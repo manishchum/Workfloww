@@ -70,17 +70,14 @@ const QuestionScroller = ({ onScrollToSolution }: { onScrollToSolution: () => vo
     {
       id: "01",
       text: "Your best location and your weakest location run the <span class='text-blue-400'>same process, same product, same team size.</span> The performance gap between them — can you explain it precisely?",
-      footer: "Most leaders have the number. Almost none have the cause."
     },
     {
       id: "02",
       text: "You rolled out a new product, process, or campaign last quarter. <span class='text-blue-400'>Right now, today</span> — what percentage of your frontline can execute it without hesitation?",
-      footer: "Not what they were briefed on. What they can actually do when it matters."
     },
     {
       id: "03",
       text: "Your process is documented. Your people are experienced. Yet <span class='text-blue-400'>every site visit, every review, every audit</span> — the same deviations surface. Why does the gap keep coming back?",
-      footer: "If it keeps returning, it was never really fixed. It was managed around."
     }
   ];
 
@@ -107,9 +104,7 @@ const QuestionScroller = ({ onScrollToSolution }: { onScrollToSolution: () => vo
             className="flex flex-col gap-10 md:gap-14 items-center text-center"
           >
             <div className="flex items-center gap-6 text-[10px] font-bold tracking-[0.5em] text-blue-500/40 uppercase font-mono">
-              <span className="text-blue-500">SECTION {questions[index].id}</span>
-              <span className="w-16 h-px bg-white/10" />
-              <span>THE EXECUTION GAP</span>
+
             </div>
 
             <h2 

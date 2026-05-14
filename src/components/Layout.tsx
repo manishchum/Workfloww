@@ -239,10 +239,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            <Button
-              className="lucid-cta rounded-xl font-bold px-6 shadow-md shadow-blue-500/20"
-              onClick={() => navigate('/contact')}
-            >
+            <Button onClick={() => navigate('/contact')} className="h-10 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold shadow-md shadow-blue-600/20 transition-colors">
               Book a Demo
             </Button>
           </div>
@@ -471,30 +468,30 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </Dialog>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-slate-200 py-20 text-slate-900">
+      <footer className="bg-white border-t border-slate-200 py-12 text-slate-900">
         <div className="container mx-auto px-6">
-          <div className="mb-16">
-            <Link to="/" className="flex items-center gap-2 mb-12">
-              <Logo className="w-10 h-10 text-blue-500" />
-              <span className="text-4xl font-black tracking-tighter text-slate-900">
+          <div className="mb-8">
+            <Link to="/" className="flex items-center gap-2 mb-6">
+              <Logo className="w-8 h-8 text-blue-500" />
+              <span className="text-2xl font-black tracking-tighter text-slate-900">
                 {LUCID_CONTENT.name}
               </span>
             </Link>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               <div>
-                <h4 className="font-bold text-lg mb-8 text-slate-900">Industries</h4>
-                <ul className="space-y-4">
+                <h4 className="font-bold text-base mb-4 text-slate-900">Industries</h4>
+                <ul className="space-y-2">
                   {LUCID_CONTENT.footer.industries.map((item) => (
                     <li key={item}>
-                      <a href="#" className="text-slate-600 hover:text-blue-500 transition-colors">{item}</a>
+                      <a href="#" className="text-sm text-slate-600 hover:text-blue-500 transition-colors">{item}</a>
                     </li>
                   ))}
                 </ul>
               </div>
               <div>
-                <h4 className="font-bold text-lg mb-8 text-slate-900">Features</h4>
-                <ul className="space-y-4">
+                <h4 className="font-bold text-base mb-4 text-slate-900">Features</h4>
+                <ul className="space-y-2">
                   {LUCID_CONTENT.footer.features.map((item) => {
                     const getLink = (name: string) => {
                       switch (name) {
@@ -511,9 +508,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     return (
                       <li key={item}>
                         {link ? (
-                          <Link to={link} className="text-slate-600 hover:text-blue-500 transition-colors">{item}</Link>
+                          <Link to={link} className="text-sm text-slate-600 hover:text-blue-500 transition-colors">{item}</Link>
                         ) : (
-                          <a href="#" className="text-slate-600 hover:text-blue-500 transition-colors">{item}</a>
+                          <a href="#" className="text-sm text-slate-600 hover:text-blue-500 transition-colors">{item}</a>
                         )}
                       </li>
                     );
@@ -521,8 +518,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </ul>
               </div>
               <div>
-                <h4 className="font-bold text-lg mb-8 text-slate-900">Use Case</h4>
-                <ul className="space-y-4">
+                <h4 className="font-bold text-base mb-4 text-slate-900">Use Case</h4>
+                <ul className="space-y-2">
                   {LUCID_CONTENT.footer.useCases.map((item) => {
                     const getLink = (name: string) => {
                       switch (name) {
@@ -541,9 +538,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     return (
                       <li key={item}>
                         {link ? (
-                          <Link to={link} className="text-slate-600 hover:text-blue-500 transition-colors">{item}</Link>
+                          <Link to={link} className="text-sm text-slate-600 hover:text-blue-500 transition-colors">{item}</Link>
                         ) : (
-                          <a href="#" className="text-slate-600 hover:text-blue-500 transition-colors">{item}</a>
+                          <a href="#" className="text-sm text-slate-600 hover:text-blue-500 transition-colors">{item}</a>
                         )}
                       </li>
                     );
@@ -551,21 +548,21 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </ul>
               </div>
               <div>
-                <h4 className="font-bold text-lg mb-8 text-slate-900">Company</h4>
-                <ul className="space-y-4">
+                <h4 className="font-bold text-base mb-4 text-slate-900">Company</h4>
+                <ul className="space-y-2">
                   {LUCID_CONTENT.footer.company.map((item) => (
                     <li key={item}>
                       {item === "About" ? (
-                        <Link to="/about" className="text-slate-600 hover:text-blue-500 transition-colors">{item}</Link>
+                        <Link to="/about" className="text-sm text-slate-600 hover:text-blue-500 transition-colors">{item}</Link>
                       ) : item === "Contact" ? (
                         <Link
                           to="/contact"
-                          className="text-slate-600 hover:text-blue-500 transition-colors"
+                          className="text-sm text-slate-600 hover:text-blue-500 transition-colors"
                         >
                           {item}
                         </Link>
                       ) : (
-                        <a href="#" className="text-slate-600 hover:text-blue-500 transition-colors">{item}</a>
+                        <a href="#" className="text-sm text-slate-600 hover:text-blue-500 transition-colors">{item}</a>
                       )}
                     </li>
                   ))}
@@ -574,7 +571,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
 
-          <div className="pt-8 border-t border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="pt-6 border-t border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-slate-500">
               © {new Date().getFullYear()} {LUCID_CONTENT.name}. All rights reserved.
             </p>

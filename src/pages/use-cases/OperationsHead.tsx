@@ -148,8 +148,8 @@ export default function OperationsHead() {
                 Recurring deviations are not a discipline problem. They are a systems problem. The standard exists. The people are capable. But the gap between your SOP and what happens on the floor has no system to close it. Lucid is that system.
               </p>
               <div className="flex flex-wrap gap-4 mt-8">
-                <Button size="lg" className="h-12 px-6 rounded-xl text-base font-semibold bg-[#6357d4] hover:bg-[#5146c7] text-white">
-                  Book a demo
+                <Button type="submit" className="w-full h-16 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold shadow-2xl shadow-blue-600/30 transition-colors">
+                  Book a Demo
                 </Button>
                 <Button variant="ghost" size="lg" className="h-12 px-6 rounded-xl text-base font-semibold text-slate-700 hover:text-[#6357d4] hover:bg-[#6357d4]/10">
                   See how it works →
