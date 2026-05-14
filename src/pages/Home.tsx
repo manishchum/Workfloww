@@ -20,19 +20,17 @@ const LUCID_CONTENT = {
       "The operating layer between what your organization decides and what actually happens — at the counter, on the floor, in the field, on the line.",
     stats: [
       { label: "18.4", sub: "%", desc: "Average performance gap between top and bottom locations" },
-      { label: "42",   sub: "%", desc: "Strategy loss between decision makers and frontline staff" },
-      { label: "3.2",  sub: "x", desc: "Revenue multiplier for organizations with higher execution clarity" },
+      { label: "42", sub: "%", desc: "Strategy loss between decision makers and frontline staff" },
+      { label: "3.2", sub: "x", desc: "Revenue multiplier for organizations with higher execution clarity" },
     ],
   },
   story: {
     need: {
-      title: "If you felt those questions —",
-      subtitle: "here's what you already know you need.",
       points: [
-        { id: "01", title: "Deploy in hours, not months.", desc: "The gap between your strategy and your ground reality cannot wait for a six-month implementation. By the time it goes live, you've lost two quarters." },
-        { id: "02", title: "Something your frontline actually uses.", desc: "Not a portal. Not an app they need to download. The channel already on the phone already in their pocket — delivering the right information at exactly the right moment." },
-        { id: "03", title: "AI with real business impact.", desc: "Not just content generation. Deployed capability — converted from what you already have, validated for accuracy, and tracked all the way to execution on the ground." },
-        { id: "04", title: "Execution visible. Revenue defensible.", desc: "Not activity reports. A clear signal — by location, by role, by shift — that tells you exactly where your business is executing and where it is leaking. Before it shows up in your numbers." },
+        { id: "01", title: "Deploy in hours, not months." },
+        { id: "02", title: "Something your frontline actually uses." },
+        { id: "03", title: "AI with real business impact.", },
+        { id: "04", title: "Execution visible. Revenue defensible." },
       ],
     },
     definition: {
@@ -147,18 +145,17 @@ const StoryAct1 = ({ onNext, onSkip }) => {
   const questions = [
     {
       id: "01",
-      text: "Your best location and your weakest location run the <span style='color:#2563eb;font-weight:700'>same process, same product, same team size.</span> The performance gap between them — can you explain it precisely?",
-      footer: "Most leaders have the number. Almost none have the cause.",
+      text: "Your best and weakest locations run the <span style='color:#2563eb;font-weight:700'>same process, same product, same team size.</span><br/>The performance gap between them —<br/>can you explain it precisely?",
+
     },
     {
       id: "02",
-      text: "You rolled out a new product, process, or campaign last quarter. <span style='color:#2563eb;font-weight:700'>Right now, today</span> — what percentage of your frontline can execute it without hesitation?",
-      footer: "Not what they were briefed on. What they can actually do when it matters.",
+      text: "You rolled out a new product, process, or campaign last quarter.<br/><span style='color:#2563eb;font-weight:700'>Right now, today</span> — what percentage of your frontline<br/>can execute it without hesitation?",
+
     },
     {
       id: "03",
-      text: "Your process is documented. Your people are experienced. Yet <span style='color:#2563eb;font-weight:700'>every site visit, every review, every audit</span> — the same deviations surface. Why does the gap keep coming back?",
-      footer: "If it keeps returning, it was never really fixed. It was managed around.",
+      text: "Your process is documented. Your people are experienced.<br/>Yet <span style='color:#2563eb;font-weight:700'>every site visit, every review, every audit</span><br/>the same deviations surface. Why does the gap keep coming back?",
     },
   ];
 
@@ -188,11 +185,11 @@ const StoryAct1 = ({ onNext, onSkip }) => {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
             {/* label */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1.5rem", marginBottom: "3rem" }}>
+            {/* <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1.5rem", marginBottom: "3rem" }}>
               <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.5em", color: "#60a5fa", fontFamily: "monospace", textTransform: "uppercase" }}>Section {questions[index].id}</span>
               <div style={{ width: 48, height: 1, background: "#cbd5e1" }} />
               <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.5em", color: "#94a3b8", fontFamily: "monospace", textTransform: "uppercase" }}>The Execution Gap</span>
-            </div>
+            </div> */}
 
             {/* question */}
             <h2
@@ -200,13 +197,6 @@ const StoryAct1 = ({ onNext, onSkip }) => {
               dangerouslySetInnerHTML={{ __html: questions[index].text }}
             />
 
-            {/* footer */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1.5rem" }}>
-              <div style={{ width: 4, height: 56, background: "#93c5fd", borderRadius: 9999, flexShrink: 0 }} />
-              <p style={{ fontSize: "clamp(1rem, 2.5vw, 1.375rem)", fontWeight: 300, fontStyle: "italic", color: "#94a3b8", maxWidth: 520, lineHeight: 1.5 }}>
-                {questions[index].footer}
-              </p>
-            </div>
           </motion.div>
         </AnimatePresence>
       </div>
@@ -248,51 +238,149 @@ const StoryAct1 = ({ onNext, onSkip }) => {
 // ─────────────── ACT 2 — The Answer (dark) ───────────────
 const StoryAct2 = ({ onNext, onSkip }) => {
   const { need } = LUCID_CONTENT.story;
+
   return (
-    <div style={{ height: "100vh", background: "#0f172a", color: "#fff", display: "flex", flexDirection: "column", justifyContent: "center", padding: "5rem 2rem", position: "relative", overflow: "hidden" }}>
-      <div style={{ position: "absolute", top: 0, right: 0, width: 600, height: 600, background: "radial-gradient(circle, rgba(37,99,235,0.15) 0%, transparent 70%)", pointerEvents: "none" }} />
+    <div style={{ height: "100vh", width: "100vw", background: "#020617", color: "#f8fafc", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column", fontFamily: "system-ui, -apple-system, sans-serif" }}>
+      {/* Background Grids & Glows */}
+      <div style={{ position: "absolute", top: "50%", left: "50%", width: "120vh", height: "120vh", background: "radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 60%)", transform: "translate(-50%, -50%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize: "40px 40px", backgroundPosition: "center center", pointerEvents: "none" }} />
 
-  <button onClick={onSkip} style={{ position: "absolute", bottom: 28, right: 28, display: "flex", alignItems: "center", gap: 8, padding: "10px 20px", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 9999, background: "rgba(255,255,255,0.05)", fontSize: 10, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#64748b", cursor: "pointer", zIndex: 50 }}
-        onMouseEnter={e => e.currentTarget.style.color = "#fff"}
-        onMouseLeave={e => e.currentTarget.style.color = "#64748b"}>
-        Skip to Platform <ArrowRight style={{ width: 12, height: 12 }} />
-      </button>
+      {/* Top Header / Navbar */}
+      <div style={{ padding: "1.5rem 2rem", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.05)", zIndex: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#3b82f6", boxShadow: "0 0 12px #3b82f6" }} />
 
-      <div style={{ maxWidth: 1100, margin: "0 auto", width: "100%", position: "relative", zIndex: 10 }}>
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: "4.5rem", textAlign: "center" }}>
-          <p style={{ fontSize: "1.25rem", color: "#94a3b8", marginBottom: 8, fontWeight: 300 }}>{need.title}</p>
-          <h2 style={{ fontSize: "clamp(1.75rem, 4vw, 3rem)", fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.1 }}>{need.subtitle}</h2>
-        </motion.div>
-
-        <div className="story-need-grid">
-          {need.points.map((point, i) => (
-            <motion.div key={point.id} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.15 }}>
-              <div style={{ fontSize: 12, fontWeight: 800, color: "#3b82f6", fontFamily: "monospace", letterSpacing: "0.3em", marginBottom: "1rem" }}>{point.id}</div>
-              <h3 style={{ fontSize: "clamp(1.25rem, 2.5vw, 1.75rem)", fontWeight: 800, letterSpacing: "-0.025em", marginBottom: "1rem", lineHeight: 1.2 }}>{point.title}</h3>
-              <p style={{ color: "#94a3b8", fontSize: "1.05rem", lineHeight: 1.7, fontWeight: 300 }}>{point.desc}</p>
-            </motion.div>
-          ))}
         </div>
 
-        <style>{`
-          .story-need-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 3rem 4rem;
-          }
-          @media (max-width: 900px) {
-            .story-need-grid {
-              grid-template-columns: 1fr;
-              gap: 2.5rem;
-            }
-          }
-        `}</style>
+      </div>
 
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} style={{ marginTop: "5rem", display: "flex", justifyContent: "center" }}>
-          <button onClick={onNext} style={{ display: "flex", alignItems: "center", gap: 10, padding: "1.25rem 2.5rem", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 16, background: "rgba(255,255,255,0.04)", color: "#fff", fontSize: "1.1rem", fontWeight: 700, cursor: "pointer", transition: "background 0.2s" }}
-            onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.08)"}
-            onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.04)"}>
-            Continue to Definition <ArrowRight style={{ width: 18, height: 18 }} />
+      {/* Main Dense Layout */}
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "1.5rem 2rem 2rem", position: "relative", zIndex: 10, maxWidth: 1600, margin: "0 auto", width: "100%" }}>
+
+        {/* Core 3-Column Architecture */}
+        <div style={{ flex: 1, display: "grid", gridTemplateColumns: "1fr 400px 1fr", gap: "2rem", alignItems: "center", position: "relative" }}>
+
+          {/* SVG Connecting Lines Background */}
+          <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 0 }} viewBox="0 0 100 100" preserveAspectRatio="none">
+            {/* From Left to Center */}
+            <motion.path d="M 20 25 L 35 25 C 45 25, 45 50, 50 50" fill="none" stroke="rgba(59,130,246,0.2)" strokeWidth="0.2" />
+            <motion.path d="M 20 75 L 35 75 C 45 75, 45 50, 50 50" fill="none" stroke="rgba(59,130,246,0.2)" strokeWidth="0.2" />
+
+            {/* From Center to Right */}
+            <motion.path d="M 50 50 C 55 50, 55 25, 65 25 L 80 25" fill="none" stroke="rgba(74,222,128,0.2)" strokeWidth="0.2" />
+            <motion.path d="M 50 50 C 55 50, 55 75, 65 75 L 80 75" fill="none" stroke="rgba(74,222,128,0.2)" strokeWidth="0.2" />
+
+            {/* Animated Data Streams */}
+            <motion.circle r="0.6" fill="#60a5fa" style={{ filter: "drop-shadow(0 0 2px #60a5fa)" }}>
+              <animateMotion dur="3s" repeatCount="indefinite" path="M 20 25 L 35 25 C 45 25, 45 50, 50 50" />
+            </motion.circle>
+            <motion.circle r="0.6" fill="#60a5fa" style={{ filter: "drop-shadow(0 0 2px #60a5fa)" }}>
+              <animateMotion dur="3.5s" repeatCount="indefinite" path="M 20 75 L 35 75 C 45 75, 45 50, 50 50" />
+            </motion.circle>
+            <motion.circle r="0.6" fill="#4ade80" style={{ filter: "drop-shadow(0 0 2px #4ade80)" }}>
+              <animateMotion dur="2.5s" repeatCount="indefinite" path="M 50 50 C 55 50, 55 25, 65 25 L 80 25" />
+            </motion.circle>
+            <motion.circle r="0.6" fill="#4ade80" style={{ filter: "drop-shadow(0 0 2px #4ade80)" }}>
+              <animateMotion dur="3.2s" repeatCount="indefinite" path="M 50 50 C 55 50, 55 75, 65 75 L 80 75" />
+            </motion.circle>
+          </svg>
+
+          {/* Left Column (Inputs) */}
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-around", height: "100%", padding: "2rem 0", zIndex: 10 }}>
+            {[need.points[0], need.points[1]].map((point, i) => (
+              <motion.div key={point.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: i * 0.2 }} style={{ background: "rgba(15,23,42,0.6)", border: "1px solid rgba(59,130,246,0.2)", borderRadius: 16, padding: "1.5rem", backdropFilter: "blur(12px)", position: "relative", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }}>
+                <div style={{ position: "absolute", top: "50%", right: "-12px", width: 12, height: 2, background: "rgba(59,130,246,0.5)", transform: "translateY(-50%)" }} />
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: "1rem" }}>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: "#60a5fa", fontFamily: "monospace", letterSpacing: "0.1em", background: "rgba(59,130,246,0.1)", padding: "2px 6px", borderRadius: 4 }}>INPUT_NODE</div>
+                  <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.05)" }} />
+                  <div style={{ fontSize: 10, color: "#4ade80", fontFamily: "monospace" }}>SYNCED</div>
+                </div>
+                <h3 style={{ fontSize: "1.25rem", fontWeight: 700, lineHeight: 1.3, color: "#f8fafc" }}>{point.title}</h3>
+                <div style={{ marginTop: "1.25rem", height: 4, background: "rgba(255,255,255,0.05)", borderRadius: 2, overflow: "hidden" }}>
+                  <motion.div animate={{ width: ["0%", "100%", "0%"] }} transition={{ duration: 4 + i, repeat: Infinity, ease: "linear" }} style={{ height: "100%", background: "#3b82f6" }} />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Center Column (AI Core) */}
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", zIndex: 10, height: "100%" }}>
+            <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 1, type: "spring" }} style={{ position: "relative", width: 320, height: 320, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              {/* Core Glow */}
+              <motion.div animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} style={{ position: "absolute", width: "100%", height: "100%", background: "radial-gradient(circle, rgba(59,130,246,0.5) 0%, transparent 60%)", borderRadius: "50%" }} />
+
+              {/* Outer Data Ring */}
+              <motion.div animate={{ rotate: 360 }} transition={{ duration: 24, repeat: Infinity, ease: "linear" }} style={{ position: "absolute", width: 280, height: 280, border: "1px dashed rgba(59,130,246,0.4)", borderRadius: "50%" }} />
+
+              {/* Inner Process Ring */}
+              <motion.div animate={{ rotate: -360 }} transition={{ duration: 16, repeat: Infinity, ease: "linear" }} style={{ position: "absolute", width: 200, height: 200, border: "2px solid rgba(59,130,246,0.05)", borderTopColor: "rgba(59,130,246,0.9)", borderBottomColor: "rgba(59,130,246,0.9)", borderRadius: "50%" }} />
+
+              {/* Central Diamond Core */}
+              <motion.div animate={{ rotate: 90 }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} style={{ width: 88, height: 88, background: "rgba(15,23,42,0.9)", border: "2px solid #3b82f6", transform: "rotate(45deg)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 40px rgba(59,130,246,0.6)", backdropFilter: "blur(10px)", zIndex: 5 }}>
+                <Zap style={{ width: 36, height: 36, color: "#60a5fa", transform: "rotate(-45deg)" }} />
+              </motion.div>
+
+              {/* Core Text Label */}
+              <div style={{ position: "absolute", bottom: -40, textAlign: "center", width: "100%" }}>
+                <div style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.3em", color: "#60a5fa", fontFamily: "monospace" }}>LUCID_ENGINE</div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, marginTop: 6 }}>
+                  <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 8px #4ade80" }} />
+                  <div style={{ fontSize: 10, color: "#94a3b8", letterSpacing: "0.05em" }}>OPTIMIZING WORKFLOWS</div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Right Column (Outputs) */}
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-around", height: "100%", padding: "2rem 0", zIndex: 10 }}>
+            {[need.points[2], need.points[3]].map((point, i) => (
+              <motion.div key={point.id} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.4 + i * 0.2 }} style={{ background: "rgba(15,23,42,0.6)", border: "1px solid rgba(74,222,128,0.25)", borderRadius: 16, padding: "1.5rem", backdropFilter: "blur(12px)", position: "relative", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }}>
+                <div style={{ position: "absolute", top: "50%", left: "-12px", width: 12, height: 2, background: "rgba(74,222,128,0.5)", transform: "translateY(-50%)" }} />
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: "1rem" }}>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: "#4ade80", fontFamily: "monospace", letterSpacing: "0.1em", background: "rgba(74,222,128,0.1)", padding: "2px 6px", borderRadius: 4 }}>OUTCOME_NODE</div>
+                  <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.05)" }} />
+                  <div style={{ fontSize: 10, color: "#60a5fa", fontFamily: "monospace" }}>DEFENSIBLE</div>
+                </div>
+                <h3 style={{ fontSize: "1.25rem", fontWeight: 700, lineHeight: 1.3, color: "#f8fafc" }}>{point.title}</h3>
+                <div style={{ marginTop: "1.25rem", display: "flex", gap: 4, height: 16 }}>
+                  {[...Array(16)].map((_, j) => (
+                    <motion.div key={j} animate={{ opacity: [0.2, 1, 0.2] }} transition={{ duration: 1.5, repeat: Infinity, delay: j * 0.05 }} style={{ flex: 1, background: "#4ade80", borderRadius: 2 }} />
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom Command Bar & CTA */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.8 }} style={{ background: "rgba(2,6,23,0.8)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: "1.25rem 2rem", display: "flex", justifyContent: "space-between", alignItems: "center", backdropFilter: "blur(20px)", marginTop: "auto", zIndex: 10, boxShadow: "0 20px 40px rgba(0,0,0,0.6)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+                <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 10px #4ade80" }} />
+                <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", color: "#94a3b8", fontFamily: "monospace" }}>SYSTEM VERIFIED</span>
+              </div>
+              <p style={{ fontSize: "1.1rem", fontWeight: 600, color: "#f8fafc", margin: 0 }}>This is not an illusion, not a list, but a real product.</p>
+            </div>
+
+            <div style={{ width: 1, height: 40, background: "rgba(255,255,255,0.1)" }} />
+
+            <div style={{ display: "flex", gap: "2rem" }}>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <span style={{ fontSize: 9, color: "#71717a", fontFamily: "monospace", textTransform: "uppercase", letterSpacing: "0.1em" }}>Global Uptime</span>
+                <span style={{ fontSize: 14, color: "#f8fafc", fontWeight: 700 }}>99.99%</span>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <span style={{ fontSize: 9, color: "#71717a", fontFamily: "monospace", textTransform: "uppercase", letterSpacing: "0.1em" }}>Net Latency</span>
+                <span style={{ fontSize: 14, color: "#f8fafc", fontWeight: 700 }}>12ms</span>
+              </div>
+            </div>
+          </div>
+
+          <button onClick={onNext} style={{ display: "flex", alignItems: "center", gap: 10, padding: "1rem 2.5rem", borderRadius: 12, background: "#f8fafc", color: "#020617", fontSize: "1rem", fontWeight: 800, border: "none", cursor: "pointer", transition: "all 0.2s" }}
+            onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 10px 25px rgba(255,255,255,0.2)"; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}>
+            Initialize OS <ArrowRight style={{ width: 16, height: 16 }} />
           </button>
         </motion.div>
       </div>
@@ -300,45 +388,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
   );
 };
 
-// ─────────────── ACT 3 — Definition (dark card) ───────────────
-const StoryAct3 = ({ onNext, onSkip }) => {
-  const { definition } = LUCID_CONTENT.story;
-  return (
-    <div style={{ height: "100vh", background: "#0f172a", display: "flex", alignItems: "center", justifyContent: "center", padding: "2rem", position: "relative" }}>
-      {/* <button onClick={onSkip} style={{ position: "absolute", top: 28, right: 28, display: "flex", alignItems: "center", gap: 8, padding: "10px 20px", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 9999, background: "rgba(255,255,255,0.05)", fontSize: 10, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#64748b", cursor: "pointer", zIndex: 50 }}
-        onMouseEnter={e => e.currentTarget.style.color = "#fff"}
-        onMouseLeave={e => e.currentTarget.style.color = "#64748b"}>
-        Enter the OS <ArrowRight style={{ width: 12, height: 12 }} />
-      </button> */}
 
-      <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9 }}
-        style={{ maxWidth: 760, width: "100%", padding: "clamp(2.5rem,6vw,5rem)", borderRadius: 48, background: "#1e293b", border: "1px solid rgba(59,130,246,0.2)", boxShadow: "0 40px 100px rgba(0,0,0,0.5)", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: 0, right: 0, width: 300, height: 300, background: "radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%)", pointerEvents: "none" }} />
-
-        <div style={{ position: "relative", zIndex: 10 }}>
-          <div style={{ marginBottom: "2.5rem" }}>
-            {definition.upper.map((line, i) => (
-              <p key={i} style={{ color: "#64748b", fontSize: "1.1rem", fontWeight: 300, lineHeight: 1.8 }}>{line}</p>
-            ))}
-          </div>
-
-          <h2 style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.75rem)", fontWeight: 800, color: "#fff", letterSpacing: "-0.03em", lineHeight: 1.2, marginBottom: "2rem" }}>{definition.core}</h2>
-
-          <div style={{ marginBottom: "3rem" }}>
-            <p style={{ fontSize: "clamp(1.25rem, 2.5vw, 2rem)", fontWeight: 800, color: "#fff", marginBottom: "0.5rem" }}>{definition.outcome}</p>
-            <p style={{ fontSize: "clamp(1.25rem, 2.5vw, 2rem)", fontWeight: 800, fontStyle: "italic", background: "linear-gradient(135deg, #60a5fa, #818cf8)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>{definition.final}</p>
-          </div>
-
-          <button onClick={onNext} style={{ display: "inline-flex", alignItems: "center", gap: 10, height: 56, padding: "0 2.5rem", borderRadius: 16, background: "#2563eb", color: "#fff", fontSize: "1.05rem", fontWeight: 800, border: "none", cursor: "pointer", boxShadow: "0 20px 40px rgba(37,99,235,0.25)", transition: "background 0.2s" }}
-            onMouseEnter={e => e.currentTarget.style.background = "#1d4ed8"}
-            onMouseLeave={e => e.currentTarget.style.background = "#2563eb"}>
-            Enter the OS <ChevronRight style={{ width: 18, height: 18 }} />
-          </button>
-        </div>
-      </motion.div>
-    </div>
-  );
-};
 
 // ─────────────── HERO ───────────────
 const Hero = () => {
@@ -502,8 +552,8 @@ const HowItWorks = () => {
                   <h3 style={{ fontSize: "clamp(1.5rem, 3vw, 2.75rem)", fontWeight: 800, letterSpacing: "-0.035em", color: "#0f172a", marginBottom: "1.5rem", lineHeight: 1.1 }}>
                     {step.heading.includes("Lucid")
                       ? step.heading.split("Lucid").map((part, i, arr) => (
-                          <span key={i}>{part}{i < arr.length - 1 && <em style={{ color: "#2563eb" }}>Lucid </em>}</span>
-                        ))
+                        <span key={i}>{part}{i < arr.length - 1 && <em style={{ color: "#2563eb" }}>Lucid </em>}</span>
+                      ))
                       : step.heading}
                   </h3>
                   <p style={{ fontSize: "1.1rem", color: "#64748b", marginBottom: "2.5rem", lineHeight: 1.8, fontWeight: 300 }}>{step.description}</p>
@@ -567,7 +617,7 @@ export default function Home() {
   const [act, setAct] = React.useState(1);
 
   React.useEffect(() => {
-    const isDark = act === 2 || act === 3;
+    const isDark = act === 2;
     window.dispatchEvent(new CustomEvent("lucid:header", { detail: { dark: isDark } }));
     return () => {
       window.dispatchEvent(new CustomEvent("lucid:header", { detail: { dark: false } }));
@@ -575,11 +625,10 @@ export default function Home() {
   }, [act]);
 
   const nextAct = () => setAct(p => p + 1);
-  const skipToMain = () => setAct(4);
+  const skipToMain = () => setAct(3);
 
   if (act === 1) return <StoryAct1 onNext={nextAct} onSkip={skipToMain} />;
-  if (act === 2) return <StoryAct2 onNext={nextAct} onSkip={skipToMain} />;
-  if (act === 3) return <StoryAct3 onNext={nextAct} onSkip={skipToMain} />;
+  if (act === 2) return <StoryAct2 onNext={skipToMain} onSkip={skipToMain} />;
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
