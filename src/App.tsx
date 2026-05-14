@@ -18,12 +18,19 @@ import Communication from "./pages/Communication";
 import SelfLearning from "./pages/SelfLearning";
 import SeamlessTraining from "./pages/SeamlessTraining";
 import Retail from "./pages/industries/Retail";
-import QSR from "./pages/industries/QSR";
+import QSRRetail from "./pages/industries/QSRRetail";
+import FMCG from "./pages/industries/FMCG";
 import Supermarkets from "./pages/industries/Supermarkets";
 import Delivery from "./pages/industries/Delivery";
 import BPO from "./pages/industries/BPO";
 import Finance from "./pages/industries/Finance";
 import Hospitality from "./pages/industries/Hospitality";
+import ManufacturingIndustrial from "./pages/industries/ManufacturingIndustrial";
+import Contact from "./pages/ContactUs";
+import CEO from "./pages/use-cases/CEO";
+import CHRO from "./pages/use-cases/CHRO";
+import SalesHead from "./pages/use-cases/SalesHead";
+import OperationsHead from "./pages/use-cases/OperationsHead";
 
 export default function App() {
   return (
@@ -41,13 +48,20 @@ export default function App() {
           <Route path="/communication" element={<Communication />} />
           <Route path="/features/self-learning" element={<SelfLearning />} />
           <Route path="/features/seamless-training" element={<SeamlessTraining />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/industries/retail" element={<Retail />} />
-          <Route path="/industries/qsr-cloud-kitchens" element={<QSR />} />
+          <Route path="/industries/qsr-cloud-kitchens" element={<QSRRetail />} />
+          <Route path="/industries/fmcg-beverages" element={<FMCG />} />
           <Route path="/industries/supermarkets-grocery" element={<Supermarkets />} />
           <Route path="/industries/delivery-partners" element={<Delivery />} />
           <Route path="/industries/bpo-contact-centres" element={<BPO />} />
           <Route path="/industries/insurance-banking" element={<Finance />} />
           <Route path="/industries/hospitality" element={<Hospitality />} />
+          <Route path="/industries/manufacturing-industrial" element={<ManufacturingIndustrial />} />
+          <Route path="/use-cases/ceo" element={<CEO />} />
+          <Route path="/use-cases/chro" element={<CHRO />} />
+          <Route path="/use-cases/sales-head" element={<SalesHead />} />
+          <Route path="/use-cases/operations-head" element={<OperationsHead />} />
         </Routes>
       </Layout>
     </Router>
