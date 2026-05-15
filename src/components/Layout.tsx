@@ -66,7 +66,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     forceDarkHeader ||
     (!scrolled && darkHeaderRoutes.some((path) => location.pathname.startsWith(path)));
 
-  const CAL_USERNAME = "monalika-goel-mpxkx5";
+  const CAL_USERNAME = "manish-chum-ovkoyi";
   const CAL_EVENT_SLUG = "book-a-demo";
 
   React.useEffect(() => {
