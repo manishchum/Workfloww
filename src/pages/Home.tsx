@@ -15,7 +15,7 @@ import {
 // ─────────────── CONTENT ───────────────
 const LUCID_CONTENT = {
   hero: {
-    subtitle: "MISSION-CRITICAL EXECUTION",
+    // subtitle: "MISSION-CRITICAL EXECUTION",
     description:
       "The operating layer between what your organization decides and what actually happens — at the counter, on the floor, in the field, on the line.",
     stats: [
@@ -144,19 +144,24 @@ const IconComp = ({ name, className, style }: { name: string; className?: string
 const StoryAct1 = ({ onNext, onSkip }) => {
   const questions = [
     {
-      id: "01",
-      text: "Your best location and your weakest location run the <span style='color:#2563eb;font-weight:700'>same process, same product, same team size.</span> The performance gap between them — can you explain it precisely?",
-      footer: "Most leaders have the number. Almost none have the cause.",
+      id: "FMCG",
+      text: "Sales Schema Is Live. Margins Are Sweetend. Yet<span style='color:#2563eb;font-weight:700'> Secondary Sales Are Flat.</span> Did You Rep Know What To Push Before The Beat Started?",
+      footer: "A Whatsapp Broadcast The Night Before Isn't Readiness.The Margin Was Lost Before The Sale Began.",
     },
     {
-      id: "02",
-      text: "You rolled out a new product, process, or campaign last quarter. <span style='color:#2563eb;font-weight:700'>Right now, today</span> — what percentage of your frontline can execute it without hesitation?",
-      footer: "Not what they were briefed on. What they can actually do when it matters.",
+      id: "BANKING",
+      text: "Sales Target Are Set. Portfolio Is Full. Yet <span style='color:#2563eb;font-weight:700'>Wallet Share Hasn't Moved In Two Quaters.</span> Does Your Relationship Manager Know How To Have The Next Conversation? ",
+      footer: "Incentives Don't Build The Pitch. If The Relationship Manager Wasn't Ready, The Opportunity Walked Out Every Day ",
     },
     {
-      id: "03",
-       text: "Your process is documented. Your people are experienced. Yet <span style='color:#2563eb;font-weight:700'>every site visit, every review, every audit</span> — the same deviations surface. Why does the gap keep coming back?",
-      footer: "If it keeps returning, it was never really fixed. It was managed around.",
+      id: "QSR",
+       text: "Food Menu Is Live. Combo Margins Are Higher. Yet <span style='color:#2563eb;font-weight:700'>Average Order Value Hasn't Moved Since Launch.</span> Is Your Crew Selling — Or Just Reading It Out?",
+       footer: "The Order Screen Can't Suggest The combo. Only The Crew Can. Every Shift Since Launch Is Revenue Left On The Counter..",
+    },
+    {
+      id: "RETAIL",
+       text: "Planogram Is Set. Promotion Is Live. Yet <span style='color:#2563eb;font-weight:700'>Conversion At The Shelf Hasn't Moved.</span> Does Your Store Associate Know What To Say When The Customer Picks It Up?",
+       footer: "Footfall Isn't The Gap. The Conversation At The Shelf Is. If The Associate Wasn't Ready, The Sale Walked Out With The Customer.",
     },
   ];
 
@@ -186,11 +191,11 @@ const StoryAct1 = ({ onNext, onSkip }) => {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
             {/* label */}
-            {/* <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1.5rem", marginBottom: "3rem" }}>
-              <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.5em", color: "#60a5fa", fontFamily: "monospace", textTransform: "uppercase" }}>Section {questions[index].id}</span>
-              <div style={{ width: 48, height: 1, background: "#cbd5e1" }} />
-              <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.5em", color: "#94a3b8", fontFamily: "monospace", textTransform: "uppercase" }}>The Execution Gap</span>
-            </div> */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1.5rem", marginBottom: "3rem" }}>
+              <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.5em", color: "#60a5fa", fontFamily: "monospace", textTransform: "uppercase" }}> {questions[index].id}</span>
+              {/* <div style={{ width: 48, height: 1, background: "#cbd5e1" }} /> */}
+              {/* <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.5em", color: "#94a3b8", fontFamily: "monospace", textTransform: "uppercase" }}></span> */}
+            </div>
 
             {/* question */}
             <h2
