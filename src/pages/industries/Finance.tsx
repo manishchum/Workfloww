@@ -24,7 +24,7 @@ export default function Finance() {
   };
 
   return (
-    <div className="pt-24">
+    <div className="pt-20">
       {/* Hero Section */}
       <section className="relative py-20 md:py-32 overflow-hidden bg-white">
         <div className="absolute top-0 right-0 w-[50%] h-[100%] bg-gradient-to-l from-blue-500/10 to-transparent -z-10 blur-[120px]" />

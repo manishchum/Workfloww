@@ -15,7 +15,7 @@ import {
 // ─────────────── CONTENT ───────────────
 const LUCID_CONTENT = {
   hero: {
-    // subtitle: "MISSION-CRITICAL EXECUTION",
+    subtitle: "WHAT IS LUCID",
     description:
       "The operating layer between what your organization decides and what actually happens — at the counter, on the floor, in the field, on the line.",
     stats: [
@@ -27,10 +27,10 @@ const LUCID_CONTENT = {
   story: {
     need: {
       points: [
-        { id: "01", title: "Deploy in hours, not months." },
-        { id: "02", title: "Something your frontline actually uses." },
-        { id: "03", title: "AI with real business impact.", },
-        { id: "04", title: "Execution visible. Revenue defensible." },
+        { id: "01", title: "Deploy in hours, not months?" },
+        { id: "02", title: "Something your frontline actually uses?" },
+        { id: "03", title: "AI with real business impact?", },
+        { id: "04", title: "Execution visible. Revenue defensible?" },
       ],
     },
     definition: {
@@ -145,7 +145,7 @@ const StoryAct1 = ({ onNext, onSkip }) => {
   const questions = [
     {
       id: "FMCG",
-      text: "Sales Schema Is Live. Margins Are Sweetend. Yet<span style='color:#2563eb;font-weight:700'> Secondary Sales Are Flat.</span> Did You Rep Know What To Push Before The Beat Started?",
+      text: "Sales Scheme Is Live. Margins Are Sweetend. Yet<span style='color:#2563eb;font-weight:700'> Secondary Sales Are Flat.</span> Did You Rep Know What To Push Before The Beat Started?",
       footer: "A Whatsapp Broadcast The Night Before Isn't Readiness.The Margin Was Lost Before The Sale Began.",
     },
     {
@@ -192,7 +192,7 @@ const StoryAct1 = ({ onNext, onSkip }) => {
           >
             {/* label */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1.5rem", marginBottom: "3rem" }}>
-              <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.5em", color: "#60a5fa", fontFamily: "monospace", textTransform: "uppercase" }}> {questions[index].id}</span>
+              <span style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.5em", color: "#60a5fa", fontFamily: "monospace", textTransform: "uppercase" }}> {questions[index].id}</span>
               {/* <div style={{ width: 48, height: 1, background: "#cbd5e1" }} /> */}
               {/* <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.5em", color: "#94a3b8", fontFamily: "monospace", textTransform: "uppercase" }}></span> */}
             </div>
@@ -267,7 +267,7 @@ const StoryAct1 = ({ onNext, onSkip }) => {
         onClick={onNext}
         style={{ position: "absolute", bottom: 24, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", color: "#64748b" }}
       >
-        <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.25em", textTransform: "uppercase" }}>Find the answer</span>
+        <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.25em", textTransform: "uppercase" }}>What You Need to Increase Your Revenue</span>
         <ChevronDown style={{ width: 20, height: 20, animation: "bounce 1.5s infinite" }} />
       </motion.button>
 
@@ -286,151 +286,404 @@ const StoryAct1 = ({ onNext, onSkip }) => {
   );
 };
 
-// ─────────────── ACT 2 — The Answer (dark) ───────────────
+// ─────────────── ACT 2 — The Answer (dark, hover-reveal 2×2 grid) ───────────────
+// Replace your existing StoryAct2 component entirely with this one.
+// Everything else (imports, LUCID_CONTENT, other components, Home) stays unchanged.
+
 const StoryAct2 = ({ onNext, onSkip }) => {
-  const { need } = LUCID_CONTENT.story;
+  const cards = [
+    {
+      id: "01",
+      label: "DEPLOY",
+      summary: "Deploy in hours, not months.",
+      points: [
+        "SOPs converted and live in 48 hours from contract signing",
+        "No IT dependency, no app download required",
+        "WhatsApp-native — works on the device they already own",
+      ],
+    },
+    {
+      id: "02",
+      label: "FRONTLINE",
+      summary: "Something your frontline actually uses.",
+      points: [
+        "Delivered on WhatsApp — zero friction, zero login",
+        "Micro-sprints under 5 minutes per session",
+        "Hinglish and regional language support built in",
+      ],
+    },
+    {
+      id: "03",
+      label: "AI IMPACT",
+      summary: "AI with real business impact.",
+      points: [
+        "Converts PDFs, decks, voice notes into training assets",
+        "Capability signals — not just completion rates",
+        "Gap alerts before they become floor problems",
+      ],
+    },
+    {
+      id: "04",
+      label: "EXECUTION",
+      summary: "Execution visible. Revenue defensible.",
+      points: [
+        "Single score by team, outlet, and region",
+        "Compliance audits across 1,000 locations in real time",
+        "Know exactly where to intervene before it hits your numbers",
+      ],
+    },
+  ];
+
+  const [hovered, setHovered] = React.useState(null);
 
   return (
-    <div style={{ height: "100vh", width: "100vw", background: "#020617", color: "#f8fafc", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column", fontFamily: "system-ui, -apple-system, sans-serif" }}>
-      {/* Background Grids & Glows */}
-      <div style={{ position: "absolute", top: "50%", left: "50%", width: "120vh", height: "120vh", background: "radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 60%)", transform: "translate(-50%, -50%)", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize: "40px 40px", backgroundPosition: "center center", pointerEvents: "none" }} />
+    <div
+      style={{
+        height: "100vh",
+        width: "100vw",
+        background: "#020617",
+        color: "#f8fafc",
+        position: "relative",
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        fontFamily: "system-ui, -apple-system, sans-serif",
+      }}
+    >
+      {/* ── Background layers (unchanged from original) ── */}
+      <div
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          width: "120vh",
+          height: "120vh",
+          background:
+            "radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 60%)",
+          transform: "translate(-50%, -50%)",
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+          backgroundPosition: "center center",
+          pointerEvents: "none",
+        }}
+      />
 
-      {/* Top Header / Navbar */}
-      <div style={{ padding: "1.5rem 2rem", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.05)", zIndex: 10 }}>
+      {/* ── Top navbar (unchanged) ── */}
+      <div
+        style={{
+          padding: "1.5rem 2rem",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          borderBottom: "1px solid rgba(255,255,255,0.05)",
+          zIndex: 10,
+        }}
+      >
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#3b82f6", boxShadow: "0 0 12px #3b82f6" }} />
-
+          <div
+            style={{
+              width: 8,
+              height: 8,
+              borderRadius: "50%",
+              background: "#3b82f6",
+              boxShadow: "0 0 12px #3b82f6",
+            }}
+          />
         </div>
-
       </div>
 
-      {/* Main Dense Layout */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "1.5rem 2rem 2rem", position: "relative", zIndex: 10, maxWidth: 1600, margin: "0 auto", width: "100%" }}>
+      {/* ── Main content ── */}
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          padding: "2rem 2rem 0",
+          position: "relative",
+          zIndex: 10,
+          maxWidth: 1200,
+          margin: "0 auto",
+          width: "100%",
+        }}
+      >
+        {/* Eyebrow label */}
+        <motion.div
+          initial={{ opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            marginBottom: "1.75rem",
+          }}
+        >
+          <div
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              background: "#4ade80",
+              boxShadow: "0 0 8px #4ade80",
+            }}
+          />
+          <span
+            style={{
+              fontSize: 10,
+              fontWeight: 800,
+              letterSpacing: "0.4em",
+              color: "#94a3b8",
+              textTransform: "uppercase",
+              fontFamily: "monospace",
+            }}
+          >
+            WHAT YOU NEED?
+          </span>
+        </motion.div>
 
-        {/* Core 3-Column Architecture */}
-        <div style={{ flex: 1, display: "grid", gridTemplateColumns: "1fr 400px 1fr", gap: "2rem", alignItems: "center", position: "relative" }}>
+        {/* 2×2 Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.15 }}
+          style={{
+            flex: 1,
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gridTemplateRows: "1fr 1fr",
+            gap: "1px",
+            background: "rgba(255,255,255,0.06)",
+            border: "1px solid rgba(255,255,255,0.06)",
+            borderRadius: 20,
+            overflow: "hidden",
+          }}
+        >
+          {cards.map((card, i) => {
+            const isHovered = hovered === card.id;
+            return (
+              <div
+                key={card.id}
+                onMouseEnter={() => setHovered(card.id)}
+                onMouseLeave={() => setHovered(null)}
+                style={{
+                  position: "relative",
+                  background: isHovered
+                    ? "rgba(15,23,42,0.95)"
+                    : "rgba(2,6,23,0.6)",
+                  padding: "2rem 2.25rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  cursor: "default",
+                  transition: "background 0.35s ease",
+                  outline: isHovered
+                    ? "1px solid rgba(59,130,246,0.4)"
+                    : "none",
+                  outlineOffset: "-1px",
+                }}
+              >
+                {/* Top row: label + ghost number */}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 800,
+                      letterSpacing: "0.35em",
+                      color: isHovered ? "#60a5fa" : "#475569",
+                      textTransform: "uppercase",
+                      fontFamily: "monospace",
+                      transition: "color 0.35s",
+                    }}
+                  >
+                    {card.label}
+                  </span>
 
-          {/* SVG Connecting Lines Background */}
-          <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 0 }} viewBox="0 0 100 100" preserveAspectRatio="none">
-            {/* From Left to Center */}
-            <motion.path d="M 20 25 L 35 25 C 45 25, 45 50, 50 50" fill="none" stroke="rgba(59,130,246,0.2)" strokeWidth="0.2" />
-            <motion.path d="M 20 75 L 35 75 C 45 75, 45 50, 50 50" fill="none" stroke="rgba(59,130,246,0.2)" strokeWidth="0.2" />
-
-            {/* From Center to Right */}
-            <motion.path d="M 50 50 C 55 50, 55 25, 65 25 L 80 25" fill="none" stroke="rgba(74,222,128,0.2)" strokeWidth="0.2" />
-            <motion.path d="M 50 50 C 55 50, 55 75, 65 75 L 80 75" fill="none" stroke="rgba(74,222,128,0.2)" strokeWidth="0.2" />
-
-            {/* Animated Data Streams */}
-            <motion.circle r="0.6" fill="#60a5fa" style={{ filter: "drop-shadow(0 0 2px #60a5fa)" }}>
-              <animateMotion dur="3s" repeatCount="indefinite" path="M 20 25 L 35 25 C 45 25, 45 50, 50 50" />
-            </motion.circle>
-            <motion.circle r="0.6" fill="#60a5fa" style={{ filter: "drop-shadow(0 0 2px #60a5fa)" }}>
-              <animateMotion dur="3.5s" repeatCount="indefinite" path="M 20 75 L 35 75 C 45 75, 45 50, 50 50" />
-            </motion.circle>
-            <motion.circle r="0.6" fill="#4ade80" style={{ filter: "drop-shadow(0 0 2px #4ade80)" }}>
-              <animateMotion dur="2.5s" repeatCount="indefinite" path="M 50 50 C 55 50, 55 25, 65 25 L 80 25" />
-            </motion.circle>
-            <motion.circle r="0.6" fill="#4ade80" style={{ filter: "drop-shadow(0 0 2px #4ade80)" }}>
-              <animateMotion dur="3.2s" repeatCount="indefinite" path="M 50 50 C 55 50, 55 75, 65 75 L 80 75" />
-            </motion.circle>
-          </svg>
-
-          {/* Left Column (Inputs) */}
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-around", height: "100%", padding: "2rem 0", zIndex: 10 }}>
-            {[need.points[0], need.points[1]].map((point, i) => (
-              <motion.div key={point.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: i * 0.2 }} style={{ background: "rgba(15,23,42,0.6)", border: "1px solid rgba(59,130,246,0.2)", borderRadius: 16, padding: "1.5rem", backdropFilter: "blur(12px)", position: "relative", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }}>
-                <div style={{ position: "absolute", top: "50%", right: "-12px", width: 12, height: 2, background: "rgba(59,130,246,0.5)", transform: "translateY(-50%)" }} />
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: "1rem" }}>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: "#60a5fa", fontFamily: "monospace", letterSpacing: "0.1em", background: "rgba(59,130,246,0.1)", padding: "2px 6px", borderRadius: 4 }}>INPUT_NODE</div>
-                  <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.05)" }} />
-                  <div style={{ fontSize: 10, color: "#4ade80", fontFamily: "monospace" }}>SYNCED</div>
+                  {/* Ghost number — fades out on hover */}
+                  <span
+                    style={{
+                      fontSize: "clamp(3rem, 6vw, 5rem)",
+                      fontWeight: 800,
+                      color: "rgba(255,255,255,0.06)",
+                      lineHeight: 1,
+                      fontFamily: "Georgia, serif",
+                      userSelect: "none",
+                      opacity: isHovered ? 0 : 1,
+                      transform: isHovered ? "scale(0.92)" : "scale(1)",
+                      transition: "opacity 0.35s ease, transform 0.35s ease",
+                    }}
+                  >
+                    {card.id}
+                  </span>
                 </div>
-                <h3 style={{ fontSize: "1.25rem", fontWeight: 700, lineHeight: 1.3, color: "#f8fafc" }}>{point.title}</h3>
-                <div style={{ marginTop: "1.25rem", height: 4, background: "rgba(255,255,255,0.05)", borderRadius: 2, overflow: "hidden" }}>
-                  <motion.div animate={{ width: ["0%", "100%", "0%"] }} transition={{ duration: 4 + i, repeat: Infinity, ease: "linear" }} style={{ height: "100%", background: "#3b82f6" }} />
-                </div>
-              </motion.div>
-            ))}
-          </div>
 
-          {/* Center Column (AI Core) */}
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", zIndex: 10, height: "100%" }}>
-            <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 1, type: "spring" }} style={{ position: "relative", width: 320, height: 320, display: "flex", alignItems: "center", justifyContent: "center" }}>
-              {/* Core Glow */}
-              <motion.div animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} style={{ position: "absolute", width: "100%", height: "100%", background: "radial-gradient(circle, rgba(59,130,246,0.5) 0%, transparent 60%)", borderRadius: "50%" }} />
-
-              {/* Outer Data Ring */}
-              <motion.div animate={{ rotate: 360 }} transition={{ duration: 24, repeat: Infinity, ease: "linear" }} style={{ position: "absolute", width: 280, height: 280, border: "1px dashed rgba(59,130,246,0.4)", borderRadius: "50%" }} />
-
-              {/* Inner Process Ring */}
-              <motion.div animate={{ rotate: -360 }} transition={{ duration: 16, repeat: Infinity, ease: "linear" }} style={{ position: "absolute", width: 200, height: 200, border: "2px solid rgba(59,130,246,0.05)", borderTopColor: "rgba(59,130,246,0.9)", borderBottomColor: "rgba(59,130,246,0.9)", borderRadius: "50%" }} />
-
-              {/* Central Diamond Core with Logo */}
-              <motion.div animate={{ rotate: 90 }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} style={{ width: 88, height: 88, background: "rgba(15,23,42,0.9)", border: "2px solid #3b82f6", transform: "rotate(45deg)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 40px rgba(59,130,246,0.6)", backdropFilter: "blur(10px)", zIndex: 5 }}>
-                <img src="images/logo.png" alt="Lucid Logo" style={{ width: 50, height: 50, transform: "rotate(-45deg)" }} />
-              </motion.div>
-
-              {/* Core Text Label */}
-              <div style={{ position: "absolute", bottom: -40, textAlign: "center", width: "100%" }}>
-                <div style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.3em", color: "#60a5fa", fontFamily: "monospace" }}>LUCID_ENGINE</div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, marginTop: 6 }}>
-                  <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 8px #4ade80" }} />
-                  <div style={{ fontSize: 10, color: "#94a3b8", letterSpacing: "0.05em" }}>OPTIMIZING WORKFLOWS</div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Right Column (Outputs) */}
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-around", height: "100%", padding: "2rem 0", zIndex: 10 }}>
-            {[need.points[2], need.points[3]].map((point, i) => (
-              <motion.div key={point.id} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.4 + i * 0.2 }} style={{ background: "rgba(15,23,42,0.6)", border: "1px solid rgba(74,222,128,0.25)", borderRadius: 16, padding: "1.5rem", backdropFilter: "blur(12px)", position: "relative", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }}>
-                <div style={{ position: "absolute", top: "50%", left: "-12px", width: 12, height: 2, background: "rgba(74,222,128,0.5)", transform: "translateY(-50%)" }} />
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: "1rem" }}>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: "#4ade80", fontFamily: "monospace", letterSpacing: "0.1em", background: "rgba(74,222,128,0.1)", padding: "2px 6px", borderRadius: 4 }}>OUTCOME_NODE</div>
-                  <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.05)" }} />
-                  <div style={{ fontSize: 10, color: "#60a5fa", fontFamily: "monospace" }}>DEFENSIBLE</div>
-                </div>
-                <h3 style={{ fontSize: "1.25rem", fontWeight: 700, lineHeight: 1.3, color: "#f8fafc" }}>{point.title}</h3>
-                <div style={{ marginTop: "1.25rem", display: "flex", gap: 4, height: 16 }}>
-                  {[...Array(16)].map((_, j) => (
-                    <motion.div key={j} animate={{ opacity: [0.2, 1, 0.2] }} transition={{ duration: 1.5, repeat: Infinity, delay: j * 0.05 }} style={{ flex: 1, background: "#4ade80", borderRadius: 2 }} />
+                {/* Bullet points — slide in on hover */}
+                <div
+                  style={{
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    gap: "0.85rem",
+                    padding: "1.25rem 0",
+                    opacity: isHovered ? 1 : 0,
+                    transform: isHovered ? "translateY(0)" : "translateY(10px)",
+                    transition: "opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s",
+                    pointerEvents: isHovered ? "auto" : "none",
+                  }}
+                >
+                  {card.points.map((point, j) => (
+                    <div
+                      key={j}
+                      style={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: "0.85rem",
+                      }}
+                    >
+                      {/* Left bar — same as the video */}
+                      <div
+                        style={{
+                          width: 2,
+                          minHeight: "100%",
+                          alignSelf: "stretch",
+                          background: "rgba(96,165,250,0.5)",
+                          borderRadius: 2,
+                          flexShrink: 0,
+                          marginTop: 2,
+                        }}
+                      />
+                      <span
+                        style={{
+                          fontSize: "0.9rem",
+                          color: "#94a3b8",
+                          lineHeight: 1.55,
+                          fontWeight: 300,
+                        }}
+                      >
+                        {point}
+                      </span>
+                    </div>
                   ))}
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
 
-        {/* Bottom Command Bar & CTA */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.8 }} style={{ background: "rgba(2,6,23,0.8)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: "1.25rem 2rem", display: "flex", justifyContent: "space-between", alignItems: "center", backdropFilter: "blur(20px)", marginTop: "auto", zIndex: 10, boxShadow: "0 20px 40px rgba(0,0,0,0.6)" }}>
+                {/* Summary line — always present, fades out on hover */}
+                <div
+                  style={{
+                    fontSize: "clamp(0.95rem, 1.4vw, 1.15rem)",
+                    fontWeight: 600,
+                    color: "#e2e8f0",
+                    lineHeight: 1.4,
+                    opacity: isHovered ? 0 : 1,
+                    transform: isHovered ? "translateY(4px)" : "translateY(0)",
+                    transition: "opacity 0.25s ease, transform 0.25s ease",
+                    position: isHovered ? "absolute" : "relative",
+                    bottom: isHovered ? "2rem" : "auto",
+                  }}
+                >
+                  {card.summary}
+                </div>
+              </div>
+            );
+          })}
+        </motion.div>
+
+        {/* ── Bottom command bar (unchanged) ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          style={{
+            background: "rgba(2,6,23,0.8)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            borderRadius: 16,
+            padding: "1.25rem 2rem",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            backdropFilter: "blur(20px)",
+            marginTop: "1.25rem",
+            marginBottom: "1.5rem",
+            zIndex: 10,
+            boxShadow: "0 20px 40px rgba(0,0,0,0.6)",
+          }}
+        >
           <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
             <div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 10px #4ade80" }} />
-                <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", color: "#94a3b8", fontFamily: "monospace" }}>SYSTEM VERIFIED</span>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  marginBottom: 4,
+                }}
+              >
+                <div
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: "50%",
+                    background: "#4ade80",
+                    boxShadow: "0 0 10px #4ade80",
+                  }}
+                />
+                <span
+                  style={{
+                    fontSize: 11,
+                    fontWeight: 700,
+                    letterSpacing: "0.15em",
+                    color: "#94a3b8",
+                    fontFamily: "monospace",
+                  }}
+                >
+                  SYSTEM VERIFIED
+                </span>
               </div>
-              
             </div>
-
-            <div style={{ width: 1, height: 40, background: "rgba(255,255,255,0.1)" }} />
-
-            <div style={{ display: "flex", gap: "2rem" }}>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                {/* <span style={{ fontSize: 9, color: "#71717a", fontFamily: "monospace", textTransform: "uppercase", letterSpacing: "0.1em" }}>Global Uptime</span>
-                <span style={{ fontSize: 14, color: "#f8fafc", fontWeight: 700 }}>99.99%</span> */}
-              </div>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                {/* <span style={{ fontSize: 9, color: "#71717a", fontFamily: "monospace", textTransform: "uppercase", letterSpacing: "0.1em" }}>Net Latency</span>
-                <span style={{ fontSize: 14, color: "#f8fafc", fontWeight: 700 }}>12ms</span> */}
-              </div>
-            </div>
+            <div
+              style={{ width: 1, height: 40, background: "rgba(255,255,255,0.1)" }}
+            />
           </div>
 
-          <button onClick={onNext} style={{ display: "flex", alignItems: "center", gap: 10, padding: "1rem 2.5rem", borderRadius: 12, background: "#f8fafc", color: "#020617", fontSize: "1rem", fontWeight: 800, border: "none", cursor: "pointer", transition: "all 0.2s" }}
-            onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 10px 25px rgba(255,255,255,0.2)"; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}>
+          <button
+            onClick={onNext}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              padding: "1rem 2.5rem",
+              borderRadius: 12,
+              background: "#f8fafc",
+              color: "#020617",
+              fontSize: "1rem",
+              fontWeight: 800,
+              border: "none",
+              cursor: "pointer",
+              transition: "all 0.2s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-2px)";
+              e.currentTarget.style.boxShadow =
+                "0 10px 25px rgba(255,255,255,0.2)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "none";
+            }}
+          >
             Initialize OS <ArrowRight style={{ width: 16, height: 16 }} />
           </button>
         </motion.div>
@@ -460,13 +713,13 @@ const Hero = () => {
           </div>
 
           <h1 style={{ fontSize: "clamp(2.5rem, 8vw, 6rem)", fontWeight: 900, letterSpacing: "-0.045em", lineHeight: 0.88, marginBottom: "2rem", color: "#0f172a", fontFamily: "Georgia, serif" }}>
-            The operating system<br />
-            your <em style={{ color: "#2563eb", fontStyle: "italic" }}>business runs on.</em><br />
-            <span style={{ color: "#94a3b8", fontStyle: "normal" }}>From decision to execution.</span>
+            Lucid Is The Operating System<br />
+            Your <em style={{ color: "#2563eb", fontStyle: "italic" }}>Business Runs On.</em><br />
+            <span style={{ color: "#94a3b8", fontStyle: "normal" }}>From Decision To Execution.</span>
           </h1>
 
           <p style={{ fontSize: "clamp(1rem, 2vw, 1.25rem)", color: "#64748b", maxWidth: 640, marginBottom: "3rem", lineHeight: 1.7, fontWeight: 300 }}>
-            Not a feature. Not a dashboard. The <strong style={{ color: "#0f172a", fontWeight: 700 }}>operating layer between what your organization decides and what actually happens</strong> — at the counter, on the floor, in the field, on the line.
+            Not a Feature. Not a Dashboard. The <strong style={{ color: "#0f172a", fontWeight: 700 }}>Operating Layer Between What Your Sales Organization Decides And What Actually Happens</strong> — At The Counter, On The Floor, In The Field, On The Line.
           </p>
 
           {/* CTA buttons */}
@@ -474,12 +727,12 @@ const Hero = () => {
             <button onClick={() => setOpen(true)} style={{ height: 56, padding: "0 2.5rem", borderRadius: 18, background: "#2563eb", color: "#fff", fontWeight: 800, fontSize: "1.05rem", border: "none", cursor: "pointer", boxShadow: "0 12px 30px rgba(37,99,235,0.3)", transition: "transform 0.15s" }}
               onMouseEnter={e => e.currentTarget.style.transform = "scale(1.02)"}
               onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>
-              See Lucid in action
+              Join Lighthouse Programme 
             </button>
             <button style={{ height: 56, padding: "0 2.5rem", borderRadius: 18, background: "transparent", color: "#475569", fontWeight: 800, fontSize: "1.05rem", border: "1.5px solid #cbd5e1", cursor: "pointer", transition: "border-color 0.2s" }}
               onMouseEnter={e => e.currentTarget.style.borderColor = "#2563eb"}
               onMouseLeave={e => e.currentTarget.style.borderColor = "#cbd5e1"}>
-              Request a 30-day pilot
+              Book a Demo
             </button>
           </div>
         </motion.div>

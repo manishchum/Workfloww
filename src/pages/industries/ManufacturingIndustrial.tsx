@@ -118,7 +118,8 @@ export default function ManufacturingIndustrial() {
           color: var(--ink);
           background: var(--surface);
         }
-        .section { padding: 96px 24px; }
+        .section { padding: 80px 24px; }
+        .section#hero { padding-top: 80px; }
         .container { max-width: 1180px; margin: 0 auto; }
         .hero-grid {
           display: grid;
@@ -260,7 +261,7 @@ export default function ManufacturingIndustrial() {
       `}</style>
 
       {/* ── HERO ── */}
-      <section className="section" id="hero">
+      <section className="section" id="hero" style={{ paddingTop: "80px" }}>
         <div className="container hero-grid">
           <div>
             <span className="eyebrow">Manufacturing & Industrial</span>

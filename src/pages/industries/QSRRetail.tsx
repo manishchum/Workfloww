@@ -163,7 +163,10 @@ export default function QSRRetail() {
           background: var(--surface);
         }
         .section {
-          padding: 96px 24px;
+          padding: 80px 24px;
+        }
+        .section#hero {
+          padding-top: 80px;
         }
         .section.surface {
           background: var(--surface-2);
@@ -616,7 +619,7 @@ export default function QSRRetail() {
       `}</style>
 
       {/* ── HERO ── */}
-      <section className="section" id="hero">
+      <section className="section" id="hero" style={{ paddingTop: "80px" }}>
         <div className="container hero-grid">
           <div className="reveal" data-reveal>
             <span className="eyebrow">QSR & Retail</span>
