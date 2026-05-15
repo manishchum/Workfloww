@@ -61,10 +61,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     "/communication",
   ];
   const solidHeaderRoutes = ["/use-cases", "/industries"];
+  const isDarkRoute = darkHeaderRoutes.some((path) => location.pathname.startsWith(path));
   const isSolidHeader = solidHeaderRoutes.some((path) => location.pathname.startsWith(path));
   const isDarkHeader =
     forceDarkHeader ||
-    (!scrolled && darkHeaderRoutes.some((path) => location.pathname.startsWith(path)));
+    (!scrolled && isDarkRoute);
 
   const CAL_USERNAME = "manish-chum-ovkoyi";
   const CAL_EVENT_SLUG = "book-a-demo";
@@ -109,7 +110,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <nav
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          scrolled || location.pathname !== "/" || isSolidHeader
+          scrolled || location.pathname !== "/" || isSolidHeader || isDarkRoute
             ? "bg-white/80 backdrop-blur-md border-b border-slate-200 py-3"
             : "bg-transparent border-transparent py-5"
         )}
@@ -131,7 +132,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <span
                 className={cn(
                   "text-2xl font-extrabold tracking-tighter transition-colors duration-300",
-                  isDarkHeader ? "text-white" : "text-slate-900"
+                  isDarkHeader && !isDarkRoute ? "text-white" : "text-slate-900"
                 )}
               >
                 {LUCID_CONTENT.name}
@@ -139,7 +140,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <span
                 className={cn(
                   "text-[10px] font-semibold tracking-[0.3em] uppercase mt-1 transition-colors duration-300",
-                  isDarkHeader ? "text-slate-300" : "text-slate-400"
+                  isDarkHeader && !isDarkRoute ? "text-slate-300" : "text-slate-400"
                 )}
               >
                 workfloww.ai
