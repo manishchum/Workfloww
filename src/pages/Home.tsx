@@ -194,9 +194,19 @@ const StoryAct1 = ({ onNext, onSkip }) => {
 
             {/* question */}
             <h2
-              style={{ fontSize: "clamp(1.75rem, 5vw, 3.25rem)", fontWeight: 500, letterSpacing: "-0.025em", color: "#0f172a", lineHeight: 1.2, marginBottom: "3rem", fontFamily: "Georgia, serif" }}
+              style={{ fontSize: "clamp(1.75rem, 5vw, 3.25rem)", fontWeight: 500, letterSpacing: "-0.025em", color: "#0f172a", lineHeight: 1.2, marginBottom: "1.5rem", fontFamily: "Georgia, serif" }}
               dangerouslySetInnerHTML={{ __html: questions[index].text }}
             />
+
+            {/* footer text */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              style={{ fontSize: "0.95rem", color: "#64748b", marginBottom: "3rem", fontWeight: 300, maxWidth: 540, margin: "0 auto 3rem auto" }}
+            >
+              {questions[index].footer}
+            </motion.p>
 
             {/* answer options
             <motion.div
