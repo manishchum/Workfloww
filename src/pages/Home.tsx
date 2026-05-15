@@ -832,8 +832,8 @@ const HowItWorks = () => {
                 </motion.div>
 
                 <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }} style={{ order: isEven ? 2 : 1 }}>
-                  <div style={{ borderRadius: 32, overflow: "hidden", background: "#f1f5f9", padding: 12, boxShadow: "0 24px 60px rgba(0,0,0,0.1)", border: "1px solid #e2e8f0" }}>
-                    <img src={step.image} alt={step.title} style={{ width: "100%", aspectRatio: "4/3", objectFit: "contain", borderRadius: 22, display: "block", backgroundColor: "#f1f5f9" }} referrerPolicy="no-referrer" />
+                  <div style={{ borderRadius: 32, overflow: "hidden", background: "transparent", padding: 0, boxShadow: "none", border: "none" }}>
+                    <img src={step.image} alt={step.title} style={{ width: "100%", height: "auto", objectFit: "cover", borderRadius: 32, display: "block" }} referrerPolicy="no-referrer" />
                   </div>
                 </motion.div>
               </div>
