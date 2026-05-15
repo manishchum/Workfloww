@@ -114,7 +114,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             : "bg-transparent border-transparent py-5"
         )}
       >
-        <div className="container mx-auto px-6 flex items-center justify-between">
+        <div className="max-w-[1180px] mx-auto w-full px-6 flex items-center justify-between">
           <Link
             to="/"
             className="flex items-center gap-3"
@@ -469,7 +469,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Footer */}
       <footer className="bg-white border-t border-slate-200 py-12 text-slate-900">
-        <div className="container mx-auto px-6">
+        <div className="max-w-[1180px] mx-auto w-full px-6">
           <div className="mb-8">
             <Link to="/" className="flex items-center gap-2 mb-6">
               <Logo className="w-8 h-8 text-blue-500" />
