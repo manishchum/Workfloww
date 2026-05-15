@@ -294,42 +294,51 @@ const StoryAct2 = ({ onNext, onSkip }) => {
   const cards = [
     {
       id: "01",
-      label: "DEPLOY",
+      label: "PEOPLE",
       summary: "Deploy in hours, not months.",
       points: [
-        "SOPs converted and live in 48 hours from contract signing",
-        "No IT dependency, no app download required",
-        "WhatsApp-native — works on the device they already own",
+        "You need your top rep's accounts covered the day they resign — not three months later.",
+
+"You need the new rep to walk into the territory knowing every account, every relationship, every open deal — not start from zero.",
+
+"You need your forecast pressure-tested at rep level — not trusted because the manager said so."
+
       ],
     },
     {
       id: "02",
-      label: "FRONTLINE",
+      label: "SALES PROCESS",
       summary: "Something your frontline actually uses.",
       points: [
-        "Delivered on WhatsApp — zero friction, zero login",
-        "Micro-sprints under 5 minutes per session",
-        "Hinglish and regional language support built in",
+        "You need to know if Tuesday's task was done — not take the ASM's word for it.",
+
+"You need your rep to counter the competitor at the shelf — not after losing the order.",
+
+"You need every lost deal to make the next rep sharper — not disappear into a CRM field."
       ],
     },
     {
       id: "03",
-      label: "AI IMPACT",
+      label: "TOOLS",
       summary: "AI with real business impact.",
       points: [
-        "Converts PDFs, decks, voice notes into training assets",
-        "Capability signals — not just completion rates",
-        "Gap alerts before they become floor problems",
+        "You need the battle card before the meeting — not the day after.",
+
+"You need photo proof the display was executed — not a WhatsApp \"done sir.\"",
+
+"You need the pitch deck your rep opens to be current — not three versions old."
       ],
     },
     {
       id: "04",
-      label: "EXECUTION",
+      label: "CONTENT",
       summary: "Execution visible. Revenue defensible.",
       points: [
-        "Single score by team, outlet, and region",
-        "Compliance audits across 1,000 locations in real time",
-        "Know exactly where to intervene before it hits your numbers",
+        "You need the new scheme at the distributor counter the day it launches — not when the RSM gets around to it.",
+
+"You need a competitor response in your rep's hand the week they drop a new product — not three weeks later.",
+
+"You need the pitch your marketing built to actually reflect what works on the ground — not sit unused in a shared drive."
       ],
     },
   ];
@@ -343,14 +352,18 @@ const StoryAct2 = ({ onNext, onSkip }) => {
         width: "100vw",
         background: "#020617",
         color: "#f8fafc",
-        position: "relative",
+        position: "fixed",
+        top: 0,
+        left: 0,
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
         fontFamily: "system-ui, -apple-system, sans-serif",
+        paddingTop: "80px",
+        boxSizing: "border-box",
       }}
     >
-      {/* ── Background layers (unchanged from original) ── */}
+      {/* ── Background layers ── */}
       <div
         style={{
           position: "absolute",
@@ -376,42 +389,19 @@ const StoryAct2 = ({ onNext, onSkip }) => {
         }}
       />
 
-      {/* ── Top navbar (unchanged) ── */}
-      <div
-        style={{
-          padding: "1.5rem 2rem",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          borderBottom: "1px solid rgba(255,255,255,0.05)",
-          zIndex: 10,
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div
-            style={{
-              width: 8,
-              height: 8,
-              borderRadius: "50%",
-              background: "#3b82f6",
-              boxShadow: "0 0 12px #3b82f6",
-            }}
-          />
-        </div>
-      </div>
-
-      {/* ── Main content ── */}
+      {/* ── Main content container ── */}
       <div
         style={{
           flex: 1,
           display: "flex",
           flexDirection: "column",
-          padding: "2rem 2rem 0",
+          padding: "1.25rem 2rem",
           position: "relative",
           zIndex: 10,
           maxWidth: 1200,
           margin: "0 auto",
           width: "100%",
+          minHeight: 0,
         }}
       >
         {/* Eyebrow label */}
@@ -423,7 +413,8 @@ const StoryAct2 = ({ onNext, onSkip }) => {
             display: "flex",
             alignItems: "center",
             gap: 10,
-            marginBottom: "1.75rem",
+            marginBottom: "0.75rem",
+            flexShrink: 0,
           }}
         >
           <div
@@ -464,6 +455,8 @@ const StoryAct2 = ({ onNext, onSkip }) => {
             border: "1px solid rgba(255,255,255,0.06)",
             borderRadius: 20,
             overflow: "hidden",
+            marginBottom: "0.75rem",
+            minHeight: 0,
           }}
         >
           {cards.map((card, i) => {
@@ -478,7 +471,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                   background: isHovered
                     ? "rgba(15,23,42,0.95)"
                     : "rgba(2,6,23,0.6)",
-                  padding: "2rem 2.25rem",
+                  padding: "1.25rem 1.75rem",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
@@ -488,6 +481,8 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                     ? "1px solid rgba(59,130,246,0.4)"
                     : "none",
                   outlineOffset: "-1px",
+                  minHeight: 0,
+                  overflow: "hidden",
                 }}
               >
                 {/* Top row: label + ghost number */}
@@ -496,11 +491,12 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "flex-start",
+                    marginBottom: "0.5rem",
                   }}
                 >
                   <span
                     style={{
-                      fontSize: 10,
+                      fontSize: 9,
                       fontWeight: 800,
                       letterSpacing: "0.35em",
                       color: isHovered ? "#60a5fa" : "#475569",
@@ -515,7 +511,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                   {/* Ghost number — fades out on hover */}
                   <span
                     style={{
-                      fontSize: "clamp(3rem, 6vw, 5rem)",
+                      fontSize: "clamp(1.5rem, 3vw, 2.75rem)",
                       fontWeight: 800,
                       color: "rgba(255,255,255,0.06)",
                       lineHeight: 1,
@@ -537,12 +533,13 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
-                    gap: "0.85rem",
-                    padding: "1.25rem 0",
+                    gap: "0.5rem",
+                    padding: "0.5rem 0",
                     opacity: isHovered ? 1 : 0,
                     transform: isHovered ? "translateY(0)" : "translateY(10px)",
                     transition: "opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s",
                     pointerEvents: isHovered ? "auto" : "none",
+                    minHeight: 0,
                   }}
                 >
                   {card.points.map((point, j) => (
@@ -551,10 +548,10 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                       style={{
                         display: "flex",
                         alignItems: "flex-start",
-                        gap: "0.85rem",
+                        gap: "0.7rem",
                       }}
                     >
-                      {/* Left bar — same as the video */}
+                      {/* Left bar */}
                       <div
                         style={{
                           width: 2,
@@ -568,9 +565,9 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                       />
                       <span
                         style={{
-                          fontSize: "0.9rem",
+                          fontSize: "0.75rem",
                           color: "#94a3b8",
-                          lineHeight: 1.55,
+                          lineHeight: 1.3,
                           fontWeight: 300,
                         }}
                       >
@@ -580,18 +577,17 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                   ))}
                 </div>
 
-                {/* Summary line — always present, fades out on hover */}
+                {/* Summary line */}
                 <div
                   style={{
-                    fontSize: "clamp(0.95rem, 1.4vw, 1.15rem)",
+                    fontSize: "clamp(0.75rem, 0.95vw, 0.85rem)",
                     fontWeight: 600,
                     color: "#e2e8f0",
-                    lineHeight: 1.4,
+                    lineHeight: 1.25,
                     opacity: isHovered ? 0 : 1,
                     transform: isHovered ? "translateY(4px)" : "translateY(0)",
                     transition: "opacity 0.25s ease, transform 0.25s ease",
-                    position: isHovered ? "absolute" : "relative",
-                    bottom: isHovered ? "2rem" : "auto",
+                    marginTop: "0.5rem",
                   }}
                 >
                   {card.summary}
@@ -601,7 +597,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
           })}
         </motion.div>
 
-        {/* ── Bottom command bar (unchanged) ── */}
+        {/* ── Bottom command bar ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -610,18 +606,18 @@ const StoryAct2 = ({ onNext, onSkip }) => {
             background: "rgba(2,6,23,0.8)",
             border: "1px solid rgba(255,255,255,0.1)",
             borderRadius: 16,
-            padding: "1.25rem 2rem",
+            padding: "0.85rem 1.5rem",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             backdropFilter: "blur(20px)",
-            marginTop: "1.25rem",
-            marginBottom: "1.5rem",
             zIndex: 10,
             boxShadow: "0 20px 40px rgba(0,0,0,0.6)",
+            flexShrink: 0,
+            gap: "1rem",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
             <div>
               <div
                 style={{
@@ -642,7 +638,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                 />
                 <span
                   style={{
-                    fontSize: 11,
+                    fontSize: 10,
                     fontWeight: 700,
                     letterSpacing: "0.15em",
                     color: "#94a3b8",
@@ -664,15 +660,17 @@ const StoryAct2 = ({ onNext, onSkip }) => {
               display: "flex",
               alignItems: "center",
               gap: 10,
-              padding: "1rem 2.5rem",
+              padding: "0.65rem 1.5rem",
               borderRadius: 12,
               background: "#f8fafc",
               color: "#020617",
-              fontSize: "1rem",
+              fontSize: "0.85rem",
               fontWeight: 800,
               border: "none",
               cursor: "pointer",
               transition: "all 0.2s",
+              whiteSpace: "nowrap",
+              flexShrink: 0,
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "translateY(-2px)";
