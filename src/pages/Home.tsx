@@ -15,7 +15,7 @@ import {
 // ─────────────── CONTENT ───────────────
 const LUCID_CONTENT = {
   hero: {
-    subtitle: "WHAT IS LUCID",
+    subtitle: "WHAT IS LUCID?",
     description:
       "The operating layer between what your organization decides and what actually happens — at the counter, on the floor, in the field, on the line.",
     stats: [
@@ -267,7 +267,7 @@ const StoryAct1 = ({ onNext, onSkip }) => {
         onClick={onNext}
         style={{ position: "absolute", bottom: 24, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", color: "#64748b" }}
       >
-        <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.25em", textTransform: "uppercase" }}>What You Need to Increase Your Revenue</span>
+        <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.25em", textTransform: "uppercase" }}>What You Need to Increase Your Revenue?</span>
         <ChevronDown style={{ width: 20, height: 20, animation: "bounce 1.5s infinite" }} />
       </motion.button>
 
