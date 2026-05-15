@@ -1,7 +1,6 @@
 import * as React from "react";
 import { motion } from "motion/react";
 import { Linkedin } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 export default function About() {
   return (
@@ -45,25 +44,38 @@ export default function About() {
             transition={{ delay: i * 0.1 }}
             className="group relative"
           >
-            <div className="aspect-[4/5] overflow-hidden rounded-2xl bg-muted mb-6">
+            <div className="aspect-[4/5] overflow-hidden rounded-2xl bg-muted mb-6 shadow-none group-hover:shadow-none">
               <img 
                 src={member.image} 
                 alt={member.name}
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                className="w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
-                <a 
-                  href={member.linkedin} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-primary hover:scale-110 transition-transform"
-                >
-                  <Linkedin className="w-6 h-6" />
-                </a>
-              </div>
             </div>
-            <h4 className="text-2xl font-bold">{member.name}</h4>
+            <div className="flex items-center gap-3 mb-2">
+              <h4 className="text-2xl font-bold">{member.name}</h4>
+              <button
+                onClick={() => window.open(member.linkedin, '_blank', 'noopener,noreferrer')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  backgroundColor: 'white',
+                  cursor: 'pointer',
+                  border: '1px solid #e2e8f0',
+                  transition: 'transform 0.2s',
+                  flexShrink: 0,
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                aria-label={`Visit ${member.name}'s LinkedIn`}
+              >
+                <Linkedin className="w-5 h-5" style={{ color: '#2563eb' }} />
+              </button>
+            </div>
             <p className="text-lg text-muted-foreground">{member.role}</p>
             {member.bio && (
               <p className="text-base text-muted-foreground leading-relaxed mt-4 whitespace-pre-line">

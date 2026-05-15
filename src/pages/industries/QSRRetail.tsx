@@ -16,7 +16,7 @@ const PROBLEM_FIX_ROWS = [
     eyebrow: "THE OPERATIONAL FRICTION",
     problemTitle: "Disconnected Product Launches",
     fixTitle: "Pre-emptive Readiness",
-    roiLabel: "Speed to Market",
+    roiLabel: "ROI: Speed to Market",
     roiValue: "+100% Alignment",
     fixCopy: "Launch brief deployed to every associate's phone before go-live. Readiness score by outlet — before the launch, not after the complaint."
   },
@@ -24,7 +24,7 @@ const PROBLEM_FIX_ROWS = [
     eyebrow: "PERFORMANCE VARIANCE",
     problemTitle: "Unexplained Revenue Gaps",
     fixTitle: "Performance Replicability",
-    roiLabel: "Bottom-line Growth",
+    roiLabel: "ROI: Bottom-line Growth",
     roiValue: "Gap Minimization",
     fixCopy: "Execution score by outlet, updated every week. Revenue correlation visible. Best practice identified and replicated to underperforming locations."
   },
@@ -32,7 +32,7 @@ const PROBLEM_FIX_ROWS = [
     eyebrow: "CHRONIC NON-COMPLIANCE",
     problemTitle: "The Recurring Audit Loop",
     fixTitle: "Root Cause Resolution",
-    roiLabel: "Operational Efficiency",
+    roiLabel: "ROI: Operational Efficiency",
     roiValue: "Zero Recurrence",
     fixCopy: "Root cause mapped to the knowledge gap behind the deviation. Fix deployed to the right team. Comprehension verified. Recurrence tracked."
   },
@@ -40,7 +40,7 @@ const PROBLEM_FIX_ROWS = [
     eyebrow: "STANDARDS DRIFT",
     problemTitle: "Planogram That Lives on Paper",
     fixTitle: "Real-Time VM Compliance",
-    roiLabel: "Brand Consistency",
+    roiLabel: "ROI: Brand Consistency",
     roiValue: "↑ Compliance Rate",
     fixCopy: "Mobile photo-capture audit against your VM standard. Non-compliance flagged and corrective action assigned the same day — not at the next site visit."
   },
@@ -48,7 +48,7 @@ const PROBLEM_FIX_ROWS = [
     eyebrow: "ATTRITION COST",
     problemTitle: "New Hires Who Leave Before They Land",
     fixTitle: "Early Attrition Signal",
-    roiLabel: "Retention & Ramp",
+    roiLabel: "ROI: Retention & Ramp",
     roiValue: "↓ 90-Day Attrition",
     fixCopy: "Role-specific capability deployed from Day 1 on WhatsApp. Capability score by associate from Week 1. Manager alerted when score drops — not when the resignation lands."
   }
@@ -308,23 +308,61 @@ export default function QSRRetail() {
           70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
           100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
         }
-        .problem-grid {
+
+        /* ── Flip card styles ── */
+        .flip-grid {
           display: grid;
-          gap: 18px;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 24px;
         }
-        .problem-row {
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 18px;
+        @media (max-width: 900px) {
+          .flip-grid { grid-template-columns: repeat(2, 1fr); }
         }
-        .problem-card {
-          background: var(--surface);
+        @media (max-width: 600px) {
+          .flip-grid { grid-template-columns: 1fr; }
+        }
+        .flip-card {
+          height: 270px;
+          perspective: 1000px;
+          cursor: pointer;
+        }
+        .flip-inner {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+          transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-inner {
+          transform: rotateY(180deg);
+        }
+        .flip-front, .flip-back {
+          position: absolute;
+          inset: 0;
           border-radius: 16px;
-          padding: 18px;
-          border-left: 3px solid var(--danger);
-          box-shadow: 0 8px 20px rgba(15, 14, 23, 0.04);
+          padding: 24px;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
         }
-        .problem-eyebrow {
+        .flip-front {
+          background: #ffffff;
+          border: 1px solid rgba(232, 65, 42, 0.2);
+          border-left: 4px solid var(--danger);
+          box-shadow: 0 8px 24px rgba(15, 14, 23, 0.06);
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        .flip-back {
+          background: var(--dark-card);
+          border: 1px solid rgba(91, 78, 245, 0.3);
+          transform: rotateY(180deg);
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          box-shadow: 0 16px 40px rgba(91, 78, 245, 0.2);
+        }
+        .flip-front-eyebrow {
           display: flex;
           align-items: center;
           gap: 6px;
@@ -332,39 +370,33 @@ export default function QSRRetail() {
           text-transform: uppercase;
           letter-spacing: 1.4px;
           color: var(--danger);
-          font-weight: 600;
-          margin-bottom: 8px;
+          font-weight: 700;
         }
-        .problem-eyebrow::before {
+        .flip-front-eyebrow::before {
           content: "";
           width: 6px;
           height: 6px;
           border-radius: 50%;
           background: var(--danger);
+          flex-shrink: 0;
         }
-        .problem-card h4 {
-          margin: 0 0 6px;
-          font-size: 18px;
-          font-weight: 700;
+        .flip-front h4 {
+          font-size: 22px;
+          font-weight: 800;
+          color: var(--ink);
+          margin: 12px 0 0;
+          line-height: 1.25;
         }
-        .fix-card {
-          background: var(--dark-card);
-          color: white;
-          border-radius: 16px;
-          padding: 18px;
-          position: relative;
+        .flip-hint {
+          font-size: 11px;
+          color: var(--ink-3);
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          margin-top: auto;
+          padding-top: 16px;
         }
-        .fix-card::after {
-          content: "";
-          position: absolute;
-          top: 16px;
-          right: 16px;
-          width: 12px;
-          height: 12px;
-          border-radius: 4px;
-          background: var(--accent-mid);
-        }
-        .fix-eyebrow {
+        .flip-back-eyebrow {
           display: flex;
           align-items: center;
           gap: 6px;
@@ -372,34 +404,43 @@ export default function QSRRetail() {
           text-transform: uppercase;
           letter-spacing: 1.4px;
           color: var(--accent-mid);
-          font-weight: 600;
-          margin-bottom: 8px;
+          font-weight: 700;
         }
-        .fix-eyebrow::before {
+        .flip-back-eyebrow::before {
           content: "";
           width: 6px;
           height: 6px;
           border-radius: 50%;
           background: var(--accent-mid);
+          flex-shrink: 0;
         }
-        .fix-card h4 {
-          margin: 0 0 8px;
+        .flip-back h4 {
           font-size: 18px;
           font-weight: 700;
+          color: white;
+          margin: 10px 0 8px;
+          line-height: 1.3;
         }
-        .roi {
+        .flip-back p {
+          font-size: 13px;
+          color: #c4c0db;
+          line-height: 1.55;
+          flex: 1;
+        }
+        .flip-roi {
           margin-top: 14px;
           padding-top: 12px;
           border-top: 1px solid rgba(255,255,255,0.1);
           display: flex;
           justify-content: space-between;
           font-size: 12px;
-          color: rgba(255,255,255,0.7);
+          color: rgba(255,255,255,0.5);
         }
-        .roi strong {
+        .flip-roi strong {
           color: var(--accent-mid);
           font-weight: 700;
         }
+
         .dashboard {
           background: var(--dark-card);
           color: white;
@@ -558,7 +599,6 @@ export default function QSRRetail() {
         @media (max-width: 900px) {
           .hero-grid { grid-template-columns: 1fr; }
           .dashboard-preview { display: none; }
-          .problem-row { grid-template-columns: 1fr; }
           .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
           .dash-body { grid-template-columns: 1fr; }
           .persona-grid { grid-template-columns: 1fr 1fr; }
@@ -566,6 +606,7 @@ export default function QSRRetail() {
         }
       `}</style>
 
+      {/* ── HERO ── */}
       <section className="section" id="hero">
         <div className="container hero-grid">
           <div className="reveal" data-reveal>
@@ -621,9 +662,10 @@ export default function QSRRetail() {
         </div>
       </section>
 
-      <section className="section surface" id="problem" data-reveal>
+      {/* ── PROBLEM / FIX — flip cards ── */}
+      <section className="section surface" id="problem">
         <div className="container reveal" data-reveal>
-          <div style={{ marginBottom: 32 }}>
+          <div style={{ marginBottom: 48 }}>
             <p className="text-xs font-semibold tracking-[0.3em] text-slate-500 uppercase mb-6">
               Where Lucid Plays
             </p>
@@ -634,20 +676,36 @@ export default function QSRRetail() {
               Every operational leak has a revenue signature. Lucid closes the loop with execution proof and correction speed.
             </p>
           </div>
-          <div className="problem-grid">
+
+          <div className="flip-grid">
             {PROBLEM_FIX_ROWS.map((row) => (
-              <div key={row.problemTitle} className="problem-row reveal" data-reveal>
-                <div className="problem-card">
-                  <div className="problem-eyebrow">{row.eyebrow}</div>
-                  <h4>{row.problemTitle}</h4>
-                </div>
-                <div className="fix-card">
-                  <div className="fix-eyebrow">Fix</div>
-                  <h4>{row.fixTitle}</h4>
-                  <p><strong>{row.fixCopy}</strong></p>
-                  <div className="roi">
-                    <span>{row.roiLabel}</span>
-                    <strong>{row.roiValue}</strong>
+              <div key={row.problemTitle} className="flip-card reveal" data-reveal>
+                <div className="flip-inner">
+                  {/* Front — white problem card */}
+                  <div className="flip-front">
+                    <div>
+                      <div className="flip-front-eyebrow">{row.eyebrow}</div>
+                      <h4>{row.problemTitle}</h4>
+                    </div>
+                    <div className="flip-hint">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M7 16V4m0 0L3 8m4-4 4 4"/>
+                        <path d="M17 8v12m0 0 4-4m-4 4-4-4"/>
+                      </svg>
+                      Hover to see the fix
+                    </div>
+                  </div>
+                  {/* Back — dark fix card */}
+                  <div className="flip-back">
+                    <div>
+                      <div className="flip-back-eyebrow">Fix · {row.fixTitle}</div>
+                      <h4>{row.fixTitle}</h4>
+                      <p>{row.fixCopy}</p>
+                    </div>
+                    <div className="flip-roi">
+                      <span>{row.roiLabel}</span>
+                      <strong>{row.roiValue}</strong>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -656,6 +714,7 @@ export default function QSRRetail() {
         </div>
       </section>
 
+      {/* ── DASHBOARD ── */}
       <section className="section" id="dashboard">
         <div className="container reveal" data-reveal>
           <p className="text-xs font-semibold tracking-[0.3em] text-slate-500 uppercase mb-6">
@@ -724,6 +783,7 @@ export default function QSRRetail() {
         </div>
       </section>
 
+      {/* ── WHO USES LUCID ── */}
       <section className="section surface" id="who">
         <div className="container reveal" data-reveal>
           <p className="text-xs font-semibold tracking-[0.3em] text-slate-500 uppercase mb-6">
@@ -747,6 +807,7 @@ export default function QSRRetail() {
         </div>
       </section>
 
+      {/* ── CTA ── */}
       <section className="section">
         <div className="container">
           <div className="cta reveal" data-reveal>

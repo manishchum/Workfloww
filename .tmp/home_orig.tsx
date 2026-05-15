@@ -70,7 +70,9 @@ const QuestionScroller = ({ onScrollToSolution }: { onScrollToSolution: () => vo
     {
       id: "01",
       text: "Your best location and your weakest location run the <span class='text-blue-400'>same process, same product, same team size.</span> The performance gap between them — can you explain it precisely?",
+      footer: "Most leaders have the number. Almost none have the cause."
     },
+    
     {
       id: "02",
       text: "You rolled out a new product, process, or campaign last quarter. <span class='text-blue-400'>Right now, today</span> — what percentage of your frontline can execute it without hesitation?",

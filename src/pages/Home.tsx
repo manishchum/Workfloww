@@ -145,17 +145,18 @@ const StoryAct1 = ({ onNext, onSkip }) => {
   const questions = [
     {
       id: "01",
-      text: "Your best and weakest locations run the <span style='color:#2563eb;font-weight:700'>same process, same product, same team size.</span><br/>The performance gap between them —<br/>can you explain it precisely?",
-
+      text: "Your best location and your weakest location run the <span style='color:#2563eb;font-weight:700'>same process, same product, same team size.</span> The performance gap between them — can you explain it precisely?",
+      footer: "Most leaders have the number. Almost none have the cause.",
     },
     {
       id: "02",
-      text: "You rolled out a new product, process, or campaign last quarter.<br/><span style='color:#2563eb;font-weight:700'>Right now, today</span> — what percentage of your frontline<br/>can execute it without hesitation?",
-
+      text: "You rolled out a new product, process, or campaign last quarter. <span style='color:#2563eb;font-weight:700'>Right now, today</span> — what percentage of your frontline can execute it without hesitation?",
+      footer: "Not what they were briefed on. What they can actually do when it matters.",
     },
     {
       id: "03",
-      text: "Your process is documented. Your people are experienced.<br/>Yet <span style='color:#2563eb;font-weight:700'>every site visit, every review, every audit</span><br/>the same deviations surface. Why does the gap keep coming back?",
+       text: "Your process is documented. Your people are experienced. Yet <span style='color:#2563eb;font-weight:700'>every site visit, every review, every audit</span> — the same deviations surface. Why does the gap keep coming back?",
+      footer: "If it keeps returning, it was never really fixed. It was managed around.",
     },
   ];
 
@@ -196,6 +197,41 @@ const StoryAct1 = ({ onNext, onSkip }) => {
               style={{ fontSize: "clamp(1.75rem, 5vw, 3.25rem)", fontWeight: 500, letterSpacing: "-0.025em", color: "#0f172a", lineHeight: 1.2, marginBottom: "3rem", fontFamily: "Georgia, serif" }}
               dangerouslySetInnerHTML={{ __html: questions[index].text }}
             />
+
+            {/* answer options
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxWidth: 540, margin: "0 auto" }}
+            >
+              {questions[index].answers.map((answer, i) => (
+                <div
+                  key={i}
+                  style={{
+                    padding: "1rem 1.5rem",
+                    background: "rgba(255,255,255,0.6)",
+                    border: "1px solid rgba(37,99,235,0.2)",
+                    borderRadius: 8,
+                    fontSize: "0.95rem",
+                    color: "#334155",
+                    cursor: "pointer",
+                    transition: "all 0.3s ease",
+                    fontFamily: "system-ui, -apple-system, sans-serif"
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(37,99,235,0.08)";
+                    e.currentTarget.style.borderColor = "rgba(37,99,235,0.4)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "rgba(255,255,255,0.6)";
+                    e.currentTarget.style.borderColor = "rgba(37,99,235,0.2)";
+                  }}
+                >
+                  {answer}
+                </div>
+              ))}
+            </motion.div> */}
 
           </motion.div>
         </AnimatePresence>
@@ -315,9 +351,9 @@ const StoryAct2 = ({ onNext, onSkip }) => {
               {/* Inner Process Ring */}
               <motion.div animate={{ rotate: -360 }} transition={{ duration: 16, repeat: Infinity, ease: "linear" }} style={{ position: "absolute", width: 200, height: 200, border: "2px solid rgba(59,130,246,0.05)", borderTopColor: "rgba(59,130,246,0.9)", borderBottomColor: "rgba(59,130,246,0.9)", borderRadius: "50%" }} />
 
-              {/* Central Diamond Core */}
+              {/* Central Diamond Core with Logo */}
               <motion.div animate={{ rotate: 90 }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} style={{ width: 88, height: 88, background: "rgba(15,23,42,0.9)", border: "2px solid #3b82f6", transform: "rotate(45deg)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 40px rgba(59,130,246,0.6)", backdropFilter: "blur(10px)", zIndex: 5 }}>
-                <Zap style={{ width: 36, height: 36, color: "#60a5fa", transform: "rotate(-45deg)" }} />
+                <img src="images/logo.png" alt="Lucid Logo" style={{ width: 50, height: 50, transform: "rotate(-45deg)" }} />
               </motion.div>
 
               {/* Core Text Label */}
@@ -360,19 +396,19 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                 <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 10px #4ade80" }} />
                 <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", color: "#94a3b8", fontFamily: "monospace" }}>SYSTEM VERIFIED</span>
               </div>
-              <p style={{ fontSize: "1.1rem", fontWeight: 600, color: "#f8fafc", margin: 0 }}>This is not an illusion, not a list, but a real product.</p>
+              
             </div>
 
             <div style={{ width: 1, height: 40, background: "rgba(255,255,255,0.1)" }} />
 
             <div style={{ display: "flex", gap: "2rem" }}>
               <div style={{ display: "flex", flexDirection: "column" }}>
-                <span style={{ fontSize: 9, color: "#71717a", fontFamily: "monospace", textTransform: "uppercase", letterSpacing: "0.1em" }}>Global Uptime</span>
-                <span style={{ fontSize: 14, color: "#f8fafc", fontWeight: 700 }}>99.99%</span>
+                {/* <span style={{ fontSize: 9, color: "#71717a", fontFamily: "monospace", textTransform: "uppercase", letterSpacing: "0.1em" }}>Global Uptime</span>
+                <span style={{ fontSize: 14, color: "#f8fafc", fontWeight: 700 }}>99.99%</span> */}
               </div>
               <div style={{ display: "flex", flexDirection: "column" }}>
-                <span style={{ fontSize: 9, color: "#71717a", fontFamily: "monospace", textTransform: "uppercase", letterSpacing: "0.1em" }}>Net Latency</span>
-                <span style={{ fontSize: 14, color: "#f8fafc", fontWeight: 700 }}>12ms</span>
+                {/* <span style={{ fontSize: 9, color: "#71717a", fontFamily: "monospace", textTransform: "uppercase", letterSpacing: "0.1em" }}>Net Latency</span>
+                <span style={{ fontSize: 14, color: "#f8fafc", fontWeight: 700 }}>12ms</span> */}
               </div>
             </div>
           </div>
