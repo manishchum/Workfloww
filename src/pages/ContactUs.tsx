@@ -16,7 +16,7 @@ import CalBooker from "../components/CalBooker";
 
 export default function Contact() {
   const [isCalOpen, setIsCalOpen] = React.useState(false);
-  const CAL_USERNAME = "monalika-goel-mpxkx5";
+  const CAL_USERNAME = "manish-chum-ovkoyi";
   const CAL_EVENT_SLUG = "book-a-demo";
 
   const handleContactSubmit = (e: React.FormEvent) => {

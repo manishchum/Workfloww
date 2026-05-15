@@ -96,7 +96,7 @@ const LUCID_CONTENT = {
           "AI converts to WhatsApp sprints, videos, audio, and flashcards",
           "Live in 48 hours from contract signing"
         ],
-        image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1200"
+        image: "/images/upload.png"
       },
       {
         id: "step-2",
@@ -108,7 +108,7 @@ const LUCID_CONTENT = {
           "Works on any smartphone including basic Android",
           "Hinglish and regional language support built in"
         ],
-        image: "https://images.unsplash.com/photo-1556742049-ed1f93ad74e4?auto=format&fit=crop&q=80&w=1200"
+        image: "/images/secondstep.png"
       },
       {
         id: "step-3",
@@ -120,7 +120,7 @@ const LUCID_CONTENT = {
           "Compliance audit results in real time",
           "Gap alerts before they become floor problems"
         ],
-        image: "https://images.unsplash.com/photo-1551288049-bbbda5366391?auto=format&fit=crop&q=80&w=1200"
+        image: "/images/analytics.png"
       }
     ]
   },
@@ -573,6 +573,224 @@ const Capabilities = () => {
   );
 };
 
+// ─────────────── UPLOAD WORKFLOW ANIMATION ───────────────
+const UploadWorkflowAnimation = () => {
+  const inputFiles = [
+    { id: 1, name: "SOP.pdf", icon: "📄", delay: 0 },
+    { id: 2, name: "Product_Manual.docx", icon: "📘", delay: 0.1 },
+    { id: 3, name: "Audit_Checklist.xlsx", icon: "📊", delay: 0.2 },
+    { id: 4, name: "Voice_Note.mp3", icon: "🎙️", delay: 0.3 },
+    { id: 5, name: "Brand_Guidelines.ppt", icon: "🎨", delay: 0.4 },
+  ];
+
+  const outputAssets = [
+    { id: 1, name: "WhatsApp Sprint", icon: "💬", delay: 0.6 },
+    { id: 2, name: "Microlearning Video", icon: "🎬", delay: 0.7 },
+    { id: 3, name: "Audio Lesson", icon: "🎵", delay: 0.8 },
+    { id: 4, name: "Flashcards", icon: "📇", delay: 0.9 },
+    { id: 5, name: "Training Checklist", icon: "✅", delay: 1 },
+  ];
+
+  return (
+    <div style={{ width: "100%", aspectRatio: "4/3", background: "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)", borderRadius: 24, padding: "2rem", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", position: "relative", overflow: "hidden" }}>
+      {/* Grid background */}
+      <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(226,232,240,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(226,232,240,0.5) 1px, transparent 1px)", backgroundSize: "40px 40px", opacity: 0.3, pointerEvents: "none" }} />
+
+      <div style={{ position: "relative", zIndex: 10, width: "100%", height: "100%", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        
+        {/* Left: Input Files */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem", justifyContent: "center", width: "20%" }}>
+          {inputFiles.map((file) => (
+            <motion.div
+              key={file.id}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: file.delay, duration: 0.6 }}
+            >
+              <motion.div
+                animate={{ x: [0, 80, 0] }}
+                transition={{ delay: file.delay + 0.8, duration: 2.5, repeat: Infinity }}
+                style={{
+                  background: "#fff",
+                  border: "1px solid #e2e8f0",
+                  borderRadius: 12,
+                  padding: "0.75rem 1rem",
+                  fontSize: "0.75rem",
+                  fontWeight: 600,
+                  color: "#64748b",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <span>{file.icon}</span>
+                <span>{file.name}</span>
+              </motion.div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Center: Processing Engine */}
+        <div style={{ width: "40%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <div style={{ position: "relative", width: 140, height: 140 }}>
+            {/* Outer rotating ring */}
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              style={{
+                position: "absolute",
+                inset: 0,
+                border: "2px solid transparent",
+                borderTop: "2px solid #3b82f6",
+                borderRight: "2px solid #3b82f6",
+                borderRadius: "50%",
+              }}
+            />
+
+            {/* Inner pulsing circle */}
+            <motion.div
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              style={{
+                position: "absolute",
+                inset: 10,
+                background: "radial-gradient(circle, rgba(37,99,235,0.1) 0%, transparent 70%)",
+                borderRadius: "50%",
+              }}
+            />
+
+            {/* Core element */}
+            <div style={{
+              position: "absolute",
+              inset: 30,
+              background: "linear-gradient(135deg, #3b82f6, #2563eb)",
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#fff",
+              fontSize: "2rem",
+              boxShadow: "0 8px 24px rgba(37,99,235,0.3)",
+            }}>
+              ⚙️
+            </div>
+
+            {/* Animated particles */}
+            {[0, 1, 2, 3].map((i) => (
+              <motion.div
+                key={i}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear", delay: i * 0.5 }}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                }}
+              >
+                <div style={{
+                  position: "absolute",
+                  width: 4,
+                  height: 4,
+                  background: "#2563eb",
+                  borderRadius: "50%",
+                  top: 0,
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  opacity: 0.6,
+                }} />
+              </motion.div>
+            ))}
+
+            {/* Label */}
+            <div style={{
+              position: "absolute",
+              bottom: -40,
+              left: "50%",
+              transform: "translateX(-50%)",
+              whiteSpace: "nowrap",
+              fontSize: "0.75rem",
+              fontWeight: 700,
+              color: "#2563eb",
+              letterSpacing: "0.05em",
+            }}>
+              LUCID AI
+            </div>
+          </div>
+        </div>
+
+        {/* Right: Output Assets */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem", justifyContent: "center", width: "20%" }}>
+          {outputAssets.map((asset) => (
+            <motion.div
+              key={asset.id}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: asset.delay, duration: 0.6 }}
+            >
+              <motion.div
+                animate={{ x: [-80, 0, 0] }}
+                transition={{ delay: asset.delay + 0.2, duration: 2.5, repeat: Infinity }}
+                style={{
+                  background: "#fff",
+                  border: "1.5px solid #3b82f6",
+                  borderRadius: 12,
+                  padding: "0.75rem 1rem",
+                  fontSize: "0.75rem",
+                  fontWeight: 600,
+                  color: "#2563eb",
+                  boxShadow: "0 4px 12px rgba(37,99,235,0.1)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <span>{asset.icon}</span>
+                <span>{asset.name}</span>
+              </motion.div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Connecting lines */}
+      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }} viewBox="0 0 800 300" preserveAspectRatio="xMidYMid slice">
+        {/* Left to center */}
+        <motion.path
+          d="M 100 150 Q 250 100 350 150"
+          fill="none"
+          stroke="url(#leftGradient)"
+          strokeWidth="2"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}
+        />
+        {/* Right from center */}
+        <motion.path
+          d="M 450 150 Q 600 100 700 150"
+          fill="none"
+          stroke="url(#rightGradient)"
+          strokeWidth="2"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse", delay: 0.3 }}
+        />
+        <defs>
+          <linearGradient id="leftGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#cbd5e1" />
+            <stop offset="100%" stopColor="#3b82f6" />
+          </linearGradient>
+          <linearGradient id="rightGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#3b82f6" />
+            <stop offset="100%" stopColor="#2563eb" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  );
+};
+
 // ─────────────── HOW IT WORKS ───────────────
 const HowItWorks = () => {
   const { howItWorks } = LUCID_CONTENT;
@@ -615,7 +833,7 @@ const HowItWorks = () => {
 
                 <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }} style={{ order: isEven ? 2 : 1 }}>
                   <div style={{ borderRadius: 32, overflow: "hidden", background: "#f1f5f9", padding: 12, boxShadow: "0 24px 60px rgba(0,0,0,0.1)", border: "1px solid #e2e8f0" }}>
-                    <img src={step.image} alt={step.title} style={{ width: "100%", aspectRatio: "4/3", objectFit: "cover", borderRadius: 22, display: "block" }} referrerPolicy="no-referrer" />
+                    <img src={step.image} alt={step.title} style={{ width: "100%", aspectRatio: "4/3", objectFit: "contain", borderRadius: 22, display: "block", backgroundColor: "#f1f5f9" }} referrerPolicy="no-referrer" />
                   </div>
                 </motion.div>
               </div>
