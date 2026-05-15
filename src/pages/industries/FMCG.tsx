@@ -51,44 +51,44 @@ const WATERFALL_STEPS = [
 
 const PROBLEM_FIX_ROWS = [
   {
-    eyebrow: "SCHEME LEAKAGE",
+    label: "SCHEME LEAKAGE",
     problemTitle: "Briefed ≠ Selling",
     fixTitle: "Execution Waterfall Visibility",
-    roiLabel: "Scheme offtake",
-    roiValue: "+100% Coverage",
-    fixCopy: "Every rep's status tracked — briefed, opened, comprehended, actively selling. NSM sees the waterfall by Day 1 of the scheme, not after the review call."
+    fixBody: "Every rep's status tracked — briefed, opened, comprehended, actively selling. NSM sees the waterfall by Day 1 of the scheme, not after the review call.",
+    roi: "Scheme offtake",
+    roiValue: "+100% Coverage"
   },
   {
-    eyebrow: "TERRITORY BLINDNESS",
+    label: "TERRITORY BLINDNESS",
     problemTitle: "Critical Territories Hidden in Averages",
     fixTitle: "Territory Readiness Scorecard",
-    roiLabel: "Coverage efficiency",
-    roiValue: "Zero Blind Territories",
-    fixCopy: "Field readiness score by territory, updated weekly. Critical territories flagged automatically. NSM and ZSM alerted — not after the review, before it."
+    fixBody: "Field readiness score by territory, updated weekly. Critical territories flagged automatically. NSM and ZSM alerted — not after the review, before it.",
+    roi: "Coverage efficiency",
+    roiValue: "Zero Blind Territories"
   },
   {
-    eyebrow: "COMPREHENSION GAP",
+    label: "COMPREHENSION GAP",
     problemTitle: "Reps Who Can't Pitch the Scheme",
     fixTitle: "Targeted Remediation Sprint",
-    roiLabel: "Pitch conversion",
-    roiValue: "↑ Outlet Conversion Rate",
-    fixCopy: "Reps who fail comprehension receive a 3-minute reinforcement sprint on WhatsApp — same day. Comprehension re-verified before they hit their next outlet."
+    fixBody: "Reps who fail comprehension receive a 3-minute reinforcement sprint on WhatsApp — same day. Comprehension re-verified before they hit their next outlet.",
+    roi: "Pitch conversion",
+    roiValue: "↑ Outlet Conversion Rate"
   },
   {
-    eyebrow: "BEAT EXECUTION DRIFT",
+    label: "BEAT EXECUTION DRIFT",
     problemTitle: "Beat Checklist That No One Updates",
     fixTitle: "Real-Time Beat Compliance",
-    roiLabel: "Field accuracy",
-    roiValue: "↑ Beat Compliance Rate",
-    fixCopy: "Scheme pitch confirmation added to beat checklist automatically on launch day. Coverage confirmed at outlet level, not inferred from rep self-report."
+    fixBody: "Scheme pitch confirmation added to beat checklist automatically on launch day. Coverage confirmed at outlet level, not inferred from rep self-report.",
+    roi: "Field accuracy",
+    roiValue: "↑ Beat Compliance Rate"
   },
   {
-    eyebrow: "NEW REP RAMP RISK",
+    label: "NEW REP RAMP RISK",
     problemTitle: "Freshers in the Field on Launch Week",
     fixTitle: "Role-Based Launch Readiness",
-    roiLabel: "Ramp speed",
-    roiValue: "↓ Fresher Drop-off",
-    fixCopy: "Freshers receive role-calibrated scheme briefs with objection handling scripts. Readiness score by rep seniority, visible to ZSM before launch week begins."
+    fixBody: "Freshers receive role-calibrated scheme briefs with objection handling scripts. Readiness score by rep seniority, visible to ZSM before launch week begins.",
+    roi: "Ramp speed",
+    roiValue: "↓ Fresher Drop-off"
   }
 ];
 
@@ -241,8 +241,9 @@ export default function FMCG() {
 
         /* Flip cards */
         .flip-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
-        @media (max-width: 900px) { .flip-grid { grid-template-columns: repeat(2,1fr); } }
-        @media (max-width: 600px) { .flip-grid { grid-template-columns: 1fr; } }
+        .flip-grid-bottom { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; max-width: 66.666%; margin: 32px auto 0; }
+        @media (max-width: 900px) { .flip-grid { grid-template-columns: repeat(2,1fr); } .flip-grid-bottom { max-width: 100%; } }
+        @media (max-width: 600px) { .flip-grid { grid-template-columns: 1fr; } .flip-grid-bottom { grid-template-columns: 1fr; } }
         .flip-card { height: 270px; perspective: 1000px; cursor: pointer; }
         .flip-inner {
           position: relative; width: 100%; height: 100%;
@@ -462,14 +463,16 @@ export default function FMCG() {
               Every scheme leak has a territory signature. Lucid closes the loop with execution proof and correction speed.
             </p>
           </div>
-          <div className="flip-grid">
-            {PROBLEM_FIX_ROWS.map((row) => (
-              <div key={row.problemTitle} className="flip-card reveal" data-reveal>
+
+          {/* Top row — 3 cards */}
+          <div className="flip-grid" style={{ marginBottom: 32 }}>
+            {PROBLEM_FIX_ROWS.slice(0, 3).map((pair) => (
+              <div key={pair.label} className="flip-card">
                 <div className="flip-inner">
                   <div className="flip-front">
                     <div>
-                      <div className="flip-front-eyebrow">{row.eyebrow}</div>
-                      <h4>{row.problemTitle}</h4>
+                      <div className="flip-front-eyebrow">{pair.label}</div>
+                      <h4>{pair.problemTitle}</h4>
                     </div>
                     <div className="flip-hint">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -480,13 +483,46 @@ export default function FMCG() {
                   </div>
                   <div className="flip-back">
                     <div>
-                      <div className="flip-back-eyebrow">Fix · {row.fixTitle}</div>
-                      <h4>{row.fixTitle}</h4>
-                      <p>{row.fixCopy}</p>
+                      <div className="flip-back-eyebrow">Fix · {pair.label}</div>
+                      <h4>{pair.fixTitle}</h4>
+                      <p>{pair.fixBody}</p>
                     </div>
                     <div className="flip-roi">
-                      <span>{row.roiLabel}</span>
-                      <strong>{row.roiValue}</strong>
+                      <span>{pair.roi}</span>
+                      <strong>{pair.roiValue}</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Bottom row — 2 cards centered */}
+          <div className="flip-grid-bottom">
+            {PROBLEM_FIX_ROWS.slice(3).map((pair) => (
+              <div key={pair.label} className="flip-card">
+                <div className="flip-inner">
+                  <div className="flip-front">
+                    <div>
+                      <div className="flip-front-eyebrow">{pair.label}</div>
+                      <h4>{pair.problemTitle}</h4>
+                    </div>
+                    <div className="flip-hint">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M7 16V4m0 0L3 8m4-4 4 4"/><path d="M17 8v12m0 0 4-4m-4 4-4-4"/>
+                      </svg>
+                      Hover to see the fix
+                    </div>
+                  </div>
+                  <div className="flip-back">
+                    <div>
+                      <div className="flip-back-eyebrow">Fix · {pair.label}</div>
+                      <h4>{pair.fixTitle}</h4>
+                      <p>{pair.fixBody}</p>
+                    </div>
+                    <div className="flip-roi">
+                      <span>{pair.roi}</span>
+                      <strong>{pair.roiValue}</strong>
                     </div>
                   </div>
                 </div>
@@ -494,7 +530,8 @@ export default function FMCG() {
             ))}
           </div>
         </div>
-      </section>
+      </section>    
+            
 
       {/* ── DASHBOARD — Image 2 layout ── */}
       <section className="section" id="dashboard">
