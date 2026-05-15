@@ -94,7 +94,7 @@ export default function CEO() {
           <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-16 items-center">
             <div>
               <p className="text-xs font-semibold tracking-[0.3em] text-slate-500 uppercase mb-6">
-                CEO Use Case
+                <span className="eyebrow">CEO Use Case</span>
               </p>
               <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
                 Execution gaps are eroding <span className="text-[#6357d4]">store performance</span> every week.
