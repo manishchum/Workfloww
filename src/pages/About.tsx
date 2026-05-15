@@ -9,10 +9,10 @@ export default function About() {
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-6xl font-bold tracking-tight mb-6"
+          className="text-2xl md:text-3xl font-bold tracking-tight mb-6 leading-relaxed"
         >
-          Your <span className="text-primary">Partner</span> in Upskilling. <br />
-          World's only SaaS built exclusively for <span className="text-primary">Frontline teams!</span>
+          At <span className="text-blue-600">Workfloww.ai</span>, We Work At The Intersection Of <span className="text-blue-600">AI And Organization Performance</span> — Consulting Organizations On How To Deploy <span className="text-blue-600">AI Meaningfully</span> And Building Products That Prove It's Possible.
+
         </motion.h2>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
@@ -20,16 +20,16 @@ export default function About() {
           transition={{ delay: 0.1 }}
           className="text-xl font-semibold text-muted-foreground"
         >
-          Connect. Learn. Operate. Grow
+          We are not just building with AI . We are fixing the priorities.
         </motion.p>
       </div>
 
-      <div className="max-w-5xl mx-auto text-center mb-16">
+      {/* <div className="max-w-5xl mx-auto text-center mb-16">
         <h3 className="text-3xl md:text-5xl font-bold mb-8">The dream team</h3>
         <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
           Channelling insights from our teaching and retail experience, we are a bunch of Ed-tech enthusiasts building Lucid - a B2B SaaS company changing how business and revenue facing roles work.
         </p>
-      </div>
+      </div> */}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 max-w-4xl mx-auto">
         {[
