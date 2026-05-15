@@ -578,7 +578,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </p>
             <div className="flex gap-8">
               <a href="#" className="text-sm text-slate-500 hover:text-blue-500">Terms of Service</a>
-              <a href="#" className="text-sm text-slate-500 hover:text-blue-500">Privacy Policy</a>
+              <Link to="/privacy-policy" className="text-sm text-slate-500 hover:text-blue-500">Privacy Policy</Link>
             </div>
           </div>
         </div>

@@ -25,7 +25,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="bg-slate-50 min-h-screen pt-24 md:pt-32 pb-12 md:pb-24 text-slate-900">
+    <div className="bg-slate-50 min-h-screen pt-20 pb-12 md:pb-24 text-slate-900">
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
 

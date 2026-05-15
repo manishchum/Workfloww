@@ -27,6 +27,7 @@ import Finance from "./pages/industries/Finance";
 import Hospitality from "./pages/industries/Hospitality";
 import ManufacturingIndustrial from "./pages/industries/ManufacturingIndustrial";
 import Contact from "./pages/ContactUs";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CEO from "./pages/use-cases/CEO";
 import CHRO from "./pages/use-cases/CHRO";
 import SalesHead from "./pages/use-cases/SalesHead";
@@ -49,6 +50,7 @@ export default function App() {
           <Route path="/features/self-learning" element={<SelfLearning />} />
           <Route path="/features/seamless-training" element={<SeamlessTraining />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/industries/retail" element={<Retail />} />
           <Route path="/industries/qsr-cloud-kitchens" element={<QSRRetail />} />
           <Route path="/industries/fmcg-beverages" element={<FMCG />} />
