@@ -315,11 +315,20 @@ export default function QSRRetail() {
           grid-template-columns: repeat(3, 1fr);
           gap: 24px;
         }
+        .flip-grid-bottom {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 24px;
+          max-width: 66.666%;
+          margin: 32px auto 0;
+        }
         @media (max-width: 900px) {
           .flip-grid { grid-template-columns: repeat(2, 1fr); }
+          .flip-grid-bottom { max-width: 100%; }
         }
         @media (max-width: 600px) {
           .flip-grid { grid-template-columns: 1fr; }
+          .flip-grid-bottom { grid-template-columns: 1fr; }
         }
         .flip-card {
           height: 270px;
@@ -678,7 +687,42 @@ export default function QSRRetail() {
           </div>
 
           <div className="flip-grid">
-            {PROBLEM_FIX_ROWS.map((row) => (
+            {PROBLEM_FIX_ROWS.slice(0, 3).map((row) => (
+              <div key={row.problemTitle} className="flip-card reveal" data-reveal>
+                <div className="flip-inner">
+                  {/* Front — white problem card */}
+                  <div className="flip-front">
+                    <div>
+                      <div className="flip-front-eyebrow">{row.eyebrow}</div>
+                      <h4>{row.problemTitle}</h4>
+                    </div>
+                    <div className="flip-hint">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M7 16V4m0 0L3 8m4-4 4 4"/>
+                        <path d="M17 8v12m0 0 4-4m-4 4-4-4"/>
+                      </svg>
+                      Hover to see the fix
+                    </div>
+                  </div>
+                  {/* Back — dark fix card */}
+                  <div className="flip-back">
+                    <div>
+                      <div className="flip-back-eyebrow">Fix · {row.fixTitle}</div>
+                      <h4>{row.fixTitle}</h4>
+                      <p>{row.fixCopy}</p>
+                    </div>
+                    <div className="flip-roi">
+                      <span>{row.roiLabel}</span>
+                      <strong>{row.roiValue}</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flip-grid-bottom">
+            {PROBLEM_FIX_ROWS.slice(3).map((row) => (
               <div key={row.problemTitle} className="flip-card reveal" data-reveal>
                 <div className="flip-inner">
                   {/* Front — white problem card */}
