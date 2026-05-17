@@ -10,6 +10,8 @@ import {
   MessageSquare,
   Rocket,
   ShieldCheck,
+  ArrowBigDown,
+  ArrowDown,
 } from "lucide-react";
 
 // ─────────────── CONTENT ───────────────
@@ -298,11 +300,8 @@ const StoryAct2 = ({ onNext, onSkip }) => {
       summary: "Deploy in hours, not months.",
       points: [
         "You need your top rep's accounts covered the day they resign — not three months later.",
-
-"You need the new rep to walk into the territory knowing every account, every relationship, every open deal — not start from zero.",
-
-"You need your forecast pressure-tested at rep level — not trusted because the manager said so."
-
+        "You need the new rep to walk into the territory knowing every account, every relationship, every open deal — not start from zero.",
+        "You need your forecast pressure-tested at rep level — not trusted because the manager said so."
       ],
     },
     {
@@ -311,10 +310,8 @@ const StoryAct2 = ({ onNext, onSkip }) => {
       summary: "Something your frontline actually uses.",
       points: [
         "You need to know if Tuesday's task was done — not take the ASM's word for it.",
-
-"You need your rep to counter the competitor at the shelf — not after losing the order.",
-
-"You need every lost deal to make the next rep sharper — not disappear into a CRM field."
+        "You need your rep to counter the competitor at the shelf — not after losing the order.",
+        "You need every lost deal to make the next rep sharper — not disappear into a CRM field."
       ],
     },
     {
@@ -323,10 +320,8 @@ const StoryAct2 = ({ onNext, onSkip }) => {
       summary: "AI with real business impact.",
       points: [
         "You need the battle card before the meeting — not the day after.",
-
-"You need photo proof the display was executed — not a WhatsApp \"done sir.\"",
-
-"You need the pitch deck your rep opens to be current — not three versions old."
+        "You need photo proof the display was executed — not a WhatsApp \"done sir.\"",
+        "You need the pitch deck your rep opens to be current — not three versions old."
       ],
     },
     {
@@ -335,10 +330,8 @@ const StoryAct2 = ({ onNext, onSkip }) => {
       summary: "Execution visible. Revenue defensible.",
       points: [
         "You need the new scheme at the distributor counter the day it launches — not when the RSM gets around to it.",
-
-"You need a competitor response in your rep's hand the week they drop a new product — not three weeks later.",
-
-"You need the pitch your marketing built to actually reflect what works on the ground — not sit unused in a shared drive."
+        "You need a competitor response in your rep's hand the week they drop a new product — not three weeks later.",
+        "You need the pitch your marketing built to actually reflect what works on the ground — not sit unused in a shared drive."
       ],
     },
   ];
@@ -350,8 +343,8 @@ const StoryAct2 = ({ onNext, onSkip }) => {
       style={{
         height: "100vh",
         width: "100vw",
-        background: "#020617",
-        color: "#f8fafc",
+        background: "#051121",
+        color: "#e2e8f0",
         position: "fixed",
         top: 0,
         left: 0,
@@ -363,7 +356,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
         boxSizing: "border-box",
       }}
     >
-      {/* ── Background layers ── */}
+      {/* ── Radial glow center ── */}
       <div
         style={{
           position: "absolute",
@@ -372,22 +365,28 @@ const StoryAct2 = ({ onNext, onSkip }) => {
           width: "120vh",
           height: "120vh",
           background:
-            "radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 60%)",
+            "radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 65%)",
           transform: "translate(-50%, -50%)",
           pointerEvents: "none",
         }}
       />
+
+      {/* ── Grid lines ── */}
       <div
         style={{
           position: "absolute",
           inset: 0,
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
+            "linear-gradient(rgba(37,99,235,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.06) 1px, transparent 1px)",
           backgroundSize: "40px 40px",
           backgroundPosition: "center center",
           pointerEvents: "none",
         }}
       />
+
+      {/* ── Corner accent glows ── */}
+      <div style={{ position: "absolute", top: 0, right: 0, width: 400, height: 400, background: "radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: 0, left: 0, width: 300, height: 300, background: "radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
 
       {/* ── Main content container ── */}
       <div
@@ -422,8 +421,8 @@ const StoryAct2 = ({ onNext, onSkip }) => {
               width: 6,
               height: 6,
               borderRadius: "50%",
-              background: "#4ade80",
-              boxShadow: "0 0 8px #4ade80",
+              background: "#3b82f6",
+              boxShadow: "0 0 10px rgba(59,130,246,0.8)",
             }}
           />
           <span
@@ -431,7 +430,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
               fontSize: 10,
               fontWeight: 800,
               letterSpacing: "0.4em",
-              color: "#94a3b8",
+              color: "#60a5fa",
               textTransform: "uppercase",
               fontFamily: "monospace",
             }}
@@ -451,15 +450,15 @@ const StoryAct2 = ({ onNext, onSkip }) => {
             gridTemplateColumns: "1fr 1fr",
             gridTemplateRows: "1fr 1fr",
             gap: "1px",
-            background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.06)",
+            background: "rgba(37,99,235,0.15)",
+            border: "1px solid rgba(37,99,235,0.2)",
             borderRadius: 20,
             overflow: "hidden",
             marginBottom: "0.75rem",
             minHeight: 0,
           }}
         >
-          {cards.map((card, i) => {
+          {cards.map((card) => {
             const isHovered = hovered === card.id;
             return (
               <div
@@ -469,8 +468,8 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                 style={{
                   position: "relative",
                   background: isHovered
-                    ? "rgba(15,23,42,0.95)"
-                    : "rgba(2,6,23,0.6)",
+                    ? "rgba(255,255,255,0.07)"
+                    : "rgba(5,17,33,0.85)",
                   padding: "1.25rem 1.75rem",
                   display: "flex",
                   flexDirection: "column",
@@ -478,13 +477,27 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                   cursor: "default",
                   transition: "background 0.35s ease",
                   outline: isHovered
-                    ? "1px solid rgba(59,130,246,0.4)"
+                    ? "1px solid rgba(99,157,253,0.45)"
                     : "none",
                   outlineOffset: "-1px",
                   minHeight: 0,
                   overflow: "hidden",
+                  boxShadow: isHovered
+                    ? "inset 0 0 30px rgba(37,99,235,0.1)"
+                    : "none",
                 }}
               >
+                {/* Hover shimmer top line */}
+                {isHovered && (
+                  <div style={{
+                    position: "absolute",
+                    top: 0, left: 0, right: 0,
+                    height: 1,
+                    background: "linear-gradient(90deg, transparent, rgba(99,157,253,0.6), transparent)",
+                    pointerEvents: "none",
+                  }} />
+                )}
+
                 {/* Top row: label + ghost number */}
                 <div
                   style={{
@@ -508,12 +521,12 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                     {card.label}
                   </span>
 
-                  {/* Ghost number — fades out on hover */}
+                  {/* Ghost number */}
                   <span
                     style={{
                       fontSize: "clamp(1.5rem, 3vw, 2.75rem)",
                       fontWeight: 800,
-                      color: "rgba(255,255,255,0.06)",
+                      color: "rgba(99,157,253,0.1)",
                       lineHeight: 1,
                       fontFamily: "Georgia, serif",
                       userSelect: "none",
@@ -526,7 +539,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                   </span>
                 </div>
 
-                {/* Bullet points — slide in on hover */}
+                {/* Bullet points */}
                 <div
                   style={{
                     flex: 1,
@@ -551,13 +564,12 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                         gap: "0.7rem",
                       }}
                     >
-                      {/* Left bar */}
                       <div
                         style={{
                           width: 2,
                           minHeight: "100%",
                           alignSelf: "stretch",
-                          background: "rgba(96,165,250,0.5)",
+                          background: "rgba(99,157,253,0.5)",
                           borderRadius: 2,
                           flexShrink: 0,
                           marginTop: 2,
@@ -566,7 +578,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                       <span
                         style={{
                           fontSize: "0.75rem",
-                          color: "#94a3b8",
+                          color: "#cbd5e1",
                           lineHeight: 1.3,
                           fontWeight: 300,
                         }}
@@ -603,56 +615,19 @@ const StoryAct2 = ({ onNext, onSkip }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
           style={{
-            background: "rgba(2,6,23,0.8)",
-            border: "1px solid rgba(255,255,255,0.1)",
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(37,99,235,0.25)",
             borderRadius: 16,
             padding: "0.85rem 1.5rem",
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "center",
             alignItems: "center",
             backdropFilter: "blur(20px)",
             zIndex: 10,
-            boxShadow: "0 20px 40px rgba(0,0,0,0.6)",
             flexShrink: 0,
             gap: "1rem",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
-            <div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                  marginBottom: 4,
-                }}
-              >
-                <div
-                  style={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: "50%",
-                    background: "#4ade80",
-                    boxShadow: "0 0 10px #4ade80",
-                  }}
-                />
-                <span
-                  style={{
-                    fontSize: 10,
-                    fontWeight: 700,
-                    letterSpacing: "0.15em",
-                    color: "#94a3b8",
-                    fontFamily: "monospace",
-                  }}
-                >
-                  SYSTEM VERIFIED
-                </span>
-              </div>
-            </div>
-            <div
-              style={{ width: 1, height: 40, background: "rgba(255,255,255,0.1)" }}
-            />
-          </div>
 
           <button
             onClick={onNext}
@@ -662,8 +637,8 @@ const StoryAct2 = ({ onNext, onSkip }) => {
               gap: 10,
               padding: "0.65rem 1.5rem",
               borderRadius: 12,
-              background: "#f8fafc",
-              color: "#020617",
+              background: "#2563eb",
+              color: "#fff",
               fontSize: "0.85rem",
               fontWeight: 800,
               border: "none",
@@ -671,27 +646,24 @@ const StoryAct2 = ({ onNext, onSkip }) => {
               transition: "all 0.2s",
               whiteSpace: "nowrap",
               flexShrink: 0,
+              boxShadow: "0 0 20px rgba(37,99,235,0.3)",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.boxShadow =
-                "0 10px 25px rgba(255,255,255,0.2)";
+              e.currentTarget.style.boxShadow = "0 8px 24px rgba(37,99,235,0.5)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "none";
+              e.currentTarget.style.boxShadow = "0 0 20px rgba(37,99,235,0.3)";
             }}
           >
-            Initialize OS <ArrowRight style={{ width: 16, height: 16 }} />
+            SHOW ME THE GAP<ArrowDown style={{ width: 16, height: 16 }} />
           </button>
         </motion.div>
       </div>
     </div>
   );
 };
-
-
-
 // ─────────────── HERO ───────────────
 const Hero = () => {
   const { hero } = LUCID_CONTENT;
@@ -784,7 +756,8 @@ const Comparison = () => {
       <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center" }}>
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1 }}>
           <p style={{ fontSize: "clamp(1.25rem, 3vw, 2rem)", color: "#64748b", fontWeight: 300, lineHeight: 1.6, marginBottom: "4rem" }}>
-            The way <em style={{ color: "#0f172a", fontWeight: 700 }}>Instagram became non-negotiable for marketing at scale</em> — Lucid is becoming non-negotiable for <em style={{ color: "#0f172a", fontWeight: 700 }}>sales and operations execution.</em> Organizations running on Lucid don't debate whether to use it. They can't imagine operating without it.
+            The <em style={{ color: "#0f172a", fontWeight: 700 }}>best frontline teams in the next decade</em> won't be the biggest. They'll be the best equipped.
+ <em style={{ color: "#0f172a", fontWeight: 700 }}> Lucid is the infrastructure layer that makes that possible </em>— for any organization, at any scale. Equipping sales teams with sales content & tools to execute sales process- All at one place.
           </p>
         </motion.div>
       </div>

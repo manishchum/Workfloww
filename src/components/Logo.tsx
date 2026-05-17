@@ -3,18 +3,14 @@ import { cn } from "@/lib/utils";
 
 export function Logo({ className }: { className?: string }) {
   return (
-    <div
+    <img
+      src="/images/logo.png"
+      alt="Lucid logo"
       className={cn(
-        "rounded-xl overflow-hidden flex items-center justify-center bg-transparent",
+        "object-contain",
         className
       )}
-    >
-      <img
-        src="/images/logo.png"
-        alt="Lucid logo"
-        className="w-full h-full object-contain"
-        loading="lazy"
-      />
-    </div>
+      loading="lazy"
+    />
   );
 }
