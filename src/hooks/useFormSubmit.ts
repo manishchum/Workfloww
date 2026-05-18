@@ -1,16 +1,34 @@
 import * as React from "react";
 
-const BACKEND_URL = (import.meta as any).env?.VITE_LEADS_API_URL ?? "http://localhost:8000";
+// Robust backend URL detection
+const getBackendUrl = (): string => {
+  const envUrl = (import.meta as any).env?.VITE_LEADS_API_URL;
+  if (envUrl) {
+    return envUrl.endsWith("/") ? envUrl.slice(0, -1) : envUrl;
+  }
+  
+  // Fallback: local backend on 8000 for local development, relative root for Vercel production
+  if (typeof window !== "undefined") {
+    const hostname = window.location.hostname;
+    if (hostname === "localhost" || hostname === "127.0.0.1" || hostname.startsWith("192.168.")) {
+      return "http://localhost:8000";
+    }
+  }
+  return "";
+};
+
+const BACKEND_URL = getBackendUrl();
 
 export type SubmitStatus = "idle" | "loading" | "success" | "error";
 
 export interface LeadPayload {
-  source:   string;
-  name:     string;
-  email:    string;
-  org?:     string;
-  phone?:   string;
-  message?: string;
+  source:        string;
+  name:          string;
+  email:         string;
+  org?:          string;
+  phone?:        string;
+  message?:      string;
+  website_trap?: string; // Honeypot trap to catch automated bots
 }
 
 export function useFormSubmit() {
@@ -21,17 +39,17 @@ export function useFormSubmit() {
     setStatus("loading");
     setError(null);
     try {
-      // ✅ AFTER
       const res = await fetch(`${BACKEND_URL}/send-email`, {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
         body:    JSON.stringify({
-          name:    payload.name,
-          email:   payload.email,
-          company: payload.org ?? "",
-          phone:   payload.phone ?? "",
-          message: payload.message ?? "",
-          source:  payload.source,
+          name:         payload.name,
+          email:        payload.email,
+          company:      payload.org ?? "",
+          phone:        payload.phone ?? "",
+          message:      payload.message ?? "",
+          source:       payload.source,
+          website_trap: payload.website_trap ?? "",
         }),
       });
       if (!res.ok) {
@@ -49,3 +67,4 @@ export function useFormSubmit() {
 
   return { submit, status, error, reset };
 }
+

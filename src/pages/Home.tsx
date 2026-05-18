@@ -673,11 +673,19 @@ const Hero = () => {
   const [open, setOpen] = React.useState(false);
   const [heroName, setHeroName] = React.useState("");
   const [heroEmail, setHeroEmail] = React.useState("");
+  const [heroTrap, setHeroTrap] = React.useState(""); // Anti-spam trap
   const { sendEmail, status: heroStatus, error: heroError } = useLeadEmail();
 
   const handleHeroSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await sendEmail({ source: "hero-demo", name: heroName, email: heroEmail });
+    await sendEmail({
+      source: "hero-demo",
+      name: heroName,
+      email: heroEmail,
+      phone: "",
+      org: "",
+      website_trap: heroTrap
+    });
     setOpen(false);
   };
 
@@ -727,6 +735,17 @@ const Hero = () => {
             <h3 style={{ fontSize: "1.75rem", fontWeight: 900, letterSpacing: "-0.03em", color: "#0f172a", marginBottom: 8 }}>See Lucid in Action</h3>
             <p style={{ color: "#64748b", marginBottom: "2rem", fontWeight: 300 }}>Schedule a personalized tour of the Lucid OS.</p>
             <form onSubmit={handleHeroSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+              {/* Anti-spam Honeypot field (hidden from normal users) */}
+              <div style={{ display: "none" }} aria-hidden="true">
+                <label>Do not fill this field</label>
+                <input
+                  type="text"
+                  value={heroTrap}
+                  onChange={e => setHeroTrap(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
               <div>
                 <label style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#64748b", display: "block", marginBottom: 6 }}>Full Name</label>
                 <input

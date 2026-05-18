@@ -1,5 +1,23 @@
 import { useState } from "react";
-const BACKEND_URL = (import.meta as any).env?.VITE_LEADS_API_URL ?? "http://localhost:8000";
+
+// Robust backend URL detection
+const getBackendUrl = (): string => {
+  const envUrl = (import.meta as any).env?.VITE_LEADS_API_URL;
+  if (envUrl) {
+    return envUrl.endsWith("/") ? envUrl.slice(0, -1) : envUrl;
+  }
+  
+  // Fallback: local backend on 8000 for local development, relative root for Vercel production
+  if (typeof window !== "undefined") {
+    const hostname = window.location.hostname;
+    if (hostname === "localhost" || hostname === "127.0.0.1" || hostname.startsWith("192.168.")) {
+      return "http://localhost:8000";
+    }
+  }
+  return "";
+};
+
+const BACKEND_URL = getBackendUrl();
 
 type LeadData = {
   source: string;
@@ -7,6 +25,7 @@ type LeadData = {
   phone: string;
   email: string;
   org: string;
+  website_trap?: string; // Honeypot trap to catch automated bots
 };
 
 export const useLeadEmail = () => {
@@ -34,16 +53,18 @@ export const useLeadEmail = () => {
             name: data.name,
             email: data.email,
             company: data.org,
-            message: `Phone: ${data.phone}
-Source: ${data.source}`
+            message: `Phone: ${data.phone}\nSource: ${data.source}`,
+            source: data.source,
+            phone: data.phone,
+            website_trap: data.website_trap ?? "",
           }),
         }
       );
 
       const result = await response.json();
 
-      if (!result.success) {
-        throw new Error(result.error || "Failed");
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || result.detail || "Failed to submit lead");
       }
 
       setStatus("success");
@@ -72,4 +93,4 @@ Source: ${data.source}`
     status,
     error
   };
-};
+};
