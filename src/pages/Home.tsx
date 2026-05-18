@@ -670,7 +670,7 @@ const Hero = () => {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <section style={{ minHeight: "calc(100vh - 72px)", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden", background: "#fff", borderBottom: "1px solid #f1f5f9" }}>
+    <section style={{ minHeight: "100vh", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden", background: "#fff", borderBottom: "1px solid #f1f5f9" }}>
       {/* blobs */}
       <div style={{ position: "absolute", top: 0, right: 0, width: 700, height: 700, background: "radial-gradient(circle, rgba(191,219,254,0.5) 0%, transparent 65%)", transform: "translate(30%, -30%)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", bottom: 0, left: 0, width: 500, height: 500, background: "radial-gradient(circle, rgba(186,230,253,0.3) 0%, transparent 70%)", transform: "translate(-30%, 30%)", pointerEvents: "none" }} />
@@ -682,18 +682,18 @@ const Hero = () => {
             <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.4em", color: "#3b82f6", textTransform: "uppercase" }}>{hero.subtitle}</span>
           </div>
 
-          <h1 style={{ fontSize: "clamp(2.5rem, 8vw, 6rem)", fontWeight: 900, letterSpacing: "-0.045em", lineHeight: 0.88, marginBottom: "2rem", color: "#0f172a", fontFamily: "Georgia, serif" }}>
+          <h1 style={{ fontSize: "clamp(2rem, 6vw, 4.5rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: "1.5rem", color: "#0f172a", fontFamily: "Georgia, serif" }}>
             Lucid Is The Operating System<br />
-            Your <em style={{ color: "#2563eb", fontStyle: "italic" }}>Business Runs On.</em><br />
+            Your <em style={{ color: "#2563eb", fontStyle: "italic" }}>Sales Team Runs On.</em><br />
             <span style={{ color: "#94a3b8", fontStyle: "normal" }}>From Decision To Execution.</span>
           </h1>
 
-          <p style={{ fontSize: "clamp(1rem, 2vw, 1.25rem)", color: "#64748b", maxWidth: 640, marginBottom: "3rem", lineHeight: 1.7, fontWeight: 300 }}>
+          <p style={{ fontSize: "clamp(0.95rem, 1.8vw, 1.1rem)", color: "#64748b", maxWidth: 640, marginBottom: "2rem", lineHeight: 1.6, fontWeight: 300 }}>
             Not a Feature. Not a Dashboard. The <strong style={{ color: "#0f172a", fontWeight: 700 }}>Operating Layer Between What Your Sales Organization Decides And What Actually Happens</strong> — At The Counter, On The Floor, In The Field, On The Line.
           </p>
 
           {/* CTA buttons */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginBottom: "3.5rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginBottom: "1.5rem" }}>
             <button onClick={() => setOpen(true)} style={{ height: 56, padding: "0 2.5rem", borderRadius: 18, background: "#2563eb", color: "#fff", fontWeight: 800, fontSize: "1.05rem", border: "none", cursor: "pointer", boxShadow: "0 12px 30px rgba(37,99,235,0.3)", transition: "transform 0.15s" }}
               onMouseEnter={e => e.currentTarget.style.transform = "scale(1.02)"}
               onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>
@@ -706,20 +706,6 @@ const Hero = () => {
             </button>
           </div>
         </motion.div>
-      </div>
-
-      {/* Stats strip */}
-      <div style={{ borderTop: "1px solid #f1f5f9", background: "rgba(248,250,252,0.8)", padding: "3rem 2rem" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "2rem", textAlign: "center" }}>
-          {hero.stats.map((stat, i) => (
-            <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <div style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900, color: "#0f172a", lineHeight: 1, marginBottom: 8 }}>
-                {stat.label}<span style={{ color: "#2563eb", fontSize: "0.6em" }}>{stat.sub}</span>
-              </div>
-              <div style={{ fontSize: 11, fontWeight: 700, color: "#94a3b8", letterSpacing: "0.15em", textTransform: "uppercase", maxWidth: 180 }}>{stat.desc}</div>
-            </div>
-          ))}
-        </div>
       </div>
 
       {/* Demo dialog */}
@@ -744,6 +730,25 @@ const Hero = () => {
           </div>
         </div>
       )}
+    </section>
+  );
+};
+
+// ─────────────── STATS STRIP (Appears on scroll) ───────────────
+const StatsStrip = () => {
+  const { hero } = LUCID_CONTENT;
+  return (
+    <section style={{ background: "rgba(248,250,252,0.8)", padding: "2rem", borderTop: "1px solid #f1f5f9", borderBottom: "1px solid #f1f5f9" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "2rem", textAlign: "center" }}>
+        {hero.stats.map((stat, i) => (
+          <motion.div key={i} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.5 }} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 900, color: "#0f172a", lineHeight: 1, marginBottom: 4 }}>
+              {stat.label}<span style={{ color: "#2563eb", fontSize: "0.6em" }}>{stat.sub}</span>
+            </div>
+            <div style={{ fontSize: 10, fontWeight: 700, color: "#94a3b8", letterSpacing: "0.15em", textTransform: "uppercase", maxWidth: 180 }}>{stat.desc}</div>
+          </motion.div>
+        ))}
+      </div>
     </section>
   );
 };
@@ -1126,6 +1131,7 @@ export default function Home() {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
       <Hero />
+      <StatsStrip />
       <Comparison />
       <Capabilities />
       <HowItWorks />
