@@ -32,6 +32,7 @@ import CEO from "./pages/use-cases/CEO";
 import CHRO from "./pages/use-cases/CHRO";
 import SalesHead from "./pages/use-cases/SalesHead";
 import OperationsHead from "./pages/use-cases/OperationsHead";
+import BuilderLab from "./pages/BuilderLab";
 
 export default function App() {
   return (
@@ -64,6 +65,7 @@ export default function App() {
           <Route path="/use-cases/chro" element={<CHRO />} />
           <Route path="/use-cases/sales-head" element={<SalesHead />} />
           <Route path="/use-cases/operations-head" element={<OperationsHead />} />
+          <Route path="/builder-lab" element={<BuilderLab />} />
         </Routes>
       </Layout>
     </Router>

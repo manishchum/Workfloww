@@ -21,10 +21,18 @@ export function useFormSubmit() {
     setStatus("loading");
     setError(null);
     try {
-      const res = await fetch(`${BACKEND_URL}/leads`, {
+      // ✅ AFTER
+      const res = await fetch(`${BACKEND_URL}/send-email`, {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify(payload),
+        body:    JSON.stringify({
+          name:    payload.name,
+          email:   payload.email,
+          company: payload.org ?? "",
+          phone:   payload.phone ?? "",
+          message: payload.message ?? "",
+          source:  payload.source,
+        }),
       });
       if (!res.ok) {
         const d = await res.json().catch(() => ({}));

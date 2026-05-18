@@ -12,6 +12,7 @@ import {
   Linkedin
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLeadEmail } from "../hooks/useLeadEmail";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -51,6 +52,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [isContactModalOpen, setIsContactModalOpen] = React.useState(false);
   const [isCalOpen, setIsCalOpen] = React.useState(false);
   const [forceDarkHeader, setForceDarkHeader] = React.useState(false);
+  const [cFirst, setCFirst] = React.useState("");
+  const [cLast, setCLast] = React.useState("");
+  const [cEmail, setCEmail] = React.useState("");
+  const [cOrg, setCOrg] = React.useState("");
+  const [cMessage, setCMessage] = React.useState("");
+  const { sendEmail: sendContactEmail, status: contactStatus, error: contactError } = useLeadEmail();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -94,12 +101,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const handleDemoSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Demo request submitted! Our team will contact you shortly.");
     setIsDemoModalOpen(false);
+    setIsContactModalOpen(true);
   };
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    await sendContactEmail({
+      source: "nav-modal",
+      name: `${cFirst} ${cLast}`.trim(),
+      email: cEmail,
+      org: cOrg,
+      message: cMessage,
+    });
     setIsContactModalOpen(false);
     setIsCalOpen(true);
   };
@@ -411,34 +425,37 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="c-first" className="text-slate-700">First name</Label>
-                    <Input id="c-first" className="bg-white border-slate-200 text-slate-900" placeholder="First name" required />
+                    <Input id="c-first" className="bg-white border-slate-200 text-slate-900" placeholder="First name" required value={cFirst} onChange={e => setCFirst(e.target.value)} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="c-last" className="text-slate-700">Last name</Label>
-                    <Input id="c-last" className="bg-white border-slate-200 text-slate-900" placeholder="Last name" required />
+                    <Input id="c-last" className="bg-white border-slate-200 text-slate-900" placeholder="Last name" required value={cLast} onChange={e => setCLast(e.target.value)} />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="c-email" className="text-slate-700">Work email</Label>
-                    <Input id="c-email" className="bg-white border-slate-200 text-slate-900" type="email" placeholder="Work email" required />
+                    <Input id="c-email" className="bg-white border-slate-200 text-slate-900" type="email" placeholder="Work email" required value={cEmail} onChange={e => setCEmail(e.target.value)} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="c-org" className="text-slate-700">Organisation</Label>
-                    <Input id="c-org" className="bg-white border-slate-200 text-slate-900" placeholder="Organisation" required />
+                    <Input id="c-org" className="bg-white border-slate-200 text-slate-900" placeholder="Organisation" required value={cOrg} onChange={e => setCOrg(e.target.value)} />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="c-message" className="text-slate-700">How can we help you?</Label>
-                  <Textarea id="c-message" className="bg-white border-slate-200 text-slate-900 min-h-[120px]" placeholder="Your message" required />
+                  <Textarea id="c-message" className="bg-white border-slate-200 text-slate-900 min-h-[120px]" placeholder="Your message" required value={cMessage} onChange={e => setCMessage(e.target.value)} />
                 </div>
 
                 <div className="space-y-4 pt-4">
-                  <Button type="submit" className="w-full md:w-auto px-12 py-6 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-xl shadow-blue-600/20">
-                    Submit form
+                  <Button type="submit" disabled={contactStatus === "loading"} className="w-full md:w-auto px-12 py-6 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-xl shadow-blue-600/20">
+                    {contactStatus === "loading" ? "Sending…" : "Submit form"}
                   </Button>
+                  {contactError && (
+                    <p className="text-red-500 text-sm mt-2">{contactError}</p>
+                  )}
                 </div>
               </form>
             </div>
