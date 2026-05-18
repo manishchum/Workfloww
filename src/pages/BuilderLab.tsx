@@ -63,7 +63,7 @@ export default function BuilderLab() {
             transition={{ duration: 0.6 }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h1 className="text-6xl sm:text-7xl md:text-8xl font-bold tracking-tight text-slate-900 mb-8 leading-[1.1]">
+            <h1 className="text-7xl sm:text-8xl md:text-8xl font-bold tracking-tight text-slate-900 mb-8 leading-[1.1] text-center">
               Forge the future. <br className="hidden sm:block" />
               <span className="text-slate-400">Together, not alone.</span>
             </h1>

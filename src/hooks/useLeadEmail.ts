@@ -1,4 +1,5 @@
 import { useState } from "react";
+const BACKEND_URL = (import.meta as any).env?.VITE_LEADS_API_URL ?? "http://localhost:8000";
 
 type LeadData = {
   source: string;
@@ -21,7 +22,7 @@ export const useLeadEmail = () => {
       setError("");
 
       const response = await fetch(
-        "http://localhost:8000/send-email",
+        `${BACKEND_URL}/send-email`,
         {
           method: "POST",
 
