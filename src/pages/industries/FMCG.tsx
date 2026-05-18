@@ -177,7 +177,7 @@ export default function FMCG() {
           background: var(--surface);
         }
         .section { padding: 80px 24px; }
-        .section#hero { padding-top: 80px; }
+        .section#hero { padding: 20px 24px; }
         .section.surface { background: var(--surface-2); }
         .container { max-width: 1180px; margin: 0 auto; }
         .reveal { opacity: 0; transform: translateY(20px); transition: all 0.55s ease; }
@@ -397,7 +397,7 @@ export default function FMCG() {
       `}</style>
 
       {/* ── HERO ── */}
-      <section className="section" id="hero" style={{ paddingTop: "80px" }}>
+      <section className="section" id="hero" style={{ paddingTop: "80px", marginTop: "80px" }}>
         <div className="container hero-grid">
           <div className="reveal" data-reveal>
             <span className="eyebrow">FMCG</span>

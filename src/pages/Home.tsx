@@ -13,6 +13,7 @@ import {
   ArrowBigDown,
   ArrowDown,
 } from "lucide-react";
+import { useLeadEmail } from "../hooks/useLeadEmail";
 
 // ─────────────── CONTENT ───────────────
 const LUCID_CONTENT = {
@@ -668,6 +669,15 @@ const StoryAct2 = ({ onNext, onSkip }) => {
 const Hero = () => {
   const { hero } = LUCID_CONTENT;
   const [open, setOpen] = React.useState(false);
+  const [heroName, setHeroName] = React.useState("");
+  const [heroEmail, setHeroEmail] = React.useState("");
+  const { sendEmail, status: heroStatus, error: heroError } = useLeadEmail();
+
+  const handleHeroSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await sendEmail({ source: "hero-demo", name: heroName, email: heroEmail });
+    setOpen(false);
+  };
 
   return (
     <section style={{ minHeight: "100vh", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden", background: "#fff", borderBottom: "1px solid #f1f5f9" }}>
@@ -714,19 +724,39 @@ const Hero = () => {
           <div style={{ background: "#fff", borderRadius: 28, padding: "3rem", maxWidth: 440, width: "100%", boxShadow: "0 40px 80px rgba(0,0,0,0.2)" }} onClick={e => e.stopPropagation()}>
             <h3 style={{ fontSize: "1.75rem", fontWeight: 900, letterSpacing: "-0.03em", color: "#0f172a", marginBottom: 8 }}>See Lucid in Action</h3>
             <p style={{ color: "#64748b", marginBottom: "2rem", fontWeight: 300 }}>Schedule a personalized tour of the Lucid OS.</p>
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            <form onSubmit={handleHeroSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
               <div>
                 <label style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#64748b", display: "block", marginBottom: 6 }}>Full Name</label>
-                <input placeholder="John Doe" style={{ width: "100%", height: 48, padding: "0 1rem", border: "1.5px solid #e2e8f0", borderRadius: 14, fontSize: "1rem", color: "#0f172a", background: "#f8fafc", boxSizing: "border-box" }} />
+                <input
+                  placeholder="John Doe"
+                  required
+                  value={heroName}
+                  onChange={e => setHeroName(e.target.value)}
+                  style={{ width: "100%", height: 48, padding: "0 1rem", border: "1.5px solid #e2e8f0", borderRadius: 14, fontSize: "1rem", color: "#0f172a", background: "#f8fafc", boxSizing: "border-box" }}
+                />
               </div>
               <div>
                 <label style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#64748b", display: "block", marginBottom: 6 }}>Work Email</label>
-                <input type="email" placeholder="john@company.com" style={{ width: "100%", height: 48, padding: "0 1rem", border: "1.5px solid #e2e8f0", borderRadius: 14, fontSize: "1rem", color: "#0f172a", background: "#f8fafc", boxSizing: "border-box" }} />
+                <input
+                  type="email"
+                  placeholder="john@company.com"
+                  required
+                  value={heroEmail}
+                  onChange={e => setHeroEmail(e.target.value)}
+                  style={{ width: "100%", height: 48, padding: "0 1rem", border: "1.5px solid #e2e8f0", borderRadius: 14, fontSize: "1rem", color: "#0f172a", background: "#f8fafc", boxSizing: "border-box" }}
+                />
               </div>
-              <button onClick={() => { alert("Demo request submitted! Our team will contact you shortly."); setOpen(false); }} style={{ height: 52, borderRadius: 14, background: "#2563eb", color: "#fff", fontWeight: 800, fontSize: "1rem", border: "none", cursor: "pointer" }}>
-                Request Demo
+              <button
+                type="submit"
+                disabled={heroStatus === "loading"}
+                style={{ height: 52, borderRadius: 14, background: "#2563eb", color: "#fff", fontWeight: 800, fontSize: "1rem", border: "none", cursor: heroStatus === "loading" ? "not-allowed" : "pointer", opacity: heroStatus === "loading" ? 0.7 : 1 }}
+              >
+                {heroStatus === "loading" ? "Sending…" : "Request Demo"}
               </button>
-            </div>
+              {heroError && (
+                <p style={{ color: "#ef4444", fontSize: 13, marginTop: 8 }}>{heroError}</p>
+              )}
+            </form>
           </div>
         </div>
       )}

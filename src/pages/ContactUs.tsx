@@ -13,21 +13,34 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import CalBooker from "../components/CalBooker";
+import { useLeadEmail } from "../hooks/useLeadEmail";
 
 export default function Contact() {
   const [isCalOpen, setIsCalOpen] = React.useState(false);
+  const [cpName, setCpName] = React.useState("");
+  const [cpPhone, setCpPhone] = React.useState("");
+  const [cpEmail, setCpEmail] = React.useState("");
+  const [cpOrg, setCpOrg] = React.useState("");
+  const { sendEmail, status: cpStatus, error: cpError } = useLeadEmail();
   const CAL_USERNAME = "manish-chum-ovkoyi";
   const CAL_EVENT_SLUG = "book-a-demo";
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    await sendEmail({
+      source: "contact-form",
+      name: cpName,
+      phone: cpPhone,
+      email: cpEmail,
+      org: cpOrg,
+    });
     setIsCalOpen(true);
   };
 
   return (
-    <div className="bg-slate-50 min-h-screen pt-20 pb-12 md:pb-24 text-slate-900">
-      <div className="container mx-auto px-6 max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
+    <div className="bg-gradient-to-b from-blue-50 via-white to-blue-50 min-h-screen pb-12 md:pb-16 text-slate-900">
+      <div className="container mx-auto px-6 max-w-7xl pt-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
 
           {/* Left Column: Context & Info */}
           <div className="lg:col-span-5 flex flex-col justify-center">
@@ -114,28 +127,35 @@ export default function Contact() {
 
                   <div className="space-y-2">
                     <Label htmlFor="firstName" className="text-slate-700">Full Name</Label>
-                    <Input id="firstName" type="text" className="bg-white border-slate-200 text-slate-900 h-12" placeholder="James Smith" required />
+                    <Input id="firstName" type="text" className="bg-white border-slate-200 text-slate-900 h-12" placeholder="James Smith" required value={cpName} onChange={e => setCpName(e.target.value)} />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="mobilenumber" className="text-slate-700">Mobile Number</Label>
-                    <Input id="mobilenumber" type="number" className="bg-white border-slate-200 text-slate-900 h-12" placeholder="+91 1234567890" required />
+                    <Input id="mobilenumber" type="number" className="bg-white border-slate-200 text-slate-900 h-12" placeholder="+91 1234567890" required value={cpPhone} onChange={e => setCpPhone(e.target.value)} />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="email" className="text-slate-700">Work Email</Label>
-                    <Input id="email" type="email" className="bg-white border-slate-200 text-slate-900 h-12" placeholder="jane@company.com" required />
+                    <Input id="email" type="email" className="bg-white border-slate-200 text-slate-900 h-12" placeholder="jane@company.com" required value={cpEmail} onChange={e => setCpEmail(e.target.value)} />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="org" className="text-slate-700">Organisation</Label>
-                    <Input id="org" className="bg-white border-slate-200 text-slate-900 h-12" placeholder="Retail/FMCG" required />
+                    <Input id="org" className="bg-white border-slate-200 text-slate-900 h-12" placeholder="Retail/FMCG" required value={cpOrg} onChange={e => setCpOrg(e.target.value)} />
                   </div>
 
 
 
-                  <Button type="submit" className="w-full h-16 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold shadow-2xl shadow-blue-600/30 transition-colors">
-                    Apply Now <ArrowRight className="ml-2 w-5 h-5" />
+                  <Button type="submit" disabled={cpStatus === "loading"} className="w-full h-16 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold shadow-2xl shadow-blue-600/30 transition-colors">
+                    {cpStatus === "loading" ? "Sending…" : "Apply Now"}
+                    {cpStatus !== "loading" && <ArrowRight className="ml-2 w-5 h-5" />}
                   </Button>
+                  {cpError && <p className="text-red-500 text-sm mt-3">{cpError}</p>}
+                  {cpStatus === "success" && (
+                    <p className="text-green-600 text-sm mt-3">
+                      ✓ Sent! We'll be in touch within 24 hours. Booking your slot now…
+                    </p>
+                  )}
 
                 </form>
               </div>
