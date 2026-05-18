@@ -63,7 +63,7 @@ async def send_email(data: LeadRequest):
 
         params = {
             "from": "no-reply@workfloww.ai",
-            "to": ["monalika.goel@workfloww.ai"],
+            "to": ["manish.chum@workfloww.ai"],
             "subject": subject,
             "html": html_content,
         }
