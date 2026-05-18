@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { 
-  Sparkles, 
-  Menu, 
-  X, 
+import {
+  Sparkles,
+  Menu,
+  X,
   ChevronRight,
   Mail,
   Phone,
@@ -12,6 +12,7 @@ import {
   Linkedin
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLeadEmail } from "../hooks/useLeadEmail";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -39,6 +40,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import CalBooker from "./CalBooker";
 import { Logo } from "./Logo";
 import { LUCID_CONTENT } from "../constants";
 import { cn } from "@/lib/utils";
@@ -48,13 +50,48 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [scrolled, setScrolled] = React.useState(false);
   const [isDemoModalOpen, setIsDemoModalOpen] = React.useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = React.useState(false);
+  const [isCalOpen, setIsCalOpen] = React.useState(false);
+  const [forceDarkHeader, setForceDarkHeader] = React.useState(false);
+  const [cFirst, setCFirst] = React.useState("");
+  const [cLast, setCLast] = React.useState("");
+  const [cEmail, setCEmail] = React.useState("");
+  const [cOrg, setCOrg] = React.useState("");
+  const [cMessage, setCMessage] = React.useState("");
+  const [cTrap, setCTrap] = React.useState(""); // Anti-spam honeypot
+  const { sendEmail: sendContactEmail, status: contactStatus, error: contactError } = useLeadEmail();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const darkHeaderRoutes = [
+    "/features",
+    "/onboarding",
+    "/mobile-learning",
+    "/communication",
+  ];
+  const solidHeaderRoutes = ["/use-cases", "/industries"];
+  const isDarkRoute = darkHeaderRoutes.some((path) => location.pathname.startsWith(path));
+  const isSolidHeader = solidHeaderRoutes.some((path) => location.pathname.startsWith(path));
+  const isDarkHeader =
+    forceDarkHeader ||
+    (!scrolled && isDarkRoute);
+
+  const CAL_USERNAME = "manish-chum-ovkoyi";
+  const CAL_EVENT_SLUG = "book-a-demo";
 
   React.useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  React.useEffect(() => {
+    const handleHeaderEvent = (event: Event) => {
+      const customEvent = event as CustomEvent<{ dark?: boolean }>;
+      setForceDarkHeader(Boolean(customEvent.detail?.dark));
+    };
+
+    window.addEventListener("lucid:header", handleHeaderEvent);
+    return () => window.removeEventListener("lucid:header", handleHeaderEvent);
   }, []);
 
   // Close mobile menu on route change
@@ -65,35 +102,65 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const handleDemoSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Demo request submitted! Our team will contact you shortly.");
     setIsDemoModalOpen(false);
+    setIsContactModalOpen(true);
   };
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Message sent! We'll get back to you soon.");
+    await sendContactEmail({
+      source: "nav-modal",
+      name: `${cFirst} ${cLast}`.trim(),
+      email: cEmail,
+      org: cOrg,
+      message: cMessage,
+      website_trap: cTrap,
+    });
     setIsContactModalOpen(false);
+    setIsCalOpen(true);
   };
 
   return (
-    <div className="min-h-screen bg-navy font-sans selection:bg-blue-500/20 selection:text-blue-400">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-500/20 selection:text-blue-600">
       {/* Navigation */}
-      <nav 
+      <nav
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          scrolled || location.pathname !== "/" ? "bg-navy/80 backdrop-blur-md border-b border-white/10 py-3" : "bg-transparent border-transparent py-5"
+          scrolled || location.pathname !== "/" || isSolidHeader || isDarkRoute
+            ? "bg-white/80 backdrop-blur-md border-b border-slate-200 py-3"
+            : "bg-transparent border-transparent py-5"
         )}
       >
-        <div className="container mx-auto px-6 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <Logo 
+        <div className="max-w-[1180px] mx-auto w-full px-6 flex items-center justify-between">
+          <Link
+            to="/"
+            className="flex items-center gap-3"
+            aria-label="Go to Lucid home"
+            onClick={() => navigate("/")}
+          >
+            <Logo
               className={cn(
                 "w-8 h-8 transition-colors duration-300",
                 !scrolled && location.pathname === "/" ? "text-blue-400" : "text-blue-500"
-              )} 
+              )}
             />
-            <span className="text-2xl font-black tracking-tighter text-white transition-colors duration-300">
-              {LUCID_CONTENT.name}
+            <span className="flex flex-col leading-none">
+              <span
+                className={cn(
+                  "text-2xl font-extrabold tracking-tighter transition-colors duration-300",
+                  isDarkHeader && !isDarkRoute ? "text-white" : "text-slate-900"
+                )}
+              >
+                {LUCID_CONTENT.name}
+              </span>
+              <span
+                className={cn(
+                  "text-[10px] font-semibold tracking-[0.3em] uppercase mt-1 transition-colors duration-300",
+                  isDarkHeader && !isDarkRoute ? "text-slate-300" : "text-slate-400"
+                )}
+              >
+                workfloww.ai
+              </span>
             </span>
           </Link>
 
@@ -109,10 +176,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <NavigationMenuItem key={name}>
                       {hasItems ? (
                         <>
-                          <NavigationMenuTrigger className="bg-transparent transition-colors text-slate-300 hover:text-white hover:bg-white/5 data-[state=open]:bg-white/5 px-2">
+                          <NavigationMenuTrigger className="bg-transparent transition-colors text-slate-700 hover:text-blue-500 data-[state=open]:text-blue-500 px-2">
                             {name}
                           </NavigationMenuTrigger>
-                          <NavigationMenuContent className="bg-navy border-slate-800">
+                          <NavigationMenuContent className="bg-white border-slate-200 shadow-xl">
                             <ul className="grid w-[240px] gap-1 p-3">
                               {item.items.map((subItem: string) => {
                                 // Keep existing link logic
@@ -126,10 +193,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                     case "Rewards & Recognition": return "/features/rewards-recognition";
                                     case "Ticketing": return "/features/ticketing";
                                     case "Onboarding": return "/onboarding";
+                                    case "CEO": return "/use-cases/ceo";
+                                    case "CHRO": return "/use-cases/chro";
+                                    case "Sales Head": return "/use-cases/sales-head";
+                                    case "Operations Head": return "/use-cases/operations-head";
                                     case "Mobile Learning": return "/mobile-learning";
                                     case "Communication": return "/communication";
                                     case "Retail": return "/industries/retail";
-                                    case "QSR & Cloud Kitchens": return "/industries/qsr-cloud-kitchens";
+                                    case "QSR & Retail": return "/industries/qsr-cloud-kitchens";
+                                    case "FMCG & Beverages": return "/industries/fmcg-beverages";
+                                    case "Manufacturing & Industrial": return "/industries/manufacturing-industrial";
                                     case "Supermarkets": return "/industries/supermarkets-grocery";
                                     case "Delivery Partners": return "/industries/delivery-partners";
                                     case "Contact Us":
@@ -142,18 +215,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                   <li key={subItem}>
                                     <NavigationMenuLink
                                       render={link ? (
-                                        <Link 
+                                        <Link
                                           to={link}
-                                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-white/5 hover:text-white focus:bg-white/5 focus:text-white"
+                                          className="block select-none space-y-1 p-3 leading-none no-underline outline-none transition-colors hover:text-blue-400 focus:text-blue-400"
                                         >
-                                          <div className="text-sm font-medium leading-none text-slate-300 group-hover:text-white">{subItem}</div>
+                                          <div className="text-sm font-medium leading-none text-slate-700">{subItem}</div>
                                         </Link>
                                       ) : (
-                                        <a 
-                                          href="#" 
-                                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-white/5 hover:text-white focus:bg-white/5 focus:text-white"
+                                        <a
+                                          href="#"
+                                          className="block select-none space-y-1 p-3 leading-none no-underline outline-none transition-colors hover:text-blue-400 focus:text-blue-400"
                                         >
-                                          <div className="text-sm font-medium leading-none text-slate-300 group-hover:text-white">{subItem}</div>
+                                          <div className="text-sm font-medium leading-none text-slate-700">{subItem}</div>
                                         </a>
                                       )}
                                     />
@@ -166,9 +239,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       ) : (
                         <NavigationMenuLink
                           render={
-                            <Link 
-                              to={item.href || "#"} 
-                              className="group inline-flex h-9 w-max items-center justify-center rounded-lg px-2 py-1.5 text-sm font-medium transition-colors text-slate-300 hover:text-white hover:bg-white/5 focus:outline-none"
+                            <Link
+                              to={item.href || "#"}
+                              className="group inline-flex h-9 w-max items-center justify-center px-2 py-1.5 text-sm font-medium transition-colors text-slate-700 hover:text-blue-500 focus:outline-none"
                             >
                               {name}
                             </Link>
@@ -183,11 +256,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            {/* CTA buttons removed as per user request to keep only About, Industries, Contact Us */}
+            <Button onClick={() => navigate('/contact')} className="h-10 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold shadow-md shadow-blue-600/20 transition-colors">
+              Book a Demo
+            </Button>
           </div>
 
           {/* Mobile Toggle */}
-          <button 
+          <button
             className="md:hidden p-2 transition-colors text-foreground"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
@@ -206,7 +281,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             className="fixed inset-0 z-40 bg-background pt-24 px-6 md:hidden"
           >
             <div className="flex flex-col gap-4">
-              <Accordion type="single" collapsible className="w-full">
+              <Accordion className="w-full">
                 {LUCID_CONTENT.nav.map((item) => {
                   const name = typeof item === 'string' ? item : item.name;
                   const hasItems = typeof item !== 'string' && item.items;
@@ -225,24 +300,29 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                   case "About": return "/about";
                                   case "Self-Learning": return "/features/self-learning";
                                   case "Seamless Training": return "/features/seamless-training";
-                                  case "Career Progression": return "/features/career-progression";
                                   case "SOP/Audits": return "/features/sop-audits";
                                   case "Rewards & Recognition": return "/features/rewards-recognition";
                                   case "Ticketing": return "/features/ticketing";
                                   case "Onboarding": return "/onboarding";
+                                  case "CEO": return "/use-cases/ceo";
+                                  case "CHRO": return "/use-cases/chro";
+                                  case "Sales Head": return "/use-cases/sales-head";
+                                  case "Operations Head": return "/use-cases/operations-head";
                                   case "Career Progression": return "/features/career-progression";
                                   case "Mobile Learning": return "/mobile-learning";
                                   case "Communication": return "/communication";
                                   case "Retail": return "/industries/retail";
-                                  case "QSR & Cloud Kitchens": return "/industries/qsr-cloud-kitchens";
+                                  case "QSR & Retail": return "/industries/qsr-cloud-kitchens";
+                                  case "FMCG & Beverages": return "/industries/fmcg-beverages";
+                                  case "Manufacturing & Industrial": return "/industries/manufacturing-industrial";
                                   case "Supermarkets": return "/industries/supermarkets-grocery";
                                   case "Delivery Partners": return "/industries/delivery-partners";
                                   case "BPO & Contact Centre": return "/industries/bpo-contact-centres";
                                   case "Insurance & Banking": return "/industries/insurance-banking";
-                                   case "Hospitality": return "/industries/hospitality";
+                                  case "Hospitality": return "/industries/hospitality";
                                   case "Contact Sales":
-                                  case "Contact Us":
-                                  case "Contact": return "/contact";
+                                  // case "Contact Us":
+                                  // case "Contact": return "/contact";
                                   default: return null;
                                 }
                               };
@@ -250,18 +330,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                               const link = getLink(subItem);
 
                               return link ? (
-                                <Link 
+                                <Link
                                   key={subItem}
                                   to={link}
-                                  className="text-left text-lg text-muted-foreground hover:text-primary"
+                                  className="text-left text-lg text-slate-600 hover:text-blue-500"
                                 >
                                   {subItem}
                                 </Link>
                               ) : (
-                                <a 
-                                  key={subItem} 
-                                  href="#" 
-                                  className="text-lg text-muted-foreground hover:text-primary"
+                                <a
+                                  key={subItem}
+                                  href="#"
+                                  className="text-lg text-slate-600 hover:text-blue-500"
                                 >
                                   {subItem}
                                 </a>
@@ -274,10 +354,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   }
 
                   return (
-                    <Link 
-                      key={name} 
-                      to={item.href || "#"} 
-                      className="text-2xl font-semibold border-b border-white/10 py-6 text-white"
+                    <Link
+                      key={name}
+                      to={item.href || "#"}
+                      className="text-2xl font-semibold border-b border-slate-200 py-6 text-slate-900 hover:text-blue-500"
                     >
                       {name}
                     </Link>
@@ -294,7 +374,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Contact Sales Modal */}
       <Dialog open={isContactModalOpen} onOpenChange={setIsContactModalOpen}>
-        <DialogContent className="sm:max-w-6xl p-0 overflow-hidden border-none bg-navy text-white">
+        <DialogContent className="sm:max-w-6xl p-0 overflow-hidden border-none bg-white text-slate-900">
           <div className="grid grid-cols-1 lg:grid-cols-2">
             {/* Left Side: Info */}
             <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center">
@@ -302,7 +382,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 Interested in Lucid? <br />
                 <span className="text-blue-500">Send us a message</span>
               </h2>
-              <p className="text-lg text-slate-400 mb-12">
+              <p className="text-lg text-slate-600 mb-12">
                 Let's change how you and your teams work.
               </p>
 
@@ -313,7 +393,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </div>
                   <div>
                     <h4 className="font-bold text-lg">Email</h4>
-                    <p className="text-slate-400">manish.chum@workfloww.ai</p>
+                    <p className="text-slate-600">manish.chum@workfloww.ai</p>
                   </div>
                 </div>
 
@@ -323,7 +403,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </div>
                   <div>
                     <h4 className="font-bold text-lg">Phone support</h4>
-                    <p className="text-slate-400">+91 8527880288</p>
+                    <p className="text-slate-600">+91 8527880288</p>
                   </div>
                 </div>
 
@@ -333,7 +413,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </div>
                   <div>
                     <h4 className="font-bold text-lg">Our location</h4>
-                    <p className="text-slate-400 max-w-xs">
+                    <p className="text-slate-600 max-w-xs">
                       Gurugram, Haryana 122018
                     </p>
                   </div>
@@ -342,39 +422,54 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
 
             {/* Right Side: Form */}
-            <div className="bg-white/5 p-8 md:p-12 lg:p-16 border-l border-white/5">
+            <div className="bg-slate-50 p-8 md:p-12 lg:p-16 border-l border-slate-200">
               <form onSubmit={handleContactSubmit} className="space-y-6">
+                {/* Anti-spam Honeypot field (hidden from normal users) */}
+                <div style={{ display: "none" }} aria-hidden="true">
+                  <Label htmlFor="c_website_trap">Do not fill this field</Label>
+                  <Input
+                    id="c_website_trap"
+                    type="text"
+                    value={cTrap}
+                    onChange={e => setCTrap(e.target.value)}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="c-first" className="text-slate-300">First name</Label>
-                    <Input id="c-first" className="bg-slate-900 border-slate-800 text-white" placeholder="First name" required />
+                    <Label htmlFor="c-first" className="text-slate-700">First name</Label>
+                    <Input id="c-first" className="bg-white border-slate-200 text-slate-900" placeholder="First name" required value={cFirst} onChange={e => setCFirst(e.target.value)} />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="c-last" className="text-slate-300">Last name</Label>
-                    <Input id="c-last" className="bg-slate-900 border-slate-800 text-white" placeholder="Last name" required />
+                    <Label htmlFor="c-last" className="text-slate-700">Last name</Label>
+                    <Input id="c-last" className="bg-white border-slate-200 text-slate-900" placeholder="Last name" required value={cLast} onChange={e => setCLast(e.target.value)} />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="c-email" className="text-slate-300">Work email</Label>
-                    <Input id="c-email" className="bg-slate-900 border-slate-800 text-white" type="email" placeholder="Work email" required />
+                    <Label htmlFor="c-email" className="text-slate-700">Work email</Label>
+                    <Input id="c-email" className="bg-white border-slate-200 text-slate-900" type="email" placeholder="Work email" required value={cEmail} onChange={e => setCEmail(e.target.value)} />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="c-org" className="text-slate-300">Organisation</Label>
-                    <Input id="c-org" className="bg-slate-900 border-slate-800 text-white" placeholder="Organisation" required />
+                    <Label htmlFor="c-org" className="text-slate-700">Organisation</Label>
+                    <Input id="c-org" className="bg-white border-slate-200 text-slate-900" placeholder="Organisation" required value={cOrg} onChange={e => setCOrg(e.target.value)} />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="c-message" className="text-slate-300">How can we help you?</Label>
-                  <Textarea id="c-message" className="bg-slate-900 border-slate-800 text-white min-h-[120px]" placeholder="Your message" required />
+                  <Label htmlFor="c-message" className="text-slate-700">How can we help you?</Label>
+                  <Textarea id="c-message" className="bg-white border-slate-200 text-slate-900 min-h-[120px]" placeholder="Your message" required value={cMessage} onChange={e => setCMessage(e.target.value)} />
                 </div>
 
                 <div className="space-y-4 pt-4">
-                  <Button type="submit" className="w-full md:w-auto px-12 py-6 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-xl shadow-blue-600/20">
-                    Submit form
+                  <Button type="submit" disabled={contactStatus === "loading"} className="w-full md:w-auto px-12 py-6 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-xl shadow-blue-600/20">
+                    {contactStatus === "loading" ? "Sending…" : "Submit form"}
                   </Button>
+                  {contactError && (
+                    <p className="text-red-500 text-sm mt-2">{contactError}</p>
+                  )}
                 </div>
               </form>
             </div>
@@ -382,31 +477,53 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </DialogContent>
       </Dialog>
 
+      <Dialog open={isCalOpen} onOpenChange={setIsCalOpen}>
+        <DialogContent className="sm:max-w-5xl p-0 overflow-hidden border-none bg-white text-slate-900">
+          <div className="p-8 md:p-10">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-bold">Pick a time to talk</DialogTitle>
+              <DialogDescription className="text-slate-600">
+                Select a slot and we’ll confirm your meeting instantly.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="mt-6">
+              <CalBooker
+                eventSlug={CAL_EVENT_SLUG}
+                username={CAL_USERNAME}
+                onSuccess={() => {
+                  setIsCalOpen(false);
+                }}
+              />
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Footer */}
-      <footer className="bg-navy border-t border-white/5 py-20 text-white">
-        <div className="container mx-auto px-6">
-          <div className="mb-16">
-            <Link to="/" className="flex items-center gap-2 mb-12">
-              <Logo className="w-10 h-10 text-blue-500" />
-              <span className="text-4xl font-black tracking-tighter text-white">
+      <footer className="bg-white border-t border-slate-200 py-12 text-slate-900">
+        <div className="max-w-[1180px] mx-auto w-full px-6">
+          <div className="mb-8">
+            <Link to="/" className="flex items-center gap-2 mb-6">
+              <Logo className="w-8 h-8 text-blue-500" />
+              <span className="text-2xl font-black tracking-tighter text-slate-900">
                 {LUCID_CONTENT.name}
               </span>
             </Link>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               <div>
-                <h4 className="font-bold text-lg mb-8 text-white">Industries</h4>
-                <ul className="space-y-4">
+                <h4 className="font-bold text-base mb-4 text-slate-900">Industries</h4>
+                <ul className="space-y-2">
                   {LUCID_CONTENT.footer.industries.map((item) => (
                     <li key={item}>
-                      <a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">{item}</a>
+                      <a href="#" className="text-sm text-slate-600 hover:text-blue-500 transition-colors">{item}</a>
                     </li>
                   ))}
                 </ul>
               </div>
               <div>
-                <h4 className="font-bold text-lg mb-8 text-white">Features</h4>
-                <ul className="space-y-4">
+                <h4 className="font-bold text-base mb-4 text-slate-900">Features</h4>
+                <ul className="space-y-2">
                   {LUCID_CONTENT.footer.features.map((item) => {
                     const getLink = (name: string) => {
                       switch (name) {
@@ -423,9 +540,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     return (
                       <li key={item}>
                         {link ? (
-                          <Link to={link} className="text-slate-400 hover:text-blue-400 transition-colors">{item}</Link>
+                          <Link to={link} className="text-sm text-slate-600 hover:text-blue-500 transition-colors">{item}</Link>
                         ) : (
-                          <a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">{item}</a>
+                          <a href="#" className="text-sm text-slate-600 hover:text-blue-500 transition-colors">{item}</a>
                         )}
                       </li>
                     );
@@ -433,12 +550,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </ul>
               </div>
               <div>
-                <h4 className="font-bold text-lg mb-8 text-white">Use Case</h4>
-                <ul className="space-y-4">
+                <h4 className="font-bold text-base mb-4 text-slate-900">Use Case</h4>
+                <ul className="space-y-2">
                   {LUCID_CONTENT.footer.useCases.map((item) => {
                     const getLink = (name: string) => {
                       switch (name) {
                         case "Onboarding": return "/onboarding";
+                        case "CEO": return "/use-cases/ceo";
+                        case "CHRO": return "/use-cases/chro";
+                        case "Sales Head": return "/use-cases/sales-head";
+                        case "Operations Head": return "/use-cases/operations-head";
                         case "Career Progression": return "/features/career-progression";
                         case "Mobile Learning": return "/mobile-learning";
                         case "Communication": return "/communication";
@@ -449,9 +570,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     return (
                       <li key={item}>
                         {link ? (
-                          <Link to={link} className="text-slate-400 hover:text-blue-400 transition-colors">{item}</Link>
+                          <Link to={link} className="text-sm text-slate-600 hover:text-blue-500 transition-colors">{item}</Link>
                         ) : (
-                          <a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">{item}</a>
+                          <a href="#" className="text-sm text-slate-600 hover:text-blue-500 transition-colors">{item}</a>
                         )}
                       </li>
                     );
@@ -459,21 +580,21 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </ul>
               </div>
               <div>
-                <h4 className="font-bold text-lg mb-8 text-white">Company</h4>
-                <ul className="space-y-4">
+                <h4 className="font-bold text-base mb-4 text-slate-900">Company</h4>
+                <ul className="space-y-2">
                   {LUCID_CONTENT.footer.company.map((item) => (
                     <li key={item}>
                       {item === "About" ? (
-                        <Link to="/about" className="text-slate-400 hover:text-blue-400 transition-colors">{item}</Link>
+                        <Link to="/about" className="text-sm text-slate-600 hover:text-blue-500 transition-colors">{item}</Link>
                       ) : item === "Contact" ? (
-                        <Link 
+                        <Link
                           to="/contact"
-                          className="text-slate-400 hover:text-blue-400 transition-colors"
+                          className="text-sm text-slate-600 hover:text-blue-500 transition-colors"
                         >
                           {item}
                         </Link>
                       ) : (
-                        <a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">{item}</a>
+                        <a href="#" className="text-sm text-slate-600 hover:text-blue-500 transition-colors">{item}</a>
                       )}
                     </li>
                   ))}
@@ -481,14 +602,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </div>
             </div>
           </div>
-          
-          <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
+
+          <div className="pt-6 border-t border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-slate-500">
               © {new Date().getFullYear()} {LUCID_CONTENT.name}. All rights reserved.
             </p>
             <div className="flex gap-8">
-              <a href="#" className="text-sm text-slate-500 hover:text-blue-400">Terms of Service</a>
-              <a href="#" className="text-sm text-slate-500 hover:text-blue-400">Privacy Policy</a>
+              <a href="#" className="text-sm text-slate-500 hover:text-blue-500">Terms of Service</a>
+              <Link to="/privacy-policy" className="text-sm text-slate-500 hover:text-blue-500">Privacy Policy</Link>
             </div>
           </div>
         </div>

@@ -24,7 +24,7 @@ export default function SelfLearning() {
   };
 
   return (
-    <div className="pt-24">
+    <div>
       {/* Hero Section */}
       <section className="relative py-20 md:py-32 overflow-hidden bg-white">
         {/* Subtle Purple Glow */}

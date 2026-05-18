@@ -6,7 +6,7 @@ export const LUCID_CONTENT = {
     title: "The operating system your business runs on. From decision to execution.",
     subtitle: "LUCID • BY WORKFLOWW.AI",
     description: "Not a feature. Not a dashboard. The operating layer between what your organization decides and what actually happens — at the counter, on the floor, in the field, on the line.",
-    roles: ["CEO", "COO", "Sales Head", "Operations Head", "Manufacturing Head"],
+    roles: ["CEO", "COO", "Sales Head", "Operations Head",],
     stats: [
       { label: "48hrs", sub: "hrs", desc: "From contract signed to fully deployed" },
       { label: "Zero", sub: ".", desc: "App downloads required by your frontline" },
@@ -20,7 +20,7 @@ export const LUCID_CONTENT = {
   },
   capabilities: {
     subtitle: "WHAT LUCID DOES",
-    title: "Five things that move your numbers.",
+    title: "Six Things That Move Your Numbers.",
     description: "Every capability in Lucid exists for one reason — closing the gap between your business intent and ground-level execution.",
     items: [
       {
@@ -103,16 +103,18 @@ export const LUCID_CONTENT = {
     description: "Every week without Lucid is a week where your strategy stays at the top and your ground reality stays unknown. The Lighthouse Programme gives you 30 days to find out exactly what's possible."
   },
   nav: [
-    { name: "About", href: "/about" },
     { name: "Features", items: ["Self-Learning", "Seamless Training", "Career Progression", "SOP/Audits", "Rewards & Recognition", "Ticketing"] },
-    { name: "Industries", items: ["Retail", "QSR & Cloud Kitchens", "Supermarkets", "Delivery Partners"] },
-    { name: "Use Case", items: ["Onboarding", "Career Progression", "Mobile Learning", "Communication"] },
-    { name: "Contact Us", href: "/contact" }
+    { name: "Industries", items: ["QSR & Retail", "FMCG & Beverages", "Manufacturing & Industrial", "Services & Distribution"] },
+    { name: "Use Case", items: ["CEO", "CHRO", "Sales Head", "Operations Head", "Compliance & Audits", "Last-Mile Communication", "SOP Deviation"] },
+    { name: "Light House Program", href: "/lighthouse-program" },
+    { name: "Builder's Lab", href: "/builder-lab" },
+    { name: "About", href: "/about" }
+    // { name: "Contact Us", href: "/contact" }
   ],
   footer: {
-    industries: ["Retail", "QSR & Cloud Kitchens", "Supermarkets", "Delivery Partners"],
+    industries: ["QSR & Retail", "FMCG & Beverages", "Manufacturing & Industrial", "Services & Distribution"],
     features: ["Self-Learning", "Seamless Training", "Career Progression", "SOP/Audits", "Rewards & Recognition", "Ticketing"],
-    useCases: ["Onboarding", "Career Progression", "Mobile Learning", "Communication"],
+    useCases: ["CEO", "CHRO", "Sales Head", "Operations Head", "Compliance & Audits", "Last-Mile Communication", "SOP Deviation"],
     company: ["About", "Certifications", "Contact"]
   },
   targetedSolutions: [

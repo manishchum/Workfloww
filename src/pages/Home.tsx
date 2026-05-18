@@ -1,217 +1,1124 @@
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { 
-  ArrowRight, 
+import { useNavigate } from "react-router-dom";
+import {
+  ArrowRight,
   ChevronRight,
-  Sparkles,
-  CheckCircle2,
+  ChevronDown,
   Zap,
-  Target,
   BarChart3,
-  ShieldCheck,
-  Brain,
-  Database,
-  Route,
   MapPin,
-  Clock,
-  Layout as LayoutIcon,
   MessageSquare,
   Rocket,
-  ArrowRightLeft
+  ShieldCheck,
+  ArrowBigDown,
+  ArrowDown,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { LUCID_CONTENT } from "../constants";
+import { useLeadEmail } from "../hooks/useLeadEmail";
 
-const IconMap: Record<string, any> = {
-  "⚡": Zap,
-  "📍": MapPin,
-  "🔄": ShieldCheck,
-  "🚀": Rocket,
-  "📈": BarChart3,
-  "💬": MessageSquare
+// ─────────────── CONTENT ───────────────
+const LUCID_CONTENT = {
+  hero: {
+    subtitle: "WHAT IS LUCID?",
+    description:
+      "The operating layer between what your organization decides and what actually happens — at the counter, on the floor, in the field, on the line.",
+    stats: [
+      { label: "18.4", sub: "%", desc: "Average performance gap between top and bottom locations" },
+      { label: "42", sub: "%", desc: "Strategy loss between decision makers and frontline staff" },
+      { label: "3.2", sub: "x", desc: "Revenue multiplier for organizations with higher execution clarity" },
+    ],
+  },
+  story: {
+    need: {
+      points: [
+        { id: "01", title: "Deploy in hours, not months?" },
+        { id: "02", title: "Something your frontline actually uses?" },
+        { id: "03", title: "AI with real business impact?", },
+        { id: "04", title: "Execution visible. Revenue defensible?" },
+      ],
+    },
+    definition: {
+      upper: ["That's not a feature list.", "That's not a wish list.", "That's the description of an operating system for your business."],
+      core: "Fast. AI-powered. Deployed everywhere your frontline is.",
+      outcome: "Outcomes you can see, measure, and act on.",
+      final: "That's what Lucid is built to be.",
+    },
+  },
+  comparison: {
+    before: "Traditional Management: Reactive & Opaque",
+    after: "Lucid OS: Proactive & Transparent",
+  },
+  capabilities: {
+    subtitle: "WHAT LUCID DOES",
+    title: "Six Things That Move Your Numbers.",
+    description: "Every capability in Lucid exists for one reason — closing the gap between your business intent and ground-level execution.",
+    items: [
+      {
+        icon: "zap",
+        title: "Convert & Deploy",
+        desc: "Your SOPs, product docs, and brand standards converted into deployed formats — WhatsApp, video, audio — in hours, not weeks."
+      },
+      {
+        icon: "mappin",
+        title: "Execution Visibility",
+        desc: "Know what your frontline knows — by role, by location, by shift. Not activity metrics. Actual execution readiness."
+      },
+      {
+        icon: "shield",
+        title: "Compliance at Scale",
+        desc: "SOP audits, photo capture, corrective actions — all mobile. Run compliance across 10 or 1,000 locations without adding headcount."
+      },
+      {
+        icon: "rocket",
+        title: "Launch Execution",
+        desc: "New product. New campaign. New process. Lucid deploys to your entire frontline before the launch date — not after."
+      },
+      {
+        icon: "chart",
+        title: "Performance Signal",
+        desc: "A single score — by team, by outlet, by region — that tells you where execution is strong and where revenue is at risk."
+      },
+      {
+        icon: "message",
+        title: "Zero Friction Delivery",
+        desc: "Delivered on WhatsApp. No app download. No login. No IT dependency. Works on the phone already in your frontline's pocket."
+      }
+    ]
+  },
+  howItWorks: {
+    subtitle: "HOW IT WORKS",
+    title: "Three steps. One operating system.",
+    description: "Lucid doesn't replace what you have. It makes what you have actually reach the ground.",
+    steps: [
+      {
+        id: "step-1",
+        title: "Upload",
+        heading: "Upload what you already have.",
+        description: "Your SOPs. Your product manuals. Your brand standards. Your audit checklists. Lucid takes what exists and converts it — no rebuilding, no instructional designers, no six-month implementation.",
+        points: [
+          "PDFs, videos, voice notes, and decks all accepted",
+          "AI converts to WhatsApp sprints, videos, audio, and flashcards",
+          "Live in 48 hours from contract signing"
+        ],
+        image: "/images/upload.png"
+      },
+      {
+        id: "step-2",
+        title: "Deploy",
+        heading: "Deploy to your frontline. Instantly.",
+        description: "No app download. No login. No training room. Content reaches your frontline on WhatsApp — the channel they already use, on the device they already own.",
+        points: [
+          "WhatsApp micro-sprints under 5 minutes",
+          "Works on any smartphone including basic Android",
+          "Hinglish and regional language support built in"
+        ],
+        image: "/images/secondstep.png"
+      },
+      {
+        id: "step-3",
+        title: "Analyze",
+        heading: "See where execution stands. Act on it.",
+        description: "A single dashboard shows you execution readiness by outlet, by role, by region. Not completion rates — actual capability signals. So you know exactly where to intervene before it hits your numbers.",
+        points: [
+          "Location-level execution scores",
+          "Compliance audit results in real time",
+          "Gap alerts before they become floor problems"
+        ],
+        image: "/images/analytics.png"
+      }
+    ]
+  },
 };
 
-const CapabilityCard = ({ item, i }: any) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: i * 0.1, duration: 0.5 }}
-    >
-      <Card className="h-full border border-border/40 shadow-sm hover:shadow-xl transition-all duration-300 group bg-background/50 backdrop-blur-sm p-6 rounded-3xl">
-        <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-6 border border-border/30">
-          <span className="text-2xl">{item.icon}</span>
-        </div>
-        <h3 className="text-2xl font-bold mb-4 tracking-tight">{item.title}</h3>
-        <p className="text-muted-foreground text-lg leading-relaxed font-light">
-          {item.desc}
-        </p>
-      </Card>
-    </motion.div>
-  );
+// ─────────────── ICON MAP ───────────────
+const IconComp = ({ name, className, style }: { name: string; className?: string; style?: React.CSSProperties }) => {
+  const map: Record<string, React.ComponentType<any>> = {
+    zap: Zap,
+    mappin: MapPin,
+    shield: ShieldCheck,
+    rocket: Rocket,
+    chart: BarChart3,
+    message: MessageSquare
+  };
+  const C = map[name] || Zap;
+  return <C className={className} style={style} />;
 };
 
-const QuestionScroller = ({ onScrollToSolution }: { onScrollToSolution: () => void }) => {
+// ─────────────── ACT 1 — Questions ───────────────
+const StoryAct1 = ({ onNext, onSkip }) => {
   const questions = [
     {
-      id: "01",
-      text: "Your best location and your weakest location run the <span class='text-blue-400'>same process, same product, same team size.</span> The performance gap between them — can you explain it precisely?",
-      footer: "Most leaders have the number. Almost none have the cause."
+      id: "FMCG",
+      text: "Sales Scheme Is Live. Margins Are Sweetend. Yet<span style='color:#2563eb;font-weight:700'> Secondary Sales Are Flat.</span> Did You Rep Know What To Push Before The Beat Started?",
+      footer: "A Whatsapp Broadcast The Night Before Isn't Readiness.The Margin Was Lost Before The Sale Began.",
     },
     {
-      id: "02",
-      text: "You rolled out a new product, process, or campaign last quarter. <span class='text-blue-400'>Right now, today</span> — what percentage of your frontline can execute it without hesitation?",
-      footer: "Not what they were briefed on. What they can actually do when it matters."
+      id: "BANKING",
+      text: "Sales Target Are Set. Portfolio Is Full. Yet <span style='color:#2563eb;font-weight:700'>Wallet Share Hasn't Moved In Two Quaters.</span> Does Your Relationship Manager Know How To Have The Next Conversation? ",
+      footer: "Incentives Don't Build The Pitch. If The Relationship Manager Wasn't Ready, The Opportunity Walked Out Every Day ",
     },
     {
-      id: "03",
-      text: "Your process is documented. Your people are experienced. Yet <span class='text-blue-400'>every site visit, every review, every audit</span> — the same deviations surface. Why does the gap keep coming back?",
-      footer: "If it keeps returning, it was never really fixed. It was managed around."
-    }
+      id: "QSR",
+       text: "Food Menu Is Live. Combo Margins Are Higher. Yet <span style='color:#2563eb;font-weight:700'>Average Order Value Hasn't Moved Since Launch.</span> Is Your Crew Selling — Or Just Reading It Out?",
+       footer: "The Order Screen Can't Suggest The combo. Only The Crew Can. Every Shift Since Launch Is Revenue Left On The Counter..",
+    },
+    {
+      id: "RETAIL",
+       text: "Planogram Is Set. Promotion Is Live. Yet <span style='color:#2563eb;font-weight:700'>Conversion At The Shelf Hasn't Moved.</span> Does Your Store Associate Know What To Say When The Customer Picks It Up?",
+       footer: "Footfall Isn't The Gap. The Conversation At The Shelf Is. If The Associate Wasn't Ready, The Sale Walked Out With The Customer.",
+    },
   ];
 
   const [index, setIndex] = React.useState(0);
 
   React.useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % questions.length);
-    }, 8000);
-    return () => clearInterval(timer);
-  }, []);
+    if (index < questions.length - 1) {
+      const t = setTimeout(() => setIndex((p) => p + 1), 5500);
+      return () => clearTimeout(t);
+    }
+  }, [index]);
 
   return (
-    <div className="bg-navy h-screen flex items-center justify-center overflow-hidden relative">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-600/5 via-transparent to-transparent" />
-      <div className="container mx-auto px-6 max-w-5xl relative z-10">
+    <div style={{ height: "100vh", background: "#f8fafc", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden" }}>
+      {/* ambient blob */}
+      <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 50% 40%, rgba(147,197,253,0.35) 0%, transparent 65%)", pointerEvents: "none" }} />
+      {/* subtle noise */}
+      <div style={{ position: "absolute", inset: 0, opacity: 0.025, backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")", pointerEvents: "none" }} />
+
+      <div style={{ maxWidth: 860, width: "100%", padding: "0 2rem", textAlign: "center", position: "relative", zIndex: 10 }}>
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.02 }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col gap-10 md:gap-14 items-center text-center"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="flex items-center gap-6 text-[10px] font-bold tracking-[0.5em] text-blue-500/40 uppercase font-mono">
-              <span className="text-blue-500">SECTION {questions[index].id}</span>
-              <span className="w-16 h-px bg-white/10" />
-              <span>THE EXECUTION GAP</span>
+            {/* label */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1.5rem", marginBottom: "3rem" }}>
+              <span style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.5em", color: "#60a5fa", fontFamily: "monospace", textTransform: "uppercase" }}> {questions[index].id}</span>
+              {/* <div style={{ width: 48, height: 1, background: "#cbd5e1" }} /> */}
+              {/* <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.5em", color: "#94a3b8", fontFamily: "monospace", textTransform: "uppercase" }}></span> */}
             </div>
 
-            <h2 
-              className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-white/95 leading-[1.2] max-w-4xl"
+            {/* question */}
+            <h2
+              style={{ fontSize: "clamp(1.75rem, 5vw, 3.25rem)", fontWeight: 500, letterSpacing: "-0.025em", color: "#0f172a", lineHeight: 1.2, marginBottom: "1.5rem", fontFamily: "Georgia, serif" }}
               dangerouslySetInnerHTML={{ __html: questions[index].text }}
             />
 
-            <div className="flex items-center justify-center gap-6">
-              <div className="w-1 h-12 bg-blue-600/40 rounded-full hidden md:block" />
-              <p className="text-xl md:text-2xl font-light italic text-slate-500 max-w-2xl px-4">
-                {questions[index].footer}
-              </p>
-            </div>
+            {/* footer text */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              style={{ fontSize: "0.95rem", color: "#64748b", marginBottom: "3rem", fontWeight: 300, maxWidth: 540, margin: "0 auto 3rem auto" }}
+            >
+              {questions[index].footer}
+            </motion.p>
+
+            {/* answer options
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxWidth: 540, margin: "0 auto" }}
+            >
+              {questions[index].answers.map((answer, i) => (
+                <div
+                  key={i}
+                  style={{
+                    padding: "1rem 1.5rem",
+                    background: "rgba(255,255,255,0.6)",
+                    border: "1px solid rgba(37,99,235,0.2)",
+                    borderRadius: 8,
+                    fontSize: "0.95rem",
+                    color: "#334155",
+                    cursor: "pointer",
+                    transition: "all 0.3s ease",
+                    fontFamily: "system-ui, -apple-system, sans-serif"
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(37,99,235,0.08)";
+                    e.currentTarget.style.borderColor = "rgba(37,99,235,0.4)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "rgba(255,255,255,0.6)";
+                    e.currentTarget.style.borderColor = "rgba(37,99,235,0.2)";
+                  }}
+                >
+                  {answer}
+                </div>
+              ))}
+            </motion.div> */}
+
           </motion.div>
         </AnimatePresence>
-
-        {/* Scroll Button */}
-        <motion.button 
-          onClick={onScrollToSolution}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="absolute bottom-6 right-8 hidden md:flex flex-col items-end gap-3 group outline-none cursor-pointer"
-        >
-          <span className="text-[10px] font-bold tracking-[0.2em] text-slate-500 uppercase group-hover:text-blue-400 transition-colors">
-            See the solution <ArrowRight className="inline-block ml-1 w-3 h-3 rotate-90" />
-          </span>
-          <div className="w-px h-16 bg-gradient-to-b from-blue-600/50 to-transparent mr-4 group-hover:h-20 transition-all duration-500" />
-        </motion.button>
       </div>
+
+      {/* progress dots */}
+      <div style={{ position: "absolute", bottom: 80, display: "flex", gap: 8 }}>
+        {questions.map((_, i) => (
+          <div key={i} style={{ width: i === index ? 24 : 8, height: 8, borderRadius: 9999, background: i === index ? "#2563eb" : "#cbd5e1", transition: "all 0.4s ease" }} />
+        ))}
+      </div>
+
+      {/* "Find the answer" appears after last question */}
+      <motion.button
+        initial={{ opacity: 0 }}
+        animate={{ opacity: index === questions.length - 1 ? 1 : 0 }}
+        transition={{ duration: 0.8 }}
+        onClick={onNext}
+        style={{ position: "absolute", bottom: 24, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", color: "#64748b" }}
+      >
+        <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.25em", textTransform: "uppercase" }}>What You Need to Increase Your Revenue?</span>
+        <ChevronDown style={{ width: 20, height: 20, animation: "bounce 1.5s infinite" }} />
+      </motion.button>
+
+      {/* skip */}
+      <button
+        onClick={onSkip}
+        style={{ position: "absolute", bottom: 28, right: 28, display: "flex", alignItems: "center", gap: 8, padding: "10px 20px", border: "1px solid #e2e8f0", borderRadius: 9999, background: "rgba(255,255,255,0.7)", backdropFilter: "blur(8px)", fontSize: 10, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#94a3b8", cursor: "pointer" }}
+        onMouseEnter={e => e.currentTarget.style.color = "#2563eb"}
+        onMouseLeave={e => e.currentTarget.style.color = "#94a3b8"}
+      >
+        Skip Intro <ArrowRight style={{ width: 12, height: 12 }} />
+      </button>
+
+      <style>{`@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }`}</style>
     </div>
   );
 };
 
-const HowItWorksDark = () => {
-  const howItWorks = (LUCID_CONTENT as any).howItWorks;
+// ─────────────── ACT 2 — The Answer (dark, hover-reveal 2×2 grid) ───────────────
+// Replace your existing StoryAct2 component entirely with this one.
+// Everything else (imports, LUCID_CONTENT, other components, Home) stays unchanged.
+
+const StoryAct2 = ({ onNext, onSkip }) => {
+  const cards = [
+    {
+      id: "01",
+      label: "PEOPLE",
+      summary: "Deploy in hours, not months.",
+      points: [
+        "You need your top rep's accounts covered the day they resign — not three months later.",
+        "You need the new rep to walk into the territory knowing every account, every relationship, every open deal — not start from zero.",
+        "You need your forecast pressure-tested at rep level — not trusted because the manager said so."
+      ],
+    },
+    {
+      id: "02",
+      label: "SALES PROCESS",
+      summary: "Something your frontline actually uses.",
+      points: [
+        "You need to know if Tuesday's task was done — not take the ASM's word for it.",
+        "You need your rep to counter the competitor at the shelf — not after losing the order.",
+        "You need every lost deal to make the next rep sharper — not disappear into a CRM field."
+      ],
+    },
+    {
+      id: "03",
+      label: "TOOLS",
+      summary: "AI with real business impact.",
+      points: [
+        "You need the battle card before the meeting — not the day after.",
+        "You need photo proof the display was executed — not a WhatsApp \"done sir.\"",
+        "You need the pitch deck your rep opens to be current — not three versions old."
+      ],
+    },
+    {
+      id: "04",
+      label: "CONTENT",
+      summary: "Execution visible. Revenue defensible.",
+      points: [
+        "You need the new scheme at the distributor counter the day it launches — not when the RSM gets around to it.",
+        "You need a competitor response in your rep's hand the week they drop a new product — not three weeks later.",
+        "You need the pitch your marketing built to actually reflect what works on the ground — not sit unused in a shared drive."
+      ],
+    },
+  ];
+
+  const [hovered, setHovered] = React.useState(null);
 
   return (
-    <section id="how-it-works" className="py-24 bg-navy overflow-hidden">
-      <div className="container mx-auto px-6">
-        <div className="mb-24">
-          <Badge variant="outline" className="mb-4 px-3 py-1 rounded-full text-blue-400 border-blue-400/20 bg-blue-400/5 font-bold tracking-wider uppercase text-[10px]">
-            {howItWorks.subtitle}
-          </Badge>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-8 leading-tight text-white">
-            {howItWorks.title}
-          </h2>
-          <p className="text-slate-400 text-xl max-w-2xl leading-relaxed">
-            {howItWorks.description}
+    <div
+      style={{
+        height: "100vh",
+        width: "100vw",
+        background: "#051121",
+        color: "#e2e8f0",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        fontFamily: "system-ui, -apple-system, sans-serif",
+        paddingTop: "80px",
+        boxSizing: "border-box",
+      }}
+    >
+      {/* ── Radial glow center ── */}
+      <div
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          width: "120vh",
+          height: "120vh",
+          background:
+            "radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 65%)",
+          transform: "translate(-50%, -50%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* ── Grid lines ── */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage:
+            "linear-gradient(rgba(37,99,235,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.06) 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+          backgroundPosition: "center center",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* ── Corner accent glows ── */}
+      <div style={{ position: "absolute", top: 0, right: 0, width: 400, height: 400, background: "radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: 0, left: 0, width: 300, height: 300, background: "radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
+
+      {/* ── Main content container ── */}
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          padding: "1.25rem 2rem",
+          position: "relative",
+          zIndex: 10,
+          maxWidth: 1200,
+          margin: "0 auto",
+          width: "100%",
+          minHeight: 0,
+        }}
+      >
+        {/* Eyebrow label */}
+        <motion.div
+          initial={{ opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            marginBottom: "0.75rem",
+            flexShrink: 0,
+          }}
+        >
+          <div
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              background: "#3b82f6",
+              boxShadow: "0 0 10px rgba(59,130,246,0.8)",
+            }}
+          />
+          <span
+            style={{
+              fontSize: 10,
+              fontWeight: 800,
+              letterSpacing: "0.4em",
+              color: "#60a5fa",
+              textTransform: "uppercase",
+              fontFamily: "monospace",
+            }}
+          >
+            WHAT YOU NEED?
+          </span>
+        </motion.div>
+
+        {/* 2×2 Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.15 }}
+          style={{
+            flex: 1,
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gridTemplateRows: "1fr 1fr",
+            gap: "1px",
+            background: "rgba(37,99,235,0.15)",
+            border: "1px solid rgba(37,99,235,0.2)",
+            borderRadius: 20,
+            overflow: "hidden",
+            marginBottom: "0.75rem",
+            minHeight: 0,
+          }}
+        >
+          {cards.map((card) => {
+            const isHovered = hovered === card.id;
+            return (
+              <div
+                key={card.id}
+                onMouseEnter={() => setHovered(card.id)}
+                onMouseLeave={() => setHovered(null)}
+                style={{
+                  position: "relative",
+                  background: isHovered
+                    ? "rgba(255,255,255,0.07)"
+                    : "rgba(5,17,33,0.85)",
+                  padding: "1.25rem 1.75rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  cursor: "default",
+                  transition: "background 0.35s ease",
+                  outline: isHovered
+                    ? "1px solid rgba(99,157,253,0.45)"
+                    : "none",
+                  outlineOffset: "-1px",
+                  minHeight: 0,
+                  overflow: "hidden",
+                  boxShadow: isHovered
+                    ? "inset 0 0 30px rgba(37,99,235,0.1)"
+                    : "none",
+                }}
+              >
+                {/* Hover shimmer top line */}
+                {isHovered && (
+                  <div style={{
+                    position: "absolute",
+                    top: 0, left: 0, right: 0,
+                    height: 1,
+                    background: "linear-gradient(90deg, transparent, rgba(99,157,253,0.6), transparent)",
+                    pointerEvents: "none",
+                  }} />
+                )}
+
+                {/* Top row: label + ghost number */}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 9,
+                      fontWeight: 800,
+                      letterSpacing: "0.35em",
+                      color: isHovered ? "#60a5fa" : "#475569",
+                      textTransform: "uppercase",
+                      fontFamily: "monospace",
+                      transition: "color 0.35s",
+                    }}
+                  >
+                    {card.label}
+                  </span>
+
+                  {/* Ghost number */}
+                  <span
+                    style={{
+                      fontSize: "clamp(1.5rem, 3vw, 2.75rem)",
+                      fontWeight: 800,
+                      color: "rgba(99,157,253,0.1)",
+                      lineHeight: 1,
+                      fontFamily: "Georgia, serif",
+                      userSelect: "none",
+                      opacity: isHovered ? 0 : 1,
+                      transform: isHovered ? "scale(0.92)" : "scale(1)",
+                      transition: "opacity 0.35s ease, transform 0.35s ease",
+                    }}
+                  >
+                    {card.id}
+                  </span>
+                </div>
+
+                {/* Bullet points */}
+                <div
+                  style={{
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    gap: "0.5rem",
+                    padding: "0.5rem 0",
+                    opacity: isHovered ? 1 : 0,
+                    transform: isHovered ? "translateY(0)" : "translateY(10px)",
+                    transition: "opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s",
+                    pointerEvents: isHovered ? "auto" : "none",
+                    minHeight: 0,
+                  }}
+                >
+                  {card.points.map((point, j) => (
+                    <div
+                      key={j}
+                      style={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: "0.7rem",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 2,
+                          minHeight: "100%",
+                          alignSelf: "stretch",
+                          background: "rgba(99,157,253,0.5)",
+                          borderRadius: 2,
+                          flexShrink: 0,
+                          marginTop: 2,
+                        }}
+                      />
+                      <span
+                        style={{
+                          fontSize: "0.75rem",
+                          color: "#cbd5e1",
+                          lineHeight: 1.3,
+                          fontWeight: 300,
+                        }}
+                      >
+                        {point}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Summary line */}
+                <div
+                  style={{
+                    fontSize: "clamp(0.75rem, 0.95vw, 0.85rem)",
+                    fontWeight: 600,
+                    color: "#e2e8f0",
+                    lineHeight: 1.25,
+                    opacity: isHovered ? 0 : 1,
+                    transform: isHovered ? "translateY(4px)" : "translateY(0)",
+                    transition: "opacity 0.25s ease, transform 0.25s ease",
+                    marginTop: "0.5rem",
+                  }}
+                >
+                  {card.summary}
+                </div>
+              </div>
+            );
+          })}
+        </motion.div>
+
+        {/* ── Bottom command bar ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          style={{
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(37,99,235,0.25)",
+            borderRadius: 16,
+            padding: "0.85rem 1.5rem",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            backdropFilter: "blur(20px)",
+            zIndex: 10,
+            flexShrink: 0,
+            gap: "1rem",
+          }}
+        >
+
+          <button
+            onClick={onNext}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              padding: "0.65rem 1.5rem",
+              borderRadius: 12,
+              background: "#2563eb",
+              color: "#fff",
+              fontSize: "0.85rem",
+              fontWeight: 800,
+              border: "none",
+              cursor: "pointer",
+              transition: "all 0.2s",
+              whiteSpace: "nowrap",
+              flexShrink: 0,
+              boxShadow: "0 0 20px rgba(37,99,235,0.3)",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-2px)";
+              e.currentTarget.style.boxShadow = "0 8px 24px rgba(37,99,235,0.5)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "0 0 20px rgba(37,99,235,0.3)";
+            }}
+          >
+            SHOW ME THE GAP<ArrowDown style={{ width: 16, height: 16 }} />
+          </button>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+// ─────────────── HERO ───────────────
+const Hero = () => {
+  const { hero } = LUCID_CONTENT;
+  const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
+  const [heroName, setHeroName] = React.useState("");
+  const [heroEmail, setHeroEmail] = React.useState("");
+  const [heroTrap, setHeroTrap] = React.useState(""); // Anti-spam trap
+  const { sendEmail, status: heroStatus, error: heroError } = useLeadEmail();
+
+  const handleHeroSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await sendEmail({
+      source: "hero-demo",
+      name: heroName,
+      email: heroEmail,
+      phone: "",
+      org: "",
+      website_trap: heroTrap
+    });
+    setOpen(false);
+  };
+
+  return (
+    <section style={{ minHeight: "100vh", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden", background: "#fff", borderBottom: "1px solid #f1f5f9" }}>
+      {/* blobs */}
+      <div style={{ position: "absolute", top: 0, right: 0, width: 700, height: 700, background: "radial-gradient(circle, rgba(191,219,254,0.5) 0%, transparent 65%)", transform: "translate(30%, -30%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: 0, left: 0, width: 500, height: 500, background: "radial-gradient(circle, rgba(186,230,253,0.3) 0%, transparent 70%)", transform: "translate(-30%, 30%)", pointerEvents: "none" }} />
+
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "5rem 2rem 3rem", maxWidth: 1100, margin: "0 auto", width: "100%", position: "relative", zIndex: 10 }}>
+        <motion.div initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85 }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 12, marginBottom: "2.5rem" }}>
+            <div style={{ width: 8, height: 8, borderRadius: 9999, background: "#2563eb" }} />
+            <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.4em", color: "#3b82f6", textTransform: "uppercase" }}>{hero.subtitle}</span>
+          </div>
+
+          <h1 style={{ fontSize: "clamp(2rem, 6vw, 4.5rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: "1.5rem", color: "#0f172a", fontFamily: "Georgia, serif" }}>
+            Lucid Is The Operating System<br />
+            Your <em style={{ color: "#2563eb", fontStyle: "italic" }}>Sales Team Runs On.</em><br />
+            <span style={{ color: "#94a3b8", fontStyle: "normal" }}>From Decision To Execution.</span>
+          </h1>
+
+          <p style={{ fontSize: "clamp(0.95rem, 1.8vw, 1.1rem)", color: "#64748b", maxWidth: 640, marginBottom: "2rem", lineHeight: 1.6, fontWeight: 300 }}>
+            Not a Feature. Not a Dashboard. The <strong style={{ color: "#0f172a", fontWeight: 700 }}>Operating Layer Between What Your Sales Organization Decides And What Actually Happens</strong> — At The Counter, On The Floor, In The Field, On The Line.
           </p>
+
+          {/* CTA buttons */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginBottom: "1.5rem" }}>
+            <button onClick={() => setOpen(true)} style={{ height: 56, padding: "0 2.5rem", borderRadius: 18, background: "#2563eb", color: "#fff", fontWeight: 800, fontSize: "1.05rem", border: "none", cursor: "pointer", boxShadow: "0 12px 30px rgba(37,99,235,0.3)", transition: "transform 0.15s" }}
+              onMouseEnter={e => e.currentTarget.style.transform = "scale(1.02)"}
+              onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>
+              Join Lighthouse Programme 
+            </button>
+            <button onClick={() => navigate("/contact")} style={{ height: 56, padding: "0 2.5rem", borderRadius: 18, background: "transparent", color: "#475569", fontWeight: 800, fontSize: "1.05rem", border: "1.5px solid #cbd5e1", cursor: "pointer", transition: "border-color 0.2s" }}
+              onMouseEnter={e => e.currentTarget.style.borderColor = "#2563eb"}
+              onMouseLeave={e => e.currentTarget.style.borderColor = "#cbd5e1"}>
+              Book a Demo
+            </button>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Demo dialog */}
+      {open && (
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", backdropFilter: "blur(6px)", zIndex: 200, display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }} onClick={() => setOpen(false)}>
+          <div style={{ background: "#fff", borderRadius: 28, padding: "3rem", maxWidth: 440, width: "100%", boxShadow: "0 40px 80px rgba(0,0,0,0.2)" }} onClick={e => e.stopPropagation()}>
+            <h3 style={{ fontSize: "1.75rem", fontWeight: 900, letterSpacing: "-0.03em", color: "#0f172a", marginBottom: 8 }}>See Lucid in Action</h3>
+            <p style={{ color: "#64748b", marginBottom: "2rem", fontWeight: 300 }}>Schedule a personalized tour of the Lucid OS.</p>
+            <form onSubmit={handleHeroSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+              {/* Anti-spam Honeypot field (hidden from normal users) */}
+              <div style={{ display: "none" }} aria-hidden="true">
+                <label>Do not fill this field</label>
+                <input
+                  type="text"
+                  value={heroTrap}
+                  onChange={e => setHeroTrap(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
+              <div>
+                <label style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#64748b", display: "block", marginBottom: 6 }}>Full Name</label>
+                <input
+                  placeholder="John Doe"
+                  required
+                  value={heroName}
+                  onChange={e => setHeroName(e.target.value)}
+                  style={{ width: "100%", height: 48, padding: "0 1rem", border: "1.5px solid #e2e8f0", borderRadius: 14, fontSize: "1rem", color: "#0f172a", background: "#f8fafc", boxSizing: "border-box" }}
+                />
+              </div>
+              <div>
+                <label style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#64748b", display: "block", marginBottom: 6 }}>Work Email</label>
+                <input
+                  type="email"
+                  placeholder="john@company.com"
+                  required
+                  value={heroEmail}
+                  onChange={e => setHeroEmail(e.target.value)}
+                  style={{ width: "100%", height: 48, padding: "0 1rem", border: "1.5px solid #e2e8f0", borderRadius: 14, fontSize: "1rem", color: "#0f172a", background: "#f8fafc", boxSizing: "border-box" }}
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={heroStatus === "loading"}
+                style={{ height: 52, borderRadius: 14, background: "#2563eb", color: "#fff", fontWeight: 800, fontSize: "1rem", border: "none", cursor: heroStatus === "loading" ? "not-allowed" : "pointer", opacity: heroStatus === "loading" ? 0.7 : 1 }}
+              >
+                {heroStatus === "loading" ? "Sending…" : "Request Demo"}
+              </button>
+              {heroError && (
+                <p style={{ color: "#ef4444", fontSize: 13, marginTop: 8 }}>{heroError}</p>
+              )}
+            </form>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+};
+
+// ─────────────── STATS STRIP (Appears on scroll) ───────────────
+const StatsStrip = () => {
+  const { hero } = LUCID_CONTENT;
+  return (
+    <section style={{ background: "rgba(248,250,252,0.8)", padding: "2rem", borderTop: "1px solid #f1f5f9", borderBottom: "1px solid #f1f5f9" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "2rem", textAlign: "center" }}>
+        {hero.stats.map((stat, i) => (
+          <motion.div key={i} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.5 }} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 900, color: "#0f172a", lineHeight: 1, marginBottom: 4 }}>
+              {stat.label}<span style={{ color: "#2563eb", fontSize: "0.6em" }}>{stat.sub}</span>
+            </div>
+            <div style={{ fontSize: 10, fontWeight: 700, color: "#94a3b8", letterSpacing: "0.15em", textTransform: "uppercase", maxWidth: 180 }}>{stat.desc}</div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+// ─────────────── COMPARISON ───────────────
+const Comparison = () => {
+  const { comparison } = LUCID_CONTENT;
+  return (
+    <section style={{ padding: "8rem 2rem", background: "#f8fafc", borderTop: "1px solid #e2e8f0", borderBottom: "1px solid #e2e8f0" }}>
+      <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center" }}>
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1 }}>
+          <p style={{ fontSize: "clamp(1.25rem, 3vw, 2rem)", color: "#64748b", fontWeight: 300, lineHeight: 1.6, marginBottom: "4rem" }}>
+            The <em style={{ color: "#0f172a", fontWeight: 700 }}>best frontline teams in the next decade</em> won't be the biggest. They'll be the best equipped.
+ <em style={{ color: "#0f172a", fontWeight: 700 }}> Lucid is the infrastructure layer that makes that possible </em>— for any organization, at any scale. Equipping sales teams with sales content & tools to execute sales process- All at one place.
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+// ─────────────── CAPABILITIES ───────────────
+const Capabilities = () => {
+  const { capabilities } = LUCID_CONTENT;
+  return (
+    <section id="results" style={{ padding: "7rem 2rem", background: "#fff" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+        <div style={{ marginBottom: "5rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: "1.5rem" }}>
+            <div style={{ width: 32, height: 1.5, background: "#2563eb" }} />
+            <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.4em", color: "#3b82f6", textTransform: "uppercase" }}>{capabilities.subtitle}</span>
+          </div>
+          <h2 style={{ fontSize: "clamp(2rem, 5vw, 4rem)", fontWeight: 900, letterSpacing: "-0.04em", color: "#0f172a", marginBottom: "1.5rem", lineHeight: 1 }}>
+            {capabilities.title}
+          </h2>
+          <p style={{ fontSize: "1.2rem", color: "#64748b", maxWidth: 560, fontWeight: 300, lineHeight: 1.7 }}>{capabilities.description}</p>
         </div>
 
-        <div className="space-y-40">
-          {howItWorks.steps.map((step: any, index: number) => {
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "2rem" }}>
+          {capabilities.items.map((item, i) => (
+            <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.5 }}>
+              <div style={{ height: "100%", padding: "2.5rem", background: "#f8fafc", borderRadius: 28, border: "1px solid transparent", transition: "all 0.3s", cursor: "default" }}
+                onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 20px 50px rgba(0,0,0,0.08)"; e.currentTarget.style.background = "#fff"; e.currentTarget.style.borderColor = "#e2e8f0"; }}
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.background = "#f8fafc"; e.currentTarget.style.borderColor = "transparent"; }}>
+                <div style={{ width: 52, height: 52, borderRadius: 16, background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.5rem", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
+                  <IconComp name={item.icon} className="w-6 h-6" style={{ width: 24, height: 24, color: "#2563eb" }} />
+                </div>
+                <h3 style={{ fontSize: "1.35rem", fontWeight: 800, letterSpacing: "-0.025em", color: "#0f172a", marginBottom: "0.75rem" }}>{item.title}</h3>
+                <p style={{ color: "#64748b", fontSize: "1rem", lineHeight: 1.7, fontWeight: 300 }}>{item.desc}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ─────────────── UPLOAD WORKFLOW ANIMATION ───────────────
+const UploadWorkflowAnimation = () => {
+  const inputFiles = [
+    { id: 1, name: "SOP.pdf", icon: "📄", delay: 0 },
+    { id: 2, name: "Product_Manual.docx", icon: "📘", delay: 0.1 },
+    { id: 3, name: "Audit_Checklist.xlsx", icon: "📊", delay: 0.2 },
+    { id: 4, name: "Voice_Note.mp3", icon: "🎙️", delay: 0.3 },
+    { id: 5, name: "Brand_Guidelines.ppt", icon: "🎨", delay: 0.4 },
+  ];
+
+  const outputAssets = [
+    { id: 1, name: "WhatsApp Sprint", icon: "💬", delay: 0.6 },
+    { id: 2, name: "Microlearning Video", icon: "🎬", delay: 0.7 },
+    { id: 3, name: "Audio Lesson", icon: "🎵", delay: 0.8 },
+    { id: 4, name: "Flashcards", icon: "📇", delay: 0.9 },
+    { id: 5, name: "Training Checklist", icon: "✅", delay: 1 },
+  ];
+
+  return (
+    <div style={{ width: "100%", aspectRatio: "4/3", background: "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)", borderRadius: 24, padding: "2rem", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", position: "relative", overflow: "hidden" }}>
+      {/* Grid background */}
+      <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(226,232,240,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(226,232,240,0.5) 1px, transparent 1px)", backgroundSize: "40px 40px", opacity: 0.3, pointerEvents: "none" }} />
+
+      <div style={{ position: "relative", zIndex: 10, width: "100%", height: "100%", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        
+        {/* Left: Input Files */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem", justifyContent: "center", width: "20%" }}>
+          {inputFiles.map((file) => (
+            <motion.div
+              key={file.id}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: file.delay, duration: 0.6 }}
+            >
+              <motion.div
+                animate={{ x: [0, 80, 0] }}
+                transition={{ delay: file.delay + 0.8, duration: 2.5, repeat: Infinity }}
+                style={{
+                  background: "#fff",
+                  border: "1px solid #e2e8f0",
+                  borderRadius: 12,
+                  padding: "0.75rem 1rem",
+                  fontSize: "0.75rem",
+                  fontWeight: 600,
+                  color: "#64748b",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <span>{file.icon}</span>
+                <span>{file.name}</span>
+              </motion.div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Center: Processing Engine */}
+        <div style={{ width: "40%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <div style={{ position: "relative", width: 140, height: 140 }}>
+            {/* Outer rotating ring */}
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              style={{
+                position: "absolute",
+                inset: 0,
+                border: "2px solid transparent",
+                borderTop: "2px solid #3b82f6",
+                borderRight: "2px solid #3b82f6",
+                borderRadius: "50%",
+              }}
+            />
+
+            {/* Inner pulsing circle */}
+            <motion.div
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              style={{
+                position: "absolute",
+                inset: 10,
+                background: "radial-gradient(circle, rgba(37,99,235,0.1) 0%, transparent 70%)",
+                borderRadius: "50%",
+              }}
+            />
+
+            {/* Core element */}
+            <div style={{
+              position: "absolute",
+              inset: 30,
+              background: "linear-gradient(135deg, #3b82f6, #2563eb)",
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#fff",
+              fontSize: "2rem",
+              boxShadow: "0 8px 24px rgba(37,99,235,0.3)",
+            }}>
+              ⚙️
+            </div>
+
+            {/* Animated particles */}
+            {[0, 1, 2, 3].map((i) => (
+              <motion.div
+                key={i}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear", delay: i * 0.5 }}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                }}
+              >
+                <div style={{
+                  position: "absolute",
+                  width: 4,
+                  height: 4,
+                  background: "#2563eb",
+                  borderRadius: "50%",
+                  top: 0,
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  opacity: 0.6,
+                }} />
+              </motion.div>
+            ))}
+
+            {/* Label */}
+            <div style={{
+              position: "absolute",
+              bottom: -40,
+              left: "50%",
+              transform: "translateX(-50%)",
+              whiteSpace: "nowrap",
+              fontSize: "0.75rem",
+              fontWeight: 700,
+              color: "#2563eb",
+              letterSpacing: "0.05em",
+            }}>
+              LUCID AI
+            </div>
+          </div>
+        </div>
+
+        {/* Right: Output Assets */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem", justifyContent: "center", width: "20%" }}>
+          {outputAssets.map((asset) => (
+            <motion.div
+              key={asset.id}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: asset.delay, duration: 0.6 }}
+            >
+              <motion.div
+                animate={{ x: [-80, 0, 0] }}
+                transition={{ delay: asset.delay + 0.2, duration: 2.5, repeat: Infinity }}
+                style={{
+                  background: "#fff",
+                  border: "1.5px solid #3b82f6",
+                  borderRadius: 12,
+                  padding: "0.75rem 1rem",
+                  fontSize: "0.75rem",
+                  fontWeight: 600,
+                  color: "#2563eb",
+                  boxShadow: "0 4px 12px rgba(37,99,235,0.1)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <span>{asset.icon}</span>
+                <span>{asset.name}</span>
+              </motion.div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Connecting lines */}
+      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }} viewBox="0 0 800 300" preserveAspectRatio="xMidYMid slice">
+        {/* Left to center */}
+        <motion.path
+          d="M 100 150 Q 250 100 350 150"
+          fill="none"
+          stroke="url(#leftGradient)"
+          strokeWidth="2"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}
+        />
+        {/* Right from center */}
+        <motion.path
+          d="M 450 150 Q 600 100 700 150"
+          fill="none"
+          stroke="url(#rightGradient)"
+          strokeWidth="2"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse", delay: 0.3 }}
+        />
+        <defs>
+          <linearGradient id="leftGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#cbd5e1" />
+            <stop offset="100%" stopColor="#3b82f6" />
+          </linearGradient>
+          <linearGradient id="rightGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#3b82f6" />
+            <stop offset="100%" stopColor="#2563eb" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  );
+};
+
+// ─────────────── HOW IT WORKS ───────────────
+const HowItWorks = () => {
+  const { howItWorks } = LUCID_CONTENT;
+  return (
+    <section id="how-it-works" style={{ padding: "7rem 2rem", background: "#fff", borderTop: "1px solid #f1f5f9" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+        <div style={{ marginBottom: "6rem" }}>
+          <span style={{ display: "inline-block", padding: "0.35rem 1rem", borderRadius: 9999, border: "1px solid #bfdbfe", background: "#eff6ff", color: "#2563eb", fontSize: 10, fontWeight: 900, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "1.5rem" }}>{howItWorks.subtitle}</span>
+          <h2 style={{ fontSize: "clamp(2rem, 5vw, 4rem)", fontWeight: 900, letterSpacing: "-0.04em", color: "#0f172a", marginBottom: "1.5rem", lineHeight: 1 }}>{howItWorks.title}</h2>
+          <p style={{ fontSize: "1.25rem", color: "#64748b", maxWidth: 540, fontWeight: 300, lineHeight: 1.7 }}>{howItWorks.description}</p>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: "8rem" }}>
+          {howItWorks.steps.map((step, index) => {
             const isEven = index % 2 === 0;
             return (
-              <div key={step.id} className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-                <motion.div
-                  initial={{ opacity: 0, x: isEven ? -50 : 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.8 }}
-                  className={!isEven ? "lg:order-2" : ""}
-                >
-                  <div className="text-blue-500 font-bold tracking-widest text-xs uppercase mb-6">
-                    STEP 0{index + 1}
+              <div key={step.id} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", alignItems: "center" }}>
+                <motion.div initial={{ opacity: 0, x: isEven ? -40 : 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8 }} style={{ order: isEven ? 1 : 2 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: "2rem" }}>
+                    <div style={{ width: 28, height: 1.5, background: "#2563eb" }} />
+                    <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.35em", color: "#3b82f6", textTransform: "uppercase" }}>Step 0{index + 1}</span>
                   </div>
-                  <h3 className="text-2xl md:text-4xl font-bold mb-8 tracking-tight leading-tight text-white">
-                    {step.heading.split(" Lucid ").map((part: string, i: number, arr: any) => (
-                      <span key={i}>
-                        {part}
-                        {i < arr.length - 1 && <><br /><span className="text-blue-500">Lucid </span></>}
-                      </span>
-                    ))}
+                  <h3 style={{ fontSize: "clamp(1.5rem, 3vw, 2.75rem)", fontWeight: 800, letterSpacing: "-0.035em", color: "#0f172a", marginBottom: "1.5rem", lineHeight: 1.1 }}>
+                    {step.heading.includes("Lucid")
+                      ? step.heading.split("Lucid").map((part, i, arr) => (
+                        <span key={i}>{part}{i < arr.length - 1 && <em style={{ color: "#2563eb" }}>Lucid </em>}</span>
+                      ))
+                      : step.heading}
                   </h3>
-                  <p className="text-slate-400 text-xl mb-10 leading-relaxed font-light">
-                    {step.description}
-                  </p>
-                  <ul className="space-y-6 mb-12">
-                    {step.points.map((point: string, i: number) => (
-                      <li key={i} className="flex items-start gap-4">
-                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-3 shrink-0" />
-                        <span className="text-slate-400 text-lg leading-relaxed">{point}</span>
+                  <p style={{ fontSize: "1.1rem", color: "#64748b", marginBottom: "2.5rem", lineHeight: 1.8, fontWeight: 300 }}>{step.description}</p>
+                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+                    {step.points.map((point, i) => (
+                      <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "1rem" }}>
+                        <div style={{ width: 6, height: 6, borderRadius: 9999, background: "#2563eb", marginTop: 9, flexShrink: 0 }} />
+                        <span style={{ color: "#64748b", fontSize: "1.05rem", lineHeight: 1.6, fontWeight: 300 }}>{point}</span>
                       </li>
                     ))}
                   </ul>
                 </motion.div>
 
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8 }}
-                  className={!isEven ? "lg:order-1" : ""}
-                >
-                  <div className="relative rounded-[2rem] overflow-hidden bg-white/5 p-2 shadow-2xl border border-white/5">
-                    <img
-                      src={step.image}
-                      alt={step.title}
-                      className="w-full object-cover aspect-[4/3] rounded-[1.5rem] grayscale-[0.2] opacity-80"
-                      referrerPolicy="no-referrer"
-                    />
+                <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }} style={{ order: isEven ? 2 : 1 }}>
+                  <div style={{ borderRadius: 32, overflow: "hidden", background: "transparent", padding: 0, boxShadow: "none", border: "none" }}>
+                    <img src={step.image} alt={step.title} style={{ width: "100%", height: "auto", objectFit: "cover", borderRadius: 32, display: "block" }} referrerPolicy="no-referrer" />
                   </div>
                 </motion.div>
               </div>
@@ -223,201 +1130,63 @@ const HowItWorksDark = () => {
   );
 };
 
+// ─────────────── FINAL CTA ───────────────
+const FinalCTA = () => (
+  <section style={{ padding: "6rem 2rem", background: "#fff" }}>
+    <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+      <div style={{ background: "#0f172a", borderRadius: 48, padding: "clamp(3rem,8vw,7rem)", textAlign: "center", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at center, rgba(37,99,235,0.25) 0%, transparent 65%)", pointerEvents: "none" }} />
+        <div style={{ position: "relative", zIndex: 10, maxWidth: 780, margin: "0 auto" }}>
+          <h2 style={{ fontSize: "clamp(2rem, 6vw, 5rem)", fontWeight: 900, color: "#fff", letterSpacing: "-0.045em", lineHeight: 0.9, marginBottom: "2rem" }}>
+            Your execution gap<br />has a <em style={{ color: "#60a5fa", fontStyle: "italic" }}>cost.</em>
+          </h2>
+          <p style={{ color: "#64748b", fontSize: "clamp(1rem, 2vw, 1.4rem)", marginBottom: "3.5rem", lineHeight: 1.7, fontWeight: 300 }}>
+            Every week without Lucid is a week where your strategy stays at the top and your <span style={{ color: "#fff", fontWeight: 500 }}>ground reality stays unknown.</span> The Lighthouse Programme gives you 30 days to find out exactly what's possible.
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: "1.5rem" }}>
+            <button style={{ height: 60, padding: "0 3rem", borderRadius: 20, background: "#2563eb", color: "#fff", fontWeight: 800, fontSize: "1.05rem", border: "none", cursor: "pointer", boxShadow: "0 20px 40px rgba(37,99,235,0.3)", transition: "transform 0.15s" }}
+              onMouseEnter={e => e.currentTarget.style.transform = "scale(1.03)"}
+              onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>
+              Apply for the Lighthouse Programme
+            </button>
+            <button style={{ height: 60, padding: "0 2rem", borderRadius: 20, background: "transparent", color: "#94a3b8", fontWeight: 800, fontSize: "1.05rem", border: "none", cursor: "pointer" }}
+              onMouseEnter={e => e.currentTarget.style.color = "#fff"}
+              onMouseLeave={e => e.currentTarget.style.color = "#94a3b8"}>
+              Talk to us first →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+// ─────────────── MAIN APP ───────────────
 export default function Home() {
-  const heroRef = React.useRef<HTMLDivElement>(null);
+  const [act, setAct] = React.useState(1);
 
-  const handleDemoSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert("Demo request submitted! Our team will contact you shortly.");
-  };
+  React.useEffect(() => {
+    const isDark = act === 2;
+    window.dispatchEvent(new CustomEvent("lucid:header", { detail: { dark: isDark } }));
+    return () => {
+      window.dispatchEvent(new CustomEvent("lucid:header", { detail: { dark: false } }));
+    };
+  }, [act]);
 
-  const scrollToSolution = () => {
-    heroRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  const nextAct = () => setAct(p => p + 1);
+  const skipToMain = () => setAct(3);
 
-  const content = LUCID_CONTENT as any;
+  if (act === 1) return <StoryAct1 onNext={nextAct} onSkip={skipToMain} />;
+  if (act === 2) return <StoryAct2 onNext={skipToMain} onSkip={skipToMain} />;
 
   return (
-    <div className="bg-navy min-h-screen">
-      <QuestionScroller onScrollToSolution={scrollToSolution} />
-      {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-[calc(100vh-80px)] flex flex-col text-white justify-center py-12 md:py-20 overflow-hidden border-t border-white/5">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-600/10 blur-[150px] rounded-full translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-500/5 blur-[120px] rounded-full -translate-x-1/2 translate-y-1/2" />
-        </div>
-
-        <div className="container mx-auto px-6 relative z-10 flex-grow flex flex-col justify-center">
-          <div className="max-w-5xl">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="inline-flex items-center gap-3 text-sm font-bold tracking-widest text-blue-400 mb-8 md:mb-12">
-                <div className="w-2 h-2 rounded-full bg-blue-400" />
-                {content.hero.subtitle}
-              </div>
-
-              <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold tracking-tighter mb-8 md:mb-12 leading-[0.85]">
-                The operating system <br />
-                your <span className="text-blue-500 font-extrabold italic">business runs on.</span> <br />
-                <span className="text-slate-500">From decision to execution.</span>
-              </h1>
-
-              <p className="text-lg md:text-xl text-slate-400 max-w-3xl mb-12 md:mb-16 leading-relaxed font-light">
-                Not a feature. Not a dashboard. The <span className="text-white font-semibold">operating layer between what your organization decides and what actually happens</span> — at the counter, on the floor, in the field, on the line.
-              </p>
-
-              <div className="flex flex-col sm:flex-row items-center gap-6 mb-8">
-                <Dialog>
-                  <DialogTrigger
-                    render={
-                      <Button size="lg" className="h-14 md:h-16 px-10 rounded-2xl text-lg font-bold bg-blue-500 hover:bg-blue-600 text-white shadow-2xl shadow-blue-500/30">
-                        See Lucid in action
-                      </Button>
-                    }
-                  />
-                  <DialogContent className="sm:max-w-[425px] bg-navy border-slate-800 text-white font-sans">
-                    <DialogHeader>
-                      <DialogTitle className="text-2xl font-bold">See Lucid in Action</DialogTitle>
-                      <DialogDescription className="text-slate-400">
-                        Schedule a personalized tour of the Lucid OS.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <form onSubmit={handleDemoSubmit} className="grid gap-6 py-4">
-                      <div className="grid gap-2">
-                        <Label htmlFor="h-name" className="text-slate-300">Full Name</Label>
-                        <Input id="h-name" className="bg-slate-900 border-slate-800 text-white" placeholder="John Doe" required />
-                      </div>
-                      <div className="grid gap-2">
-                        <Label htmlFor="h-email" className="text-slate-300">Work Email</Label>
-                        <Input id="h-email" className="bg-slate-900 border-slate-800 text-white" type="email" placeholder="john@company.com" required />
-                      </div>
-                      <Button type="submit" className="w-full h-12 bg-blue-500 text-white hover:bg-blue-600">Request Demo</Button>
-                    </form>
-                  </DialogContent>
-                </Dialog>
-
-                <Button variant="outline" size="lg" className="h-14 md:h-16 px-10 rounded-2xl text-lg font-bold bg-white border-white text-black hover:bg-slate-100 transition-all">
-                  Request a 30-day pilot
-                </Button>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Stats Strip - Flowing naturally to avoid overlap on mobile/tablet */}
-        <div className="border-t border-white/5 bg-white/[0.02] py-12">
-          <div className="container mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-              {content.hero.stats.map((stat: any, i: number) => (
-                <div key={i} className="flex flex-col items-center justify-center text-center h-full">
-                  <div className="text-5xl font-extrabold mb-2 flex items-baseline justify-center text-white">
-                    {stat.label.replace(stat.sub, '')}
-                    <span className="text-blue-500 text-2xl ml-1">{stat.sub === "." ? "." : stat.sub}</span>
-                  </div>
-                  <div className="text-sm text-slate-500 font-medium">{stat.desc}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Comparison Text Block */}
-      <section className="py-32 bg-navy text-white relative border-y border-white/5">
-        <div className="container mx-auto px-6 max-w-4xl text-center">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1 }}
-          >
-            <p className="text-xl md:text-2xl lg:text-3xl leading-relaxed font-light text-slate-400 mb-16">
-              The way <span className="text-white font-semibold italic">Instagram became non-negotiable for marketing at scale</span> — Lucid is becoming non-negotiable for <span className="text-white font-semibold italic">sales and operations execution.</span> Organizations running on Lucid don't debate whether to use it. They can't imagine operating without it.
-            </p>
-
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-              <div className="px-6 py-4 rounded-full border border-white/10 bg-white/5 text-slate-500 text-sm italic">
-                {content.comparison.before}
-              </div>
-              <div className="px-8 py-4 rounded-full bg-blue-600 text-white text-sm font-bold shadow-2xl shadow-blue-600/20">
-                {content.comparison.after}
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Capabilities Section */}
-      <section id="results" className="py-24 bg-navy">
-        <div className="container mx-auto px-6">
-          <div className="mb-20">
-            <div className="text-blue-500 font-bold tracking-widest text-[10px] uppercase mb-6">
-              {content.capabilities.subtitle}
-            </div>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-8 text-white leading-tight">
-              {content.capabilities.title}
-            </h2>
-            <p className="text-slate-400 text-xl max-w-2xl font-light leading-relaxed">
-              {content.capabilities.description}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {content.capabilities.items.map((item: any, i: number) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-              >
-                <Card className="h-full border-white/5 bg-white/[0.03] shadow-sm hover:shadow-xl transition-all duration-300 group p-6 rounded-3xl">
-                  <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center mb-6 border border-white/5">
-                    <span className="text-2xl">{item.icon}</span>
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4 tracking-tight text-white">{item.title}</h3>
-                  <p className="text-slate-400 text-lg leading-relaxed font-light">
-                    {item.desc}
-                  </p>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <HowItWorksDark />
-
-      {/* Final CTA Strip */}
-      <section className="py-24 bg-navy relative overflow-hidden">
-        <div className="container mx-auto px-6">
-          <div className="bg-slate-900 border border-white/5 rounded-[3rem] p-12 md:p-24 text-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-transparent opacity-50" />
-            
-            <div className="relative z-10 max-w-4xl mx-auto">
-              <h2 className="text-3xl md:text-6xl font-bold text-white mb-8 tracking-tighter">
-                Your execution gap <br /> 
-                has a <span className="text-blue-500">cost.</span>
-              </h2>
-              <p className="text-slate-400 text-xl md:text-2xl mb-16 leading-relaxed font-light">
-                Every week without Lucid is a week where your strategy stays at the top and your <span className="text-white font-medium">ground reality stays unknown.</span> The Lighthouse Programme gives you 30 days to find out exactly what's possible.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <Button size="lg" className="h-16 px-12 rounded-2xl text-lg font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-2xl shadow-blue-600/20">
-                  Apply for the Lighthouse Programme
-                </Button>
-                <Button variant="ghost" size="lg" className="h-16 px-10 rounded-2xl text-lg font-bold text-slate-300 hover:text-white hover:bg-white/5">
-                  Talk to us first →
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+      <Hero />
+      <StatsStrip />
+      <Comparison />
+      <Capabilities />
+      <HowItWorks />
+      <FinalCTA />
+    </motion.div>
   );
 }

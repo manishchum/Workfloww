@@ -24,9 +24,9 @@ export default function BPO() {
   };
 
   return (
-    <div className="pt-24">
+    <div>
       {/* Hero Section */}
-      <section className="relative py-20 md:py-32 overflow-hidden bg-white">
+      <section className="relative py-20 md:py-32 overflow-hidden bg-white pt-20">
         <div className="absolute top-0 right-0 w-[50%] h-[100%] bg-gradient-to-l from-blue-500/10 to-transparent -z-10 blur-[120px]" />
 
         <div className="container mx-auto px-6">
