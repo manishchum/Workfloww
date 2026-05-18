@@ -1,5 +1,6 @@
 import * as React from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   ChevronRight,
@@ -668,6 +669,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
 // ─────────────── HERO ───────────────
 const Hero = () => {
   const { hero } = LUCID_CONTENT;
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [heroName, setHeroName] = React.useState("");
   const [heroEmail, setHeroEmail] = React.useState("");
@@ -709,7 +711,7 @@ const Hero = () => {
               onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>
               Join Lighthouse Programme 
             </button>
-            <button style={{ height: 56, padding: "0 2.5rem", borderRadius: 18, background: "transparent", color: "#475569", fontWeight: 800, fontSize: "1.05rem", border: "1.5px solid #cbd5e1", cursor: "pointer", transition: "border-color 0.2s" }}
+            <button onClick={() => navigate("/contact")} style={{ height: 56, padding: "0 2.5rem", borderRadius: 18, background: "transparent", color: "#475569", fontWeight: 800, fontSize: "1.05rem", border: "1.5px solid #cbd5e1", cursor: "pointer", transition: "border-color 0.2s" }}
               onMouseEnter={e => e.currentTarget.style.borderColor = "#2563eb"}
               onMouseLeave={e => e.currentTarget.style.borderColor = "#cbd5e1"}>
               Book a Demo
