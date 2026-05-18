@@ -2,17 +2,18 @@ import * as React from "react";
 
 // Robust backend URL detection
 const getBackendUrl = (): string => {
-  const envUrl = (import.meta as any).env?.VITE_LEADS_API_URL;
-  if (envUrl) {
-    return envUrl.endsWith("/") ? envUrl.slice(0, -1) : envUrl;
-  }
-  
-  // Fallback: local backend on 8000 for local development, relative root for Vercel production
+  // Always prioritize localhost on 8000 during local development to avoid CORS preflight issues
   if (typeof window !== "undefined") {
     const hostname = window.location.hostname;
     if (hostname === "localhost" || hostname === "127.0.0.1" || hostname.startsWith("192.168.")) {
       return "http://localhost:8000";
     }
+  }
+
+  // Otherwise, fallback to the environment variable or relative origin in production
+  const envUrl = (import.meta as any).env?.VITE_LEADS_API_URL;
+  if (envUrl) {
+    return envUrl.endsWith("/") ? envUrl.slice(0, -1) : envUrl;
   }
   return "";
 };
