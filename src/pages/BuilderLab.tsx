@@ -23,6 +23,7 @@ export default function BuilderLab() {
   const [mobileNumber, setMobileNumber] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [organization, setOrganization] = React.useState("");
+  const [websiteTrap, setWebsiteTrap] = React.useState(""); // Anti-spam trap
   const { sendEmail, status, error } = useLeadEmail();
 
   const handleJoinSubmit = async (e: React.FormEvent) => {
@@ -39,6 +40,7 @@ export default function BuilderLab() {
       email: email,
       phone: mobileNumber,
       org: organization,
+      website_trap: websiteTrap,
     });
 
     // Reset form and close dialog on success
@@ -47,6 +49,7 @@ export default function BuilderLab() {
       setMobileNumber("");
       setEmail("");
       setOrganization("");
+      setWebsiteTrap("");
       setIsDialogOpen(false);
       alert("Thank you for joining! We'll be in touch soon.");
     }
@@ -102,6 +105,18 @@ export default function BuilderLab() {
                   <p className="text-slate-600 mb-6">Fill in your details to get started</p>
 
                   <form onSubmit={handleJoinSubmit} className="space-y-4 text-left">
+                    {/* Anti-spam Honeypot field (hidden from normal users) */}
+                    <div style={{ display: "none" }} aria-hidden="true">
+                      <label htmlFor="b_website_trap">Do not fill this field</label>
+                      <input
+                        id="b_website_trap"
+                        type="text"
+                        value={websiteTrap}
+                        onChange={(e) => setWebsiteTrap(e.target.value)}
+                        tabIndex={-1}
+                        autoComplete="off"
+                      />
+                    </div>
                     <div>
                       <label className="block text-sm font-medium text-slate-900 mb-2">
                         Full Name

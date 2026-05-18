@@ -57,6 +57,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [cEmail, setCEmail] = React.useState("");
   const [cOrg, setCOrg] = React.useState("");
   const [cMessage, setCMessage] = React.useState("");
+  const [cTrap, setCTrap] = React.useState(""); // Anti-spam honeypot
   const { sendEmail: sendContactEmail, status: contactStatus, error: contactError } = useLeadEmail();
   const location = useLocation();
   const navigate = useNavigate();
@@ -113,6 +114,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       email: cEmail,
       org: cOrg,
       message: cMessage,
+      website_trap: cTrap,
     });
     setIsContactModalOpen(false);
     setIsCalOpen(true);
@@ -422,6 +424,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             {/* Right Side: Form */}
             <div className="bg-slate-50 p-8 md:p-12 lg:p-16 border-l border-slate-200">
               <form onSubmit={handleContactSubmit} className="space-y-6">
+                {/* Anti-spam Honeypot field (hidden from normal users) */}
+                <div style={{ display: "none" }} aria-hidden="true">
+                  <Label htmlFor="c_website_trap">Do not fill this field</Label>
+                  <Input
+                    id="c_website_trap"
+                    type="text"
+                    value={cTrap}
+                    onChange={e => setCTrap(e.target.value)}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="c-first" className="text-slate-700">First name</Label>

@@ -21,6 +21,7 @@ export default function Contact() {
   const [cpPhone, setCpPhone] = React.useState("");
   const [cpEmail, setCpEmail] = React.useState("");
   const [cpOrg, setCpOrg] = React.useState("");
+  const [cpTrap, setCpTrap] = React.useState(""); // Honeypot spam trap
   const { sendEmail, status: cpStatus, error: cpError } = useLeadEmail();
   const CAL_USERNAME = "manish-chum-ovkoyi";
   const CAL_EVENT_SLUG = "book-a-demo";
@@ -33,6 +34,7 @@ export default function Contact() {
       phone: cpPhone,
       email: cpEmail,
       org: cpOrg,
+      website_trap: cpTrap,
     });
     setIsCalOpen(true);
   };
@@ -125,6 +127,19 @@ export default function Contact() {
                 </div>
 
                 <form onSubmit={handleContactSubmit} className="space-y-6">
+
+                  {/* Anti-spam Honeypot field (hidden from normal users) */}
+                  <div style={{ display: "none" }} aria-hidden="true">
+                    <Label htmlFor="website_trap">Do not fill this field</Label>
+                    <Input
+                      id="website_trap"
+                      type="text"
+                      value={cpTrap}
+                      onChange={e => setCpTrap(e.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="firstName" className="text-slate-700">Full Name</Label>
