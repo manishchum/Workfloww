@@ -38,9 +38,10 @@ export default function Contact() {
   };
 
   return (
-    <div className="bg-gradient-to-b from-blue-50 via-white to-blue-50 min-h-screen pb-12 md:pb-16 text-slate-900">
-      <div className="container mx-auto px-6 max-w-7xl pt-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+    <div className="bg-gradient-to-b from-blue-50 via-white to-blue-50 min-h-screen text-slate-900 flex flex-col items-center justify-center py-12 md:py-20">
+      <div className="w-full px-6 flex items-center justify-center">
+        <div className="max-w-7xl w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
 
           {/* Left Column: Context & Info */}
           <div className="lg:col-span-5 flex flex-col justify-center">
@@ -185,6 +186,7 @@ export default function Contact() {
           </div>
         </DialogContent>
       </Dialog>
+    </div>
     </div>
   );
 }
