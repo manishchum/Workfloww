@@ -56,7 +56,7 @@ export default function BuilderLab() {
   };
 
   return (
-    <div>
+    <div className="font-sans">
       {/* Hero Section */}
       <section className="relative py-20 md:py-32 pl-45 pr-42 overflow-hidden bg-white min-h-[100vh] flex items-center">
         <div className="container mx-auto px-6">

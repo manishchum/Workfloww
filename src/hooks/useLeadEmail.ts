@@ -18,9 +18,10 @@ const BACKEND_URL = getBackendUrl();
 type LeadData = {
   source: string;
   name: string;
-  phone: string;
+  phone?: string;
   email: string;
   org: string;
+  message?: string;
   website_trap?: string; // Honeypot trap to catch automated bots
 };
 
@@ -49,9 +50,12 @@ export const useLeadEmail = () => {
             name: data.name,
             email: data.email,
             company: data.org,
-            message: `Phone: ${data.phone}\nSource: ${data.source}`,
+            // Prefer an explicit message from the caller, fallback to a generated one
+            message: data.message
+              ? `${data.message}\n\nPhone: ${data.phone ?? ""}\nSource: ${data.source}`
+              : `Phone: ${data.phone ?? ""}\nSource: ${data.source}`,
             source: data.source,
-            phone: data.phone,
+            phone: data.phone ?? "",
             website_trap: data.website_trap ?? "",
           }),
         }
@@ -89,4 +93,4 @@ export const useLeadEmail = () => {
     status,
     error
   };
-};
+};
