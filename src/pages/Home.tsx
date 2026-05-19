@@ -263,10 +263,10 @@ const StoryAct1 = ({ onNext, onSkip }) => {
         ))}
       </div>
 
-      {/* "Find the answer" appears after last question */}
+      {/* "Find the answer" appears after each question */}
       <motion.button
         initial={{ opacity: 0 }}
-        animate={{ opacity: index === questions.length - 1 ? 1 : 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
         onClick={onNext}
         style={{ position: "absolute", bottom: 24, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", color: "#64748b" }}
@@ -429,7 +429,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
           />
           <span
             style={{
-              fontSize: 10,
+              fontSize: 14,
               fontWeight: 800,
               letterSpacing: "0.4em",
               color: "#60a5fa",
@@ -437,7 +437,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
               fontFamily: "monospace",
             }}
           >
-            WHAT YOU NEED?
+            WHAT YOU NEED TO INCREASE YOUR REVENUE?
           </span>
         </motion.div>
 
@@ -511,10 +511,10 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                 >
                   <span
                     style={{
-                      fontSize: 9,
+                      fontSize: 16,
                       fontWeight: 800,
                       letterSpacing: "0.35em",
-                      color: isHovered ? "#60a5fa" : "#475569",
+                      color: "#ffffff",
                       textTransform: "uppercase",
                       fontFamily: "monospace",
                       transition: "color 0.35s",
@@ -528,7 +528,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                     style={{
                       fontSize: "clamp(1.5rem, 3vw, 2.75rem)",
                       fontWeight: 800,
-                      color: "rgba(99,157,253,0.1)",
+                      color: "#ffffff",
                       lineHeight: 1,
                       fontFamily: "Georgia, serif",
                       userSelect: "none",
@@ -579,8 +579,8 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                       />
                       <span
                         style={{
-                          fontSize: "0.75rem",
-                          color: "#cbd5e1",
+                          fontSize: "0.95rem",
+                          color: "#ffffff",
                           lineHeight: 1.3,
                           fontWeight: 300,
                         }}
@@ -594,9 +594,9 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                 {/* Summary line */}
                 <div
                   style={{
-                    fontSize: "clamp(0.75rem, 0.95vw, 0.85rem)",
+                    fontSize: "clamp(1rem, 1.2vw, 1.15rem)",
                     fontWeight: 600,
-                    color: "#e2e8f0",
+                    color: "#ffffff",
                     lineHeight: 1.25,
                     opacity: isHovered ? 0 : 1,
                     transform: isHovered ? "translateY(4px)" : "translateY(0)",
