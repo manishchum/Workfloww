@@ -66,7 +66,7 @@ export default function SalesHead() {
     <div className="bg-white text-slate-900">
       {/* Hero */}
       <section className="border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20 lg:py-24">
+        <div className="pl-45 pr-42 px-4 py-8 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-16 items-center">
             <div>
               <p className="text-xs font-semibold tracking-[0.3em] text-slate-500 uppercase mb-6">
@@ -135,7 +135,7 @@ export default function SalesHead() {
 
       {/* Revenue Assurance */}
       <section className="border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20">
+        <div className="pl-45 pr-42 px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-16 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-extrabold">
@@ -183,7 +183,7 @@ export default function SalesHead() {
 
       {/* Launch Execution */}
       <section className="border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20">
+        <div className="pl-45 pr-42 px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-16 items-start">
             <div className="bg-white border border-slate-200 rounded-3xl shadow-xl p-6">
               <div className="flex items-center justify-between">
@@ -251,7 +251,7 @@ export default function SalesHead() {
 
       {/* Outcomes */}
       <section className="border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20">
+        <div className="pl-45 pr-42 px-4 py-8">
           <h2 className="text-3xl md:text-4xl font-extrabold mb-10">
             ₹2.1Cr is recovered when every outlet runs the same play.
           </h2>
@@ -270,7 +270,7 @@ export default function SalesHead() {
 
       {/* CTA */}
       <section className="bg-slate-900 text-white">
-        <div className="container mx-auto px-6 py-20">
+        <div className="pl-45 pr-42 px-4 py-8">
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
             <div>
               <p className="text-xs font-semibold tracking-[0.3em] text-slate-400 uppercase mb-4">

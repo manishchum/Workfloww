@@ -808,7 +808,7 @@ const StatsStrip = () => {
 const Comparison = () => {
   const { comparison } = LUCID_CONTENT;
   return (
-    <section style={{ padding: "8rem 2rem", background: "#f8fafc", borderTop: "1px solid #e2e8f0", borderBottom: "1px solid #e2e8f0" }}>
+    <section style={{ padding: "2rem 2rem", height:"325px",background: "#f8fafc", borderTop: "1px solid #e2e8f0", borderBottom: "1px solid #e2e8f0" }}>
       <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center" }}>
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1 }}>
           <p style={{ fontSize: "clamp(1.25rem, 3vw, 2rem)", color: "#64748b", fontWeight: 300, lineHeight: 1.6, marginBottom: "4rem" }}>
@@ -825,7 +825,7 @@ const Comparison = () => {
 const Capabilities = () => {
   const { capabilities } = LUCID_CONTENT;
   return (
-    <section id="results" style={{ padding: "7rem 2rem", background: "#fff" }}>
+    <section id="results" style={{ padding: "2rem 2rem ", background: "#fff" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
         <div style={{ marginBottom: "5rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: "1.5rem" }}>
@@ -1080,7 +1080,7 @@ const UploadWorkflowAnimation = () => {
 const HowItWorks = () => {
   const { howItWorks } = LUCID_CONTENT;
   return (
-    <section id="how-it-works" style={{ padding: "7rem 2rem", background: "#fff", borderTop: "1px solid #f1f5f9" }}>
+    <section id="how-it-works" style={{ padding: "2rem 2rem", background: "#fff", borderTop: "1px solid #f1f5f9" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
         <div style={{ marginBottom: "6rem" }}>
           <span style={{ display: "inline-block", padding: "0.35rem 1rem", borderRadius: 9999, border: "1px solid #bfdbfe", background: "#eff6ff", color: "#2563eb", fontSize: 10, fontWeight: 900, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "1.5rem" }}>{howItWorks.subtitle}</span>
@@ -1132,7 +1132,7 @@ const HowItWorks = () => {
 
 // ─────────────── FINAL CTA ───────────────
 const FinalCTA = () => (
-  <section style={{ padding: "6rem 2rem", background: "#fff" }}>
+  <section style={{ padding: "2rem 2rem", background: "#fff" }}>
     <div style={{ maxWidth: 1100, margin: "0 auto" }}>
       <div style={{ background: "#0f172a", borderRadius: 48, padding: "clamp(3rem,8vw,7rem)", textAlign: "center", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at center, rgba(37,99,235,0.25) 0%, transparent 65%)", pointerEvents: "none" }} />

@@ -118,9 +118,9 @@ export default function ManufacturingIndustrial() {
           color: var(--ink);
           background: var(--surface);
         }
-        .section { padding: 80px 24px; }
+        .section { padding: 2rem 24px; }
         .section#hero { padding: 20px 24px; }
-        .container { max-width: 1180px; margin: 0 auto; }
+        .container { max-width: 1180px; margin: 0 auto; padding-left: 45px;padding-right: 42px; }
         .hero-grid {
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -163,7 +163,7 @@ export default function QSRRetail() {
           background: var(--surface);
         }
         .section {
-          padding: 80px 24px;
+          padding: 2rem 24px;
         }
         .section#hero {
           padding: 20px 24px;
@@ -171,10 +171,15 @@ export default function QSRRetail() {
         .section.surface {
           background: var(--surface-2);
         }
-        .container {
+          .container {
           max-width: 1180px;
-          margin: 0 auto;
+            margin: 0 auto;
+            padding-top: 8px;      /* py-8 top */
+            padding-bottom: 4px;
+            padding-left: 45px;
+            padding-right: 42px;
         }
+        
         .reveal {
           opacity: 0;
           transform: translateY(20px);
@@ -873,10 +878,10 @@ export default function QSRRetail() {
         </div>
       </section>
 
-      <footer className="footer">
+      {/* <footer className="footer">
         <div className="nav-logo" style={{ color: "var(--ink)" }}>Lucid</div>
         <div>© 2026 Lucid. All rights reserved.</div>
-      </footer>
+      </footer> */}
     </div>
   );
 }

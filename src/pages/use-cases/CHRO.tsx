@@ -87,7 +87,7 @@ export default function CHRO() {
     <div className="bg-white text-slate-900">
       {/* Hero */}
       <section className="border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20 lg:py-24">
+        <div className="pl-45 pr-42 px-4 py-8 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-16 items-center">
             <div>
               <p className="text-xs font-semibold tracking-[0.3em] text-slate-500 uppercase mb-6">
@@ -154,7 +154,7 @@ export default function CHRO() {
 
       {/* Attrition Problem */}
       <section className="border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20">
+        <div className="pl-45 pr-42 px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-16 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-extrabold font-[var(--font-heading)]">
@@ -202,7 +202,7 @@ export default function CHRO() {
 
       {/* Capability Blind Spot */}
       <section className="border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20">
+        <div className="pl-45 pr-42 px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-16 items-start">
             <div className="bg-white border border-slate-200 rounded-3xl shadow-xl p-6">
               <div className="flex items-center justify-between">
@@ -254,7 +254,7 @@ export default function CHRO() {
 
       {/* Evidence */}
       <section className="border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20">
+        <div className="pl-45 pr-42 px-4 py-8">
           <h2 className="text-3xl md:text-4xl font-extrabold font-[var(--font-heading)] mb-10">
             Retention drops sharply when capability stays low.
           </h2>
@@ -301,7 +301,7 @@ export default function CHRO() {
 
       {/* Speed to Productivity */}
       <section className="border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20">
+        <div className="pl-45 pr-42 px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-16 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-extrabold font-[var(--font-heading)]">
@@ -352,7 +352,7 @@ export default function CHRO() {
 
       {/* Six Outcomes */}
       <section className="border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20">
+        <div className="pl-45 pr-42 px-4 py-8">
           <h2 className="text-3xl md:text-4xl font-extrabold font-[var(--font-heading)]">
             Six outcomes tied to workforce cost and retention.
           </h2>
@@ -372,7 +372,7 @@ export default function CHRO() {
 
       {/* CTA Dark */}
       <section className="bg-[#0f1117] text-white">
-        <div className="container mx-auto px-6 py-20">
+        <div className="pl-45 pr-42 px-4 py-8">
           <div className="max-w-3xl">
             <h2 className="text-3xl md:text-5xl font-extrabold font-[var(--font-heading)]">
               Put a <span className="text-[#6357d4]">30-day pilot</span> against frontline attrition.

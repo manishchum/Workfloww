@@ -176,10 +176,10 @@ export default function FMCG() {
           color: var(--ink);
           background: var(--surface);
         }
-        .section { padding: 80px 24px; }
+        .section { padding: 2rem 24px; }
         .section#hero { padding: 20px 24px; }
         .section.surface { background: var(--surface-2); }
-        .container { max-width: 1180px; margin: 0 auto; }
+        .container { max-width: 1180px; margin: 0 auto; padding-left: 45px; padding-right: 42px;}
         .reveal { opacity: 0; transform: translateY(20px); transition: all 0.55s ease; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
         .eyebrow {
@@ -695,10 +695,10 @@ export default function FMCG() {
         </div>
       </section>
 
-      <footer className="footer">
+      {/* <footer className="footer">
         <div style={{ fontWeight: 800, color: "var(--ink)" }}>Lucid</div>
         <div>© 2026 Lucid. All rights reserved.</div>
-      </footer>
+      </footer> */}
     </div>
   );
 }

@@ -58,7 +58,7 @@ export default function BuilderLab() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative py-20 md:py-32 overflow-hidden bg-white min-h-[100vh] flex items-center">
+      <section className="relative py-20 md:py-32 pl-45 pr-42 overflow-hidden bg-white min-h-[100vh] flex items-center">
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -191,7 +191,7 @@ export default function BuilderLab() {
       </section>
 
       {/* What is Builder Labs Section */}
-      <section className="py-20 md:py-32 bg-white border-b border-slate-200">
+      <section className="py-2 md:py-4 pl-45 pr-42 bg-white border-b border-slate-200">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-start">
             <motion.div
@@ -289,7 +289,7 @@ export default function BuilderLab() {
       </section>
 
       {/* Why Needed Section */}
-      <section className="py-20 md:py-32 bg-slate-50">
+      <section className="py-6 md:py-10 pl-45 pr-42 bg-slate-50">
         <div className="container mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -322,7 +322,7 @@ export default function BuilderLab() {
       </section>
 
       {/* What You Get Section */}
-      <section className="py-20 md:py-32 bg-white border-y border-slate-200">
+      <section className="py-6 md:py-10 pl-45 pr-42 bg-white border-y border-slate-200">
         <div className="container mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -359,7 +359,7 @@ export default function BuilderLab() {
       </section>
 
       {/* Impact Section */}
-      <section className="py-20 md:py-32 bg-slate-50">
+      <section className="py-6 md:py-10 pl-45 pr-42 bg-slate-50">
         <div className="container mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -438,7 +438,7 @@ export default function BuilderLab() {
       </section>
 
       {/* Join Section */}
-      <section className="py-20 md:py-32 bg-white">
+      <section className="py-6 md:py-10 pl-45 pr-42 bg-white">
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
