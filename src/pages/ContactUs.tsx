@@ -40,14 +40,14 @@ export default function Contact() {
   };
 
   return (
-    <div className="bg-gradient-to-b from-blue-50 via-white to-blue-50 min-h-screen text-slate-900 flex flex-col items-center justify-center py-12 md:py-20">
-      <div className="w-full px-6 flex items-center justify-center">
+    <div className="bg-gradient-to-b from-blue-50 via-white to-blue-50 min-h-screen text-slate-900 flex flex-col items-center justify-center py-0 px-0 ">
+      <div className="w-full px-0 flex items-center justify-center">
         <div className="max-w-7xl w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
 
           {/* Left Column: Context & Info */}
           <div className="lg:col-span-5 flex flex-col justify-center">
-            <div className="space-y-12">
+            <div className="py-4 px-6">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -114,19 +114,19 @@ export default function Contact() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
-              className="bg-white border border-slate-200 rounded-[3rem] p-8 md:p-16 relative overflow-hidden"
+              className="bg-white border border-slate-200 rounded-[3rem] px-2, py-6 pl-6 pr-8 relative overflow-hidden"
             >
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
 
               <div className="relative z-10">
                 <div className="mb-12">
-                  <h2 className="text-3xl font-bold text-slate-900 mb-4">Apply for a 30-Day Pilot</h2>
+                  {/* <h2 className="text-3xl font-bold text-slate-900 mb-4">Apply for a 30-Day Pilot</h2>
                   <p className="text-slate-600 font-light">
                     Join the Lighthouse Programme. See ground reality in 48 hours.
-                  </p>
+                  </p> */}
                 </div>
 
-                <form onSubmit={handleContactSubmit} className="space-y-6">
+                <form onSubmit={handleContactSubmit} className="space-y-4">
 
                   {/* Anti-spam Honeypot field (hidden from normal users) */}
                   <div style={{ display: "none" }} aria-hidden="true">
@@ -147,7 +147,7 @@ export default function Contact() {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="mobilenumber" className="text-slate-700">Mobile Number</Label>
-                    <Input id="mobilenumber" type="number" className="bg-white border-slate-200 text-slate-900 h-12" placeholder="+91 1234567890" required value={cpPhone} onChange={e => setCpPhone(e.target.value)} />
+                    <Input id="mobilenumber" type="tel" className="bg-white border-slate-200 text-slate-900 h-12" placeholder="+91 1234567890" required value={cpPhone} onChange={e => setCpPhone(e.target.value)} />
                   </div>
 
                   <div className="space-y-2">

@@ -159,3 +159,35 @@
     transform: rotateY(180deg);
   }
 }
+
+/* ── Lighthouse Program — scoped design tokens ─────────────────────────── */
+.lh-page {
+  --lh-ink:          #0a0a0a;
+  --lh-paper:        #f9f9f9;
+  --lh-accent:       #2563eb;
+  --lh-light:        #dbeafe;
+  --lh-font-sans:    "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --lh-font-display: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+
+  font-family: var(--lh-font-sans);
+  background-color: var(--lh-paper);
+  color: var(--lh-ink);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.lh-page ::selection {
+  background-color: var(--lh-accent);
+  color: white;
+}
+
+/* Utility helpers — all scoped under .lh-page so nothing leaks */
+.lh-page .lh-display      { font-family: var(--lh-font-display); font-weight: 700; }
+.lh-page .lh-accent-text  { color: var(--lh-accent); }
+.lh-page .lh-text-ink     { color: var(--lh-ink); }
+.lh-page .lh-text-muted   { color: #6b7280; }
+.lh-page .lh-bg-paper     { background-color: var(--lh-paper); }
+.lh-page .lh-bg-ink       { background-color: var(--lh-ink); }
+.lh-page .lh-bg-accent    { background-color: var(--lh-accent); }
+.lh-page .lh-bg-light     { background-color: var(--lh-light); }
+.lh-page .lh-border-faint { border-color: rgba(10,10,10,0.08); }
