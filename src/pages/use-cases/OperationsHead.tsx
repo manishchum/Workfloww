@@ -135,7 +135,7 @@ export default function OperationsHead() {
     <div className="bg-white text-slate-900">
       {/* Hero */}
       <section className="border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20 lg:py-24">
+        <div className="pl-45 pr-42 px-4 py-8 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-16 items-center">
             <div>
               <p className="text-xs font-semibold tracking-[0.3em] text-[#6357d4] uppercase mb-6">
@@ -200,11 +200,11 @@ export default function OperationsHead() {
 
       {/* Stat strip */}
       <section className="border-b border-slate-200 bg-slate-50">
-        <div className="container mx-auto px-6 py-12">
+        <div className="pl-45 pr-42 px-4 py-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {STAT_STRIP.map((stat) => (
               <div key={stat.value} className="bg-white border border-slate-200 rounded-2xl p-6">
-                <p className="text-3xl font-heading font-extrabold text-slate-900">{stat.value}</p>
+                <p className="text-4xl font-extrabold text-slate-900">{stat.value}</p>
                 <p className="text-sm text-slate-600 mt-3 leading-relaxed">{stat.label}</p>
               </div>
             ))}
@@ -214,7 +214,7 @@ export default function OperationsHead() {
 
       {/* Execution Consistency */}
       <section className="border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20">
+        <div className="pl-45 pr-42 px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-16 items-center">
             <div>
               <p className="text-xs font-semibold tracking-[0.3em] text-[#6357d4] uppercase mb-4">
@@ -289,7 +289,7 @@ export default function OperationsHead() {
 
       {/* Operational Visibility */}
       <section className="border-b border-slate-200 bg-slate-50">
-        <div className="container mx-auto px-6 py-20">
+        <div className="pl-45 pr-42 px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-16 items-start">
             <div className="bg-white border border-slate-200 rounded-3xl shadow-xl p-6">
               <div className="flex items-center justify-between">
@@ -355,7 +355,7 @@ export default function OperationsHead() {
 
       {/* Heatmap Evidence */}
       <section className="border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20">
+        <div className="pl-45 pr-42 px-4 py-8">
           <p className="text-xs font-semibold tracking-[0.3em] text-[#6357d4] uppercase mb-4">The Evidence</p>
           <h2 className="text-3xl md:text-4xl font-extrabold leading-tight">
             Compliance patterns across locations and time — visible at a glance.
@@ -414,7 +414,7 @@ export default function OperationsHead() {
 
       {/* Speed of Correction */}
       <section className="border-b border-slate-200 bg-slate-50">
-        <div className="container mx-auto px-6 py-20">
+        <div className="pl-45 pr-42 px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-16 items-center">
             <div>
               <p className="text-xs font-semibold tracking-[0.3em] text-[#6357d4] uppercase mb-4">
@@ -488,7 +488,7 @@ export default function OperationsHead() {
 
       {/* Outcomes */}
       <section className="border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20">
+        <div className="pl-45 pr-42 px-4 py-8">
           <h2 className="text-3xl md:text-4xl font-extrabold mb-10">
             Six outcomes operations teams can finally control.
           </h2>
@@ -507,7 +507,7 @@ export default function OperationsHead() {
 
       {/* CTA */}
       <section className="py-24 bg-slate-950 text-white">
-        <div className="container mx-auto px-6">
+        <div className="pl-45 pr-42 px-4 py-8">
           <div className="bg-slate-900 border border-slate-800 rounded-[3rem] p-10 md:p-16">
             <div className="max-w-3xl">
               <h2 className="text-3xl md:text-4xl font-extrabold leading-tight">

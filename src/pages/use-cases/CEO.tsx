@@ -90,7 +90,7 @@ export default function CEO() {
     <div className="bg-white text-slate-900">
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20 lg:py-24">
+        <div className="pl-45 pr-42 px-4 py-8 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-16 items-center">
             <div>
               <p className="text-xs font-semibold tracking-[0.3em] text-slate-500 uppercase mb-6">
@@ -162,7 +162,7 @@ export default function CEO() {
 
       {/* Visibility Problem */}
       <section className="border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20">
+        <div className=" pl-45 pr-42 px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-16 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-extrabold">
@@ -219,7 +219,7 @@ export default function CEO() {
 
       {/* Scale Problem */}
       <section className="border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20">
+        <div className=" pl-45 pr-42 px-4 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-16 items-start">
             <div>
               <h2 className="text-3xl md:text-4xl font-extrabold">
@@ -272,7 +272,7 @@ export default function CEO() {
 
       {/* Evidence Table */}
       <section className="border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20">
+        <div className="pl-45 pr-42 px-4 py-8">
           <h2 className="text-3xl md:text-4xl font-extrabold mb-10">
             Evidence of execution gaps across the network.
           </h2>
@@ -315,7 +315,7 @@ export default function CEO() {
 
       {/* Six Outcomes */}
       <section className="border-b border-slate-200">
-        <div className="container mx-auto px-6 py-20">
+        <div className="pl-45 pr-42 px-4 py-8">
           <h2 className="text-3xl md:text-4xl font-extrabold">
             Six outcomes tied directly to P&L performance.
           </h2>
@@ -335,7 +335,7 @@ export default function CEO() {
 
       {/* CTA Dark */}
       <section className="bg-[#0f1117] text-white">
-        <div className="container mx-auto px-6 py-20">
+        <div className="pl-45 pr-42 px-4 py-8">
           <div className="max-w-3xl">
             <h2 className="text-3xl md:text-5xl font-extrabold">
               Put a <span className="text-[#6357d4]">30-day pilot</span> against your execution gap.
