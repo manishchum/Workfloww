@@ -45,6 +45,68 @@ import { Logo } from "./Logo";
 import { LUCID_CONTENT } from "../constants";
 import { cn } from "@/lib/utils";
 
+// ---------------------------------------------------------------------------
+// Validation Functions - Production-friendly
+// ---------------------------------------------------------------------------
+
+/**
+ * FIX: Stricter email regex that explicitly whitelists safe characters.
+ * Previous regex /^[^\s@]+@[^\s@]+\.[^\s@]+$/ was too permissive and
+ * allowed invalid special chars like *, #, !, etc.
+ *
+ * This regex allows:
+ *   - Local part: a-z, 0-9, . _ % + -  (covers john+sales@company.com)
+ *   - Domain:     a-z, 0-9, . -
+ *   - TLD:        2+ letters only
+ *
+ * Rejects: monalika.*#@gmail.com, test!@x.co, etc.
+ */
+const validateEmail = (email: string): boolean => {
+  if (!email?.trim()) return false;
+  const cleaned = email.trim().toLowerCase();
+  return /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(cleaned);
+};
+
+/**
+ * FIX: validatePhone is unchanged — logic was already correct.
+ * The bug was that the /contact page form was NOT calling this function.
+ * Ensure this is imported and used in the contact page component as well.
+ *
+ * Accepts:
+ *   - 10-digit Indian mobile starting with 6-9  (e.g. 9876543210)
+ *   - With +91 prefix                           (e.g. +919876543210)
+ *   - With 91  prefix                           (e.g. 919876543210)
+ * Rejects: single digits like "8", short numbers, landlines starting with 1-5.
+ */
+const validatePhone = (phone: string): boolean => {
+  if (!phone?.trim()) return false;
+
+  // Normalize input: remove all non-digits first
+  const cleanedPhone = phone.replace(/\D/g, "");
+
+  // Handle +91 and 91 country codes
+  const normalized = cleanedPhone.startsWith("91")
+    ? cleanedPhone.slice(2)
+    : cleanedPhone;
+
+  // Accept only valid Indian mobile numbers (10 digits, starting with 6-9)
+  return /^[6-9]\d{9}$/.test(normalized);
+};
+
+// Suspicious content detection
+const suspiciousPatterns = [
+  "test",
+  "asdf",
+  "qwerty",
+  "123456",
+  "hello"
+];
+
+const hasSuspiciousContent = (text: string): boolean => {
+  const lowercased = text.toLowerCase().trim();
+  return suspiciousPatterns.some(pattern => lowercased.includes(pattern));
+};
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
@@ -52,12 +114,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [isContactModalOpen, setIsContactModalOpen] = React.useState(false);
   const [isCalOpen, setIsCalOpen] = React.useState(false);
   const [forceDarkHeader, setForceDarkHeader] = React.useState(false);
+  const [openDropdown, setOpenDropdown] = React.useState<string | null>(null);
   const [cFirst, setCFirst] = React.useState("");
   const [cLast, setCLast] = React.useState("");
   const [cEmail, setCEmail] = React.useState("");
   const [cOrg, setCOrg] = React.useState("");
   const [cMessage, setCMessage] = React.useState("");
+  const [cPhone, setCPhone] = React.useState("");
   const [cTrap, setCTrap] = React.useState(""); // Anti-spam honeypot
+  const [emailError, setEmailError] = React.useState("");
+  const [phoneError, setPhoneError] = React.useState("");
+  const [messageError, setMessageError] = React.useState("");
+  const formLoadTime = React.useRef<number>(Date.now());
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const { sendEmail: sendContactEmail, status: contactStatus, error: contactError } = useLeadEmail();
   const location = useLocation();
   const navigate = useNavigate();
@@ -94,6 +163,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener("lucid:header", handleHeaderEvent);
   }, []);
 
+  // Reset form load time when contact modal opens
+  React.useEffect(() => {
+    if (isContactModalOpen) {
+      formLoadTime.current = Date.now();
+    }
+  }, [isContactModalOpen]);
+
   // Close mobile menu on route change
   React.useEffect(() => {
     setIsMenuOpen(false);
@@ -108,16 +184,124 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await sendContactEmail({
-      source: "nav-modal",
-      name: `${cFirst} ${cLast}`.trim(),
-      email: cEmail,
-      org: cOrg,
-      message: cMessage,
-      website_trap: cTrap,
-    });
-    setIsContactModalOpen(false);
-    setIsCalOpen(true);
+
+    // Clear previous errors first
+    setEmailError("");
+    setPhoneError("");
+    setMessageError("");
+
+    // 1. Honeypot enforcement - reject if trap is filled
+    if (cTrap.trim()) {
+      console.warn("[Spam] Honeypot triggered");
+      return;
+    }
+
+    // 2. Smarter timing bot protection (avoid blocking autofill users)
+    const secondsTaken = (Date.now() - formLoadTime.current) / 1000;
+    if (secondsTaken < 1.5 && cMessage.length < 5) {
+      console.warn("[Spam] Too fast - possible bot");
+      return;
+    }
+
+    // 3. Sanitize all values
+    const first = cFirst.trim();
+    const last = cLast.trim();
+    const email = cEmail.trim().toLowerCase();
+    const org = cOrg.trim();
+    const message = cMessage.trim();
+    const phone = cPhone.replace(/\D/g, "");
+
+    // 4. Required field checks
+    if (!first || !last || !email || !org || !message || !phone || phone.length < 10) {
+      console.log("[DEBUG] Validation failed at required fields check:", { first, last, email, org, message, phone, phoneLength: phone.length });
+      if (!first) setEmailError("First name is required");
+      if (!last) setEmailError("Last name is required");
+      if (!email) setEmailError("Email is required");
+      if (!org) setEmailError("Organisation is required");
+      if (!message) setMessageError("Message is required");
+      if (!phone || phone.length < 10) setPhoneError("Phone number must be exactly 10 digits");
+      return;
+    }
+
+    // 5. Length limits validation
+    if (first.length > 50) {
+      setEmailError("First name cannot exceed 50 characters");
+      return;
+    }
+    if (last.length > 50) {
+      setEmailError("Last name cannot exceed 50 characters");
+      return;
+    }
+    if (org.length > 100) {
+      setEmailError("Organisation cannot exceed 100 characters");
+      return;
+    }
+    if (message.length > 1000) {
+      setMessageError("Message cannot exceed 1000 characters");
+      return;
+    }
+
+    // 6. Email validation
+    if (!validateEmail(email)) {
+      setEmailError("Please enter a valid email address (e.g., name@company.com)");
+      return;
+    }
+
+    // 7. Phone validation
+    console.log("[DEBUG] Phone before validation:", { cPhone, phone, phoneLength: phone.length });
+    if (!validatePhone(phone)) {
+      console.error("[DEBUG] Phone validation failed. Value:", phone);
+      setPhoneError("Please enter a valid 10-digit Indian mobile number (must start with 6-9)");
+      return;
+    }
+
+    // 8. Suspicious content check
+    if (hasSuspiciousContent(message)) {
+      setMessageError("Your message contains suspicious patterns. Please try again.");
+      return;
+    }
+
+    // All validation passed - now prevent duplicate submit
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
+    try {
+      // 9. Send request
+      await sendContactEmail({
+        source: "nav-modal",
+        name: `${first} ${last}`,
+        email: email,
+        org: org,
+        phone: phone,
+        message: message,
+        website_trap: cTrap,
+      });
+
+      // TODO: Backend integration - IP rate limiting
+      // Implement on backend to track submissions per IP address
+      // Recommended: Use Redis with sliding window or similar pattern
+      // Max 5 submissions per IP per 24 hours
+
+      // TODO: Backend integration - Cloudflare Turnstile or reCAPTCHA v3
+      // Add CAPTCHA token validation before sendContactEmail
+
+      // TODO: Backend integration - Email verification API
+      // After successful submission, send verification email
+      // Use SendGrid, AWS SES, or similar for verification
+
+      // 10. Reset form on success
+      setIsContactModalOpen(false);
+      setIsCalOpen(true);
+      setCFirst("");
+      setCLast("");
+      setCEmail("");
+      setCOrg("");
+      setCMessage("");
+      setCPhone("");
+      setCTrap("");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -131,7 +315,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             : "bg-transparent border-transparent py-5"
         )}
       >
-        <div className="max-w-[1180px] mx-auto w-full px-6 flex items-center justify-between">
+        <div className="max-w-[1180px] mx-auto w-full px-4 sm:px-6 flex items-center justify-between">
           <Link
             to="/"
             className="flex items-center gap-3"
@@ -176,13 +360,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <NavigationMenuItem key={name}>
                       {hasItems ? (
                         <>
-                          <NavigationMenuTrigger className="bg-transparent transition-colors text-slate-700 hover:text-blue-500 data-[state=open]:text-blue-500 px-2">
+                          <NavigationMenuTrigger
+                            className="bg-transparent transition-colors text-slate-700 hover:text-blue-500 data-[state=open]:text-blue-500 px-2"
+                            onClick={() => setOpenDropdown(openDropdown === name ? null : name)}
+                          >
                             {name}
                           </NavigationMenuTrigger>
                           <NavigationMenuContent className="bg-white border-slate-200 shadow-xl">
                             <ul className="grid w-[240px] gap-1 p-3">
                               {item.items.map((subItem: string) => {
-                                // Keep existing link logic
                                 const getLink = (name: string) => {
                                   switch (name) {
                                     case "About": return "/about";
@@ -217,6 +403,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                       render={link ? (
                                         <Link
                                           to={link}
+                                          onClick={() => setOpenDropdown(null)}
                                           className="block select-none space-y-1 p-3 leading-none no-underline outline-none transition-colors hover:text-blue-400 focus:text-blue-400"
                                         >
                                           <div className="text-sm font-medium leading-none text-slate-700">{subItem}</div>
@@ -224,6 +411,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                       ) : (
                                         <a
                                           href="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            setOpenDropdown(null);
+                                          }}
                                           className="block select-none space-y-1 p-3 leading-none no-underline outline-none transition-colors hover:text-blue-400 focus:text-blue-400"
                                         >
                                           <div className="text-sm font-medium leading-none text-slate-700">{subItem}</div>
@@ -278,7 +469,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-background pt-24 px-6 md:hidden"
+            className="fixed inset-0 z-40 bg-background pt-20 px-4 sm:px-6 md:hidden"
           >
             <div className="flex flex-col gap-4">
               <Accordion className="w-full">
@@ -333,6 +524,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 <Link
                                   key={subItem}
                                   to={link}
+                                  onClick={() => setIsMenuOpen(false)}
                                   className="text-left text-lg text-slate-600 hover:text-blue-500"
                                 >
                                   {subItem}
@@ -341,6 +533,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 <a
                                   key={subItem}
                                   href="#"
+                                  onClick={() => setIsMenuOpen(false)}
                                   className="text-lg text-slate-600 hover:text-blue-500"
                                 >
                                   {subItem}
@@ -450,7 +643,27 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="c-email" className="text-slate-700">Work email</Label>
-                    <Input id="c-email" className="bg-white border-slate-200 text-slate-900" type="email" placeholder="Work email" required value={cEmail} onChange={e => setCEmail(e.target.value)} />
+                    <Input
+                      id="c-email"
+                      className={cn(
+                        "bg-white border-slate-200 text-slate-900",
+                        emailError && "border-red-500"
+                      )}
+                      type="email"
+                      placeholder="Work email"
+                      required
+                      value={cEmail}
+                      onChange={e => {
+                        // Trim leading spaces while typing
+                        const value = e.target.value;
+                        const trimmedValue = value.startsWith(" ") ? value.trimStart() : value;
+                        setCEmail(trimmedValue);
+                        if (emailError) setEmailError("");
+                      }}
+                    />
+                    {emailError && (
+                      <p className="text-red-500 text-sm mt-1">{emailError}</p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="c-org" className="text-slate-700">Organisation</Label>
@@ -459,13 +672,62 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </div>
 
                 <div className="space-y-2">
+                  <Label htmlFor="c-phone" className="text-slate-700">Phone (Indian mobile number)</Label>
+                  <Input
+                    id="c-phone"
+                    className={cn(
+                      "bg-white border-slate-200 text-slate-900",
+                      phoneError && "border-red-500"
+                    )}
+                    type="tel"
+                    placeholder="+91 9876543210 or 9876543210"
+                    required
+                    value={cPhone}
+                    onChange={e => {
+                      // Allow only digits, +, spaces, and hyphens
+                      const value = e.target.value;
+                      const filtered = value.replace(/[^0-9+\s\-]/g, "");
+                      // FIX: cap input length to prevent absurdly long numbers
+                      // +91 (3) + space (1) + 10 digits = 14 chars max with formatting
+                      if (filtered.replace(/\D/g, "").length <= 12) {
+                        setCPhone(filtered);
+                      }
+                      if (phoneError) setPhoneError("");
+                    }}
+                  />
+                  {phoneError && (
+                    <p className="text-red-500 text-sm mt-1">{phoneError}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
                   <Label htmlFor="c-message" className="text-slate-700">How can we help you?</Label>
-                  <Textarea id="c-message" className="bg-white border-slate-200 text-slate-900 min-h-[120px]" placeholder="Your message" required value={cMessage} onChange={e => setCMessage(e.target.value)} />
+                  <Textarea
+                    id="c-message"
+                    className={cn(
+                      "bg-white border-slate-200 text-slate-900 min-h-[120px]",
+                      messageError && "border-red-500"
+                    )}
+                    placeholder="Your message"
+                    required
+                    value={cMessage}
+                    onChange={e => {
+                      setCMessage(e.target.value);
+                      if (messageError) setMessageError("");
+                    }}
+                  />
+                  {messageError && (
+                    <p className="text-red-500 text-sm mt-1">{messageError}</p>
+                  )}
                 </div>
 
                 <div className="space-y-4 pt-4">
-                  <Button type="submit" disabled={contactStatus === "loading"} className="w-full md:w-auto px-12 py-6 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-xl shadow-blue-600/20">
-                    {contactStatus === "loading" ? "Sending…" : "Submit form"}
+                  <Button
+                    type="submit"
+                    disabled={contactStatus === "loading" || isSubmitting}
+                    className="w-full md:w-auto px-12 py-6 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-xl shadow-blue-600/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {contactStatus === "loading" || isSubmitting ? "Sending…" : "Submit form"}
                   </Button>
                   {contactError && (
                     <p className="text-red-500 text-sm mt-2">{contactError}</p>
@@ -483,7 +745,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <DialogHeader>
               <DialogTitle className="text-2xl font-bold">Pick a time to talk</DialogTitle>
               <DialogDescription className="text-slate-600">
-                Select a slot and we’ll confirm your meeting instantly.
+                Select a slot and we'll confirm your meeting instantly.
               </DialogDescription>
             </DialogHeader>
             <div className="mt-6">
@@ -501,7 +763,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Footer */}
       <footer className="bg-white border-t border-slate-200 py-12 text-slate-900">
-        <div className="max-w-[1180px] mx-auto w-full px-6">
+        <div className="max-w-[1180px] mx-auto w-full px-4 sm:px-6">
           <div className="mb-8">
             <Link to="/" className="flex items-center gap-2 mb-6">
               <Logo className="w-8 h-8 text-blue-500" />

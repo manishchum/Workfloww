@@ -13,8 +13,20 @@ import {
   ShieldCheck,
   ArrowBigDown,
   ArrowDown,
+  ChevronLeft,
 } from "lucide-react";
 import { useLeadEmail } from "../hooks/useLeadEmail";
+
+// ─────────────── RESPONSIVE HOOK ───────────────
+const useWindowSize = () => {
+  const [size, setSize] = React.useState({ width: typeof window !== "undefined" ? window.innerWidth : 1200, height: typeof window !== "undefined" ? window.innerHeight : 800 });
+  React.useEffect(() => {
+    const handler = () => setSize({ width: window.innerWidth, height: window.innerHeight });
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
+  return size;
+};
 
 // ─────────────── CONTENT ───────────────
 const LUCID_CONTENT = {
@@ -33,7 +45,7 @@ const LUCID_CONTENT = {
       points: [
         { id: "01", title: "Deploy in hours, not months?" },
         { id: "02", title: "Something your frontline actually uses?" },
-        { id: "03", title: "AI with real business impact?", },
+        { id: "03", title: "AI with real business impact?" },
         { id: "04", title: "Execution visible. Revenue defensible?" },
       ],
     },
@@ -146,6 +158,9 @@ const IconComp = ({ name, className, style }: { name: string; className?: string
 
 // ─────────────── ACT 1 — Questions ───────────────
 const StoryAct1 = ({ onNext, onSkip }) => {
+  const { width } = useWindowSize();
+  const isMobile = width < 640;
+
   const questions = [
     {
       id: "FMCG",
@@ -159,13 +174,13 @@ const StoryAct1 = ({ onNext, onSkip }) => {
     },
     {
       id: "QSR",
-       text: "Food Menu Is Live. Combo Margins Are Higher. Yet <span style='color:#2563eb;font-weight:700'>Average Order Value Hasn't Moved Since Launch.</span> Is Your Crew Selling — Or Just Reading It Out?",
-       footer: "The Order Screen Can't Suggest The combo. Only The Crew Can. Every Shift Since Launch Is Revenue Left On The Counter..",
+      text: "Food Menu Is Live. Combo Margins Are Higher. Yet <span style='color:#2563eb;font-weight:700'>Average Order Value Hasn't Moved Since Launch.</span> Is Your Crew Selling — Or Just Reading It Out?",
+      footer: "The Order Screen Can't Suggest The combo. Only The Crew Can. Every Shift Since Launch Is Revenue Left On The Counter..",
     },
     {
       id: "RETAIL",
-       text: "Planogram Is Set. Promotion Is Live. Yet <span style='color:#2563eb;font-weight:700'>Conversion At The Shelf Hasn't Moved.</span> Does Your Store Associate Know What To Say When The Customer Picks It Up?",
-       footer: "Footfall Isn't The Gap. The Conversation At The Shelf Is. If The Associate Wasn't Ready, The Sale Walked Out With The Customer.",
+      text: "Planogram Is Set. Promotion Is Live. Yet <span style='color:#2563eb;font-weight:700'>Conversion At The Shelf Hasn't Moved.</span> Does Your Store Associate Know What To Say When The Customer Picks It Up?",
+      footer: "Footfall Isn't The Gap. The Conversation At The Shelf Is. If The Associate Wasn't Ready, The Sale Walked Out With The Customer.",
     },
   ];
 
@@ -185,7 +200,7 @@ const StoryAct1 = ({ onNext, onSkip }) => {
       {/* subtle noise */}
       <div style={{ position: "absolute", inset: 0, opacity: 0.025, backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")", pointerEvents: "none" }} />
 
-      <div style={{ maxWidth: 860, width: "100%", padding: "0 2rem", textAlign: "center", position: "relative", zIndex: 10 }}>
+      <div style={{ maxWidth: 860, width: "100%", padding: isMobile ? "0 1.25rem" : "0 2rem", textAlign: "center", position: "relative", zIndex: 10 }}>
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
@@ -195,15 +210,13 @@ const StoryAct1 = ({ onNext, onSkip }) => {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
             {/* label */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1.5rem", marginBottom: "3rem" }}>
-              <span style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.5em", color: "#60a5fa", fontFamily: "monospace", textTransform: "uppercase" }}> {questions[index].id}</span>
-              {/* <div style={{ width: 48, height: 1, background: "#cbd5e1" }} /> */}
-              {/* <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.5em", color: "#94a3b8", fontFamily: "monospace", textTransform: "uppercase" }}></span> */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1.5rem", marginBottom: isMobile ? "1.5rem" : "3rem" }}>
+              <span style={{ fontSize: isMobile ? 12 : 14, fontWeight: 800, letterSpacing: "0.5em", color: "#60a5fa", fontFamily: "monospace", textTransform: "uppercase" }}>{questions[index].id}</span>
             </div>
 
             {/* question */}
             <h2
-              style={{ fontSize: "clamp(1.75rem, 5vw, 3.25rem)", fontWeight: 500, letterSpacing: "-0.025em", color: "#0f172a", lineHeight: 1.2, marginBottom: "1.5rem", fontFamily: "Georgia, serif" }}
+              style={{ fontSize: isMobile ? "1.35rem" : "clamp(1.75rem, 5vw, 3.25rem)", fontWeight: 500, letterSpacing: "-0.025em", color: "#0f172a", lineHeight: 1.3, marginBottom: "1.5rem", fontFamily: "Georgia, serif" }}
               dangerouslySetInnerHTML={{ __html: questions[index].text }}
             />
 
@@ -212,73 +225,153 @@ const StoryAct1 = ({ onNext, onSkip }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              style={{ fontSize: "0.95rem", color: "#64748b", marginBottom: "3rem", fontWeight: 300, maxWidth: 540, margin: "0 auto 3rem auto" }}
+              style={{ fontSize: isMobile ? "0.85rem" : "0.95rem", color: "#64748b", marginBottom: "3rem", fontWeight: 300, maxWidth: 540, margin: "0 auto 3rem auto" }}
             >
               {questions[index].footer}
             </motion.p>
-
-            {/* answer options
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxWidth: 540, margin: "0 auto" }}
-            >
-              {questions[index].answers.map((answer, i) => (
-                <div
-                  key={i}
-                  style={{
-                    padding: "1rem 1.5rem",
-                    background: "rgba(255,255,255,0.6)",
-                    border: "1px solid rgba(37,99,235,0.2)",
-                    borderRadius: 8,
-                    fontSize: "0.95rem",
-                    color: "#334155",
-                    cursor: "pointer",
-                    transition: "all 0.3s ease",
-                    fontFamily: "system-ui, -apple-system, sans-serif"
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "rgba(37,99,235,0.08)";
-                    e.currentTarget.style.borderColor = "rgba(37,99,235,0.4)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "rgba(255,255,255,0.6)";
-                    e.currentTarget.style.borderColor = "rgba(37,99,235,0.2)";
-                  }}
-                >
-                  {answer}
-                </div>
-              ))}
-            </motion.div> */}
-
           </motion.div>
         </AnimatePresence>
       </div>
 
       {/* progress dots */}
-      <div style={{ position: "absolute", bottom: 80, display: "flex", gap: 8 }}>
+      <div style={{ position: "absolute", bottom: isMobile ? 100 : 80, display: "flex", gap: 8 }}>
         {questions.map((_, i) => (
           <div key={i} style={{ width: i === index ? 24 : 8, height: 8, borderRadius: 9999, background: i === index ? "#2563eb" : "#cbd5e1", transition: "all 0.4s ease" }} />
         ))}
       </div>
 
-      {/* "Find the answer" appears after each question */}
+      {/* "What You Need" CTA */}
       <motion.button
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
         onClick={onNext}
-        style={{ position: "absolute", bottom: 24, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", color: "#64748b" }}
+        style={{ position: "absolute", bottom: isMobile ? 60 : 24, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", color: "#64748b", padding: "0 1rem", textAlign: "center" }}
       >
-        <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.25em", textTransform: "uppercase" }}>What You Need to Increase Your Revenue?</span>
+        <span style={{ fontSize: isMobile ? 9 : 10, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase" }}>What You Need to Increase Your Revenue?</span>
         <ChevronDown style={{ width: 20, height: 20, animation: "bounce 1.5s infinite" }} />
       </motion.button>
+
+      {/* Left arrow navigation — hidden on very small screens */}
+      {!isMobile && (
+        <motion.button
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          onClick={() => setIndex((p) => (p - 1 + questions.length) % questions.length)}
+          style={{
+            position: "absolute",
+            left: 28,
+            top: "50%",
+            transform: "translateY(-50%)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 48,
+            height: 48,
+            borderRadius: "50%",
+            border: "1.5px solid #cbd5e1",
+            background: "rgba(255,255,255,0.7)",
+            backdropFilter: "blur(8px)",
+            cursor: "pointer",
+            color: "#94a3b8",
+            transition: "all 0.3s ease"
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.borderColor = "#2563eb";
+            e.currentTarget.style.color = "#2563eb";
+            e.currentTarget.style.boxShadow = "0 8px 24px rgba(37,99,235,0.2)";
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.borderColor = "#cbd5e1";
+            e.currentTarget.style.color = "#94a3b8";
+            e.currentTarget.style.boxShadow = "none";
+          }}
+        >
+          <ChevronLeft style={{ width: 24, height: 24 }} />
+        </motion.button>
+      )}
+
+      {/* Right arrow navigation — hidden on very small screens */}
+      {!isMobile && (
+        <motion.button
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          onClick={() => setIndex((p) => (p + 1) % questions.length)}
+          style={{
+            position: "absolute",
+            right: 28,
+            top: "50%",
+            transform: "translateY(-50%)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 48,
+            height: 48,
+            borderRadius: "50%",
+            border: "1.5px solid #cbd5e1",
+            background: "rgba(255,255,255,0.7)",
+            backdropFilter: "blur(8px)",
+            cursor: "pointer",
+            color: "#94a3b8",
+            transition: "all 0.3s ease"
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.borderColor = "#2563eb";
+            e.currentTarget.style.color = "#2563eb";
+            e.currentTarget.style.boxShadow = "0 8px 24px rgba(37,99,235,0.2)";
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.borderColor = "#cbd5e1";
+            e.currentTarget.style.color = "#94a3b8";
+            e.currentTarget.style.boxShadow = "none";
+          }}
+        >
+          <ChevronRight style={{ width: 24, height: 24 }} />
+        </motion.button>
+      )}
+
+      {/* Mobile swipe dots as tap targets */}
+      {isMobile && (
+        <div style={{ position: "absolute", bottom: 110, display: "flex", gap: 24 }}>
+          <button
+            onClick={() => setIndex((p) => (p - 1 + questions.length) % questions.length)}
+            style={{ background: "none", border: "none", cursor: "pointer", color: "#94a3b8", padding: "8px" }}
+          >
+            <ChevronLeft style={{ width: 20, height: 20 }} />
+          </button>
+          <button
+            onClick={() => setIndex((p) => (p + 1) % questions.length)}
+            style={{ background: "none", border: "none", cursor: "pointer", color: "#94a3b8", padding: "8px" }}
+          >
+            <ChevronRight style={{ width: 20, height: 20 }} />
+          </button>
+        </div>
+      )}
 
       {/* skip */}
       <button
         onClick={onSkip}
-        style={{ position: "absolute", bottom: 28, right: 28, display: "flex", alignItems: "center", gap: 8, padding: "10px 20px", border: "1px solid #e2e8f0", borderRadius: 9999, background: "rgba(255,255,255,0.7)", backdropFilter: "blur(8px)", fontSize: 10, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#94a3b8", cursor: "pointer" }}
+        style={{
+          position: "absolute",
+          bottom: isMobile ? 16 : 28,
+          right: isMobile ? 12 : 28,
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          padding: isMobile ? "8px 14px" : "10px 20px",
+          border: "1px solid #e2e8f0",
+          borderRadius: 9999,
+          background: "rgba(255,255,255,0.7)",
+          backdropFilter: "blur(8px)",
+          fontSize: isMobile ? 9 : 10,
+          fontWeight: 800,
+          letterSpacing: "0.2em",
+          textTransform: "uppercase",
+          color: "#94a3b8",
+          cursor: "pointer"
+        }}
         onMouseEnter={e => e.currentTarget.style.color = "#2563eb"}
         onMouseLeave={e => e.currentTarget.style.color = "#94a3b8"}
       >
@@ -291,10 +384,11 @@ const StoryAct1 = ({ onNext, onSkip }) => {
 };
 
 // ─────────────── ACT 2 — The Answer (dark, hover-reveal 2×2 grid) ───────────────
-// Replace your existing StoryAct2 component entirely with this one.
-// Everything else (imports, LUCID_CONTENT, other components, Home) stays unchanged.
-
 const StoryAct2 = ({ onNext, onSkip }) => {
+  const { width } = useWindowSize();
+  const isMobile = width < 640;
+  const isTablet = width >= 640 && width < 1024;
+
   const cards = [
     {
       id: "01",
@@ -338,27 +432,36 @@ const StoryAct2 = ({ onNext, onSkip }) => {
     },
   ];
 
-  const [hovered, setHovered] = React.useState(null);
+  const [hovered, setHovered] = React.useState<string | null>(null);
+  const [expanded, setExpanded] = React.useState<string | null>(null);
+
+  // On mobile, toggle expanded state on tap instead of hover
+  const handleCardInteraction = (id: string) => {
+    if (isMobile || isTablet) {
+      setExpanded(prev => prev === id ? null : id);
+    }
+  };
 
   return (
     <div
       style={{
-        height: "100vh",
+        minHeight: "100vh",
         width: "100vw",
         background: "#051121",
         color: "#e2e8f0",
-        position: "fixed",
+        position: isMobile ? "relative" : "fixed",
         top: 0,
         left: 0,
-        overflow: "hidden",
+        overflowY: isMobile ? "auto" : "hidden",
+        overflowX: "hidden",
         display: "flex",
         flexDirection: "column",
         fontFamily: "system-ui, -apple-system, sans-serif",
-        paddingTop: "80px",
+        paddingTop: isMobile ? "70px" : "80px",
         boxSizing: "border-box",
       }}
     >
-      {/* ── Radial glow center ── */}
+      {/* Radial glow center */}
       <div
         style={{
           position: "absolute",
@@ -366,43 +469,42 @@ const StoryAct2 = ({ onNext, onSkip }) => {
           left: "50%",
           width: "120vh",
           height: "120vh",
-          background:
-            "radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 65%)",
+          background: "radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 65%)",
           transform: "translate(-50%, -50%)",
           pointerEvents: "none",
         }}
       />
 
-      {/* ── Grid lines ── */}
+      {/* Grid lines */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          backgroundImage:
-            "linear-gradient(rgba(37,99,235,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.06) 1px, transparent 1px)",
+          backgroundImage: "linear-gradient(rgba(37,99,235,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.06) 1px, transparent 1px)",
           backgroundSize: "40px 40px",
           backgroundPosition: "center center",
           pointerEvents: "none",
         }}
       />
 
-      {/* ── Corner accent glows ── */}
+      {/* Corner accent glows */}
       <div style={{ position: "absolute", top: 0, right: 0, width: 400, height: 400, background: "radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", bottom: 0, left: 0, width: 300, height: 300, background: "radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
 
-      {/* ── Main content container ── */}
+      {/* Main content container */}
       <div
         style={{
           flex: 1,
           display: "flex",
           flexDirection: "column",
-          padding: "1.25rem 2rem",
+          padding: isMobile ? "1rem 1rem 1.5rem" : "1.25rem 2rem",
           position: "relative",
           zIndex: 10,
           maxWidth: 1200,
           margin: "0 auto",
           width: "100%",
           minHeight: 0,
+          boxSizing: "border-box",
         }}
       >
         {/* Eyebrow label */}
@@ -414,7 +516,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
             display: "flex",
             alignItems: "center",
             gap: 10,
-            marginBottom: "0.75rem",
+            marginBottom: isMobile ? "0.75rem" : "0.75rem",
             flexShrink: 0,
           }}
         >
@@ -425,13 +527,14 @@ const StoryAct2 = ({ onNext, onSkip }) => {
               borderRadius: "50%",
               background: "#3b82f6",
               boxShadow: "0 0 10px rgba(59,130,246,0.8)",
+              flexShrink: 0,
             }}
           />
           <span
             style={{
-              fontSize: 14,
+              fontSize: isMobile ? 10 : 14,
               fontWeight: 800,
-              letterSpacing: "0.4em",
+              letterSpacing: isMobile ? "0.2em" : "0.4em",
               color: "#60a5fa",
               textTransform: "uppercase",
               fontFamily: "monospace",
@@ -441,7 +544,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
           </span>
         </motion.div>
 
-        {/* 2×2 Grid */}
+        {/* 2×2 Grid — stacks to 1 col on mobile */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -449,8 +552,8 @@ const StoryAct2 = ({ onNext, onSkip }) => {
           style={{
             flex: 1,
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gridTemplateRows: "1fr 1fr",
+            gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+            gridTemplateRows: isMobile ? "auto" : "1fr 1fr",
             gap: "1px",
             background: "rgba(37,99,235,0.15)",
             border: "1px solid rgba(37,99,235,0.2)",
@@ -461,36 +564,31 @@ const StoryAct2 = ({ onNext, onSkip }) => {
           }}
         >
           {cards.map((card) => {
-            const isHovered = hovered === card.id;
+            const isActive = isMobile || isTablet ? expanded === card.id : hovered === card.id;
             return (
               <div
                 key={card.id}
-                onMouseEnter={() => setHovered(card.id)}
-                onMouseLeave={() => setHovered(null)}
+                onMouseEnter={() => { if (!isMobile && !isTablet) setHovered(card.id); }}
+                onMouseLeave={() => { if (!isMobile && !isTablet) setHovered(null); }}
+                onClick={() => handleCardInteraction(card.id)}
                 style={{
                   position: "relative",
-                  background: isHovered
-                    ? "rgba(255,255,255,0.07)"
-                    : "rgba(5,17,33,0.85)",
-                  padding: "1.25rem 1.75rem",
+                  background: isActive ? "rgba(255,255,255,0.07)" : "rgba(5,17,33,0.85)",
+                  padding: isMobile ? "1.25rem 1.25rem" : "1.25rem 1.75rem",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
-                  cursor: "default",
+                  cursor: isMobile || isTablet ? "pointer" : "default",
                   transition: "background 0.35s ease",
-                  outline: isHovered
-                    ? "1px solid rgba(99,157,253,0.45)"
-                    : "none",
+                  outline: isActive ? "1px solid rgba(99,157,253,0.45)" : "none",
                   outlineOffset: "-1px",
-                  minHeight: 0,
+                  minHeight: isMobile ? "auto" : 0,
                   overflow: "hidden",
-                  boxShadow: isHovered
-                    ? "inset 0 0 30px rgba(37,99,235,0.1)"
-                    : "none",
+                  boxShadow: isActive ? "inset 0 0 30px rgba(37,99,235,0.1)" : "none",
                 }}
               >
                 {/* Hover shimmer top line */}
-                {isHovered && (
+                {isActive && (
                   <div style={{
                     position: "absolute",
                     top: 0, left: 0, right: 0,
@@ -500,7 +598,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                   }} />
                 )}
 
-                {/* Top row: label + ghost number */}
+                {/* Top row: label + ghost number / toggle icon on mobile */}
                 <div
                   style={{
                     display: "flex",
@@ -511,7 +609,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                 >
                   <span
                     style={{
-                      fontSize: 16,
+                      fontSize: isMobile ? 13 : 16,
                       fontWeight: 800,
                       letterSpacing: "0.35em",
                       color: "#ffffff",
@@ -523,22 +621,35 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                     {card.label}
                   </span>
 
-                  {/* Ghost number */}
-                  <span
-                    style={{
-                      fontSize: "clamp(1.5rem, 3vw, 2.75rem)",
-                      fontWeight: 800,
-                      color: "#ffffff",
-                      lineHeight: 1,
-                      fontFamily: "Georgia, serif",
-                      userSelect: "none",
-                      opacity: isHovered ? 0 : 1,
-                      transform: isHovered ? "scale(0.92)" : "scale(1)",
-                      transition: "opacity 0.35s ease, transform 0.35s ease",
-                    }}
-                  >
-                    {card.id}
-                  </span>
+                  {/* Ghost number (desktop) / chevron (mobile) */}
+                  {isMobile || isTablet ? (
+                    <ChevronDown
+                      style={{
+                        width: 18,
+                        height: 18,
+                        color: "#60a5fa",
+                        transform: isActive ? "rotate(180deg)" : "rotate(0deg)",
+                        transition: "transform 0.3s ease",
+                        flexShrink: 0,
+                      }}
+                    />
+                  ) : (
+                    <span
+                      style={{
+                        fontSize: "clamp(1.5rem, 3vw, 2.75rem)",
+                        fontWeight: 800,
+                        color: "#ffffff",
+                        lineHeight: 1,
+                        fontFamily: "Georgia, serif",
+                        userSelect: "none",
+                        opacity: isActive ? 0 : 1,
+                        transform: isActive ? "scale(0.92)" : "scale(1)",
+                        transition: "opacity 0.35s ease, transform 0.35s ease",
+                      }}
+                    >
+                      {card.id}
+                    </span>
+                  )}
                 </div>
 
                 {/* Bullet points */}
@@ -550,10 +661,12 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                     justifyContent: "center",
                     gap: "0.5rem",
                     padding: "0.5rem 0",
-                    opacity: isHovered ? 1 : 0,
-                    transform: isHovered ? "translateY(0)" : "translateY(10px)",
-                    transition: "opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s",
-                    pointerEvents: isHovered ? "auto" : "none",
+                    opacity: isActive ? 1 : 0,
+                    maxHeight: isActive ? 500 : 0,
+                    overflow: "hidden",
+                    transform: isActive ? "translateY(0)" : "translateY(10px)",
+                    transition: "opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s, max-height 0.4s ease",
+                    pointerEvents: isActive ? "auto" : "none",
                     minHeight: 0,
                   }}
                 >
@@ -579,9 +692,9 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                       />
                       <span
                         style={{
-                          fontSize: "0.95rem",
+                          fontSize: isMobile ? "0.85rem" : "0.95rem",
                           color: "#ffffff",
-                          lineHeight: 1.3,
+                          lineHeight: 1.4,
                           fontWeight: 300,
                         }}
                       >
@@ -594,24 +707,33 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                 {/* Summary line */}
                 <div
                   style={{
-                    fontSize: "clamp(1rem, 1.2vw, 1.15rem)",
+                    fontSize: isMobile ? "0.9rem" : "clamp(1rem, 1.2vw, 1.15rem)",
                     fontWeight: 600,
                     color: "#ffffff",
                     lineHeight: 1.25,
-                    opacity: isHovered ? 0 : 1,
-                    transform: isHovered ? "translateY(4px)" : "translateY(0)",
-                    transition: "opacity 0.25s ease, transform 0.25s ease",
+                    opacity: isActive ? 0 : 1,
+                    maxHeight: isActive ? 0 : 40,
+                    overflow: "hidden",
+                    transform: isActive ? "translateY(4px)" : "translateY(0)",
+                    transition: "opacity 0.25s ease, transform 0.25s ease, max-height 0.3s ease",
                     marginTop: "0.5rem",
                   }}
                 >
                   {card.summary}
                 </div>
+
+                {/* Mobile tap hint */}
+                {(isMobile || isTablet) && !isActive && (
+                  <div style={{ fontSize: 10, color: "rgba(99,157,253,0.5)", marginTop: 8, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                    Tap to expand
+                  </div>
+                )}
               </div>
             );
           })}
         </motion.div>
 
-        {/* ── Bottom command bar ── */}
+        {/* Bottom command bar */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -620,7 +742,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
             background: "rgba(255,255,255,0.04)",
             border: "1px solid rgba(37,99,235,0.25)",
             borderRadius: 16,
-            padding: "0.85rem 1.5rem",
+            padding: isMobile ? "0.75rem 1rem" : "0.85rem 1.5rem",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -630,18 +752,17 @@ const StoryAct2 = ({ onNext, onSkip }) => {
             gap: "1rem",
           }}
         >
-
           <button
             onClick={onNext}
             style={{
               display: "flex",
               alignItems: "center",
               gap: 10,
-              padding: "0.65rem 1.5rem",
+              padding: isMobile ? "0.6rem 1.25rem" : "0.65rem 1.5rem",
               borderRadius: 12,
               background: "#2563eb",
               color: "#fff",
-              fontSize: "0.85rem",
+              fontSize: isMobile ? "0.8rem" : "0.85rem",
               fontWeight: 800,
               border: "none",
               cursor: "pointer",
@@ -659,13 +780,14 @@ const StoryAct2 = ({ onNext, onSkip }) => {
               e.currentTarget.style.boxShadow = "0 0 20px rgba(37,99,235,0.3)";
             }}
           >
-            SHOW ME THE GAP<ArrowDown style={{ width: 16, height: 16 }} />
+            SHOW ME THE GAP <ArrowDown style={{ width: 16, height: 16 }} />
           </button>
         </motion.div>
       </div>
     </div>
   );
 };
+
 // ─────────────── HERO ───────────────
 const Hero = () => {
   const { hero } = LUCID_CONTENT;
@@ -673,8 +795,10 @@ const Hero = () => {
   const [open, setOpen] = React.useState(false);
   const [heroName, setHeroName] = React.useState("");
   const [heroEmail, setHeroEmail] = React.useState("");
-  const [heroTrap, setHeroTrap] = React.useState(""); // Anti-spam trap
+  const [heroTrap, setHeroTrap] = React.useState("");
   const { sendEmail, status: heroStatus, error: heroError } = useLeadEmail();
+  const { width } = useWindowSize();
+  const isMobile = width < 640;
 
   const handleHeroSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -692,36 +816,67 @@ const Hero = () => {
   return (
     <section style={{ minHeight: "100vh", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden", background: "#fff", borderBottom: "1px solid #f1f5f9" }}>
       {/* blobs */}
-      <div style={{ position: "absolute", top: 0, right: 0, width: 700, height: 700, background: "radial-gradient(circle, rgba(191,219,254,0.5) 0%, transparent 65%)", transform: "translate(30%, -30%)", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", bottom: 0, left: 0, width: 500, height: 500, background: "radial-gradient(circle, rgba(186,230,253,0.3) 0%, transparent 70%)", transform: "translate(-30%, 30%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", top: 0, right: 0, width: isMobile ? 300 : 700, height: isMobile ? 300 : 700, background: "radial-gradient(circle, rgba(191,219,254,0.5) 0%, transparent 65%)", transform: "translate(30%, -30%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: 0, left: 0, width: isMobile ? 250 : 500, height: isMobile ? 250 : 500, background: "radial-gradient(circle, rgba(186,230,253,0.3) 0%, transparent 70%)", transform: "translate(-30%, 30%)", pointerEvents: "none" }} />
 
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "5rem 2rem 3rem", maxWidth: 1100, margin: "0 auto", width: "100%", position: "relative", zIndex: 10 }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: isMobile ? "5rem 1.25rem 3rem" : "5rem 2rem 3rem", maxWidth: 1100, margin: "0 auto", width: "100%", position: "relative", zIndex: 10, boxSizing: "border-box" }}>
         <motion.div initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85 }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 12, marginBottom: "2.5rem" }}>
-            <div style={{ width: 8, height: 8, borderRadius: 9999, background: "#2563eb" }} />
+            <div style={{ width: 8, height: 8, borderRadius: 9999, background: "#2563eb", flexShrink: 0 }} />
             <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.4em", color: "#3b82f6", textTransform: "uppercase" }}>{hero.subtitle}</span>
           </div>
 
-          <h1 style={{ fontSize: "clamp(2rem, 6vw, 4.5rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: "1.5rem", color: "#0f172a", fontFamily: "Georgia, serif" }}>
+          <h1 style={{ fontSize: isMobile ? "1.8rem" : "clamp(2rem, 6vw, 4.5rem)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: "1.5rem", color: "#0f172a", fontFamily: "Georgia, serif" }}>
             Lucid Is The Operating System<br />
             Your <em style={{ color: "#2563eb", fontStyle: "italic" }}>Sales Team Runs On.</em><br />
             <span style={{ color: "#94a3b8", fontStyle: "normal" }}>From Decision To Execution.</span>
           </h1>
 
-          <p style={{ fontSize: "clamp(0.95rem, 1.8vw, 1.1rem)", color: "#64748b", maxWidth: 640, marginBottom: "2rem", lineHeight: 1.6, fontWeight: 300 }}>
+          <p style={{ fontSize: isMobile ? "0.9rem" : "clamp(0.95rem, 1.8vw, 1.1rem)", color: "#64748b", maxWidth: 640, marginBottom: "2rem", lineHeight: 1.6, fontWeight: 300 }}>
             Not a Feature. Not a Dashboard. The <strong style={{ color: "#0f172a", fontWeight: 700 }}>Operating Layer Between What Your Sales Organization Decides And What Actually Happens</strong> — At The Counter, On The Floor, In The Field, On The Line.
           </p>
 
           {/* CTA buttons */}
           <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginBottom: "1.5rem" }}>
-            <button onClick={() => setOpen(true)} style={{ height: 56, padding: "0 2.5rem", borderRadius: 18, background: "#2563eb", color: "#fff", fontWeight: 800, fontSize: "1.05rem", border: "none", cursor: "pointer", boxShadow: "0 12px 30px rgba(37,99,235,0.3)", transition: "transform 0.15s" }}
+            <button
+              onClick={() => setOpen(true)}
+              style={{
+                height: isMobile ? 48 : 56,
+                padding: isMobile ? "0 1.5rem" : "0 2.5rem",
+                borderRadius: 18,
+                background: "#2563eb",
+                color: "#fff",
+                fontWeight: 800,
+                fontSize: isMobile ? "0.9rem" : "1.05rem",
+                border: "none",
+                cursor: "pointer",
+                boxShadow: "0 12px 30px rgba(37,99,235,0.3)",
+                transition: "transform 0.15s",
+                flexShrink: 0,
+              }}
               onMouseEnter={e => e.currentTarget.style.transform = "scale(1.02)"}
-              onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>
-              Join Lighthouse Programme 
+              onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+            >
+              Join Lighthouse Programme
             </button>
-            <button onClick={() => navigate("/contact")} style={{ height: 56, padding: "0 2.5rem", borderRadius: 18, background: "transparent", color: "#475569", fontWeight: 800, fontSize: "1.05rem", border: "1.5px solid #cbd5e1", cursor: "pointer", transition: "border-color 0.2s" }}
+            <button
+              onClick={() => navigate("/contact")}
+              style={{
+                height: isMobile ? 48 : 56,
+                padding: isMobile ? "0 1.5rem" : "0 2.5rem",
+                borderRadius: 18,
+                background: "transparent",
+                color: "#475569",
+                fontWeight: 800,
+                fontSize: isMobile ? "0.9rem" : "1.05rem",
+                border: "1.5px solid #cbd5e1",
+                cursor: "pointer",
+                transition: "border-color 0.2s",
+                flexShrink: 0,
+              }}
               onMouseEnter={e => e.currentTarget.style.borderColor = "#2563eb"}
-              onMouseLeave={e => e.currentTarget.style.borderColor = "#cbd5e1"}>
+              onMouseLeave={e => e.currentTarget.style.borderColor = "#cbd5e1"}
+            >
               Book a Demo
             </button>
           </div>
@@ -730,21 +885,20 @@ const Hero = () => {
 
       {/* Demo dialog */}
       {open && (
-        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", backdropFilter: "blur(6px)", zIndex: 200, display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }} onClick={() => setOpen(false)}>
-          <div style={{ background: "#fff", borderRadius: 28, padding: "3rem", maxWidth: 440, width: "100%", boxShadow: "0 40px 80px rgba(0,0,0,0.2)" }} onClick={e => e.stopPropagation()}>
-            <h3 style={{ fontSize: "1.75rem", fontWeight: 900, letterSpacing: "-0.03em", color: "#0f172a", marginBottom: 8 }}>See Lucid in Action</h3>
+        <div
+          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", backdropFilter: "blur(6px)", zIndex: 200, display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}
+          onClick={() => setOpen(false)}
+        >
+          <div
+            style={{ background: "#fff", borderRadius: 28, padding: isMobile ? "2rem 1.5rem" : "3rem", maxWidth: 440, width: "100%", boxShadow: "0 40px 80px rgba(0,0,0,0.2)", overflowY: "auto", maxHeight: "90vh" }}
+            onClick={e => e.stopPropagation()}
+          >
+            <h3 style={{ fontSize: isMobile ? "1.4rem" : "1.75rem", fontWeight: 900, letterSpacing: "-0.03em", color: "#0f172a", marginBottom: 8 }}>See Lucid in Action</h3>
             <p style={{ color: "#64748b", marginBottom: "2rem", fontWeight: 300 }}>Schedule a personalized tour of the Lucid OS.</p>
             <form onSubmit={handleHeroSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-              {/* Anti-spam Honeypot field (hidden from normal users) */}
               <div style={{ display: "none" }} aria-hidden="true">
                 <label>Do not fill this field</label>
-                <input
-                  type="text"
-                  value={heroTrap}
-                  onChange={e => setHeroTrap(e.target.value)}
-                  tabIndex={-1}
-                  autoComplete="off"
-                />
+                <input type="text" value={heroTrap} onChange={e => setHeroTrap(e.target.value)} tabIndex={-1} autoComplete="off" />
               </div>
               <div>
                 <label style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#64748b", display: "block", marginBottom: 6 }}>Full Name</label>
@@ -785,15 +939,18 @@ const Hero = () => {
   );
 };
 
-// ─────────────── STATS STRIP (Appears on scroll) ───────────────
+// ─────────────── STATS STRIP ───────────────
 const StatsStrip = () => {
   const { hero } = LUCID_CONTENT;
+  const { width } = useWindowSize();
+  const isMobile = width < 640;
+
   return (
-    <section style={{ background: "rgba(248,250,252,0.8)", padding: "2rem", borderTop: "1px solid #f1f5f9", borderBottom: "1px solid #f1f5f9" }}>
-      <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "2rem", textAlign: "center" }}>
+    <section style={{ background: "rgba(248,250,252,0.8)", padding: isMobile ? "2rem 1.25rem" : "2rem", borderTop: "1px solid #f1f5f9", borderBottom: "1px solid #f1f5f9" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(200px, 1fr))", gap: isMobile ? "1.5rem" : "2rem", textAlign: "center" }}>
         {hero.stats.map((stat, i) => (
           <motion.div key={i} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.5 }} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <div style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 900, color: "#0f172a", lineHeight: 1, marginBottom: 4 }}>
+            <div style={{ fontSize: isMobile ? "2rem" : "clamp(1.75rem, 4vw, 2.5rem)", fontWeight: 900, color: "#0f172a", lineHeight: 1, marginBottom: 4 }}>
               {stat.label}<span style={{ color: "#2563eb", fontSize: "0.6em" }}>{stat.sub}</span>
             </div>
             <div style={{ fontSize: 10, fontWeight: 700, color: "#94a3b8", letterSpacing: "0.15em", textTransform: "uppercase", maxWidth: 180 }}>{stat.desc}</div>
@@ -806,14 +963,16 @@ const StatsStrip = () => {
 
 // ─────────────── COMPARISON ───────────────
 const Comparison = () => {
-  const { comparison } = LUCID_CONTENT;
+  const { width } = useWindowSize();
+  const isMobile = width < 640;
+
   return (
-    <section style={{ padding: "2rem 2rem", height:"325px",background: "#f8fafc", borderTop: "1px solid #e2e8f0", borderBottom: "1px solid #e2e8f0" }}>
+    <section style={{ padding: isMobile ? "2.5rem 1.25rem" : "2rem 2rem", background: "#f8fafc", borderTop: "1px solid #e2e8f0", borderBottom: "1px solid #e2e8f0" }}>
       <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center" }}>
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1 }}>
-          <p style={{ fontSize: "clamp(1.25rem, 3vw, 2rem)", color: "#64748b", fontWeight: 300, lineHeight: 1.6, marginBottom: "4rem" }}>
-            The <em style={{ color: "#0f172a", fontWeight: 700 }}>best frontline teams in the next decade</em> won't be the biggest. They'll be the best equipped.
- <em style={{ color: "#0f172a", fontWeight: 700 }}> Lucid is the infrastructure layer that makes that possible </em>— for any organization, at any scale. Equipping sales teams with sales content & tools to execute sales process- All at one place.
+          <p style={{ fontSize: isMobile ? "1.1rem" : "clamp(1.25rem, 3vw, 2rem)", color: "#64748b", fontWeight: 300, lineHeight: 1.6, marginBottom: isMobile ? "2rem" : "4rem" }}>
+            The <em style={{ color: "#0f172a", fontWeight: 700 }}>best frontline teams in the next decade</em> won't be the biggest. They'll be the best equipped.{" "}
+            <em style={{ color: "#0f172a", fontWeight: 700 }}>Lucid is the infrastructure layer that makes that possible</em> — for any organization, at any scale. Equipping sales teams with sales content & tools to execute sales process — All at one place.
           </p>
         </motion.div>
       </div>
@@ -824,30 +983,35 @@ const Comparison = () => {
 // ─────────────── CAPABILITIES ───────────────
 const Capabilities = () => {
   const { capabilities } = LUCID_CONTENT;
+  const { width } = useWindowSize();
+  const isMobile = width < 640;
+
   return (
-    <section id="results" style={{ padding: "2rem 2rem ", background: "#fff" }}>
+    <section id="results" style={{ padding: isMobile ? "2.5rem 1.25rem" : "2rem 2rem", background: "#fff" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ marginBottom: "5rem" }}>
+        <div style={{ marginBottom: isMobile ? "2.5rem" : "5rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: "1.5rem" }}>
-            <div style={{ width: 32, height: 1.5, background: "#2563eb" }} />
+            <div style={{ width: 32, height: 1.5, background: "#2563eb", flexShrink: 0 }} />
             <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.4em", color: "#3b82f6", textTransform: "uppercase" }}>{capabilities.subtitle}</span>
           </div>
-          <h2 style={{ fontSize: "clamp(2rem, 5vw, 4rem)", fontWeight: 900, letterSpacing: "-0.04em", color: "#0f172a", marginBottom: "1.5rem", lineHeight: 1 }}>
+          <h2 style={{ fontSize: isMobile ? "1.75rem" : "clamp(2rem, 5vw, 4rem)", fontWeight: 900, letterSpacing: "-0.04em", color: "#0f172a", marginBottom: "1.5rem", lineHeight: 1 }}>
             {capabilities.title}
           </h2>
-          <p style={{ fontSize: "1.2rem", color: "#64748b", maxWidth: 560, fontWeight: 300, lineHeight: 1.7 }}>{capabilities.description}</p>
+          <p style={{ fontSize: isMobile ? "1rem" : "1.2rem", color: "#64748b", maxWidth: 560, fontWeight: 300, lineHeight: 1.7 }}>{capabilities.description}</p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "2rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
           {capabilities.items.map((item, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.5 }}>
-              <div style={{ height: "100%", padding: "2.5rem", background: "#f8fafc", borderRadius: 28, border: "1px solid transparent", transition: "all 0.3s", cursor: "default" }}
+              <div
+                style={{ height: "100%", padding: isMobile ? "1.75rem" : "2.5rem", background: "#f8fafc", borderRadius: 28, border: "1px solid transparent", transition: "all 0.3s", cursor: "default" }}
                 onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 20px 50px rgba(0,0,0,0.08)"; e.currentTarget.style.background = "#fff"; e.currentTarget.style.borderColor = "#e2e8f0"; }}
-                onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.background = "#f8fafc"; e.currentTarget.style.borderColor = "transparent"; }}>
-                <div style={{ width: 52, height: 52, borderRadius: 16, background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.5rem", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.background = "#f8fafc"; e.currentTarget.style.borderColor = "transparent"; }}
+              >
+                <div style={{ width: 52, height: 52, borderRadius: 16, background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.5rem", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", flexShrink: 0 }}>
                   <IconComp name={item.icon} className="w-6 h-6" style={{ width: 24, height: 24, color: "#2563eb" }} />
                 </div>
-                <h3 style={{ fontSize: "1.35rem", fontWeight: 800, letterSpacing: "-0.025em", color: "#0f172a", marginBottom: "0.75rem" }}>{item.title}</h3>
+                <h3 style={{ fontSize: isMobile ? "1.15rem" : "1.35rem", fontWeight: 800, letterSpacing: "-0.025em", color: "#0f172a", marginBottom: "0.75rem" }}>{item.title}</h3>
                 <p style={{ color: "#64748b", fontSize: "1rem", lineHeight: 1.7, fontWeight: 300 }}>{item.desc}</p>
               </div>
             </motion.div>
@@ -860,6 +1024,9 @@ const Capabilities = () => {
 
 // ─────────────── UPLOAD WORKFLOW ANIMATION ───────────────
 const UploadWorkflowAnimation = () => {
+  const { width } = useWindowSize();
+  const isMobile = width < 640;
+
   const inputFiles = [
     { id: 1, name: "SOP.pdf", icon: "📄", delay: 0 },
     { id: 2, name: "Product_Manual.docx", icon: "📘", delay: 0.1 },
@@ -877,14 +1044,14 @@ const UploadWorkflowAnimation = () => {
   ];
 
   return (
-    <div style={{ width: "100%", aspectRatio: "4/3", background: "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)", borderRadius: 24, padding: "2rem", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", position: "relative", overflow: "hidden" }}>
+    <div style={{ width: "100%", aspectRatio: isMobile ? "1/1" : "4/3", background: "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)", borderRadius: 24, padding: isMobile ? "1rem" : "2rem", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", position: "relative", overflow: "hidden" }}>
       {/* Grid background */}
       <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(226,232,240,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(226,232,240,0.5) 1px, transparent 1px)", backgroundSize: "40px 40px", opacity: 0.3, pointerEvents: "none" }} />
 
       <div style={{ position: "relative", zIndex: 10, width: "100%", height: "100%", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        
+
         {/* Left: Input Files */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "1rem", justifyContent: "center", width: "20%" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? "0.5rem" : "1rem", justifyContent: "center", width: isMobile ? "30%" : "20%" }}>
           {inputFiles.map((file) => (
             <motion.div
               key={file.id}
@@ -893,34 +1060,34 @@ const UploadWorkflowAnimation = () => {
               transition={{ delay: file.delay, duration: 0.6 }}
             >
               <motion.div
-                animate={{ x: [0, 80, 0] }}
+                animate={{ x: [0, isMobile ? 40 : 80, 0] }}
                 transition={{ delay: file.delay + 0.8, duration: 2.5, repeat: Infinity }}
                 style={{
                   background: "#fff",
                   border: "1px solid #e2e8f0",
                   borderRadius: 12,
-                  padding: "0.75rem 1rem",
-                  fontSize: "0.75rem",
+                  padding: isMobile ? "0.5rem 0.6rem" : "0.75rem 1rem",
+                  fontSize: isMobile ? "0.6rem" : "0.75rem",
                   fontWeight: 600,
                   color: "#64748b",
                   boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
                   display: "flex",
                   alignItems: "center",
-                  gap: "0.5rem",
+                  gap: "0.3rem",
                   whiteSpace: "nowrap",
+                  overflow: "hidden",
                 }}
               >
                 <span>{file.icon}</span>
-                <span>{file.name}</span>
+                {!isMobile && <span>{file.name}</span>}
               </motion.div>
             </motion.div>
           ))}
         </div>
 
         {/* Center: Processing Engine */}
-        <div style={{ width: "40%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <div style={{ position: "relative", width: 140, height: 140 }}>
-            {/* Outer rotating ring */}
+        <div style={{ width: isMobile ? "30%" : "40%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <div style={{ position: "relative", width: isMobile ? 80 : 140, height: isMobile ? 80 : 140 }}>
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
@@ -933,8 +1100,6 @@ const UploadWorkflowAnimation = () => {
                 borderRadius: "50%",
               }}
             />
-
-            {/* Inner pulsing circle */}
             <motion.div
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
@@ -945,33 +1110,26 @@ const UploadWorkflowAnimation = () => {
                 borderRadius: "50%",
               }}
             />
-
-            {/* Core element */}
             <div style={{
               position: "absolute",
-              inset: 30,
+              inset: isMobile ? 18 : 30,
               background: "linear-gradient(135deg, #3b82f6, #2563eb)",
               borderRadius: "50%",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               color: "#fff",
-              fontSize: "2rem",
+              fontSize: isMobile ? "1rem" : "2rem",
               boxShadow: "0 8px 24px rgba(37,99,235,0.3)",
             }}>
               ⚙️
             </div>
-
-            {/* Animated particles */}
             {[0, 1, 2, 3].map((i) => (
               <motion.div
                 key={i}
                 animate={{ rotate: 360 }}
                 transition={{ duration: 4, repeat: Infinity, ease: "linear", delay: i * 0.5 }}
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                }}
+                style={{ position: "absolute", inset: 0 }}
               >
                 <div style={{
                   position: "absolute",
@@ -986,15 +1144,13 @@ const UploadWorkflowAnimation = () => {
                 }} />
               </motion.div>
             ))}
-
-            {/* Label */}
             <div style={{
               position: "absolute",
-              bottom: -40,
+              bottom: isMobile ? -28 : -40,
               left: "50%",
               transform: "translateX(-50%)",
               whiteSpace: "nowrap",
-              fontSize: "0.75rem",
+              fontSize: isMobile ? "0.6rem" : "0.75rem",
               fontWeight: 700,
               color: "#2563eb",
               letterSpacing: "0.05em",
@@ -1005,7 +1161,7 @@ const UploadWorkflowAnimation = () => {
         </div>
 
         {/* Right: Output Assets */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "1rem", justifyContent: "center", width: "20%" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? "0.5rem" : "1rem", justifyContent: "center", width: isMobile ? "30%" : "20%" }}>
           {outputAssets.map((asset) => (
             <motion.div
               key={asset.id}
@@ -1014,25 +1170,26 @@ const UploadWorkflowAnimation = () => {
               transition={{ delay: asset.delay, duration: 0.6 }}
             >
               <motion.div
-                animate={{ x: [-80, 0, 0] }}
+                animate={{ x: [isMobile ? -40 : -80, 0, 0] }}
                 transition={{ delay: asset.delay + 0.2, duration: 2.5, repeat: Infinity }}
                 style={{
                   background: "#fff",
                   border: "1.5px solid #3b82f6",
                   borderRadius: 12,
-                  padding: "0.75rem 1rem",
-                  fontSize: "0.75rem",
+                  padding: isMobile ? "0.5rem 0.6rem" : "0.75rem 1rem",
+                  fontSize: isMobile ? "0.6rem" : "0.75rem",
                   fontWeight: 600,
                   color: "#2563eb",
                   boxShadow: "0 4px 12px rgba(37,99,235,0.1)",
                   display: "flex",
                   alignItems: "center",
-                  gap: "0.5rem",
+                  gap: "0.3rem",
                   whiteSpace: "nowrap",
+                  overflow: "hidden",
                 }}
               >
                 <span>{asset.icon}</span>
-                <span>{asset.name}</span>
+                {!isMobile && <span>{asset.name}</span>}
               </motion.div>
             </motion.div>
           ))}
@@ -1041,7 +1198,6 @@ const UploadWorkflowAnimation = () => {
 
       {/* Connecting lines */}
       <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }} viewBox="0 0 800 300" preserveAspectRatio="xMidYMid slice">
-        {/* Left to center */}
         <motion.path
           d="M 100 150 Q 250 100 350 150"
           fill="none"
@@ -1051,7 +1207,6 @@ const UploadWorkflowAnimation = () => {
           animate={{ pathLength: 1 }}
           transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse" }}
         />
-        {/* Right from center */}
         <motion.path
           d="M 450 150 Q 600 100 700 150"
           fill="none"
@@ -1079,46 +1234,75 @@ const UploadWorkflowAnimation = () => {
 // ─────────────── HOW IT WORKS ───────────────
 const HowItWorks = () => {
   const { howItWorks } = LUCID_CONTENT;
+  const { width } = useWindowSize();
+  const isMobile = width < 640;
+  const isTablet = width >= 640 && width < 1024;
+
   return (
-    <section id="how-it-works" style={{ padding: "2rem 2rem", background: "#fff", borderTop: "1px solid #f1f5f9" }}>
+    <section id="how-it-works" style={{ padding: isMobile ? "2.5rem 1.25rem" : "2rem 2rem", background: "#fff", borderTop: "1px solid #f1f5f9" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ marginBottom: "6rem" }}>
+        <div style={{ marginBottom: isMobile ? "3rem" : "6rem" }}>
           <span style={{ display: "inline-block", padding: "0.35rem 1rem", borderRadius: 9999, border: "1px solid #bfdbfe", background: "#eff6ff", color: "#2563eb", fontSize: 10, fontWeight: 900, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "1.5rem" }}>{howItWorks.subtitle}</span>
-          <h2 style={{ fontSize: "clamp(2rem, 5vw, 4rem)", fontWeight: 900, letterSpacing: "-0.04em", color: "#0f172a", marginBottom: "1.5rem", lineHeight: 1 }}>{howItWorks.title}</h2>
-          <p style={{ fontSize: "1.25rem", color: "#64748b", maxWidth: 540, fontWeight: 300, lineHeight: 1.7 }}>{howItWorks.description}</p>
+          <h2 style={{ fontSize: isMobile ? "1.75rem" : "clamp(2rem, 5vw, 4rem)", fontWeight: 900, letterSpacing: "-0.04em", color: "#0f172a", marginBottom: "1.5rem", lineHeight: 1 }}>{howItWorks.title}</h2>
+          <p style={{ fontSize: isMobile ? "1rem" : "1.25rem", color: "#64748b", maxWidth: 540, fontWeight: 300, lineHeight: 1.7 }}>{howItWorks.description}</p>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "8rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? "4rem" : "8rem" }}>
           {howItWorks.steps.map((step, index) => {
             const isEven = index % 2 === 0;
             return (
-              <div key={step.id} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", alignItems: "center" }}>
-                <motion.div initial={{ opacity: 0, x: isEven ? -40 : 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8 }} style={{ order: isEven ? 1 : 2 }}>
+              <div
+                key={step.id}
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: isMobile || isTablet ? "1fr" : "1fr 1fr",
+                  gap: isMobile ? "2rem" : "5rem",
+                  alignItems: "center",
+                }}
+              >
+                <motion.div
+                  initial={{ opacity: 0, x: isMobile ? 0 : (isEven ? -40 : 40) }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.8 }}
+                  style={{ order: isMobile || isTablet ? 2 : (isEven ? 1 : 2) }}
+                >
                   <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: "2rem" }}>
-                    <div style={{ width: 28, height: 1.5, background: "#2563eb" }} />
+                    <div style={{ width: 28, height: 1.5, background: "#2563eb", flexShrink: 0 }} />
                     <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.35em", color: "#3b82f6", textTransform: "uppercase" }}>Step 0{index + 1}</span>
                   </div>
-                  <h3 style={{ fontSize: "clamp(1.5rem, 3vw, 2.75rem)", fontWeight: 800, letterSpacing: "-0.035em", color: "#0f172a", marginBottom: "1.5rem", lineHeight: 1.1 }}>
+                  <h3 style={{ fontSize: isMobile ? "1.4rem" : "clamp(1.5rem, 3vw, 2.75rem)", fontWeight: 800, letterSpacing: "-0.035em", color: "#0f172a", marginBottom: "1.5rem", lineHeight: 1.1 }}>
                     {step.heading.includes("Lucid")
                       ? step.heading.split("Lucid").map((part, i, arr) => (
                         <span key={i}>{part}{i < arr.length - 1 && <em style={{ color: "#2563eb" }}>Lucid </em>}</span>
                       ))
                       : step.heading}
                   </h3>
-                  <p style={{ fontSize: "1.1rem", color: "#64748b", marginBottom: "2.5rem", lineHeight: 1.8, fontWeight: 300 }}>{step.description}</p>
+                  <p style={{ fontSize: isMobile ? "0.95rem" : "1.1rem", color: "#64748b", marginBottom: "2.5rem", lineHeight: 1.8, fontWeight: 300 }}>{step.description}</p>
                   <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "1.25rem" }}>
                     {step.points.map((point, i) => (
                       <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "1rem" }}>
                         <div style={{ width: 6, height: 6, borderRadius: 9999, background: "#2563eb", marginTop: 9, flexShrink: 0 }} />
-                        <span style={{ color: "#64748b", fontSize: "1.05rem", lineHeight: 1.6, fontWeight: 300 }}>{point}</span>
+                        <span style={{ color: "#64748b", fontSize: isMobile ? "0.9rem" : "1.05rem", lineHeight: 1.6, fontWeight: 300 }}>{point}</span>
                       </li>
                     ))}
                   </ul>
                 </motion.div>
 
-                <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }} style={{ order: isEven ? 2 : 1 }}>
-                  <div style={{ borderRadius: 32, overflow: "hidden", background: "transparent", padding: 0, boxShadow: "none", border: "none" }}>
-                    <img src={step.image} alt={step.title} style={{ width: "100%", height: "auto", objectFit: "cover", borderRadius: 32, display: "block" }} referrerPolicy="no-referrer" />
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                  style={{ order: isMobile || isTablet ? 1 : (isEven ? 2 : 1) }}
+                >
+                  <div style={{ borderRadius: 32, overflow: "hidden" }}>
+                    <img
+                      src={step.image}
+                      alt={step.title}
+                      style={{ width: "100%", height: "auto", objectFit: "cover", borderRadius: 32, display: "block" }}
+                      referrerPolicy="no-referrer"
+                    />
                   </div>
                 </motion.div>
               </div>
@@ -1131,35 +1315,57 @@ const HowItWorks = () => {
 };
 
 // ─────────────── FINAL CTA ───────────────
-const FinalCTA = () => (
-  <section style={{ padding: "2rem 2rem", background: "#fff" }}>
-    <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-      <div style={{ background: "#0f172a", borderRadius: 48, padding: "clamp(3rem,8vw,7rem)", textAlign: "center", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at center, rgba(37,99,235,0.25) 0%, transparent 65%)", pointerEvents: "none" }} />
-        <div style={{ position: "relative", zIndex: 10, maxWidth: 780, margin: "0 auto" }}>
-          <h2 style={{ fontSize: "clamp(2rem, 6vw, 5rem)", fontWeight: 900, color: "#fff", letterSpacing: "-0.045em", lineHeight: 0.9, marginBottom: "2rem" }}>
-            Your execution gap<br />has a <em style={{ color: "#60a5fa", fontStyle: "italic" }}>cost.</em>
-          </h2>
-          <p style={{ color: "#64748b", fontSize: "clamp(1rem, 2vw, 1.4rem)", marginBottom: "3.5rem", lineHeight: 1.7, fontWeight: 300 }}>
-            Every week without Lucid is a week where your strategy stays at the top and your <span style={{ color: "#fff", fontWeight: 500 }}>ground reality stays unknown.</span> The Lighthouse Programme gives you 30 days to find out exactly what's possible.
-          </p>
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: "1.5rem" }}>
-            <button style={{ height: 60, padding: "0 3rem", borderRadius: 20, background: "#2563eb", color: "#fff", fontWeight: 800, fontSize: "1.05rem", border: "none", cursor: "pointer", boxShadow: "0 20px 40px rgba(37,99,235,0.3)", transition: "transform 0.15s" }}
-              onMouseEnter={e => e.currentTarget.style.transform = "scale(1.03)"}
-              onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>
-              Apply for the Lighthouse Programme
-            </button>
-            <button style={{ height: 60, padding: "0 2rem", borderRadius: 20, background: "transparent", color: "#94a3b8", fontWeight: 800, fontSize: "1.05rem", border: "none", cursor: "pointer" }}
-              onMouseEnter={e => e.currentTarget.style.color = "#fff"}
-              onMouseLeave={e => e.currentTarget.style.color = "#94a3b8"}>
-              Talk to us first →
-            </button>
+const FinalCTA = () => {
+  const { width } = useWindowSize();
+  const isMobile = width < 640;
+
+  return (
+    <section style={{ padding: isMobile ? "2rem 1.25rem" : "2rem 2rem", background: "#fff" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+        <div style={{ background: "#0f172a", borderRadius: isMobile ? 28 : 48, padding: isMobile ? "3rem 1.5rem" : "clamp(3rem,8vw,7rem)", textAlign: "center", position: "relative", overflow: "hidden" }}>
+          <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at center, rgba(37,99,235,0.25) 0%, transparent 65%)", pointerEvents: "none" }} />
+          <div style={{ position: "relative", zIndex: 10, maxWidth: 780, margin: "0 auto" }}>
+            <h2 style={{ fontSize: isMobile ? "2.25rem" : "clamp(2rem, 6vw, 5rem)", fontWeight: 900, color: "#fff", letterSpacing: "-0.045em", lineHeight: 0.9, marginBottom: "2rem" }}>
+              Your execution gap<br />has a <em style={{ color: "#60a5fa", fontStyle: "italic" }}>cost.</em>
+            </h2>
+            <p style={{ color: "#64748b", fontSize: isMobile ? "0.95rem" : "clamp(1rem, 2vw, 1.4rem)", marginBottom: "3.5rem", lineHeight: 1.7, fontWeight: 300 }}>
+              Every week without Lucid is a week where your strategy stays at the top and your <span style={{ color: "#fff", fontWeight: 500 }}>ground reality stays unknown.</span> The Lighthouse Programme gives you 30 days to find out exactly what's possible.
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: "1.5rem" }}>
+              <button
+                style={{
+                  height: isMobile ? 52 : 60,
+                  padding: isMobile ? "0 1.75rem" : "0 3rem",
+                  borderRadius: 20,
+                  background: "#2563eb",
+                  color: "#fff",
+                  fontWeight: 800,
+                  fontSize: isMobile ? "0.9rem" : "1.05rem",
+                  border: "none",
+                  cursor: "pointer",
+                  boxShadow: "0 20px 40px rgba(37,99,235,0.3)",
+                  transition: "transform 0.15s",
+                  textAlign: "center",
+                }}
+                onMouseEnter={e => e.currentTarget.style.transform = "scale(1.03)"}
+                onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+              >
+                Apply for the Lighthouse Programme
+              </button>
+              <button
+                style={{ height: isMobile ? 52 : 60, padding: "0 2rem", borderRadius: 20, background: "transparent", color: "#94a3b8", fontWeight: 800, fontSize: isMobile ? "0.9rem" : "1.05rem", border: "none", cursor: "pointer" }}
+                onMouseEnter={e => e.currentTarget.style.color = "#fff"}
+                onMouseLeave={e => e.currentTarget.style.color = "#94a3b8"}
+              >
+                Talk to us first →
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 // ─────────────── MAIN APP ───────────────
 export default function Home() {
