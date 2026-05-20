@@ -819,9 +819,9 @@ const Hero = () => {
       <div style={{ position: "absolute", top: 0, right: 0, width: isMobile ? 300 : 700, height: isMobile ? 300 : 700, background: "radial-gradient(circle, rgba(191,219,254,0.5) 0%, transparent 65%)", transform: "translate(30%, -30%)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", bottom: 0, left: 0, width: isMobile ? 250 : 500, height: isMobile ? 250 : 500, background: "radial-gradient(circle, rgba(186,230,253,0.3) 0%, transparent 70%)", transform: "translate(-30%, 30%)", pointerEvents: "none" }} />
 
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: isMobile ? "5rem 1.25rem 3rem" : "5rem 2rem 3rem", maxWidth: 1100, margin: "0 auto", width: "100%", position: "relative", zIndex: 10, boxSizing: "border-box" }}>
-        <motion.div initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85 }}>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 12, marginBottom: "2.5rem" }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: isMobile ? "5rem 1.25rem 3rem" : "5rem 2rem 3rem", maxWidth: 1100, margin: "0 auto", width: "100%", position: "relative", zIndex: 10, boxSizing: "border-box" }}>
+        <motion.div initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85 }} style={{ textAlign: "center", width: "100%" }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 12, marginBottom: "2.5rem", justifyContent: "center" }}>
             <div style={{ width: 8, height: 8, borderRadius: 9999, background: "#2563eb", flexShrink: 0 }} />
             <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.4em", color: "#3b82f6", textTransform: "uppercase" }}>{hero.subtitle}</span>
           </div>
@@ -832,12 +832,12 @@ const Hero = () => {
             <span style={{ color: "#94a3b8", fontStyle: "normal" }}>From Decision To Execution.</span>
           </h1>
 
-          <p style={{ fontSize: isMobile ? "0.9rem" : "clamp(0.95rem, 1.8vw, 1.1rem)", color: "#64748b", maxWidth: 640, marginBottom: "2rem", lineHeight: 1.6, fontWeight: 300 }}>
+          <p style={{ fontSize: isMobile ? "0.9rem" : "clamp(0.95rem, 1.8vw, 1.1rem)", color: "#64748b", maxWidth: 640, marginBottom: "2rem", lineHeight: 1.6, fontWeight: 300, margin: "0 auto 2rem" }}>
             Not a Feature. Not a Dashboard. The <strong style={{ color: "#0f172a", fontWeight: 700 }}>Operating Layer Between What Your Sales Organization Decides And What Actually Happens</strong> — At The Counter, On The Floor, In The Field, On The Line.
           </p>
 
           {/* CTA buttons */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginBottom: "1.5rem" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginBottom: "1.5rem", justifyContent: "center" }}>
             <button
               onClick={() => setOpen(true)}
               style={{

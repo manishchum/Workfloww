@@ -90,8 +90,8 @@ const deviationColor = (value: number | null) => {
   return "bg-[#D85A30]/20 text-[#D85A30] border-[#D85A30]/30";
 };
 
-/* Shared section padding */
-const sp = "px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 py-10 sm:py-14 lg:py-20";
+/* Shared section padding - centered alignment */
+const sp = "max-w-[1200px] mx-auto w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 py-10 sm:py-14 lg:py-20";
 
 export default function OperationsHead() {
   return (
@@ -103,7 +103,7 @@ export default function OperationsHead() {
           <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-16 items-center">
 
             <div>
-              <p className="text-xs font-semibold tracking-[0.3em] text-[#6357d4] uppercase mb-4 sm:mb-6">
+              <p className="text-xs font-semibold tracking-[0.3em] text-slate-500 uppercase mb-4 sm:mb-6">
                 For the Operations Head
               </p>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">

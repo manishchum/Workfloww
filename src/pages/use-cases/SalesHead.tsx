@@ -61,8 +61,8 @@ const readinessColor = (value: number) => {
   return "bg-rose-500";
 };
 
-/* Shared section padding */
-const sp = "px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 py-10 sm:py-14 lg:py-20";
+/* Shared section padding - centered alignment */
+const sp = "max-w-[1200px] mx-auto w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 py-10 sm:py-14 lg:py-20";
 
 export default function SalesHead() {
   return (
