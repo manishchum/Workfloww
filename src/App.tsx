@@ -32,6 +32,7 @@ import CEO from "./pages/use-cases/CEO";
 import CHRO from "./pages/use-cases/CHRO";
 import SalesHead from "./pages/use-cases/SalesHead";
 import OperationsHead from "./pages/use-cases/OperationsHead";
+import SalesTeam from "./pages/features/SalesTeam";
 import BuilderLab from "./pages/BuilderLab";
 import LighthouseProgram from "./pages/LighthouseProgram";
 
@@ -66,6 +67,7 @@ export default function App() {
           <Route path="/use-cases/chro" element={<CHRO />} />
           <Route path="/use-cases/sales-head" element={<SalesHead />} />
           <Route path="/use-cases/operations-head" element={<OperationsHead />} />
+          <Route path="/features/sales-team" element={<SalesTeam />} />
           <Route path="/builder-lab" element={<BuilderLab />} />
           <Route path="/lighthouse-program" element={<LighthouseProgram />} />
         </Routes>

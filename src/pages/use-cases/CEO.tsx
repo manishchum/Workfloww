@@ -56,7 +56,7 @@ const getExecutionColor = (value: number) => {
 };
 
 /* Shared section padding — centered alignment */
-const sectionPadding = "max-w-[1200px] mx-auto w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 py-10 sm:py-14 lg:py-20";
+const sectionPadding = "max-w-[1200px] mx-auto w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 py-10 sm:py-10 lg:py-16";
 
 export default function CEO() {
   return (
