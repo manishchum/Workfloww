@@ -372,6 +372,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 const getLink = (name: string) => {
                                   switch (name) {
                                     case "About": return "/about";
+                                    case "Sales Team": return "/features/sales-team";
                                     case "Self-Learning": return "/features/self-learning";
                                     case "Seamless Training": return "/features/seamless-training";
                                     case "Career Progression": return "/features/career-progression";
