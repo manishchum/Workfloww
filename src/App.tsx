@@ -33,6 +33,9 @@ import CHRO from "./pages/use-cases/CHRO";
 import SalesHead from "./pages/use-cases/SalesHead";
 import OperationsHead from "./pages/use-cases/OperationsHead";
 import SalesTeam from "./pages/features/SalesTeam";
+import SalesTool from "./pages/features/SalesTool";
+import Execution from "./pages/features/Execution";
+import ContentEngine from "./pages/ContentEngine";
 import BuilderLab from "./pages/BuilderLab";
 import LighthouseProgram from "./pages/LighthouseProgram";
 
@@ -68,6 +71,9 @@ export default function App() {
           <Route path="/use-cases/sales-head" element={<SalesHead />} />
           <Route path="/use-cases/operations-head" element={<OperationsHead />} />
           <Route path="/features/sales-team" element={<SalesTeam />} />
+          <Route path="/features/sales-tool" element={<SalesTool />} />
+          <Route path="/features/execution" element={<Execution />} />
+          <Route path="/features/content-engine" element={<ContentEngine />} />
           <Route path="/builder-lab" element={<BuilderLab />} />
           <Route path="/lighthouse-program" element={<LighthouseProgram />} />
         </Routes>
