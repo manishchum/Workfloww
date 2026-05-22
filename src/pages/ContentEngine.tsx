@@ -704,6 +704,310 @@ export default function ContentEngine() {
           line-height: 1.5;
           margin: 0;
         }
+
+        /* ──────────── SPRINT EDITOR CARD ──────────── */
+        .sprint-editor-card {
+          background: white;
+          border-radius: 18px;
+          border: 1px solid rgba(91, 78, 245, 0.1);
+          overflow: hidden;
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+        }
+
+        .sprint-editor-header {
+          background: var(--dark-card);
+          padding: 16px 18px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .sprint-editor-header-left {
+          display: flex;
+          gap: 8px;
+          align-items: center;
+        }
+
+        .sprint-editor-header h4 {
+          font-size: 14px;
+          font-weight: 500;
+          color: white;
+          margin: 0;
+        }
+
+        .sprint-editor-subtitle {
+          font-size: 12px;
+          color: #a78bfa;
+        }
+
+        .sprint-editor-body {
+          padding: 16px;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .sprint-editor-sprint-label {
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          color: var(--ink-3);
+          margin-bottom: 4px;
+        }
+
+        .sprint-q-row {
+          border-radius: 10px;
+          padding: 12px 14px;
+          border: 1px solid;
+        }
+
+        .sprint-q-approved {
+          background: #f0fdf4;
+          border-color: #bbf7d0;
+        }
+
+        .sprint-q-edit {
+          background: #fefce8;
+          border-color: #fde047;
+        }
+
+        .sprint-q-pending {
+          background: #f8fafc;
+          border-color: #e2e8f0;
+        }
+
+        .sprint-q-meta {
+          font-size: 9px;
+          font-weight: 700;
+          letter-spacing: 0.8px;
+          text-transform: uppercase;
+          margin-bottom: 6px;
+        }
+
+        .sprint-q-approved .sprint-q-meta { color: #166534; }
+        .sprint-q-edit .sprint-q-meta { color: #854d0e; }
+        .sprint-q-pending .sprint-q-meta { color: var(--ink-3); }
+
+        .sprint-q-text {
+          font-size: 13px;
+          color: var(--ink);
+          line-height: 1.5;
+          margin: 0;
+        }
+
+        .sprint-q-pending .sprint-q-text { color: var(--ink-3); }
+
+        .sprint-q-comment {
+          font-size: 11px;
+          color: #92400e;
+          margin: 6px 0 0;
+          font-style: italic;
+        }
+
+        .sprint-editor-actions {
+          display: flex;
+          gap: 8px;
+        }
+
+        .sprint-btn-primary {
+          flex: 1;
+          background: var(--accent);
+          border: none;
+          border-radius: 8px;
+          padding: 10px;
+          font-size: 12px;
+          font-weight: 700;
+          color: white;
+          cursor: pointer;
+          transition: opacity 0.2s;
+        }
+
+        .sprint-btn-primary:hover { opacity: 0.88; }
+
+        .sprint-btn-secondary {
+          flex: 1;
+          background: white;
+          border: 1px solid #e2e8f0;
+          border-radius: 8px;
+          padding: 10px;
+          font-size: 12px;
+          font-weight: 600;
+          color: var(--ink-3);
+          cursor: pointer;
+          transition: border-color 0.2s;
+        }
+
+        .sprint-btn-secondary:hover { border-color: var(--accent); }
+
+        .sprint-awaiting-bar {
+          background: #ede9ff;
+          border-radius: 8px;
+          padding: 10px 14px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .sprint-awaiting-bar span {
+          font-size: 12px;
+          font-weight: 600;
+          color: var(--accent);
+        }
+
+        /* ──────────── CONTENT PERFORMANCE CARD ──────────── */
+        .perf-card {
+          background: white;
+          border-radius: 18px;
+          border: 1px solid rgba(91, 78, 245, 0.1);
+          overflow: hidden;
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+        }
+
+        .perf-card-header {
+          background: var(--dark-card);
+          padding: 16px 18px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .perf-card-header-left {
+          display: flex;
+          gap: 8px;
+          align-items: center;
+        }
+
+        .perf-card-header h4 {
+          font-size: 14px;
+          font-weight: 500;
+          color: white;
+          margin: 0;
+        }
+
+        .perf-card-subtitle {
+          font-size: 12px;
+          color: #a78bfa;
+        }
+
+        .perf-card-body {
+          padding: 16px;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .perf-kpi-row {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 8px;
+        }
+
+        .perf-kpi-tile {
+          background: #f8fafc;
+          border-radius: 10px;
+          padding: 12px;
+          text-align: center;
+          border: 1px solid #e8ecf0;
+        }
+
+        .perf-kpi-value {
+          font-size: 22px;
+          font-weight: 800;
+          color: var(--ink);
+          margin: 0 0 2px;
+          font-family: "DM Sans", sans-serif;
+        }
+
+        .perf-kpi-value.green { color: #10b981; }
+
+        .perf-kpi-label {
+          font-size: 10px;
+          color: var(--ink-3);
+          margin: 0 0 2px;
+        }
+
+        .perf-kpi-trend {
+          font-size: 9px;
+          color: #10b981;
+          font-weight: 600;
+        }
+
+        .perf-leaderboard {
+          background: #f8fafc;
+          border-radius: 10px;
+          padding: 12px 14px;
+          border: 1px solid #e8ecf0;
+        }
+
+        .perf-leaderboard-label {
+          font-size: 9px;
+          font-weight: 700;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          color: var(--ink-3);
+          margin-bottom: 10px;
+        }
+
+        .perf-leaderboard-rows {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .perf-lb-row {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .perf-lb-name {
+          font-size: 11px;
+          color: var(--ink-2);
+          flex: 1;
+          min-width: 0;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .perf-lb-bar-track {
+          width: 64px;
+          height: 5px;
+          background: #e8ecf0;
+          border-radius: 3px;
+          overflow: hidden;
+          flex-shrink: 0;
+        }
+
+        .perf-lb-bar-fill {
+          height: 100%;
+          border-radius: 3px;
+        }
+
+        .perf-lb-score {
+          font-size: 11px;
+          font-weight: 700;
+          width: 30px;
+          text-align: right;
+          flex-shrink: 0;
+        }
+
+        .perf-flag-bar {
+          background: #fef2f2;
+          border: 1px solid #fecaca;
+          border-radius: 8px;
+          padding: 10px 14px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .perf-flag-bar span {
+          font-size: 11px;
+          font-weight: 600;
+          color: #991b1b;
+        }
         
         /* ──────────── STATS BAR ──────────── */
         .stats-bar {
@@ -923,6 +1227,10 @@ export default function ContentEngine() {
           .cta-inner {
             padding: 48px 24px;
           }
+
+          .perf-kpi-row {
+            grid-template-columns: repeat(3, 1fr);
+          }
         }
         
         @media (max-width: 600px) {
@@ -963,28 +1271,12 @@ export default function ContentEngine() {
         }
       `}</style>
 
-      {/* ─────────── NAV ─────────── */}
-      {/* <nav>
-        <div className="container">
-          <div className="nav-logo">Lucid</div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '24px', marginLeft: 'auto' }}>
-            <ul className="nav-links">
-              <li><a href="#how-it-works">How it works</a></li>
-              <li><a href="#voice-insights">Voice insights</a></li>
-              <li><a href="#features">Features</a></li>
-            </ul>
-            <button className="nav-cta">Book a demo</button>
-          </div>
-        </div>
-      </nav> */}
-
       {/* ─────────── HERO ─────────── */}
       <section id="hero" className="section">
         <div className="container">
           <div className="hero-grid">
             {/* Left Column */}
             <div>
-              {/* <div className="hero-eyebrow">PILLAR 4</div> */}
               <h1 className="hero-title">
                 Your Best Knowledge,<br />in Every <span>Rep's</span><br />Hands
               </h1>
@@ -993,15 +1285,14 @@ export default function ContentEngine() {
               </p>
               <div className="cta-group">
                 <button onClick={() => navigate('/contact')} className="bg-[#6357d4] hover:bg-[#5146c7] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2">
-                                Book Demo <ArrowRight className="w-5 h-5" />
-                              </button>
+                  Book Demo <ArrowRight className="w-5 h-5" />
+                </button>
               </div>
             </div>
 
             {/* Right Column - Content Library Card */}
             <div>
               <div className="hero-card">
-                {/* Card Header */}
                 <div className="card-header">
                   <div className="card-header-left">
                     <div className="card-icon">
@@ -1018,9 +1309,7 @@ export default function ContentEngine() {
                   </div>
                 </div>
 
-                {/* Card Body */}
                 <div className="card-body">
-                  {/* Recently Deployed */}
                   <span className="section-label">Recently Deployed</span>
                   <div className="content-rows">
                     <div className="content-row">
@@ -1049,7 +1338,6 @@ export default function ContentEngine() {
                     </div>
                   </div>
 
-                  {/* In Creation */}
                   <span className="section-label" style={{ marginTop: '16px' }}>In Creation</span>
                   <div className="content-rows">
                     <div className="content-row">
@@ -1080,7 +1368,6 @@ export default function ContentEngine() {
       <section className="section surface" id="how-it-works" data-reveal>
         <div className="container">
           <div className="feature-row">
-            {/* Left - Text */}
             <div>
               <h3 className="feature-text">
                 <div style={{ marginBottom: '8px' }}>MULTI-FORMAT INGESTION</div>
@@ -1092,76 +1379,44 @@ export default function ContentEngine() {
                 Your SOPs are in PPT. Your playbooks are in Word. Your best trainer's knowledge is in a voice note. Lucid ingests all of it and turns it into structured, deployable learning content. No reformatting. No L&D agency.
               </p>
               <ul className="feature-checklist">
-                <li className="feature-check-item">
-                  <div className="feature-check-icon">
-                    <CheckCircle2 size={12} />
-                  </div>
-                  <span>PDF, PPT, Word docs, URLs, voice notes all accepted</span>
-                </li>
-                <li className="feature-check-item">
-                  <div className="feature-check-icon">
-                    <CheckCircle2 size={12} />
-                  </div>
-                  <span>AI extracts key concepts, structures them into sprint modules</span>
-                </li>
-                <li className="feature-check-item">
-                  <div className="feature-check-icon">
-                    <CheckCircle2 size={12} />
-                  </div>
-                  <span>Your team reviews and approves before deployment</span>
-                </li>
-                <li className="feature-check-item">
-                  <div className="feature-check-icon">
-                    <CheckCircle2 size={12} />
-                  </div>
-                  <span>Source document always preserved and traceable</span>
-                </li>
+                {[
+                  "PDF, PPT, Word docs, URLs, voice notes all accepted",
+                  "AI extracts key concepts, structures them into sprint modules",
+                  "Your team reviews and approves before deployment",
+                  "Source document always preserved and traceable",
+                ].map((item) => (
+                  <li className="feature-check-item" key={item}>
+                    <div className="feature-check-icon"><CheckCircle2 size={12} /></div>
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
             </div>
 
-            {/* Right - Dark Card */}
             <div>
               <div className="dark-card">
-                {/* Header */}
                 <div className="dark-card-header">
                   <div className="dark-card-title">
                     <div className="dark-card-icon">🔄</div>
-                    <div>
-                      <h4>Content Ingestion</h4>
-                    </div>
+                    <h4>Content Ingestion</h4>
                   </div>
                   <div className="dark-card-subtitle">All formats supported</div>
                 </div>
-
-                {/* Upload Grid */}
                 <div className="upload-grid">
-                  <div className="upload-tile">
-                    <div className="upload-tile-emoji">📄</div>
-                    <div className="upload-tile-name">PDF / Word</div>
-                    <div className="upload-tile-desc">SOPs, manuals</div>
-                  </div>
-                  <div className="upload-tile">
-                    <div className="upload-tile-emoji">📊</div>
-                    <div className="upload-tile-name">PowerPoint</div>
-                    <div className="upload-tile-desc">Decks, playbooks</div>
-                  </div>
-                  <div className="upload-tile">
-                    <div className="upload-tile-emoji">🎙️</div>
-                    <div className="upload-tile-name">Voice Notes</div>
-                    <div className="upload-tile-desc">Trainer insights</div>
-                  </div>
-                  <div className="upload-tile">
-                    <div className="upload-tile-emoji">🔗</div>
-                    <div className="upload-tile-name">URLs</div>
-                    <div className="upload-tile-desc">Web pages, docs</div>
-                  </div>
+                  {[
+                    { emoji: "📄", name: "PDF / Word", desc: "SOPs, manuals" },
+                    { emoji: "📊", name: "PowerPoint", desc: "Decks, playbooks" },
+                    { emoji: "🎙️", name: "Voice Notes", desc: "Trainer insights" },
+                    { emoji: "🔗", name: "URLs", desc: "Web pages, docs" },
+                  ].map((t) => (
+                    <div className="upload-tile" key={t.name}>
+                      <div className="upload-tile-emoji">{t.emoji}</div>
+                      <div className="upload-tile-name">{t.name}</div>
+                      <div className="upload-tile-desc">{t.desc}</div>
+                    </div>
+                  ))}
                 </div>
-
-                <div className="upload-center-label">
-                  AI processes in under 6 hours
-                </div>
-
-                {/* Ready Row */}
+                <div className="upload-center-label">AI processes in under 6 hours</div>
                 <div className="ready-row">
                   <div className="ready-left">
                     <div className="ready-icon">✨</div>
@@ -1182,21 +1437,15 @@ export default function ContentEngine() {
       <section className="section" id="voice-insights" data-reveal>
         <div className="container">
           <div className="feature-row rtl">
-            {/* Left - Light Card */}
             <div>
               <div className="light-card">
-                {/* Header */}
                 <div className="light-card-header">
                   <div className="light-card-header-left">
                     <div className="light-card-icon">🎙️</div>
-                    <div>
-                      <h4>Voice Insights Report</h4>
-                    </div>
+                    <h4>Voice Insights Report</h4>
                   </div>
                   <div style={{ fontSize: '12px', color: '#a78bfa' }}>This week · 234 responses</div>
                 </div>
-
-                {/* Body */}
                 <div className="light-card-body">
                   <span className="insights-header">Top Field Challenges This Week</span>
                   <div className="insight-rows">
@@ -1213,8 +1462,6 @@ export default function ContentEngine() {
                       <p>"Customers responding well to demo video"</p>
                     </div>
                   </div>
-
-                  {/* AI Recommendation */}
                   <div className="ai-recommendation">
                     <span className="ai-recommendation-label">💡 AI Recommendation</span>
                     <p className="ai-recommendation-text">
@@ -1225,7 +1472,6 @@ export default function ContentEngine() {
               </div>
             </div>
 
-            {/* Right - Text */}
             <div>
               <h3 className="feature-text">
                 <div style={{ marginBottom: '8px' }}>GROUND-LEVEL VOICE INSIGHTS</div>
@@ -1237,30 +1483,199 @@ export default function ContentEngine() {
                 Lucid captures open responses from your field team inside WhatsApp sprints and surfaces patterns your managers would never otherwise see. Real intel from the ground — not a survey that nobody fills.
               </p>
               <ul className="feature-checklist">
-                <li className="feature-check-item">
-                  <div className="feature-check-icon">
-                    <CheckCircle2 size={12} />
+                {[
+                  "Open-text responses captured in sprint flows",
+                  "AI clusters common themes and objections",
+                  "Surface product gaps, market intel, and customer questions",
+                  "Feeds directly into your next content sprint",
+                ].map((item) => (
+                  <li className="feature-check-item" key={item}>
+                    <div className="feature-check-icon"><CheckCircle2 size={12} /></div>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────── FEATURE ROW 3: Sprint Editor & Approval ─────────── */}
+      <section className="section surface" id="sprint-editor" data-reveal>
+        <div className="container">
+          <div className="feature-row">
+            {/* Left - Text */}
+            <div>
+              <h3 className="feature-text">
+                <div style={{ marginBottom: '8px' }}>SPRINT EDITOR & APPROVAL</div>
+              </h3>
+              <h2 className="feature-title">
+                AI Builds the First Draft. Your Team Controls What Goes Live.
+              </h2>
+              <p className="feature-copy">
+                Lucid's AI generates the sprint — questions, scenarios, knowledge checks — from your source document. Your L&D or enablement team reviews, edits, and approves before anything reaches a single rep. Full creative control. Zero heavy lifting.
+              </p>
+              <ul className="feature-checklist">
+                {[
+                  "AI-generated first draft ready in under 6 hours",
+                  "Inline editor — reorder, rewrite, add or remove questions",
+                  "Multi-level approval workflow before deployment",
+                  "Version history — track every edit, rollback anytime",
+                  "Deploy to specific cohorts, regions, or roles — not everyone",
+                ].map((item) => (
+                  <li className="feature-check-item" key={item}>
+                    <div className="feature-check-icon"><CheckCircle2 size={12} /></div>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Right - Sprint Editor Card */}
+            <div>
+              <div className="sprint-editor-card">
+                <div className="sprint-editor-header">
+                  <div className="sprint-editor-header-left">
+                    <span style={{ fontSize: '18px' }}>✍️</span>
+                    <h4>Sprint Editor</h4>
                   </div>
-                  <span>Open-text responses captured in sprint flows</span>
-                </li>
-                <li className="feature-check-item">
-                  <div className="feature-check-icon">
-                    <CheckCircle2 size={12} />
+                  <div className="sprint-editor-subtitle">Draft v2 · Pending Approval</div>
+                </div>
+
+                <div className="sprint-editor-body">
+                  <div className="sprint-editor-sprint-label">
+                    📋 Sprint: Objection Handling — Premium Plans
                   </div>
-                  <span>AI clusters common themes and objections</span>
-                </li>
-                <li className="feature-check-item">
-                  <div className="feature-check-icon">
-                    <CheckCircle2 size={12} />
+
+                  <div className="sprint-q-row sprint-q-approved">
+                    <div className="sprint-q-meta">Q1 · MCQ · ✅ Approved</div>
+                    <p className="sprint-q-text">
+                      What's the first thing you establish when a customer says "too expensive"?
+                    </p>
                   </div>
-                  <span>Surface product gaps, market intel, and customer questions</span>
-                </li>
-                <li className="feature-check-item">
-                  <div className="feature-check-icon">
-                    <CheckCircle2 size={12} />
+
+                  <div className="sprint-q-row sprint-q-edit">
+                    <div className="sprint-q-meta">Q2 · Roleplay · ✏️ Edit suggested</div>
+                    <p className="sprint-q-text">
+                      Customer: "I'll think about it." Respond as you would in the field.
+                    </p>
+                    <p className="sprint-q-comment">💬 Reviewer: "Add a follow-up prompt here"</p>
                   </div>
-                  <span>Feeds directly into your next content sprint</span>
-                </li>
+
+                  <div className="sprint-q-row sprint-q-pending">
+                    <div className="sprint-q-meta">Q3 · Case Study · ⏳ Pending review</div>
+                    <p className="sprint-q-text">
+                      Amit meets a customer comparing 4 insurers...
+                    </p>
+                  </div>
+
+                  <div className="sprint-editor-actions">
+                    <button className="sprint-btn-primary">Request Approval</button>
+                    <button className="sprint-btn-secondary">Save Draft</button>
+                  </div>
+
+                  <div className="sprint-awaiting-bar">
+                    <span>👤</span>
+                    <span>Awaiting approval from: Priya (L&D Head)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────── FEATURE ROW 4: Content Performance Analytics ─────────── */}
+      <section className="section" id="content-performance" data-reveal>
+        <div className="container">
+          <div className="feature-row rtl">
+            {/* Left - Performance Card */}
+            <div>
+              <div className="perf-card">
+                <div className="perf-card-header">
+                  <div className="perf-card-header-left">
+                    <span style={{ fontSize: '18px' }}>📈</span>
+                    <h4>Content Performance</h4>
+                  </div>
+                  <div className="perf-card-subtitle">Q3 · All Regions</div>
+                </div>
+
+                <div className="perf-card-body">
+                  <div className="perf-kpi-row">
+                    <div className="perf-kpi-tile">
+                      <p className="perf-kpi-value">24</p>
+                      <p className="perf-kpi-label">Active Sprints</p>
+                      <p className="perf-kpi-trend">↑ 6 this quarter</p>
+                    </div>
+                    <div className="perf-kpi-tile">
+                      <p className="perf-kpi-value">89%</p>
+                      <p className="perf-kpi-label">Avg Completion</p>
+                      <p className="perf-kpi-trend">↑ vs 61% LMS</p>
+                    </div>
+                    <div className="perf-kpi-tile">
+                      <p className="perf-kpi-value green">4.2x</p>
+                      <p className="perf-kpi-label">Avg ROI</p>
+                      <p className="perf-kpi-trend">Across all sprints</p>
+                    </div>
+                  </div>
+
+                  <div className="perf-leaderboard">
+                    <div className="perf-leaderboard-label">Sprint Performance Leaderboard</div>
+                    <div className="perf-leaderboard-rows">
+                      {[
+                        { name: "Objection Handling — Premium", pct: 95, color: "#10b981" },
+                        { name: "New Product Launch — Term Plus", pct: 88, color: "#10b981" },
+                        { name: "Compliance Refresh — July", pct: 72, color: "#f59e0b" },
+                        { name: "Upsell Techniques — Q3", pct: 41, color: "#ef4444" },
+                      ].map((row) => (
+                        <div className="perf-lb-row" key={row.name}>
+                          <div className="perf-lb-name">{row.name}</div>
+                          <div className="perf-lb-bar-track">
+                            <div
+                              className="perf-lb-bar-fill"
+                              style={{ width: `${row.pct}%`, background: row.color }}
+                            />
+                          </div>
+                          <div className="perf-lb-score" style={{ color: row.color }}>
+                            {row.pct}%
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="perf-flag-bar">
+                    <span>⚠️</span>
+                    <span>1 sprint flagged for revision — low completion + poor KPI correlation</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right - Text */}
+            <div>
+              <h3 className="feature-text">
+                <div style={{ marginBottom: '8px' }}>CONTENT PERFORMANCE ANALYTICS</div>
+              </h3>
+              <h2 className="feature-title">
+                See What's Moving the Needle. Kill What Isn't.
+              </h2>
+              <p className="feature-copy">
+                Every sprint Lucid deploys is tracked against real outcomes. Completion rates, assessment scores, KPI movement post-sprint — all in one view. You finally know which content is earning its place and which is just noise.
+              </p>
+              <ul className="feature-checklist">
+                {[
+                  "Sprint-level completion, drop-off, and score data",
+                  "KPI movement tracked pre and post each sprint",
+                  "Identify top-performing content across verticals and regions",
+                  "Auto-flag underperforming sprints for revision",
+                  "Share ROI reports with leadership in one click",
+                ].map((item) => (
+                  <li className="feature-check-item" key={item}>
+                    <div className="feature-check-icon"><CheckCircle2 size={12} /></div>
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -1270,21 +1685,15 @@ export default function ContentEngine() {
       {/* ─────────── STATS BAR ─────────── */}
       <section className="stats-bar" data-reveal>
         <div className="stats-bar-item">
-          <p className="stat-number">
-            70<span className="stat-accent">%</span>
-          </p>
+          <p className="stat-number">70<span className="stat-accent">%</span></p>
           <p className="stat-label">Reduction in content creation time vs manual process</p>
         </div>
         <div className="stats-bar-item">
-          <p className="stat-number">
-            6<span className="stat-accent">hrs</span>
-          </p>
+          <p className="stat-number">6<span className="stat-accent">hrs</span></p>
           <p className="stat-label">From raw document to live WhatsApp sprint</p>
         </div>
         <div className="stats-bar-item">
-          <p className="stat-number">
-            4<span className="stat-accent">+</span>
-          </p>
+          <p className="stat-number">4<span className="stat-accent">+</span></p>
           <p className="stat-label">formats — PDF, PPT, Word, voice — all converted by AI</p>
         </div>
       </section>
@@ -1293,45 +1702,26 @@ export default function ContentEngine() {
       <section className="section surface" id="features" data-reveal>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-            <h2 className="feature-title" style={{ marginBottom: '12px' }}>
-              More Content Features
-            </h2>
+            <h2 className="feature-title" style={{ marginBottom: '12px' }}>More Content Features</h2>
             <p className="feature-copy" style={{ fontSize: '16px', maxWidth: '600px', margin: '0 auto' }}>
               The full content engine your sales organisation needs
             </p>
           </div>
-
           <div className="features-grid">
-            <div className="feature-card">
-              <div className="feature-card-icon">📦</div>
-              <h4>Multi-Format Ingestion</h4>
-              <p>PDF, PPT, Word, voice notes, URLs — whatever format your knowledge lives in, Lucid converts it into a deployable sprint.</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-card-icon">✏️</div>
-              <h4>Sprint Editor & Approval</h4>
-              <p>AI builds the first draft. Your L&D or enablement team edits, approves, and deploys. Hours, not weeks.</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-card-icon">🏗️</div>
-              <h4>Vertical-Ready Templates</h4>
-              <p>Pre-built sprint structures for insurance, QSR, pharma, FMCG — plug in your content and go live.</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-card-icon">🌐</div>
-              <h4>Auto-Translation</h4>
-              <p>Every sprint auto-translated into regional languages. One source content, every language, every region.</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-card-icon">🔍</div>
-              <h4>RAG Quality Assurance</h4>
-              <p>AI-generated content audited against source documents before deployment. Accuracy guaranteed.</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-card-icon">📈</div>
-              <h4>Content Performance Analytics</h4>
-              <p>See which sprints move the needle on KPIs. Kill what doesn't work. Double down on what does.</p>
-            </div>
+            {[
+              { icon: "📦", title: "Multi-Format Ingestion", desc: "PDF, PPT, Word, voice notes, URLs — whatever format your knowledge lives in, Lucid converts it into a deployable sprint." },
+              { icon: "✏️", title: "Sprint Editor & Approval", desc: "AI builds the first draft. Your L&D or enablement team edits, approves, and deploys. Hours, not weeks." },
+              { icon: "🏗️", title: "Vertical-Ready Templates", desc: "Pre-built sprint structures for insurance, QSR, pharma, FMCG — plug in your content and go live." },
+              { icon: "🌐", title: "Auto-Translation", desc: "Every sprint auto-translated into regional languages. One source content, every language, every region." },
+              { icon: "🔍", title: "RAG Quality Assurance", desc: "AI-generated content audited against source documents before deployment. Accuracy guaranteed." },
+              { icon: "📈", title: "Content Performance Analytics", desc: "See which sprints move the needle on KPIs. Kill what doesn't work. Double down on what does." },
+            ].map((card) => (
+              <div className="feature-card" key={card.title}>
+                <div className="feature-card-icon">{card.icon}</div>
+                <h4>{card.title}</h4>
+                <p>{card.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -1341,11 +1731,11 @@ export default function ContentEngine() {
         <div className="cta-inner">
           <h2>Ready to put your best knowledge in every rep's hands?</h2>
           <button
-  onClick={() => navigate('/contact')}
-  className="bg-white hover:bg-gray-100 text-[#6357d4] px-8 py-4 rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"
->
-  Book Demo <ArrowRight className="w-5 h-5" />
-</button>
+            onClick={() => navigate('/contact')}
+            className="bg-white hover:bg-gray-100 text-[#6357d4] px-8 py-4 rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"
+          >
+            Book Demo <ArrowRight className="w-5 h-5" />
+          </button>
         </div>
       </section>
 
