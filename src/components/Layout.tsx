@@ -373,6 +373,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                   switch (name) {
                                     case "About": return "/about";
                                     case "Sales Team": return "/features/sales-team";
+                                    case "Sales Tool": return "/features/sales-tool";
+                                    case "Execution": return "/features/execution";
+                                    case "Content Engine": return "/features/content-engine";
                                     case "Self-Learning": return "/features/self-learning";
                                     case "Seamless Training": return "/features/seamless-training";
                                     case "Career Progression": return "/features/career-progression";
@@ -490,6 +493,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                               const getLink = (name: string) => {
                                 switch (name) {
                                   case "About": return "/about";
+                                  case "Sales Team": return "/features/sales-team";
+                                  case "Sales Tool": return "/features/sales-tool";
+                                  case "Execution": return "/features/execution";
+                                  case "Content Engine": return "/features/content-engine";
                                   case "Self-Learning": return "/features/self-learning";
                                   case "Seamless Training": return "/features/seamless-training";
                                   case "SOP/Audits": return "/features/sop-audits";

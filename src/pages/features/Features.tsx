@@ -9,8 +9,8 @@ type PillarKey = "team" | "tools" | "execution" | "content";
 const TABS: { key: PillarKey; label: string }[] = [
   { key: "team",      label: "Sales Team" },
   { key: "tools",     label: "Sales Tools" },
-  { key: "execution", label: "Sales Execution" },
-  { key: "content",   label: "Sales Content" },
+  { key: "execution", label: "Execution" },
+  { key: "content",   label: "Content Engine" },
 ];
 
 /* ─── Reusable primitives ───────────────────────────────────────────────── */
