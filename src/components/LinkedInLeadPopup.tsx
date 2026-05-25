@@ -107,14 +107,17 @@ export default function LinkedInLeadPopup() {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-h-[calc(100vh-2rem)] overflow-y-auto border border-blue-100 bg-white p-0 text-slate-900 shadow-2xl shadow-blue-950/20 sm:max-w-lg">
+      <DialogContent
+        className="max-h-[calc(100vh-2rem)] overflow-y-auto border border-blue-100 bg-white p-0 font-sans text-slate-900 shadow-2xl shadow-blue-950/20 sm:max-w-lg"
+        style={{ fontFamily: '"DM Sans", sans-serif' }}
+      >
         <div className="bg-gradient-to-br from-blue-50 via-white to-slate-50 p-6 sm:p-8">
           <DialogHeader>
             <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-600 text-white">
               <Linkedin className="h-5 w-5" />
             </div>
             <DialogTitle className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
-              Welcome from LinkedIn
+              Welcome To Workfloww.ai
             </DialogTitle>
             <DialogDescription className="text-base text-slate-600">
               Share your details and our team will send the next step.
