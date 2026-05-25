@@ -175,26 +175,29 @@ export default function LinkedInLeadPopup() {
         <div className="bg-gradient-to-br from-blue-50 via-white to-slate-50 p-6 sm:p-8">
           <DialogHeader>
             {/* Workfloww logo */}
-            <div className="mb-3 flex items-center">
+            <div className="mb-3 flex items-center gap-2">
               <img
                 src="/images/logo.png"
                 alt="Workfloww.ai logo"
                 className="h-11 w-auto object-contain"
                 draggable={false}
               />
+              <span className="text-lg font-bold text-black" style={{ fontFamily: '"DM Sans", sans-serif' }}>
+                workfloww.ai
+              </span>
             </div>
 
             <DialogTitle
               className="text-2xl font-extrabold tracking-tight text-slate-950 sm:text-3xl"
               style={{ fontFamily: '"DM Sans", sans-serif', fontWeight: 800 }}
             >
-              Welcome To Workfloww.ai
+              Thanks For Your Interest In AI Mixer Event.
             </DialogTitle>
             <DialogDescription
               className="text-base text-slate-600"
               style={{ fontFamily: '"DM Sans", sans-serif' }}
             >
-              Share your details and our team will send the next step.
+              Please Share Your Details Our Team Will Reach Out And Share The Next Step.
             </DialogDescription>
           </DialogHeader>
 
