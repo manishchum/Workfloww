@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,6 +11,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useLeadEmail } from "../hooks/useLeadEmail";
+
+// Inject DM Sans font once
+if (typeof document !== "undefined") {
+  const linkId = "dm-sans-font";
+  if (!document.getElementById(linkId)) {
+    const link = document.createElement("link");
+    link.id = linkId;
+    link.rel = "stylesheet";
+    link.href =
+      "https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,700;9..40,800&display=swap";
+    document.head.appendChild(link);
+  }
+}
 
 const linkedInSignals = ["linkedin", "lnkd.in"];
 
@@ -26,17 +38,33 @@ const isLinkedInVisit = () => {
   ];
 
   return (
-    linkedInSignals.some((source) => document.referrer.toLowerCase().includes(source)) ||
-    urlSignals.some((value) => value && linkedInSignals.some((source) => value.toLowerCase().includes(source)))
+    linkedInSignals.some((source) =>
+      document.referrer.toLowerCase().includes(source)
+    ) ||
+    urlSignals.some(
+      (value) =>
+        value &&
+        linkedInSignals.some((source) =>
+          value.toLowerCase().includes(source)
+        )
+    )
   );
 };
 
-const validateEmail = (email: string) => /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+const validateEmail = (email: string) =>
+  /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
 
 const validatePhone = (phone: string) => {
   const digits = phone.replace(/\D/g, "");
   const normalized = digits.startsWith("91") ? digits.slice(2) : digits;
   return /^[6-9]\d{9}$/.test(normalized);
+};
+
+type FieldErrors = {
+  name?: string;
+  email?: string;
+  phone?: string;
+  org?: string;
 };
 
 export default function LinkedInLeadPopup() {
@@ -46,20 +74,46 @@ export default function LinkedInLeadPopup() {
   const [phone, setPhone] = React.useState("");
   const [org, setOrg] = React.useState("");
   const [trap, setTrap] = React.useState("");
-  const [fieldError, setFieldError] = React.useState("");
+  const [fieldErrors, setFieldErrors] = React.useState<FieldErrors>({});
   const [submitted, setSubmitted] = React.useState(false);
   const { sendEmail, status, error } = useLeadEmail();
 
   React.useEffect(() => {
-    if (!isLinkedInVisit() || sessionStorage.getItem("linkedinLeadSubmitted")) return;
+    if (
+      !isLinkedInVisit() ||
+      sessionStorage.getItem("linkedinLeadSubmitted")
+    )
+      return;
 
     const timer = window.setTimeout(() => setIsOpen(true), 600);
     return () => window.clearTimeout(timer);
   }, []);
 
+  // Per-field live validation on blur
+  const handleBlurEmail = () => {
+    if (email.trim() && !validateEmail(email.trim().toLowerCase())) {
+      setFieldErrors((prev) => ({
+        ...prev,
+        email: "Please enter a valid email address.",
+      }));
+    } else {
+      setFieldErrors((prev) => ({ ...prev, email: undefined }));
+    }
+  };
+
+  const handleBlurPhone = () => {
+    if (phone.trim() && !validatePhone(phone.trim())) {
+      setFieldErrors((prev) => ({
+        ...prev,
+        phone: "Please enter a valid 10-digit Indian mobile number.",
+      }));
+    } else {
+      setFieldErrors((prev) => ({ ...prev, phone: undefined }));
+    }
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    setFieldError("");
 
     if (trap.trim()) return;
 
@@ -68,20 +122,27 @@ export default function LinkedInLeadPopup() {
     const cleanOrg = org.trim();
     const cleanPhone = phone.trim();
 
-    if (!cleanName || !cleanEmail || !cleanPhone || !cleanOrg) {
-      setFieldError("Please fill all fields.");
+    const errors: FieldErrors = {};
+
+    if (!cleanName) errors.name = "Name is required.";
+    if (!cleanEmail) {
+      errors.email = "Email is required.";
+    } else if (!validateEmail(cleanEmail)) {
+      errors.email = "Please enter a valid email address.";
+    }
+    if (!cleanPhone) {
+      errors.phone = "Phone number is required.";
+    } else if (!validatePhone(cleanPhone)) {
+      errors.phone = "Please enter a valid 10-digit Indian mobile number.";
+    }
+    if (!cleanOrg) errors.org = "Organization is required.";
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
       return;
     }
 
-    if (!validateEmail(cleanEmail)) {
-      setFieldError("Please enter a valid email address.");
-      return;
-    }
-
-    if (!validatePhone(cleanPhone)) {
-      setFieldError("Please enter a valid 10-digit Indian mobile number.");
-      return;
-    }
+    setFieldErrors({});
 
     const result = await sendEmail({
       source: "linkedin-post-popup",
@@ -108,83 +169,147 @@ export default function LinkedInLeadPopup() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent
-        className="max-h-[calc(100vh-2rem)] overflow-y-auto border border-blue-100 bg-white p-0 font-sans text-slate-900 shadow-2xl shadow-blue-950/20 sm:max-w-lg"
+        className="max-h-[calc(100vh-2rem)] overflow-y-auto border border-blue-100 bg-white p-0 shadow-2xl shadow-blue-950/20 sm:max-w-lg"
         style={{ fontFamily: '"DM Sans", sans-serif' }}
       >
         <div className="bg-gradient-to-br from-blue-50 via-white to-slate-50 p-6 sm:p-8">
           <DialogHeader>
-            <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-600 text-white">
-              <Linkedin className="h-5 w-5" />
+            {/* Workfloww logo */}
+            <div className="mb-3 flex items-center">
+              <img
+                src="/images/logo.png"
+                alt="Workfloww.ai logo"
+                className="h-11 w-auto object-contain"
+                draggable={false}
+              />
             </div>
-            <DialogTitle className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
+
+            <DialogTitle
+              className="text-2xl font-extrabold tracking-tight text-slate-950 sm:text-3xl"
+              style={{ fontFamily: '"DM Sans", sans-serif', fontWeight: 800 }}
+            >
               Welcome To Workfloww.ai
             </DialogTitle>
-            <DialogDescription className="text-base text-slate-600">
+            <DialogDescription
+              className="text-base text-slate-600"
+              style={{ fontFamily: '"DM Sans", sans-serif' }}
+            >
               Share your details and our team will send the next step.
             </DialogDescription>
           </DialogHeader>
 
-          <form onSubmit={handleSubmit} className="mt-7 space-y-4">
+          <form onSubmit={handleSubmit} className="mt-7 space-y-4" noValidate>
+            {/* Honeypot */}
             <div className="hidden" aria-hidden="true">
               <Label htmlFor="linkedin-website-trap">Do not fill this field</Label>
               <Input
                 id="linkedin-website-trap"
                 value={trap}
-                onChange={(event) => setTrap(event.target.value)}
+                onChange={(e) => setTrap(e.target.value)}
                 tabIndex={-1}
                 autoComplete="off"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="linkedin-name" className="text-slate-700">Name</Label>
+            {/* Name */}
+            <div className="space-y-1">
+              <Label htmlFor="linkedin-name" className="text-slate-700">
+                Name
+              </Label>
               <Input
                 id="linkedin-name"
-                className="h-12 bg-white text-slate-900"
+                className={cn(
+                  "h-12 bg-white text-slate-900",
+                  fieldErrors.name && "border-red-500 focus-visible:ring-red-400"
+                )}
                 value={name}
-                onChange={(event) => setName(event.target.value)}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  if (fieldErrors.name)
+                    setFieldErrors((prev) => ({ ...prev, name: undefined }));
+                }}
                 autoComplete="name"
-                required
               />
+              {fieldErrors.name && (
+                <p className="text-xs text-red-500">{fieldErrors.name}</p>
+              )}
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="linkedin-email" className="text-slate-700">Email</Label>
+            {/* Email */}
+            <div className="space-y-1">
+              <Label htmlFor="linkedin-email" className="text-slate-700">
+                Email
+              </Label>
               <Input
                 id="linkedin-email"
-                className="h-12 bg-white text-slate-900"
+                className={cn(
+                  "h-12 bg-white text-slate-900",
+                  fieldErrors.email && "border-red-500 focus-visible:ring-red-400"
+                )}
                 type="email"
                 value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (fieldErrors.email)
+                    setFieldErrors((prev) => ({ ...prev, email: undefined }));
+                }}
+                onBlur={handleBlurEmail}
                 autoComplete="email"
-                required
               />
+              {fieldErrors.email && (
+                <p className="text-xs text-red-500">{fieldErrors.email}</p>
+              )}
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="linkedin-phone" className="text-slate-700">Number</Label>
+            {/* Phone */}
+            <div className="space-y-1">
+              <Label htmlFor="linkedin-phone" className="text-slate-700">
+                Number
+              </Label>
               <Input
                 id="linkedin-phone"
-                className="h-12 bg-white text-slate-900"
+                className={cn(
+                  "h-12 bg-white text-slate-900",
+                  fieldErrors.phone && "border-red-500 focus-visible:ring-red-400"
+                )}
                 type="tel"
                 value={phone}
-                onChange={(event) => setPhone(event.target.value.replace(/[^0-9+\s-]/g, ""))}
+                onChange={(e) => {
+                  setPhone(e.target.value.replace(/[^0-9+\s-]/g, ""));
+                  if (fieldErrors.phone)
+                    setFieldErrors((prev) => ({ ...prev, phone: undefined }));
+                }}
+                onBlur={handleBlurPhone}
                 autoComplete="tel"
                 inputMode="tel"
-                required
               />
+              {fieldErrors.phone && (
+                <p className="text-xs text-red-500">{fieldErrors.phone}</p>
+              )}
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="linkedin-org" className="text-slate-700">Organization</Label>
+            {/* Organization */}
+            <div className="space-y-1">
+              <Label htmlFor="linkedin-org" className="text-slate-700">
+                Organization
+              </Label>
               <Input
                 id="linkedin-org"
-                className="h-12 bg-white text-slate-900"
+                className={cn(
+                  "h-12 bg-white text-slate-900",
+                  fieldErrors.org && "border-red-500 focus-visible:ring-red-400"
+                )}
                 value={org}
-                onChange={(event) => setOrg(event.target.value)}
+                onChange={(e) => {
+                  setOrg(e.target.value);
+                  if (fieldErrors.org)
+                    setFieldErrors((prev) => ({ ...prev, org: undefined }));
+                }}
                 autoComplete="organization"
-                required
               />
+              {fieldErrors.org && (
+                <p className="text-xs text-red-500">{fieldErrors.org}</p>
+              )}
             </div>
 
             <div className="pt-2">
@@ -192,12 +317,13 @@ export default function LinkedInLeadPopup() {
                 type="submit"
                 disabled={status === "loading"}
                 className="h-12 w-full rounded-full bg-blue-600 text-base font-bold text-white hover:bg-blue-700 disabled:opacity-60"
+                style={{ fontFamily: '"DM Sans", sans-serif' }}
               >
                 {status === "loading" ? "Submitting..." : "Submit"}
               </Button>
             </div>
 
-            {(fieldError || error || submitted) && (
+            {(error || submitted) && (
               <p
                 className={cn(
                   "text-sm",
@@ -205,7 +331,9 @@ export default function LinkedInLeadPopup() {
                 )}
                 role="status"
               >
-                {submitted ? "Thank you. We have received your details." : fieldError || error}
+                {submitted
+                  ? "Thank you. We have received your details."
+                  : error}
               </p>
             )}
           </form>
