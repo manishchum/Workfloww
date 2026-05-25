@@ -10,9 +10,9 @@ const Execution = () => {
     <div className="bg-white min-h-screen font-sans text-slate-900">
 
       {/* 1. HERO SECTION */}
-      <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-b from-emerald-50/50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+<section style={{ padding: "5rem 1.25rem 3rem" }} className="relative overflow-hidden bg-gradient-to-b from-emerald-50/50 to-white pt-24">
+  <div style={{ maxWidth: "1100px", margin: "0 auto" }} className="relative z-10">
+    <div className="grid lg:grid-cols-2 gap-16 items-center">
 
             {/* Left Text */}
             <motion.div
@@ -116,9 +116,9 @@ const Execution = () => {
       </section>
 
       {/* 2. NUDGE ENGINE */}
-      <section className="py-24 bg-white border-t border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+<section style={{ padding: "2.5rem 1.25rem" }} className="bg-white border-t border-slate-100">
+  <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+    <div className="grid lg:grid-cols-2 gap-16 items-center">
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -196,9 +196,9 @@ const Execution = () => {
       </section>
 
       {/* 3. KPI-MAPPED PERFORMANCE */}
-      <section className="py-24 bg-slate-50 border-t border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+<section style={{ padding: "2.5rem 1.25rem", background: "#f8fafc" }} className="border-t border-slate-200">
+  <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+    <div className="grid lg:grid-cols-2 gap-16 items-center">
 
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -297,9 +297,9 @@ const Execution = () => {
       </section>
 
       {/* 4. EXECUTION PROOF VIA CHECKLIST */}
-      <section className="py-24 bg-white border-t border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+<section style={{ padding: "2.5rem 1.25rem" }} className="bg-white border-t border-slate-100">
+  <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+    <div className="grid lg:grid-cols-2 gap-16 items-center">
 
             {/* Left Text */}
             <motion.div
@@ -399,9 +399,9 @@ const Execution = () => {
       </section>
 
       {/* 5. GROUND-LEVEL VOICE INSIGHTS */}
-      <section className="py-24 bg-slate-50 border-t border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+<section style={{ padding: "2.5rem 1.25rem", background: "#f8fafc" }} className="border-t border-slate-200">
+  <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+    <div className="grid lg:grid-cols-2 gap-16 items-center">
 
             {/* Left Visual: Voice Insights Widget */}
             <motion.div
@@ -479,8 +479,8 @@ const Execution = () => {
       </section>
 
       {/* 6. DARK STAT STRIP */}
-      <section className="bg-[#0f1117] py-16 border-y border-slate-800 font-sans">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section style={{ padding: "2.5rem 1.25rem", background: "#0f1117" }} className="font-sans border-y border-slate-800">
+  <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
     <div className="grid md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-800">
       <div className="p-4">
         <div className="text-5xl lg:text-6xl font-sans font-extrabold text-white mb-2">
@@ -508,14 +508,14 @@ const Execution = () => {
           Manager time spent chasing sprint completion
         </p>
       </div>
+      </div>
     </div>
-  </div>
 </section>
 
       {/* 7. MORE EXECUTION FEATURES */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+<section style={{ padding: "2.5rem 1.25rem" }} className="bg-white">
+  <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+    <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl font-bold mb-4">More Execution Features</h2>
             <p className="text-xl text-slate-600">The full stack of tools to close the execution gap at scale</p>
           </div>
@@ -563,23 +563,33 @@ const Execution = () => {
       </section>
 
       {/* 8. PURPLE CTA BANNER */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto mb-20">
-        <div className="bg-[#4F46E5] rounded-[20px] p-12 text-center shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-white opacity-5 mix-blend-overlay"></div>
-          <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-white opacity-5 mix-blend-overlay"></div>
+<section style={{ padding: "2.5rem 1.25rem" }}>
+  <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+    <div className="bg-[#4F46E5] rounded-[20px] p-12 text-center shadow-2xl relative overflow-hidden">
+      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-white opacity-5 mix-blend-overlay"></div>
+      <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-white opacity-5 mix-blend-overlay"></div>
 
-          <div className="relative z-10 max-w-2xl mx-auto">
-            <h2 className="text-4xl font-bold text-white mb-8 leading-tight">
-              Ready to bridge the gap between knowing and doing?
-            </h2>
-            <button onClick={() => navigate('/contact')} className="bg-white/10 hover:bg-white/20 border border-white text-white px-8 py-4 rounded-full font-semibold text-lg transition-all inline-flex items-center gap-2 backdrop-blur-sm">
-              Book Demo Now <ArrowRight className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-      </section>
+      <div className="relative z-10 max-w-2xl mx-auto">
+        <h2 className="text-4xl font-bold text-white mb-8 leading-tight">
+          Ready to bridge the gap between knowing and doing?
+        </h2>
+        <button onClick={() => navigate('/contact')} className="bg-white/10 hover:bg-white/20 border border-white text-white px-8 py-4 rounded-full font-semibold text-lg transition-all inline-flex items-center gap-2 backdrop-blur-sm">
+          Book Demo Now <ArrowRight className="w-5 h-5" />
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
     </div>
   );
 };
 
 export default Execution;
+
+<style>{`
+  @media (min-width: 1024px) {
+    section[style*="padding: 2.5rem 1.25rem"] {
+      padding: 3rem 2rem !important;
+    }
+  }
+`}</style>

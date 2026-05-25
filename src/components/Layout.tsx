@@ -41,6 +41,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import CalBooker from "./CalBooker";
+import LinkedInLeadPopup from "./LinkedInLeadPopup";
 import { Logo } from "./Logo";
 import { LUCID_CONTENT } from "../constants";
 import { cn } from "@/lib/utils";
@@ -372,10 +373,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 const getLink = (name: string) => {
                                   switch (name) {
                                     case "About": return "/about";
-                                    case "Sales Team": return "/features/sales-team";
-                                    case "Sales Tool": return "/features/sales-tool";
-                                    case "Execution": return "/features/execution";
-                                    case "Content Engine": return "/features/content-engine";
+                                    case "Lucid Ready": return "/features/sales-team";
+                                    case "Lucid Arsenal": return "/features/sales-tool";
+                                    case "Lucid Field": return "/features/execution";
+                                    case "Lucid Studio": return "/features/content-engine";
                                     case "Self-Learning": return "/features/self-learning";
                                     case "Seamless Training": return "/features/seamless-training";
                                     case "Career Progression": return "/features/career-progression";
@@ -493,10 +494,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                               const getLink = (name: string) => {
                                 switch (name) {
                                   case "About": return "/about";
-                                  case "Sales Team": return "/features/sales-team";
-                                  case "Sales Tool": return "/features/sales-tool";
-                                  case "Execution": return "/features/execution";
-                                  case "Content Engine": return "/features/content-engine";
+                                  case "Lucid Ready": return "/features";
+                                  case "Lucid Arsenal": return "/features";
+                                  case "Lucid Field": return "/features";
+                                  case "Lucid Studio": return "/features";
                                   case "Self-Learning": return "/features/self-learning";
                                   case "Seamless Training": return "/features/seamless-training";
                                   case "SOP/Audits": return "/features/sop-audits";
@@ -572,6 +573,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </AnimatePresence>
 
       <main>{children}</main>
+      <LinkedInLeadPopup />
 
       {/* Contact Sales Modal */}
       <Dialog open={isContactModalOpen} onOpenChange={setIsContactModalOpen}>

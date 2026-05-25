@@ -188,7 +188,7 @@ const StoryAct1 = ({ onNext, onSkip }) => {
 
   React.useEffect(() => {
     if (index < questions.length - 1) {
-      const t = setTimeout(() => setIndex((p) => p + 1), 5500);
+      const t = setTimeout(() => setIndex((p) => p + 1), 8000);
       return () => clearTimeout(t);
     }
   }, [index]);
@@ -246,9 +246,9 @@ const StoryAct1 = ({ onNext, onSkip }) => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
         onClick={onNext}
-        style={{ position: "absolute", bottom: isMobile ? 60 : 24, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", color: "#64748b", padding: "0 1rem", textAlign: "center" }}
+        style={{ position: "absolute", bottom: isMobile ? 110 : 24, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", color: "#64748b", padding: "0 1rem", textAlign: "center", zIndex: 20, minWidth: "100%" }}
       >
-        <span style={{ fontSize: isMobile ? 9 : 10, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase" }}>What You Need to Increase Your Revenue?</span>
+        <span style={{ fontSize: isMobile ? 9 : 10, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", whiteSpace: "wrap" }}>What You Need to Increase Your Revenue?</span>
         <ChevronDown style={{ width: 20, height: 20, animation: "bounce 1.5s infinite" }} />
       </motion.button>
 
@@ -334,18 +334,22 @@ const StoryAct1 = ({ onNext, onSkip }) => {
 
       {/* Mobile swipe dots as tap targets */}
       {isMobile && (
-        <div style={{ position: "absolute", bottom: 110, display: "flex", gap: 24 }}>
+        <div style={{ position: "absolute", bottom: 50, display: "flex", gap: 32, left: "50%", transform: "translateX(-50%)", zIndex: 20 }}>
           <button
             onClick={() => setIndex((p) => (p - 1 + questions.length) % questions.length)}
-            style={{ background: "none", border: "none", cursor: "pointer", color: "#94a3b8", padding: "8px" }}
+            style={{ background: "none", border: "none", cursor: "pointer", color: "#94a3b8", padding: "12px 16px", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.2s ease" }}
+            onMouseEnter={e => e.currentTarget.style.color = "#2563eb"}
+            onMouseLeave={e => e.currentTarget.style.color = "#94a3b8"}
           >
-            <ChevronLeft style={{ width: 20, height: 20 }} />
+            <ChevronLeft style={{ width: 24, height: 24 }} />
           </button>
           <button
             onClick={() => setIndex((p) => (p + 1) % questions.length)}
-            style={{ background: "none", border: "none", cursor: "pointer", color: "#94a3b8", padding: "8px" }}
+            style={{ background: "none", border: "none", cursor: "pointer", color: "#94a3b8", padding: "12px 16px", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.2s ease" }}
+            onMouseEnter={e => e.currentTarget.style.color = "#2563eb"}
+            onMouseLeave={e => e.currentTarget.style.color = "#94a3b8"}
           >
-            <ChevronRight style={{ width: 20, height: 20 }} />
+            <ChevronRight style={{ width: 24, height: 24 }} />
           </button>
         </div>
       )}
@@ -355,22 +359,24 @@ const StoryAct1 = ({ onNext, onSkip }) => {
         onClick={onSkip}
         style={{
           position: "absolute",
-          bottom: isMobile ? 16 : 28,
-          right: isMobile ? 12 : 28,
+          bottom: isMobile ? 20 : 28,
+          right: isMobile ? 16 : 28,
           display: "flex",
           alignItems: "center",
           gap: 8,
-          padding: isMobile ? "8px 14px" : "10px 20px",
+          padding: isMobile ? "10px 16px" : "10px 20px",
           border: "1px solid #e2e8f0",
           borderRadius: 9999,
           background: "rgba(255,255,255,0.7)",
           backdropFilter: "blur(8px)",
-          fontSize: isMobile ? 9 : 10,
+          fontSize: isMobile ? 10 : 10,
           fontWeight: 800,
           letterSpacing: "0.2em",
           textTransform: "uppercase",
           color: "#94a3b8",
-          cursor: "pointer"
+          cursor: "pointer",
+          zIndex: 20,
+          transition: "all 0.2s ease"
         }}
         onMouseEnter={e => e.currentTarget.style.color = "#2563eb"}
         onMouseLeave={e => e.currentTarget.style.color = "#94a3b8"}
@@ -515,24 +521,15 @@ const StoryAct2 = ({ onNext, onSkip }) => {
           style={{
             display: "flex",
             alignItems: "center",
+            justifyContent: "center",
             gap: 10,
             marginBottom: isMobile ? "0.75rem" : "0.75rem",
             flexShrink: 0,
           }}
         >
-          <div
-            style={{
-              width: 6,
-              height: 6,
-              borderRadius: "50%",
-              background: "#3b82f6",
-              boxShadow: "0 0 10px rgba(59,130,246,0.8)",
-              flexShrink: 0,
-            }}
-          />
           <span
             style={{
-              fontSize: isMobile ? 10 : 14,
+              fontSize: isMobile ? 14 : 20,
               fontWeight: 800,
               letterSpacing: isMobile ? "0.2em" : "0.4em",
               color: "#60a5fa",
@@ -711,11 +708,8 @@ const StoryAct2 = ({ onNext, onSkip }) => {
                     fontWeight: 600,
                     color: "#ffffff",
                     lineHeight: 1.25,
-                    opacity: isActive ? 0 : 1,
-                    maxHeight: isActive ? 0 : 40,
+                    opacity: 1,
                     overflow: "hidden",
-                    transform: isActive ? "translateY(4px)" : "translateY(0)",
-                    transition: "opacity 0.25s ease, transform 0.25s ease, max-height 0.3s ease",
                     marginTop: "0.5rem",
                   }}
                 >
@@ -780,7 +774,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
               e.currentTarget.style.boxShadow = "0 0 20px rgba(37,99,235,0.3)";
             }}
           >
-            SHOW ME THE GAP <ArrowDown style={{ width: 16, height: 16 }} />
+            Explore How Lucid Can Help You in Revenue Maximization<ArrowDown style={{ width: 16, height: 16 }} />
           </button>
         </motion.div>
       </div>
@@ -987,9 +981,9 @@ const Capabilities = () => {
   const isMobile = width < 640;
 
   return (
-    <section id="results" style={{ padding: isMobile ? "2.5rem 1.25rem" : "2rem 2rem", background: "#fff" }}>
+    <section id="results" style={{ padding: isMobile ? "2.5rem 1.25rem" : "3rem 2rem", background: "#fff" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ marginBottom: isMobile ? "2.5rem" : "5rem" }}>
+        <div style={{ marginBottom: isMobile ? "2.5rem" : "4rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: "1.5rem" }}>
             <div style={{ width: 32, height: 1.5, background: "#2563eb", flexShrink: 0 }} />
             <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.4em", color: "#3b82f6", textTransform: "uppercase" }}>{capabilities.subtitle}</span>
@@ -1000,7 +994,7 @@ const Capabilities = () => {
           <p style={{ fontSize: isMobile ? "1rem" : "1.2rem", color: "#64748b", maxWidth: 560, fontWeight: 300, lineHeight: 1.7 }}>{capabilities.description}</p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? "1.5rem" : "2rem" }}>
           {capabilities.items.map((item, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.5 }}>
               <div
@@ -1239,15 +1233,15 @@ const HowItWorks = () => {
   const isTablet = width >= 640 && width < 1024;
 
   return (
-    <section id="how-it-works" style={{ padding: isMobile ? "2.5rem 1.25rem" : "2rem 2rem", background: "#fff", borderTop: "1px solid #f1f5f9" }}>
+    <section id="how-it-works" style={{ padding: isMobile ? "2.5rem 1.25rem" : "3rem 2rem", background: "#fff", borderTop: "1px solid #f1f5f9" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ marginBottom: isMobile ? "3rem" : "6rem" }}>
+        <div style={{ marginBottom: isMobile ? "3rem" : "4rem" }}>
           <span style={{ display: "inline-block", padding: "0.35rem 1rem", borderRadius: 9999, border: "1px solid #bfdbfe", background: "#eff6ff", color: "#2563eb", fontSize: 10, fontWeight: 900, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "1.5rem" }}>{howItWorks.subtitle}</span>
           <h2 style={{ fontSize: isMobile ? "1.75rem" : "clamp(2rem, 5vw, 4rem)", fontWeight: 900, letterSpacing: "-0.04em", color: "#0f172a", marginBottom: "1.5rem", lineHeight: 1 }}>{howItWorks.title}</h2>
           <p style={{ fontSize: isMobile ? "1rem" : "1.25rem", color: "#64748b", maxWidth: 540, fontWeight: 300, lineHeight: 1.7 }}>{howItWorks.description}</p>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? "4rem" : "8rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? "3rem" : "4rem" }}>
           {howItWorks.steps.map((step, index) => {
             const isEven = index % 2 === 0;
             return (
@@ -1256,7 +1250,7 @@ const HowItWorks = () => {
                 style={{
                   display: "grid",
                   gridTemplateColumns: isMobile || isTablet ? "1fr" : "1fr 1fr",
-                  gap: isMobile ? "2rem" : "5rem",
+                  gap: isMobile ? "2rem" : "4rem",
                   alignItems: "center",
                 }}
               >

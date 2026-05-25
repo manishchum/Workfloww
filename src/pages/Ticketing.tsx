@@ -16,10 +16,10 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export default function Ticketing() {
   return (
-    <div className="pt-20">
+    <div className="pt-24">
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden bg-slate-50">
-        <div className="container mx-auto px-6">
+      <section style={{ padding: "5rem 1.25rem 3rem" }} className="relative overflow-hidden bg-white flex items-center min-h-[85vh]">
+        <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <motion.div
               className="lg:w-1/2"
@@ -27,10 +27,10 @@ export default function Ticketing() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 text-slate-900">
+              <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 lh-text-ink">
                 Ticketing
               </h1>
-              <p className="text-xl text-slate-600 mb-8 leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl lh-text-muted mb-8 leading-relaxed">
                 Streamline issue reporting and resolution for frontline staff. Track ticket
                 status and response times to improve efficiency. Categorize issues to
                 identify recurring problems and trends. Ensure every concern is addressed promptly and effectively.
@@ -61,8 +61,8 @@ export default function Ticketing() {
       </section>
 
       {/* Feature 1: Easy Reporting */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-6">
+      <section style={{ padding: "2.5rem 1.25rem" }} className="bg-white">
+        <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
           <div className="flex flex-col lg:flex-row items-center gap-16">
             <div className="lg:w-1/2 order-2 lg:order-1">
               <img

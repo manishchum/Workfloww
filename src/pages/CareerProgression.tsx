@@ -16,10 +16,10 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export default function CareerProgression() {
     return (
-        <div className="pt-20">
+        <div className="pt-24">
             {/* Hero Section */}
-            <section className="relative py-20 overflow-hidden bg-slate-50">
-                <div className="container mx-auto px-6">
+            <section style={{ padding: "5rem 1.25rem 3rem" }} className="relative overflow-hidden bg-white flex items-center min-h-[85vh]">
+                <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
                     <div className="flex flex-col lg:flex-row items-center gap-12">
                         <motion.div
                             className="lg:w-1/2"
@@ -27,10 +27,10 @@ export default function CareerProgression() {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6 }}
                         >
-                            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 text-slate-900">
+                            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 lh-text-ink">
                                 Career Progression
                             </h1>
-                            <p className="text-xl text-slate-600 mb-8 leading-relaxed">
+                            <p className="text-base sm:text-lg md:text-xl lh-text-muted mb-8 leading-relaxed">
                                 Define clear career paths for your frontline employees. Automate promotions
                                 based on performance and skill acquisition. Reduce turnover by showing
                                 employees a future within the company. Track progress and identify
@@ -62,8 +62,8 @@ export default function CareerProgression() {
             </section>
 
             {/* Feature 1: Career Paths */}
-            <section className="py-24 bg-white">
-                <div className="container mx-auto px-6">
+            <section style={{ padding: "2.5rem 1.25rem" }} className="bg-white">
+                <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
                     <div className="flex flex-col lg:flex-row items-center gap-16">
                         <div className="lg:w-1/2 order-2 lg:order-1">
                             <img
@@ -74,10 +74,10 @@ export default function CareerProgression() {
                             />
                         </div>
                         <div className="lg:w-1/2 order-1 lg:order-2">
-                            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-slate-900">
+                            <h2 className="text-3xl md:text-4xl font-bold mb-6 lh-text-ink">
                                 Define clear career paths
                             </h2>
-                            <p className="text-lg text-slate-600 leading-relaxed mb-6">
+                            <p className="text-base sm:text-lg lh-text-muted leading-relaxed mb-6">
                                 Lucid allows you to map out every possible growth trajectory within your organization.
                                 From entry-level associate to store manager, every step is clearly defined with
                                 required competencies and performance benchmarks.
@@ -90,8 +90,8 @@ export default function CareerProgression() {
                                     "Multi-directional path options"
                                 ].map((item, i) => (
                                     <li key={i} className="flex items-center gap-3">
-                                        <CheckCircle2 className="w-5 h-5 text-blue-600" />
-                                        <span className="text-slate-700 font-medium">{item}</span>
+                                        <CheckCircle2 className="w-5 h-5 lh-accent-text" />
+                                        <span className="lh-text-ink font-medium">{item}</span>
                                     </li>
                                 ))}
                             </ul>
@@ -101,14 +101,14 @@ export default function CareerProgression() {
             </section>
 
             {/* Feature 2: Automated Promotions */}
-            <section className="py-24 bg-slate-50">
-                <div className="container mx-auto px-6">
+            <section style={{ padding: "2.5rem 1.25rem", background: "#f8fafc" }} className="">
+                <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
                     <div className="flex flex-col lg:flex-row items-center gap-16">
                         <div className="lg:w-1/2">
-                            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-slate-900">
+                            <h2 className="text-3xl md:text-4xl font-bold mb-6 lh-text-ink">
                                 Automate Promotions
                             </h2>
-                            <p className="text-lg text-slate-600 leading-relaxed mb-6">
+                            <p className="text-base sm:text-lg lh-text-muted leading-relaxed mb-6">
                                 Remove bias and manual effort from the promotion process. Lucid automatically
                                 identifies employees who have met all criteria for their next role and
                                 triggers the promotion workflow.
@@ -117,10 +117,10 @@ export default function CareerProgression() {
                                 <Card className="border-none shadow-sm">
                                     <CardContent className="pt-6">
                                         <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                                            <Zap className="w-6 h-6 text-blue-600" />
+                                            <Zap className="w-6 h-6 lh-accent-text" />
                                         </div>
-                                        <h3 className="font-bold mb-2">Instant Triggers</h3>
-                                        <p className="text-sm text-slate-500">Promotions are triggered as soon as criteria are met.</p>
+                                        <h3 className="font-bold mb-2 lh-text-ink">Instant Triggers</h3>
+                                        <p className="text-sm lh-text-muted">Promotions are triggered as soon as criteria are met.</p>
                                     </CardContent>
                                 </Card>
                                 <Card className="border-none shadow-sm">
@@ -128,8 +128,8 @@ export default function CareerProgression() {
                                         <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mb-4">
                                             <TrendingUp className="w-6 h-6 text-green-600" />
                                         </div>
-                                        <h3 className="font-bold mb-2">Performance-Led</h3>
-                                        <p className="text-sm text-slate-500">Growth is tied directly to real-world performance data.</p>
+                                        <h3 className="font-bold mb-2 lh-text-ink">Performance-Led</h3>
+                                        <p className="text-sm lh-text-muted">Growth is tied directly to real-world performance data.</p>
                                     </CardContent>
                                 </Card>
                             </div>
@@ -147,8 +147,8 @@ export default function CareerProgression() {
             </section>
 
             {/* Feature 3: Skill Acquisition */}
-            <section className="py-24 bg-white">
-                <div className="container mx-auto px-6">
+            <section style={{ padding: "2.5rem 1.25rem" }} className="bg-white">
+                <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
                     <div className="flex flex-col lg:flex-row items-center gap-16">
                         <div className="lg:w-1/2 order-2 lg:order-1">
                             <img
@@ -159,10 +159,10 @@ export default function CareerProgression() {
                             />
                         </div>
                         <div className="lg:w-1/2 order-1 lg:order-2">
-                            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-slate-900">
+                            <h2 className="text-3xl md:text-4xl font-bold mb-6 lh-text-ink">
                                 Skill Acquisition Tracking
                             </h2>
-                            <p className="text-lg text-slate-600 leading-relaxed mb-6">
+                            <p className="text-base sm:text-lg lh-text-muted leading-relaxed mb-6">
                                 Monitor the development of your workforce in real-time. Lucid tracks every
                                 skill acquired, assessment passed, and certification earned, building a
                                 comprehensive competency profile for every employee.
@@ -173,8 +173,8 @@ export default function CareerProgression() {
                                         <Target className="w-6 h-6 text-purple-600" />
                                     </div>
                                     <div>
-                                        <h4 className="font-bold text-slate-900">Competency Matrix</h4>
-                                        <p className="text-slate-600">Visualize skill density across teams and locations.</p>
+                                        <h4 className="font-bold lh-text-ink">Competency Matrix</h4>
+                                        <p className="lh-text-muted">Visualize skill density across teams and locations.</p>
                                     </div>
                                 </div>
                                 <div className="flex gap-4">
@@ -182,8 +182,8 @@ export default function CareerProgression() {
                                         <Award className="w-6 h-6 text-orange-600" />
                                     </div>
                                     <div>
-                                        <h4 className="font-bold text-slate-900">Verified Skills</h4>
-                                        <p className="text-slate-600">Skills are verified through assessments and manager sign-offs.</p>
+                                        <h4 className="font-bold lh-text-ink">Verified Skills</h4>
+                                        <p className="lh-text-muted">Skills are verified through assessments and manager sign-offs.</p>
                                     </div>
                                 </div>
                             </div>
@@ -193,14 +193,14 @@ export default function CareerProgression() {
             </section>
 
             {/* Feature 4: Retention Analytics */}
-            <section className="py-24 bg-slate-900 text-white overflow-hidden relative">
-                <div className="container mx-auto px-6 relative z-10">
+            <section style={{ padding: "2.5rem 1.25rem", background: "#0f172a", color: "white" }} className="overflow-hidden relative">
+                <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }} className="relative z-10">
                     <div className="flex flex-col lg:flex-row items-center gap-16">
                         <div className="lg:w-1/2">
                             <h2 className="text-3xl md:text-4xl font-bold mb-6">
                                 Retention Analytics
                             </h2>
-                            <p className="text-lg text-slate-300 leading-relaxed mb-8">
+                            <p className="text-base sm:text-lg text-slate-300 leading-relaxed mb-8">
                                 Understand the direct impact of career progression on your bottom line.
                                 Lucid provides deep insights into how growth opportunities correlate with
                                 reduced turnover and increased employee lifetime value.
@@ -227,8 +227,8 @@ export default function CareerProgression() {
             </section>
 
             {/* Feature 5: High-Potential Identification */}
-            <section className="py-24 bg-white">
-                <div className="container mx-auto px-6">
+            <section style={{ padding: "2.5rem 1.25rem" }} className="bg-white">
+                <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
                     <div className="flex flex-col lg:flex-row items-center gap-16">
                         <div className="lg:w-1/2 order-2 lg:order-1">
                             <img
@@ -239,10 +239,10 @@ export default function CareerProgression() {
                             />
                         </div>
                         <div className="lg:w-1/2 order-1 lg:order-2">
-                            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-slate-900">
+                            <h2 className="text-3xl md:text-4xl font-bold mb-6 lh-text-ink">
                                 Identify High-Potential Individuals
                             </h2>
-                            <p className="text-lg text-slate-600 leading-relaxed mb-6">
+                            <p className="text-base sm:text-lg lh-text-muted leading-relaxed mb-6">
                                 Never lose a future leader again. Lucid's AI-driven insights highlight
                                 top performers who are ready for more responsibility, allowing you to
                                 proactively nurture your internal talent pipeline.
@@ -256,10 +256,10 @@ export default function CareerProgression() {
             </section>
 
             {/* Sub Features Section */}
-            <section className="py-24 bg-slate-50">
-                <div className="container mx-auto px-6 text-center">
-                    <h2 className="text-3xl font-bold mb-16 text-slate-900">Sub Features of Progression</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <section style={{ padding: "2.5rem 1.25rem", background: "#f8fafc" }} className="">
+                <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }} className="text-center">
+                    <h2 className="text-3xl font-bold mb-16 lh-text-ink">Sub Features of Progression</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8" style={{ gridTemplateColumns: "repeat(3, minmax(0, 1fr))" }}>
                         {[
                             { title: "Role Mapping", icon: Map, desc: "Visualize the entire organizational structure and growth paths." },
                             { title: "Succession Planning", icon: Users, desc: "Build a robust pipeline for critical leadership roles." },
@@ -268,10 +268,10 @@ export default function CareerProgression() {
                             <Card key={i} className="border-none shadow-sm hover:shadow-md transition-shadow">
                                 <CardContent className="pt-8 pb-8">
                                     <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                                        <feature.icon className="w-6 h-6 text-blue-600" />
+                                        <feature.icon className="w-6 h-6 lh-accent-text" />
                                     </div>
-                                    <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-                                    <p className="text-slate-500">{feature.desc}</p>
+                                    <h3 className="text-xl font-bold mb-3 lh-text-ink">{feature.title}</h3>
+                                    <p className="lh-text-muted">{feature.desc}</p>
                                 </CardContent>
                             </Card>
                         ))}
@@ -280,10 +280,10 @@ export default function CareerProgression() {
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 bg-blue-600 text-white">
-                <div className="container mx-auto px-6 text-center">
+            <section style={{ padding: "2.5rem 1.25rem", background: "#2563eb", color: "white" }} className="">
+                <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }} className="text-center">
                     <h2 className="text-3xl md:text-5xl font-bold mb-8">Ready to nurture your talent?</h2>
-                    <p className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
+                    <p className="text-base sm:text-lg text-blue-100 mb-10 max-w-2xl mx-auto">
                         Join leading organizations that use Lucid to build transparent and motivating career paths.
                     </p>
                     <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50 rounded-full px-10 py-7 text-lg font-bold">
@@ -291,6 +291,14 @@ export default function CareerProgression() {
                     </Button>
                 </div>
             </section>
+
+            <style>{`
+                @media (min-width: 1024px) {
+                  section[style*="padding: 2.5rem 1.25rem"] {
+                    padding: 3rem 2rem !important;
+                  }
+                }
+              `}</style>
         </div>
     );
 }

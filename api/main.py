@@ -89,6 +89,8 @@ async def send_email(data: LeadRequest):
         # Determine subject based on source
         if data.source == "builder-labs-signup":
             subject = "New Builder Labs Signup"
+        elif data.source == "linkedin-post-popup":
+            subject = "New LinkedIn Post Lead"
         elif data.source == "contact-form":
             subject = "New Contact Form Submission"
         else:

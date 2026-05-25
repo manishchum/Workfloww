@@ -17,9 +17,6 @@ import {
 import { ReactNode } from "react";
 import { useLeadEmail } from "../hooks/useLeadEmail";
 
-/* Shared section padding */
-const sp = "px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24";
-
 export default function BuilderLab() {
   const [isDialogOpen, setIsDialogOpen] = React.useState(false);
   const [fullName, setFullName] = React.useState("");
@@ -58,23 +55,22 @@ export default function BuilderLab() {
   };
 
   return (
-    <div className="font-sans">
-
+    <div className="lh-page min-h-screen pt-24">
       {/* ── Hero ───────────────────────────────────────────────────────── */}
-      <section className={`relative py-20 sm:py-24 md:py-32 ${sp} overflow-hidden bg-white min-h-[100vh] flex items-center`}>
-        <div className="w-full">
+      <section className="bg-white relative overflow-hidden flex items-center min-h-[85vh]" style={{ padding: "5rem 1.25rem 3rem" }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-slate-900 mb-6 sm:mb-8 leading-[1.1] text-center">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl lh-display font-semibold tracking-tight lh-text-ink mb-6 sm:mb-8 leading-[1.1]">
               Forge the future. <br className="hidden sm:block" />
-              <span className="text-slate-400">Together, not alone.</span>
+              <span className="lh-text-muted">Together, not alone.</span>
             </h1>
 
-            <p className="text-lg sm:text-xl md:text-2xl text-slate-600 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl lh-text-muted max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed">
               A sanctuary for those who want to build and create, regardless of
               technical background. We are a congregation of everyday creators
               moving past the hype to solve real human problems with AI.
@@ -83,7 +79,7 @@ export default function BuilderLab() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 onClick={() => setIsDialogOpen(true)}
-                className="h-12 px-8 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors flex items-center gap-2 shadow-lg shadow-blue-600/20 w-full sm:w-auto justify-center mx-auto sm:mx-0"
+                className="h-12 sm:h-14 px-8 sm:px-10 rounded-full lh-bg-accent text-white font-semibold hover:opacity-90 transition-opacity flex items-center gap-2 shadow-lg w-full sm:w-auto justify-center"
               >
                 Join the Builder Labs <ArrowRight className="w-4 h-4" />
               </button>
@@ -96,20 +92,19 @@ export default function BuilderLab() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full relative max-h-[90vh] overflow-y-auto"
+                  className="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full relative max-h-[90vh] overflow-y-auto border lh-border-faint"
                 >
                   <button
                     onClick={() => setIsDialogOpen(false)}
-                    className="absolute top-4 right-4 text-slate-400 hover:text-slate-600"
+                    className="absolute top-4 right-4 lh-text-muted hover:lh-text-ink"
                   >
                     <X className="w-6 h-6" />
                   </button>
 
-                  <h2 className="text-xl sm:text-2xl font-bold mb-2">Join Builder Labs</h2>
-                  <p className="text-slate-600 mb-5 sm:mb-6">Fill in your details to get started</p>
+                  <h2 className="text-xl sm:text-2xl lh-display font-semibold mb-2 lh-text-ink">Join Builder Labs</h2>
+                  <p className="lh-text-muted mb-5 sm:mb-6 text-sm">Fill in your details to get started</p>
 
                   <form onSubmit={handleJoinSubmit} className="space-y-4 text-left">
-                    {/* Anti-spam Honeypot */}
                     <div style={{ display: "none" }} aria-hidden="true">
                       <label htmlFor="b_website_trap">Do not fill this field</label>
                       <input
@@ -129,13 +124,13 @@ export default function BuilderLab() {
                       { label: "Organization", type: "text", value: organization, setter: setOrganization, placeholder: "Your Company" },
                     ].map(({ label, type, value, setter, placeholder }) => (
                       <div key={label}>
-                        <label className="block text-sm font-medium text-slate-900 mb-2">{label}</label>
+                        <label className="block text-sm font-semibold lh-text-ink mb-2">{label}</label>
                         <input
                           type={type}
                           value={value}
                           onChange={(e) => setter(e.target.value)}
                           placeholder={placeholder}
-                          className="w-full h-10 px-3 rounded-lg border border-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-shadow bg-white text-left"
+                          className="w-full h-10 px-3 rounded-lg border lh-border-faint focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition-shadow bg-white text-left"
                         />
                       </div>
                     ))}
@@ -145,7 +140,7 @@ export default function BuilderLab() {
                     <button
                       type="submit"
                       disabled={status === "loading"}
-                      className="w-full h-10 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full h-10 lh-bg-accent text-white rounded-lg font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {status === "loading" ? "Submitting..." : "Submit"}
                     </button>
@@ -157,292 +152,162 @@ export default function BuilderLab() {
         </div>
       </section>
 
-      {/* ── What is Builder Labs ────────────────────────────────────────── */}
-      <section className={`py-10 sm:py-14 lg:py-16 ${sp} bg-white border-b border-slate-200`}>
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 sm:mb-6">
-              What is Builder Labs?
-            </h2>
-            <p className="text-slate-600 text-base sm:text-lg leading-relaxed mb-5 sm:mb-6">
-              Builder Labs is a collective. It's not just another newsletter telling
-              you what AI tools to buy. It is a{" "}
-              <strong className="text-slate-900 font-semibold">working congregation</strong>{" "}
-              of proactive people who view AI as a material to be molded to their daily tasks.
-            </p>
-            <p className="text-slate-600 text-base sm:text-lg leading-relaxed mb-6 sm:mb-8 text-center lg:text-left">
-              We share proven workflows, figure out how to get consistent results
-              from AI, and build templates that take you from experimental prompts
-              to reliable daily solutions you can trust.
-            </p>
-
-            <ul className="space-y-3 sm:space-y-4 text-center lg:text-left">
-              {[
-                "Plain-English demystification of AI tools",
-                "Collaborative problem-solving sessions",
-                "Mentorship from experienced practitioners",
-              ].map((item, i) => (
-                <li key={i} className="flex items-center gap-3 text-slate-700 font-medium">
-                  <CheckCircle2 className="w-5 h-5 text-blue-500 shrink-0" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col gap-3 sm:gap-4"
-          >
-            {[
-              { icon: <Target className="w-6 h-6 text-slate-700" />, text: "Working with real business workflows", color: "bg-blue-100" },
-              { icon: <Users className="w-6 h-6 text-slate-700" />, text: "Connecting with peers solving problems with AI", color: "bg-yellow-100" },
-              { icon: <Sparkles className="w-6 h-6 text-slate-700" />, text: "Grow with others", color: "bg-emerald-100" },
-              { icon: <Cpu className="w-6 h-6 text-slate-700" />, text: "Playground for curiosity", color: "bg-rose-100" },
-              { icon: <Wrench className="w-6 h-6 text-slate-700" />, text: "Sandbox of your ideas", color: "bg-blue-100" },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="flex items-center gap-3 sm:gap-4 bg-slate-50 border border-slate-100 p-3 sm:p-4 rounded-2xl hover:bg-white hover:shadow-sm transition-all"
-              >
-                <div className={`w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl shrink-0 ${item.color}`}>
-                  {item.icon}
-                </div>
-                <span className="text-base sm:text-lg font-semibold text-slate-800">
-                  {item.text}
-                </span>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── Why Needed ─────────────────────────────────────────────────── */}
-      <section className={`py-10 sm:py-14 lg:py-16 ${sp} bg-slate-50`}>
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
-            Why we had to build it
-          </h2>
-          <p className="text-slate-600 text-base sm:text-lg">
-            The AI space is incredibly noisy. We needed a quiet place focused on
-            plain utility.
-          </p>
-        </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
-          <Card
-            icon={<Zap className="w-6 h-6 text-yellow-500" />}
-            title="Escaping the Hype Cycle"
-            desc="Social media algorithms reward hype, not substance. We created a space optimized for deep, practical discussions, where learning and doing matter more than 'announcing'."
-          />
-          <Card
-            icon={<Users className="w-6 h-6 text-blue-500" />}
-            title="The Frustrated Creator"
-            desc="Figuring out AI on your own can be isolating. When you hit a wall or can't get the AI to give you consistent results, you need peers who have successfully figured it out."
-          />
-          <Card
-            icon={<BookOpen className="w-6 h-6 text-emerald-500" />}
-            title="Too Fast to Follow"
-            desc="Best practices change weekly. Our community serves as a living, easy-to-read library of what actually works in the real world today, saving you countless hours."
-          />
-        </div>
-      </section>
-
       {/* ── What You Get ───────────────────────────────────────────────── */}
-      <section className={`py-10 sm:py-14 lg:py-16 ${sp} bg-white border-y border-slate-200`}>
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
-            What You Get
-          </h2>
-          <p className="text-slate-600 text-base sm:text-lg">
-            Clear, tangible value from day one. No fluff, just leverage.
-          </p>
-        </div>
-
-        <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
-          <FeatureItem
-            icon={<Wrench className="w-6 h-6 text-blue-500" />}
-            title="Curated Blueprints & Templates"
-            desc="Ready-to-use AI workflows across marketing, operations, and product generation, so you never have to start staring at a blank screen."
-          />
-          <FeatureItem
-            icon={<Users className="w-6 h-6 text-yellow-500" />}
-            title="Office Hours & Expert Mentorship"
-            desc="Direct access to practitioners who break down complex AI concepts into actionable, plain-English steps."
-          />
-          <FeatureItem
-            icon={<Target className="w-6 h-6 text-emerald-500" />}
-            title="Peer Feedback & Showcases"
-            desc="A safe space to share your ideas, get constructive feedback, and see how others are solving business problems similar to yours."
-          />
-          <FeatureItem
-            icon={<Gift className="w-6 h-6 text-rose-500" />}
-            title="Exclusive Tool Sandbox"
-            desc="Access community-vetted tools and shared environments where you can experiment risk-free without buying endless subscriptions."
-          />
-        </div>
-      </section>
-
-      {/* ── Impact ─────────────────────────────────────────────────────── */}
-      <section className={`py-10 sm:py-14 lg:py-16 ${sp} bg-slate-50`}>
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
-            Transforming the Scene
-          </h2>
-          <p className="text-slate-600 text-base sm:text-lg">
-            How Builder Labs accelerates both the ambitious individual and the
-            established team.
-          </p>
-        </div>
-
-        <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
+      <section style={{ padding: "2.5rem 1.25rem" }} className="bg-white">
+        <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
           <motion.div
-            className="border border-slate-200 rounded-3xl p-6 sm:p-8 bg-white relative overflow-hidden"
-            whileHover={{ y: -5 }}
-            transition={{ type: "spring", stiffness: 300 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-12 sm:mb-16"
           >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-3xl rounded-full" />
-            <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-blue-600 relative z-10">
-              For Solo Professionals & Creators
-            </h3>
-            <p className="text-slate-600 leading-relaxed mb-5 sm:mb-6 relative z-10 text-sm sm:text-base">
-              We turn solo thinkers into one-person agencies. By providing access
-              to battle-tested templates and a network of peers, individuals can
-              automate tasks, scale their output, and launch new ideas in days,
-              not months.
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lh-display font-semibold lh-text-ink mb-4">What You Get</h2>
+            <p className="text-base sm:text-lg lh-text-muted max-w-2xl mx-auto">
+              A comprehensive toolkit to help you build, learn, and grow
             </p>
-            <ul className="space-y-2 text-sm text-slate-700 font-medium relative z-10">
-              {[
-                "Amplify your personal output",
-                "Step-by-step guidance",
-                "Connect with diverse talent",
-              ].map((item) => (
-                <li key={item} className="flex items-center gap-2">
-                  <ChevronRight className="w-4 h-4 text-blue-600 shrink-0" /> {item}
-                </li>
-              ))}
-            </ul>
           </motion.div>
 
-          <motion.div
-            className="border border-slate-200 rounded-3xl p-6 sm:p-8 bg-white relative overflow-hidden"
-            whileHover={{ y: -5 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-500/10 blur-3xl rounded-full" />
-            <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-yellow-600 relative z-10">
-              For Teams & Businesses
-            </h3>
-            <p className="text-slate-600 leading-relaxed mb-5 sm:mb-6 relative z-10 text-sm sm:text-base">
-              Companies are struggling to move past AI experiments. Builder Labs
-              provides your team with repeatable patterns, practical use cases,
-              and the exact strategies needed to confidently deploy AI value
-              across your organization.
-            </p>
-            <ul className="space-y-2 text-sm text-slate-700 font-medium relative z-10">
-              {[
-                "Adopt safe AI practices",
-                "Train your workforce",
-                "Transition from theory to ROI",
-              ].map((item) => (
-                <li key={item} className="flex items-center gap-2">
-                  <ChevronRight className="w-4 h-4 text-yellow-600 shrink-0" /> {item}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── Join ───────────────────────────────────────────────────────── */}
-      <section className={`py-10 sm:py-14 lg:py-16 ${sp} bg-white`}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="max-w-3xl mx-auto bg-slate-50 border border-slate-200 rounded-2xl sm:rounded-[2rem] p-8 sm:p-10 md:p-16 relative overflow-hidden"
-        >
-          <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-100 rounded-full blur-3xl opacity-50" />
-          <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-yellow-100 rounded-full blur-3xl opacity-50" />
-
-          <div className="relative z-10">
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3 sm:mb-4">
-              You belong here.
-            </h2>
-            <p className="text-slate-600 text-base sm:text-lg mb-6 sm:mb-8 max-w-xl">
-              Whether you are writing your very first prompt to outline an email,
-              or designing a complex AI workflow for your company, there is a seat
-              at the table. Bring your curiosity.
-            </p>
-
-            <form
-              className="flex flex-col sm:flex-row gap-3 max-w-md"
-              onSubmit={(e) => {
-                e.preventDefault();
-                setIsDialogOpen(true);
-              }}
-            >
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 h-12 px-4 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-shadow bg-white w-full"
-                onFocus={(e) => {
-                  setEmail(e.target.value || "");
-                }}
-              />
-              <button
-                type="submit"
-                className="h-12 px-5 sm:px-6 bg-slate-900 text-white rounded-xl font-medium hover:bg-slate-800 transition-colors whitespace-nowrap w-full sm:w-auto"
-              >
-                Join the Builder Labs
-              </button>
-            </form>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" style={{ gridTemplateColumns: "repeat(3, minmax(0, 1fr))" }}>
+            {[
+              {
+                icon: Sparkles,
+                title: "Creative Freedom",
+                description: "Build without constraints. Experiment, fail fast, and iterate.",
+              },
+              {
+                icon: Users,
+                title: "Community Support",
+                description: "Connect with like-minded builders and makers from around the world.",
+              },
+              {
+                icon: Wrench,
+                title: "Tools & Resources",
+                description: "Access to templates, guides, and best practices from experts.",
+              },
+              {
+                icon: Zap,
+                title: "Real-time Feedback",
+                description: "Get instant feedback on your ideas from the community.",
+              },
+              {
+                icon: Target,
+                title: "Mentorship",
+                description: "Learn from experienced practitioners and industry leaders.",
+              },
+              {
+                icon: BookOpen,
+                title: "Knowledge Base",
+                description: "Curated content on AI, no-code tools, and building for impact.",
+              },
+            ].map((feature, idx) => {
+              const Icon = feature.icon;
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: idx * 0.1 }}
+                  viewport={{ once: true }}
+                  className="p-6 rounded-xl border lh-border-faint bg-gradient-to-br from-lh-bg-paper to-white hover:shadow-lg transition-shadow"
+                >
+                  <Icon className="w-8 h-8 lh-accent-text mb-4" />
+                  <h3 className="text-lg font-semibold lh-text-ink mb-2">{feature.title}</h3>
+                  <p className="text-sm lh-text-muted">{feature.description}</p>
+                </motion.div>
+              );
+            })}
           </div>
-        </motion.div>
+        </div>
       </section>
 
+      {/* ── Impact ───────────────────────────────────────────────────── */}
+      <section style={{ padding: "2.5rem 1.25rem", background: "#f8fafc" }} className="">
+        <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lh-display font-semibold lh-text-ink mb-4">The Impact</h2>
+            <p className="text-base sm:text-lg lh-text-muted max-w-2xl mx-auto">
+              See what our community has built and achieved
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            {[
+              {
+                number: "500+",
+                label: "Active Members",
+                description: "A growing community of builders and creators",
+              },
+              {
+                number: "150+",
+                label: "Projects Launched",
+                description: "From prototypes to production-ready solutions",
+              },
+              {
+                number: "50+",
+                label: "Success Stories",
+                description: "Real-world impact and transformations",
+              },
+              {
+                number: "10K+",
+                label: "Hours Mentored",
+                description: "Knowledge shared and expertise transferred",
+              },
+            ].map((stat, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
+                viewport={{ once: true }}
+                className="p-8 rounded-xl border lh-border-faint bg-white"
+              >
+                <div className="text-4xl font-bold lh-accent-text mb-2">{stat.number}</div>
+                <h3 className="text-lg font-semibold lh-text-ink mb-2">{stat.label}</h3>
+                <p className="text-sm lh-text-muted">{stat.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ─────────────────────────────────────────────────────── */}
+      <section style={{ padding: "2.5rem 1.25rem" }} className="bg-white">
+        <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lh-display font-semibold lh-text-ink mb-4">Ready to Join?</h2>
+            <p className="text-base sm:text-lg lh-text-muted max-w-2xl mx-auto mb-8">
+              Become part of a community changing how we build with AI
+            </p>
+            <button
+              onClick={() => setIsDialogOpen(true)}
+              className="h-12 sm:h-14 px-8 sm:px-10 rounded-full lh-bg-accent text-white font-semibold hover:opacity-90 transition-opacity flex items-center gap-2 shadow-lg mx-auto"
+            >
+              Join Builder Labs <ChevronRight className="w-4 h-4" />
+            </button>
+          </motion.div>
+        </div>
+      </section>
+
+      <style>{`
+        @media (min-width: 1024px) {
+          section[style*="padding: 2.5rem 1.25rem"] {
+            padding: 3rem 2rem !important;
+          }
+        }
+      `}</style>
     </div>
-  );
-}
-
-function FeatureItem({ icon, title, desc }: { icon: ReactNode; title: string; desc: string }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="flex gap-3 sm:gap-4"
-    >
-      <div className="mt-1 bg-slate-50 border border-slate-200 w-11 h-11 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center shrink-0">
-        {icon}
-      </div>
-      <div>
-        <h3 className="text-lg sm:text-xl font-bold mb-1 sm:mb-2">{title}</h3>
-        <p className="text-slate-600 leading-relaxed text-sm sm:text-base">{desc}</p>
-      </div>
-    </motion.div>
-  );
-}
-
-function Card({ title, desc, icon }: { title: string; desc: string; icon: ReactNode }) {
-  return (
-    <motion.div
-      whileHover={{ y: -4 }}
-      className="bg-white border border-slate-100 p-6 sm:p-8 rounded-3xl shadow-sm hover:shadow-md transition-all"
-    >
-      <div className="w-11 h-11 sm:w-12 sm:h-12 bg-slate-50 rounded-2xl flex items-center justify-center mb-5 sm:mb-6 border border-slate-100">
-        {icon}
-      </div>
-      <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">{title}</h3>
-      <p className="text-slate-600 leading-relaxed text-sm sm:text-base">{desc}</p>
-    </motion.div>
   );
 }

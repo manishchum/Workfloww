@@ -1740,12 +1740,12 @@ export default function ContentEngine() {
       </section>
 
       {/* ─────────── FOOTER ─────────── */}
-      <footer>
+      {/* <footer>
         <div className="footer-container">
           <div className="footer-logo">Lucid</div>
           <div className="footer-copy">© 2026 Lucid. All rights reserved.</div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 }
