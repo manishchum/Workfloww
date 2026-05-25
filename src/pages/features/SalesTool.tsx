@@ -469,17 +469,19 @@ const SalesTool = () => {
       </section>
 
       {/* 8. PURPLE CTA BANNER */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto mb-20">
-        <div className="bg-[#4F46E5] rounded-[20px] p-12 text-center shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-white opacity-5 mix-blend-overlay"></div>
-          <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-white opacity-5 mix-blend-overlay"></div>
-          <div className="relative z-10 max-w-2xl mx-auto">
-            <h2 className="text-4xl font-bold text-white mb-8 leading-tight">
-              Ready to arm your sales team with an arsenal of sales tools to win the market battles?
-            </h2>
-            <button onClick={() => navigate('/contact')} className="bg-white/10 hover:bg-white/20 border border-white text-white px-8 py-4 rounded-full font-semibold text-lg transition-all inline-flex items-center gap-2 backdrop-blur-sm">
-              Book Demo Now <ArrowRight className="w-5 h-5" />
-            </button>
+      <section style={{ padding: "2.5rem 1.25rem" }} className="mb-20">
+        <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
+          <div className="bg-[#4F46E5] rounded-[20px] p-12 text-center shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-white opacity-5 mix-blend-overlay"></div>
+            <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-white opacity-5 mix-blend-overlay"></div>
+            <div className="relative z-10 max-w-2xl mx-auto">
+              <h2 className="text-4xl font-bold text-white mb-8 leading-tight">
+                Ready to arm your sales team with an arsenal of sales tools to win the market battles?
+              </h2>
+              <button onClick={() => navigate('/contact')} className="bg-white/10 hover:bg-white/20 border border-white text-white px-8 py-4 rounded-full font-semibold text-lg transition-all inline-flex items-center gap-2 backdrop-blur-sm">
+                Book Demo Now <ArrowRight className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -488,3 +490,11 @@ const SalesTool = () => {
 };
 
 export default SalesTool;
+
+<style>{`
+  @media (min-width: 1024px) {
+    section[style*="padding: 2.5rem 1.25rem"] {
+      padding: 3rem 2rem !important;
+    }
+  }
+`}</style>
