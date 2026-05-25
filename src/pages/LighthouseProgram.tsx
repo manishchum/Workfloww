@@ -89,7 +89,7 @@ export default function LighthouseProgram() {
     <div className="lh-page min-h-screen pt-24">
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
-      <section className="relative lucid-container flex flex-col lg:flex-row items-center gap-8 lg:gap-12 min-h-[85vh] px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 py-10 lg:py-12">
+      <section className="relative lucid-container flex flex-col lg:flex-row items-center gap-8 lg:gap-12 min-h-[85vh] px-5 sm:px-6 md:px-8 lg:px-8 xl:px-8 py-10 lg:py-12" style={{ padding: "5rem 1.25rem 3rem", maxWidth: "1100px", margin: "0 auto" }}>
         {/* Glow */}
         <div className="absolute top-0 right-0 w-[300px] sm:w-[500px] lg:w-[700px] h-[300px] sm:h-[500px] lg:h-[700px] lh-bg-light rounded-full blur-[120px] -z-10 opacity-50 translate-x-1/3 -translate-y-1/3 pointer-events-none" />
 
@@ -163,9 +163,10 @@ export default function LighthouseProgram() {
       {/* ── Deliverables ────────────────────────────────────────────────── */}
       <section
         id="what-you-get"
-        className="py-16 sm:py-20 lg:py-24 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 bg-white border-y lh-border-faint"
+        className="bg-white border-y lh-border-faint"
+        style={{ padding: "2.5rem 1.25rem" }}
       >
-        <div className="lucid-container">
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div className="max-w-3xl mb-10 sm:mb-16">
             <h2 className="text-sm font-semibold uppercase tracking-widest lh-accent-text mb-4 lh-display">
               What You Get
@@ -179,7 +180,7 @@ export default function LighthouseProgram() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" style={{ gridTemplateColumns: "repeat(3, minmax(0, 1fr))" }}>
             {deliverables.map((item, i) => (
               <div
                 key={i}
@@ -203,9 +204,10 @@ export default function LighthouseProgram() {
       {/* ── Key Outcomes ────────────────────────────────────────────────── */}
       <section
         id="outcomes"
-        className="py-16 sm:py-20 lg:py-24 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 lh-bg-paper"
+        className="lh-bg-paper"
+        style={{ padding: "2.5rem 1.25rem" }}
       >
-        <div className="lucid-container">
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div className="max-w-2xl mb-10 sm:mb-16">
             <h2 className="text-sm font-semibold uppercase tracking-widest lh-accent-text mb-4 lh-display">
               Key Outcomes
@@ -219,7 +221,7 @@ export default function LighthouseProgram() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-12 gap-6 lg:gap-12">
+          <div className="grid lg:grid-cols-12 gap-6 lg:gap-8">
             {/* Tab nav */}
             <div className="lg:col-span-4 flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0 -mx-4 px-4 lg:mx-0 lg:px-0 snap-x lg:snap-none">
               {outcomes.map((outcome, idx) => (
@@ -288,29 +290,38 @@ export default function LighthouseProgram() {
       </section>
 
       {/* ── CTA ─────────────────────────────────────────────────────────── */}
-      <section className="py-8 sm:py-12 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 lh-bg-paper">
-        <div className="lucid-container bg-white border lh-border-faint shadow-xl rounded-2xl lg:rounded-[2rem] p-8 sm:p-12 md:p-16 lg:p-20 text-center relative overflow-hidden">
-          <div
-            className="absolute top-0 right-0 w-full h-full opacity-80 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(ellipse at top right, #e0f2fe 0%, transparent 60%)",
-            }}
-          />
-          <div className="relative z-10 flex flex-col items-center">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl lh-display font-semibold lh-text-ink mb-6 sm:mb-8 lg:mb-10">
-              Ready to Accelerate Your Revenue Engine?
-            </h2>
-            <button
-              onClick={() => navigate("/contact")}
-              className="h-12 sm:h-14 px-6 sm:px-8 rounded-full lh-bg-ink text-white font-medium hover:opacity-90 transition-all shadow-lg text-base sm:text-lg w-full sm:w-auto max-w-xs sm:max-w-none"
-            >
-              Talk to us
-            </button>
+      <section className="" style={{ padding: "2.5rem 1.25rem", background: "#f8fafc" }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+          <div className="bg-white border lh-border-faint shadow-xl rounded-2xl lg:rounded-[2rem] p-8 sm:p-12 md:p-16 lg:p-20 text-center relative overflow-hidden">
+            <div
+              className="absolute top-0 right-0 w-full h-full opacity-80 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(ellipse at top right, #e0f2fe 0%, transparent 60%)",
+              }}
+            />
+            <div className="relative z-10 flex flex-col items-center">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl lh-display font-semibold lh-text-ink mb-6 sm:mb-8 lg:mb-10">
+                Ready to Accelerate Your Revenue Engine?
+              </h2>
+              <button
+                onClick={() => navigate("/contact")}
+                className="h-12 sm:h-14 px-6 sm:px-8 rounded-full lh-bg-ink text-white font-medium hover:opacity-90 transition-all shadow-lg text-base sm:text-lg w-full sm:w-auto max-w-xs sm:max-w-none"
+              >
+                Talk to us
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
+      <style>{`
+        @media (min-width: 1024px) {
+          section[style*="padding: 2.5rem 1.25rem"] {
+            padding: 3rem 2rem !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

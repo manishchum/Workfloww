@@ -103,7 +103,7 @@ export const LUCID_CONTENT = {
     description: "Every week without Lucid is a week where your strategy stays at the top and your ground reality stays unknown. The Lighthouse Programme gives you 30 days to find out exactly what's possible."
   },
   nav: [
-    { name: "Features", items: ["Sales Team", "Sales Tool", "Execution", "Content Engine", ] },
+    { name: "Features", items: ["Lucid Ready", "Lucid Arsenal", "Lucid Field", "Lucid Studio", ] },
     { name: "Industries", items: ["QSR & Retail", "FMCG & Beverages", "Manufacturing & Industrial", "Services & Distribution"] },
     { name: "Use Case", items: ["CEO", "CHRO", "Sales Head", "Operations Head", "Compliance & Audits", "Last-Mile Communication", "SOP Deviation"] },
     { name: "Light House Program", href: "/lighthouse-program" },

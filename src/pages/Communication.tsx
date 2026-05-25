@@ -24,12 +24,10 @@ export default function Communication() {
   };
 
   return (
-    <div>
+    <div className="pt-24">
       {/* Hero Section */}
-      <section className="relative py-20 md:py-32 overflow-hidden bg-white">
-        <div className="absolute top-0 right-0 w-[50%] h-[100%] bg-gradient-to-l from-blue-500/10 to-transparent -z-10 blur-[120px]" />
-
-        <div className="container mx-auto px-6">
+      <section style={{ padding: "5rem 1.25rem 3rem" }} className="relative overflow-hidden bg-white flex items-center min-h-[85vh]">
+        <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -40 }}
@@ -37,10 +35,10 @@ export default function Communication() {
               transition={{ duration: 0.6 }}
               className="max-w-2xl"
             >
-              <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-8 leading-[1.1] text-foreground">
+              <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-8 leading-[1.1] lh-text-ink">
                 Communication built for Frontline teams
               </h1>
-              <p className="text-xl text-muted-foreground mb-10 leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl lh-text-muted mb-10 leading-relaxed">
                 Keep your frontline workforce connected and informed. Share company news, updates, and announcements in real-time. Foster a sense of community with two-way communication channels designed for deskless workers.
               </p>
 
@@ -98,16 +96,16 @@ export default function Communication() {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 bg-secondary/30">
-        <div className="container mx-auto px-6">
+      <section style={{ padding: "2.5rem 1.25rem", background: "#f8fafc" }} className="">
+        <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Connect your entire workforce</h2>
-            <p className="text-lg text-muted-foreground">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 lh-text-ink">Connect your entire workforce</h2>
+            <p className="text-base sm:text-lg lh-text-muted">
               Lucid's communication tools bridge the gap between HQ and the frontline.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" style={{ gridTemplateColumns: "repeat(3, minmax(0, 1fr))" }}>
             {[
               {
                 title: "Real-time Announcements",
@@ -140,13 +138,13 @@ export default function Communication() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-background p-8 rounded-2xl border border-border hover:border-primary/50 transition-colors shadow-sm"
+                className="bg-white p-8 rounded-2xl border lh-border-faint hover:shadow-lg transition-shadow"
               >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
-                  <MessageSquare className="w-6 h-6 text-primary" />
+                <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mb-6">
+                  <MessageSquare className="w-6 h-6 lh-accent-text" />
                 </div>
-                <h3 className="text-xl font-bold mb-4">{feature.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <h3 className="text-xl font-bold mb-4 lh-text-ink">{feature.title}</h3>
+                <p className="lh-text-muted leading-relaxed">
                   {feature.description}
                 </p>
               </motion.div>
@@ -156,20 +154,28 @@ export default function Communication() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24">
-        <div className="container mx-auto px-6">
-          <div className="bg-primary rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden">
+      <section style={{ padding: "2.5rem 1.25rem" }} className="bg-white">
+        <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
+          <div className="bg-blue-600 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden">
             <div className="relative z-10 max-w-3xl mx-auto">
-              <h2 className="text-4xl md:text-5xl font-bold text-primary-foreground mb-8">
+              <h2 className="text-3xl md:text-5xl font-bold text-white mb-8">
                 Ready to connect your frontline?
               </h2>
-              <Button size="lg" className="rounded-full px-12 py-8 text-xl font-bold bg-blue-600 hover:bg-blue-700 text-white hover:scale-105 transition-transform">
+              <Button size="lg" className="rounded-full px-12 py-8 text-xl font-bold bg-white text-blue-600 hover:bg-blue-50 hover:scale-105 transition-transform">
                 Book Demo Now
               </Button>
             </div>
           </div>
         </div>
       </section>
+
+      <style>{`
+        @media (min-width: 1024px) {
+          section[style*="padding: 2.5rem 1.25rem"] {
+            padding: 3rem 2rem !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

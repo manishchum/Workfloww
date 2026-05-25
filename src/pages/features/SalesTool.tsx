@@ -70,8 +70,8 @@ const SalesTool = () => {
     <div className="bg-white min-h-screen font-sans text-navy">
 
       {/* 1. HERO SECTION */}
-      <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-b from-blue-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <section style={{ padding: "13.5rem 1.25rem 11rem" }} className="relative overflow-hidden bg-gradient-to-b from-blue-50 to-white pt-24">
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }} className="relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
 
             {/* Left Text */}
@@ -140,8 +140,8 @@ const SalesTool = () => {
       </section>
 
       {/* 2. THE ARSENAL — SALES TOOLS GRID */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section style={{ padding: "2.5rem 1.25rem" }} className="bg-white">
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div className="text-center max-w-2xl mx-auto mb-16">
             <div className="text-[11px] font-bold tracking-widest uppercase text-[#6357d4] mb-3">The Arsenal</div>
             <h2 className="text-4xl font-bold text-navy mb-4 leading-tight">Sales Tools. Built in Minutes. Updated from the Field.</h2>
@@ -172,8 +172,8 @@ const SalesTool = () => {
       </section>
 
       {/* 3. HOW IT WORKS */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section style={{ padding: "2.5rem 1.25rem", background: "#f8fafc" }} className="border-t border-slate-200">
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div className="text-center mb-16">
             <div className="text-[11px] font-bold tracking-widest uppercase text-[#6357d4] mb-3">How It Works</div>
             <h2 className="text-4xl font-bold text-navy">From Your Intel to Their Hands — in Minutes</h2>
@@ -218,8 +218,8 @@ const SalesTool = () => {
       </section>
 
       {/* 4. BOTTOM-UP INTELLIGENCE */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section style={{ padding: "2.5rem 1.25rem" }} className="bg-white">
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div className="grid lg:grid-cols-2 gap-16 items-center">
 
             {/* Left Text */}
@@ -303,8 +303,8 @@ const SalesTool = () => {
       </section>
 
       {/* 5. INDUSTRY & CHANNEL SPECIFIC */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section style={{ padding: "2.5rem 1.25rem", background: "#f8fafc" }} className="border-t border-slate-200">
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div className="grid lg:grid-cols-2 gap-16 items-center">
 
             {/* Left: Industry Switcher Widget */}
@@ -377,8 +377,8 @@ const SalesTool = () => {
       </section>
 
       {/* 6. DARK STAT STRIP */}
-      <section className="bg-[#0f1117] py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section style={{ padding: "2.5rem 1.25rem", background: "#0f1117" }} className="font-sans border-y border-gray-800">
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div className="grid md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-gray-800">
             <div className="p-4">
               <div className="text-5xl lg:text-6xl font-extrabold text-white mb-2">
@@ -403,8 +403,8 @@ const SalesTool = () => {
       </section>
 
       {/* 7. MORE TOOL FEATURES */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section style={{ padding: "2.5rem 1.25rem" }} className="bg-white">
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl font-bold text-navy mb-4">More Tool Features</h2>
             <p className="text-xl text-gray-600">Everything your enablement team needs to deploy, track, and iterate</p>
