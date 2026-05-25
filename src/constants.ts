@@ -107,7 +107,7 @@ export const LUCID_CONTENT = {
     { name: "Industries", items: ["QSR & Retail", "FMCG & Beverages", "Manufacturing & Industrial", "Services & Distribution"] },
     { name: "Use Case", items: ["CEO", "CHRO", "Sales Head", "Operations Head", "Compliance & Audits", "Last-Mile Communication", "SOP Deviation"] },
     { name: "Light House Program", href: "/lighthouse-program" },
-    { name: "Builder's Lab", href: "/builder-lab" },
+    { name: "Builder Lab", href: "/builder-lab" },
     { name: "About", href: "/about" }
     // { name: "Contact Us", href: "/contact" }
   ],

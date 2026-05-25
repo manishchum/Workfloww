@@ -494,21 +494,21 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                               const getLink = (name: string) => {
                                 switch (name) {
                                   case "About": return "/about";
-                                  case "Lucid Ready": return "/features";
-                                  case "Lucid Arsenal": return "/features";
-                                  case "Lucid Field": return "/features";
-                                  case "Lucid Studio": return "/features";
-                                  case "Self-Learning": return "/features/self-learning";
-                                  case "Seamless Training": return "/features/seamless-training";
-                                  case "SOP/Audits": return "/features/sop-audits";
-                                  case "Rewards & Recognition": return "/features/rewards-recognition";
-                                  case "Ticketing": return "/features/ticketing";
+                                  case "Lucid Ready": return "/features/sales-team";
+                                  case "Lucid Arsenal": return "/features/sales-tool";
+                                  case "Lucid Field": return "/features/execution";
+                                  case "Lucid Studio": return "/features/content-engine";
+                                  case "Self-Learning": return "/self-learning";
+                                  case "Seamless Training": return "/seamless-training";
+                                  case "SOP/Audits": return "/sop-audits";
+                                  case "Rewards & Recognition": return "/rewards-recognition";
+                                  case "Ticketing": return "/ticketing";
                                   case "Onboarding": return "/onboarding";
                                   case "CEO": return "/use-cases/ceo";
                                   case "CHRO": return "/use-cases/chro";
                                   case "Sales Head": return "/use-cases/sales-head";
                                   case "Operations Head": return "/use-cases/operations-head";
-                                  case "Career Progression": return "/features/career-progression";
+                                  case "Career Progression": return "/career-progression";
                                   case "Mobile Learning": return "/mobile-learning";
                                   case "Communication": return "/communication";
                                   case "Retail": return "/industries/retail";
@@ -538,16 +538,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 >
                                   {subItem}
                                 </Link>
-                              ) : (
-                                <a
-                                  key={subItem}
-                                  href="#"
-                                  onClick={() => setIsMenuOpen(false)}
-                                  className="text-lg text-slate-600 hover:text-blue-500"
-                                >
-                                  {subItem}
-                                </a>
-                              );
+                              ) : null;
                             })}
                           </div>
                         </AccordionContent>
