@@ -1,6 +1,8 @@
 import * as React from "react";
 import { LayoutGrid, LineChart, Star, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import SectionWrapper from "../../components/SectionWrapper";
+import { trackEvent } from "../../Analytics";
 
 const TAGS = [
   "FMCG beverages",
@@ -193,6 +195,8 @@ function FlipCard({ pair }: { pair: ProblemFixRow }) {
 }
 
 export default function FMCG() {
+
+  const navigate = useNavigate();
   React.useEffect(() => {
     const targets = document.querySelectorAll("[data-reveal]");
     if (!targets.length) return;
@@ -1036,7 +1040,20 @@ export default function FMCG() {
               </span>
             </p>
             <div style={{ display: "flex", gap: "12px", marginTop: "24px", flexWrap: "wrap" }}>
-              <button className="btn-primary">Request a pilot</button>
+              <button
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Request Pilot Click",
+      "CTA Button"
+    );
+
+    navigate("/contact");
+  }}
+  className="btn-primary"
+>
+  Request a pilot
+</button>
               <button className="btn-ghost">See how it works →</button>
             </div>
             <div className="tag-row">
@@ -1259,7 +1276,20 @@ export default function FMCG() {
             <div className="trust">No IT dependency · WhatsApp-native · 30-day pilot</div>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <button className="btn-primary">Request a pilot</button>
+            <button
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Request Pilot Click",
+      "CTA Button"
+    );
+
+    navigate("/contact");
+  }}
+  className="btn-primary"
+>
+  Request a pilot
+</button>
             <button className="btn-ghost" style={{ color: "#fff", borderColor: "rgba(255,255,255,0.3)" }}>
               Talk to us first →
             </button>

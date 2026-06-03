@@ -5,6 +5,7 @@ import {
   BarChart3, Zap, Layers, Network,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { trackEvent } from "../Analytics";
 
 /* ─── Data ─────────────────────────────────────────────────────────────── */
 const outcomes = [
@@ -129,18 +130,30 @@ export default function LighthouseProgram() {
             className="pt-1 sm:pt-2 lg:pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 lg:gap-4"
           >
             <button
-              onClick={() => navigate("/contact")}
-              className="h-11 sm:h-12 lg:h-14 px-5 sm:px-6 lg:px-8 rounded-full lh-bg-accent text-white font-medium hover:opacity-90 transition-all flex items-center justify-center gap-2 group w-full sm:w-auto text-sm sm:text-base"
-            >
-              Talk to Us
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Talk To Us Click",
+      "Lighthouse Hero CTA"
+    );
+
+    navigate("/contact");
+  }}
+  className="h-11 sm:h-12 lg:h-14 px-5 sm:px-6 lg:px-8 rounded-full lh-bg-accent text-white font-medium hover:opacity-90 transition-all flex items-center justify-center gap-2 group w-full sm:w-auto text-sm sm:text-base"
+>Talk To Us</button>
             <a
-              href="#what-you-get"
-              className="h-11 sm:h-12 lg:h-14 px-5 sm:px-6 lg:px-8 rounded-full border lh-border-faint font-medium hover:bg-gray-50 transition-all flex items-center justify-center w-full sm:w-auto text-sm sm:text-base"
-            >
-              Explore Deliverables
-            </a>
+  href="#what-you-get"
+  onClick={() => {
+    trackEvent(
+      "Engagement",
+      "Explore Deliverables Click",
+      "Lighthouse Hero CTA"
+    );
+  }}
+  className="h-11 sm:h-12 lg:h-14 px-5 sm:px-6 lg:px-8 rounded-full border lh-border-faint font-medium hover:bg-gray-50 transition-all flex items-center justify-center w-full sm:w-auto text-sm sm:text-base"
+>
+  Explore Deliverables
+</a>
           </motion.div>
         </div>
 
@@ -305,11 +318,17 @@ export default function LighthouseProgram() {
                 Ready to Accelerate Your Revenue Engine?
               </h2>
               <button
-                onClick={() => navigate("/contact")}
-                className="h-11 sm:h-12 lg:h-14 px-6 sm:px-8 rounded-full lh-bg-ink text-white font-medium hover:opacity-90 transition-all shadow-lg text-sm sm:text-base lg:text-lg w-full sm:w-auto max-w-xs sm:max-w-none"
-              >
-                Talk to us
-              </button>
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Talk To Us Click",
+      "Lighthouse Bottom CTA"
+    );
+
+    navigate("/contact");
+  }}
+  className="h-11 sm:h-12 lg:h-14 px-6 sm:px-8 rounded-full lh-bg-ink text-white font-medium hover:opacity-90 transition-all shadow-lg text-sm sm:text-base lg:text-lg w-full sm:w-auto max-w-xs sm:max-w-none"
+>Talk To Us</button>
             </div>
           </div>
         </div>

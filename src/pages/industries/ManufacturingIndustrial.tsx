@@ -1,5 +1,8 @@
 import * as React from "react";
+import { LayoutGrid, LineChart, Star, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import SectionWrapper from "../../components/SectionWrapper";
+import { trackEvent } from "../../Analytics";
 
 const PURPLE = "#6357d4";
 const GREEN = "#1D9E75";
@@ -150,6 +153,7 @@ function FlipCard({ pair }: { pair: ProblemFixPair }) {
 }
 
 export default function ManufacturingIndustrial() {
+  const navigate = useNavigate();
   return (
     <div className="lucid-mfg">
       <style>{`
@@ -756,7 +760,20 @@ export default function ManufacturingIndustrial() {
               The SOP exists. The operator has been briefed. The corrective action was filed in March. A deviation that repeats is not a people problem. It is a system that has never actually fixed it.
             </p>
             <div style={{ display: "flex", gap: "12px", marginTop: "24px", flexWrap: "wrap" }}>
-              <button className="btn-primary">Request a pilot</button>
+              <button
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Request Pilot Click",
+      "CTA Button"
+    );
+
+    navigate("/contact");
+  }}
+  className="btn-primary"
+>
+  Request a pilot
+</button>
               <button className="btn-ghost">See how it works →</button>
             </div>
             <div className="tag-row">
@@ -981,7 +998,20 @@ export default function ManufacturingIndustrial() {
             Live in 48 hours. SOP adherence by line and shift in 72. Your Plant Head has this view for every line by Day 7.
           </p>
           <div style={{ marginTop: 32, display: "flex", flexWrap: "wrap", alignItems: "center", gap: 16 }}>
-            <button className="btn-primary">Request a pilot</button>
+            <button
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Request Pilot Click",
+      "CTA Button"
+    );
+
+    navigate("/contact");
+  }}
+  className="btn-primary"
+>
+  Request a pilot
+</button>
             <button className="btn-ghost" style={{ color: "#cbd5e1", borderColor: "#475569" }}>
               Talk to us first →
             </button>

@@ -1,5 +1,7 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { trackEvent } from "../../Analytics";
 
 const HERO_STATS = [
   { value: "18%", label: "attrition rate (down)" },
@@ -86,6 +88,7 @@ const getRetentionWidth = (value: number) => `${value}%`;
 const sp = "max-w-[1200px] mx-auto w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 py-10 sm:py-14 lg:py-20";
 
 export default function CHRO() {
+  const navigate = useNavigate();
   return (
     <div className="bg-white text-slate-900">
 
@@ -113,11 +116,20 @@ export default function CHRO() {
 
               <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mt-6 sm:mt-8">
                 <Button
-                  size="lg"
-                  className="h-12 px-6 rounded-xl text-base font-semibold bg-[#6357d4] hover:bg-[#5146c7] text-white w-full sm:w-auto"
-                >
-                  Book a Demo
-                </Button>
+  size="lg"
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "book_demo_click",
+      "CTA Button"
+    );
+
+    navigate("/contact");
+  }}
+  className="h-12 px-6 rounded-xl text-base font-semibold bg-[#6357d4] hover:bg-[#5146c7] text-white w-full sm:w-auto"
+>
+  Book a Demo
+</Button>
                 <Button
                   variant="outline"
                   size="lg"
@@ -408,11 +420,20 @@ export default function CHRO() {
             </p>
             <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mt-6 sm:mt-8">
               <Button
-                size="lg"
-                className="h-12 px-6 rounded-xl text-base font-semibold bg-[#6357d4] hover:bg-[#5146c7] text-white w-full sm:w-auto"
-              >
-                Reserve the pilot
-              </Button>
+  size="lg"
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Reserve Pilot Click",
+      "CHRO Bottom CTA"
+    );
+
+    navigate("/contact");
+  }}
+  className="h-12 px-6 rounded-xl text-base font-semibold bg-[#6357d4] hover:bg-[#5146c7] text-white w-full sm:w-auto"
+>
+  Reserve the pilot
+</Button>
             </div>
           </div>
         </div>
