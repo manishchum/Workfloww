@@ -48,9 +48,21 @@ export default function BPO() {
                 <Dialog>
                   <DialogTrigger
                     render={
-                      <Button size="lg" className="rounded-full px-10 py-7 text-lg font-bold bg-blue-600 hover:bg-blue-700 transition-colors text-white">
-                        Book Demo
-                      </Button>
+                      <Button
+  size="lg"
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Book Demo Click",
+      "CTA Button"
+    );
+
+    navigate("/contact");
+  }}
+  className="rounded-full px-10 py-7 text-lg font-bold bg-blue-600 hover:bg-blue-700 transition-colors text-white"
+>
+  Book Demo
+</Button>
                     }
                   />
                   <DialogContent className="sm:max-w-[425px]">

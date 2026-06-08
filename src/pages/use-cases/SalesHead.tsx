@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { trackEvent } from "../../Analytics";
 
 const HERO_STATS = [
   { value: "₹1.2Cr", label: "annual revenue leakage from weak counter readiness" },
@@ -93,19 +94,36 @@ export default function SalesHead() {
 
               <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mt-6 sm:mt-8">
                 <Button
-                  onClick={() => navigate("/contact")}
-                  size="lg"
-                  className="h-12 px-6 rounded-xl text-base font-semibold bg-[#6357d4] hover:bg-[#5146c7] text-white w-full sm:w-auto"
-                >
-                  Book a Demo
-                </Button>
+  size="lg"
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "book_demo_click",
+      "Sales Hero CTA"
+    );
+
+    navigate("/contact");
+  }}
+  className="h-12 px-6 rounded-xl text-base font-semibold bg-[#6357d4] hover:bg-[#5146c7] text-white w-full sm:w-auto"
+>
+  Book a Demo
+</Button>
                 <Button
-                  variant="outline"
-                  size="lg"
-                  className="h-12 px-6 rounded-xl text-base font-semibold border-slate-300 w-full sm:w-auto"
-                >
-                  See the 30-day pilot
-                </Button>
+  variant="outline"
+  size="lg"
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "View Pilot Click",
+      "Sales Hero CTA"
+    );
+
+    navigate("/contact");
+  }}
+  className="h-12 px-6 rounded-xl text-base font-semibold border-slate-300 w-full sm:w-auto"
+>
+  See the 30-day pilot
+</Button>
               </div>
 
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-8 sm:mt-10">
@@ -314,12 +332,20 @@ export default function SalesHead() {
               </p>
             </div>
             <Button
-              onClick={() => navigate("/contact")}
-              size="lg"
-              className="h-12 px-6 rounded-xl text-base font-semibold bg-white text-slate-900 hover:bg-slate-100 w-full sm:w-auto shrink-0"
-            >
-              Book a Demo
-            </Button>
+  size="lg"
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "book_demo_click",
+      "Sales Bottom CTA"
+    );
+
+    navigate("/contact");
+  }}
+  className="h-12 px-6 rounded-xl text-base font-semibold bg-[#6357d4] hover:bg-[#5146c7] text-white w-full sm:w-auto"
+>
+  Book a Demo
+</Button>
           </div>
         </div>
       </section>

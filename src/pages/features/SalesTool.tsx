@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, CheckCircle2, MessageCircle, FileText, BarChart3, Shield, Zap, TrendingUp, Globe, Smartphone, Clock, Swords, Target, Mic, Search, BookOpen, Microscope, Trophy, DollarSign, PhoneCall, Mail } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { trackEvent } from "../../Analytics";
 
 const SalesTool = () => {
   const navigate = useNavigate();
@@ -87,9 +88,20 @@ const SalesTool = () => {
               <p className="text-xl text-gray-600 mb-8 leading-relaxed">
                 Lucid instantly creates, updates, and delivers 10 battle-tested sales tools — built for your industry, your channel, and what's actually happening in the field right now. Not generic. Not static. Not a PDF nobody reads.
               </p>
-              <button onClick={() => navigate('/contact')} className="bg-[#6357d4] hover:bg-[#5146c7] text-white px-8 py-4 rounded-full font-semibold text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2">
-                Book Demo <ArrowRight className="w-5 h-5" />
-              </button>
+              <button
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Book Demo Click",
+      "CTA Button"
+    );
+
+    navigate("/contact");
+  }}
+  className="bg-[#6357d4] hover:bg-[#5146c7] text-white px-8 py-4 rounded-full font-semibold text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"
+>
+  Book Demo <ArrowRight className="w-5 h-5" />
+</button>
             </motion.div>
 
             {/* Right Visual: Sales Arsenal Mockup */}
@@ -478,9 +490,20 @@ const SalesTool = () => {
               <h2 className="text-4xl font-bold text-white mb-8 leading-tight">
                 Ready to arm your sales team with an arsenal of sales tools to win the market battles?
               </h2>
-              <button onClick={() => navigate('/contact')} className="bg-white/10 hover:bg-white/20 border border-white text-white px-8 py-4 rounded-full font-semibold text-lg transition-all inline-flex items-center gap-2 backdrop-blur-sm">
-                Book Demo Now <ArrowRight className="w-5 h-5" />
-              </button>
+              <button
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Book Demo Click",
+      "CTA Button"
+    );
+
+    navigate("/contact");
+  }}
+  className="bg-[#6357d4] hover:bg-[#5146c7] text-white px-8 py-4 rounded-full font-semibold text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"
+>
+  Book Demo <ArrowRight className="w-5 h-5" />
+</button>
             </div>
           </div>
         </div>

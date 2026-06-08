@@ -16,6 +16,7 @@ import {
   ChevronLeft,
 } from "lucide-react";
 import { useLeadEmail } from "../hooks/useLeadEmail";
+import { trackEvent } from "../Analytics";
 
 // ─────────────── RESPONSIVE HOOK ───────────────
 const useWindowSize = () => {
@@ -795,17 +796,25 @@ const Hero = () => {
   const isMobile = width < 640;
 
   const handleHeroSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await sendEmail({
-      source: "hero-demo",
-      name: heroName,
-      email: heroEmail,
-      phone: "",
-      org: "",
-      website_trap: heroTrap
-    });
-    setOpen(false);
-  };
+  e.preventDefault();
+
+  trackEvent(
+    "Lead",
+    "Demo Form Submit",
+    "Hero Form"
+  );
+
+  await sendEmail({
+    source: "hero-demo",
+    name: heroName,
+    email: heroEmail,
+    phone: "",
+    org: "",
+    website_trap: heroTrap
+  });
+
+  setOpen(false);
+};
 
   return (
     <section style={{ minHeight: "100vh", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden", background: "#fff", borderBottom: "1px solid #f1f5f9" }}>
@@ -833,46 +842,70 @@ const Hero = () => {
           {/* CTA buttons */}
           <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginBottom: "1.5rem", justifyContent: "center" }}>
             <button
-              onClick={() => setOpen(true)}
-              style={{
-                height: isMobile ? 48 : 56,
-                padding: isMobile ? "0 1.5rem" : "0 2.5rem",
-                borderRadius: 18,
-                background: "#2563eb",
-                color: "#fff",
-                fontWeight: 800,
-                fontSize: isMobile ? "0.9rem" : "1.05rem",
-                border: "none",
-                cursor: "pointer",
-                boxShadow: "0 12px 30px rgba(37,99,235,0.3)",
-                transition: "transform 0.15s",
-                flexShrink: 0,
-              }}
-              onMouseEnter={e => e.currentTarget.style.transform = "scale(1.02)"}
-              onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
-            >
-              Join Lighthouse Programme
-            </button>
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Lighthouse Programme Click",
+      "Hero CTA"
+    );
+
+    setOpen(true);
+  }}
+  style={{
+    height: isMobile ? 48 : 56,
+    padding: isMobile ? "0 1.5rem" : "0 2.5rem",
+    borderRadius: 18,
+    background: "#2563eb",
+    color: "#fff",
+    fontWeight: 800,
+    fontSize: isMobile ? "0.9rem" : "1.05rem",
+    border: "none",
+    cursor: "pointer",
+    boxShadow: "0 12px 30px rgba(37,99,235,0.3)",
+    transition: "transform 0.15s",
+    flexShrink: 0,
+  }}
+  onMouseEnter={(e) =>
+    (e.currentTarget.style.transform = "scale(1.02)")
+  }
+  onMouseLeave={(e) =>
+    (e.currentTarget.style.transform = "scale(1)")
+  }
+>
+  Join Lighthouse Programme
+</button>
             <button
-              onClick={() => navigate("/contact")}
-              style={{
-                height: isMobile ? 48 : 56,
-                padding: isMobile ? "0 1.5rem" : "0 2.5rem",
-                borderRadius: 18,
-                background: "transparent",
-                color: "#475569",
-                fontWeight: 800,
-                fontSize: isMobile ? "0.9rem" : "1.05rem",
-                border: "1.5px solid #cbd5e1",
-                cursor: "pointer",
-                transition: "border-color 0.2s",
-                flexShrink: 0,
-              }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = "#2563eb"}
-              onMouseLeave={e => e.currentTarget.style.borderColor = "#cbd5e1"}
-            >
-              Book a Demo
-            </button>
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "book_demo_click",
+      "CTA Button"
+    );
+
+    navigate("/contact");
+  }}
+  style={{
+    height: isMobile ? 48 : 56,
+    padding: isMobile ? "0 1.5rem" : "0 2.5rem",
+    borderRadius: 18,
+    background: "transparent",
+    color: "#475569",
+    fontWeight: 800,
+    fontSize: isMobile ? "0.9rem" : "1.05rem",
+    border: "1.5px solid #cbd5e1",
+    cursor: "pointer",
+    transition: "border-color 0.2s",
+    flexShrink: 0,
+  }}
+  onMouseEnter={(e) =>
+    (e.currentTarget.style.borderColor = "#2563eb")
+  }
+  onMouseLeave={(e) =>
+    (e.currentTarget.style.borderColor = "#cbd5e1")
+  }
+>
+  Book a Demo
+</button>
           </div>
         </motion.div>
       </div>
@@ -1312,6 +1345,7 @@ const HowItWorks = () => {
 const FinalCTA = () => {
   const { width } = useWindowSize();
   const isMobile = width < 640;
+  const navigate = useNavigate();
 
   return (
     <section style={{ padding: isMobile ? "2rem 1.25rem" : "2rem 2rem", background: "#fff" }}>
@@ -1327,38 +1361,79 @@ const FinalCTA = () => {
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: "1.5rem" }}>
               <button
-                style={{
-                  height: isMobile ? 52 : 60,
-                  padding: isMobile ? "0 1.75rem" : "0 3rem",
-                  borderRadius: 20,
-                  background: "#2563eb",
-                  color: "#fff",
-                  fontWeight: 800,
-                  fontSize: isMobile ? "0.9rem" : "1.05rem",
-                  border: "none",
-                  cursor: "pointer",
-                  boxShadow: "0 20px 40px rgba(37,99,235,0.3)",
-                  transition: "transform 0.15s",
-                  textAlign: "center",
-                }}
-                onMouseEnter={e => e.currentTarget.style.transform = "scale(1.03)"}
-                onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
-              >
-                Apply for the Lighthouse Programme
-              </button>
-              <button
-                style={{ height: isMobile ? 52 : 60, padding: "0 2rem", borderRadius: 20, background: "transparent", color: "#94a3b8", fontWeight: 800, fontSize: isMobile ? "0.9rem" : "1.05rem", border: "none", cursor: "pointer" }}
-                onMouseEnter={e => e.currentTarget.style.color = "#fff"}
-                onMouseLeave={e => e.currentTarget.style.color = "#94a3b8"}
-              >
-                Talk to us first →
-              </button>
-            </div>
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Lighthouse Programme Click",
+      "Final CTA"
+    );
+    navigate("/contact");
+  }}
+  style={{
+    height: isMobile ? 52 : 60,
+    padding: isMobile ? "0 1.75rem" : "0 3rem",
+    borderRadius: 20,
+    background: "#2563eb",
+    color: "#fff",
+    fontWeight: 800,
+    fontSize: isMobile ? "0.9rem" : "1.05rem",
+    border: "none",
+    cursor: "pointer",
+    boxShadow: "0 20px 40px rgba(37,99,235,0.3)",
+    transition: "transform 0.15s",
+    textAlign: "center",
+  }}
+  onMouseEnter={(e) =>
+    (e.currentTarget.style.transform = "scale(1.03)")
+  }
+  onMouseLeave={(e) =>
+    (e.currentTarget.style.transform = "scale(1)")
+  }
+>
+  Apply for the Lighthouse Programme
+</button>
+
+<button
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Talk To Us Click",
+      "Final CTA"
+    );
+    navigate("/contact");
+  }}
+  style={{
+    height: isMobile ? 52 : 60,
+    padding: "0 2rem",
+    borderRadius: 20,
+    background: "transparent",
+    color: "#94a3b8",
+    fontWeight: 800,
+    fontSize: isMobile ? "0.9rem" : "1.05rem",
+    border: "none",
+    cursor: "pointer",
+  }}
+  onMouseEnter={(e) =>
+    (e.currentTarget.style.color = "#fff")
+  }
+  onMouseLeave={(e) =>
+    (e.currentTarget.style.color = "#94a3b8")
+  }
+>
+  Talk to us first →
+</button>
+</div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
+
   );
+
 };
 
 // ─────────────── MAIN APP ───────────────

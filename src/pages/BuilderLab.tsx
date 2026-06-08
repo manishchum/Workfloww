@@ -1,5 +1,6 @@
 import * as React from "react";
 import { motion } from "motion/react";
+import { trackEvent } from "../Analytics";
 import {
   Sparkles,
   Cpu,
@@ -27,32 +28,46 @@ export default function BuilderLab() {
   const { sendEmail, status, error } = useLeadEmail();
 
   const handleJoinSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!fullName.trim() || !mobileNumber.trim() || !email.trim() || !organization.trim()) {
-      alert("Please fill in all fields");
-      return;
-    }
+  if (
+    !fullName.trim() ||
+    !mobileNumber.trim() ||
+    !email.trim() ||
+    !organization.trim()
+  ) {
+    alert("Please fill in all fields");
+    return;
+  }
 
+  try {
     await sendEmail({
       source: "builder-labs-signup",
       name: fullName,
-      email: email,
+      email,
       phone: mobileNumber,
       org: organization,
       website_trap: websiteTrap,
     });
 
-    if (status === "success" || !error) {
-      setFullName("");
-      setMobileNumber("");
-      setEmail("");
-      setOrganization("");
-      setWebsiteTrap("");
-      setIsDialogOpen(false);
-      alert("Thank you for joining! We'll be in touch soon.");
-    }
-  };
+    trackEvent(
+      "Lead",
+      "Builder Labs Form Submitted",
+      "Builder Labs Signup Form"
+    );
+
+    setFullName("");
+    setMobileNumber("");
+    setEmail("");
+    setOrganization("");
+    setWebsiteTrap("");
+    setIsDialogOpen(false);
+
+    alert("Thank you for joining! We'll be in touch soon.");
+  } catch (err) {
+    console.error("Form submit failed", err);
+  }
+};
 
   return (
     <div className="font-sans">
@@ -79,11 +94,19 @@ export default function BuilderLab() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
-                onClick={() => setIsDialogOpen(true)}
-                className="h-12 px-8 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors flex items-center gap-2 shadow-lg shadow-blue-600/20 w-full sm:w-auto justify-center mx-auto sm:mx-0"
-              >
-                Join the Builder Labs <ArrowRight className="w-4 h-4" />
-              </button>
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Join Builder Labs Click",
+      "Builder Labs Hero CTA"
+    );
+
+    setIsDialogOpen(true);
+  }}
+  className="h-12 px-8 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors flex items-center gap-2 shadow-lg shadow-blue-600/20 w-full sm:w-auto justify-center mx-auto sm:mx-0"
+>
+  Join the Builder Labs <ArrowRight className="w-4 h-4" />
+</button>
             </div>
 
             {/* Join Dialog Modal */}
@@ -367,7 +390,7 @@ export default function BuilderLab() {
         </div>
       </section>
 
-      {/* ── Join ───────────────────────────────────────────────────────── */}
+            {/* ── Join ───────────────────────────────────────────────────────── */}
       <section style={{ padding: "2.5rem 1.25rem" }} className="bg-white">
         <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
           <motion.div
@@ -383,6 +406,7 @@ export default function BuilderLab() {
               <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3 sm:mb-4">
                 You belong here.
               </h2>
+
               <p className="text-slate-600 text-base sm:text-lg mb-6 sm:mb-8 max-w-xl">
                 Whether you are writing your very first prompt to outline an email,
                 or designing a complex AI workflow for your company, there is a seat
@@ -393,23 +417,31 @@ export default function BuilderLab() {
                 className="flex flex-col sm:flex-row gap-3 max-w-md"
                 onSubmit={(e) => {
                   e.preventDefault();
+
+                  trackEvent(
+                    "Lead",
+                    "Builder Labs Email CTA Click",
+                    "Bottom Email Form"
+                  );
+
                   setIsDialogOpen(true);
                 }}
               >
                 <input
                   type="email"
                   placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="flex-1 h-12 px-4 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-shadow bg-white w-full"
-                  onFocus={(e) => {
-                    setEmail(e.target.value || "");
-                  }}
                 />
+
                 <button
                   type="submit"
                   className="h-12 px-5 sm:px-6 bg-slate-900 text-white rounded-xl font-medium hover:bg-slate-800 transition-colors whitespace-nowrap w-full sm:w-auto"
                 >
                   Join the Builder Labs
                 </button>
+
               </form>
             </div>
           </motion.div>
@@ -420,7 +452,18 @@ export default function BuilderLab() {
   );
 }
 
-function FeatureItem({ icon, title, desc }: { icon: ReactNode; title: string; desc: string }) {
+
+/* FEATURE ITEM */
+
+function FeatureItem({
+  icon,
+  title,
+  desc,
+}: {
+  icon: ReactNode;
+  title: string;
+  desc: string;
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -431,15 +474,32 @@ function FeatureItem({ icon, title, desc }: { icon: ReactNode; title: string; de
       <div className="mt-1 bg-slate-50 border border-slate-200 w-11 h-11 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center shrink-0">
         {icon}
       </div>
+
       <div>
-        <h3 className="text-lg sm:text-xl font-bold mb-1 sm:mb-2">{title}</h3>
-        <p className="text-slate-600 leading-relaxed text-sm sm:text-base">{desc}</p>
+        <h3 className="text-lg sm:text-xl font-bold mb-1 sm:mb-2">
+          {title}
+        </h3>
+
+        <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
+          {desc}
+        </p>
       </div>
     </motion.div>
   );
 }
 
-function Card({ title, desc, icon }: { title: string; desc: string; icon: ReactNode }) {
+
+/* CARD */
+
+function Card({
+  title,
+  desc,
+  icon,
+}: {
+  title: string;
+  desc: string;
+  icon: ReactNode;
+}) {
   return (
     <motion.div
       whileHover={{ y: -4 }}
@@ -448,8 +508,14 @@ function Card({ title, desc, icon }: { title: string; desc: string; icon: ReactN
       <div className="w-11 h-11 sm:w-12 sm:h-12 bg-slate-50 rounded-2xl flex items-center justify-center mb-5 sm:mb-6 border border-slate-100">
         {icon}
       </div>
-      <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">{title}</h3>
-      <p className="text-slate-600 leading-relaxed text-sm sm:text-base">{desc}</p>
+
+      <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3">
+        {title}
+      </h3>
+
+      <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
+        {desc}
+      </p>
     </motion.div>
   );
 }

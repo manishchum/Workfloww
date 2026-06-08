@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { trackEvent } from "../../Analytics";
 
 
 const SalesTeam = () => {
@@ -30,12 +31,20 @@ const SalesTeam = () => {
         </p>
 
         <Button
-          onClick={() => navigate("/contact")}
-          className="w-fit px-8 py-6 text-base font-semibold rounded-xl"
-          style={{ backgroundColor: "#5B50E8" }}
-        >
-          Book Demo
-        </Button>
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Book Demo Click",
+      "Website Button"
+    );
+
+    navigate("/contact");
+  }}
+  className="w-fit px-8 py-6 text-base font-semibold rounded-xl"
+  style={{ backgroundColor: "#5B50E8" }}
+>
+  Book Demo
+</Button>
       </div>
 
       {/* Right */}
@@ -699,15 +708,23 @@ const SalesTeam = () => {
         </p>
 
         <Button
-          onClick={() => navigate("/contact")}
-          className="px-8 md:px-10 py-6 text-base font-semibold rounded-2xl shadow-lg hover:scale-[1.02] transition-all"
-          style={{
-            backgroundColor: "white",
-            color: "#1a1a1a",
-          }}
-        >
-          Book Demo Now
-        </Button>
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Book Demo Now Click",
+      "Homepage CTA"
+    );
+
+    navigate("/contact");
+  }}
+  className="px-8 md:px-10 py-6 text-base font-semibold rounded-2xl shadow-lg hover:scale-[1.02] transition-all"
+  style={{
+    backgroundColor: "white",
+    color: "#1a1a1a",
+  }}
+>
+  Book Demo Now
+</Button>
       </div>
     </div>
   </div>
