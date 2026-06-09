@@ -908,7 +908,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 
                 {/* Ask AI How Lucid Works - Below Company */}
                 <div className="mt-6 pt-6 border-t border-slate-100">
-                  <h5 className="font-bold text-sm mb-3 text-slate-900 uppercase">ASK AI HOW LUCID WORKS</h5>
+                  <h5 className="font-bold text-sm mb-3 text-slate-900 uppercase">Know more about workfloww.ai</h5>
                   <div className="flex flex-wrap gap-3">
                     {[
                       {
