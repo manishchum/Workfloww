@@ -453,9 +453,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            <Button onClick={() => navigate('/contact')} className="h-10 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold shadow-md shadow-blue-600/20 transition-colors">
-              Book a Demo
-            </Button>
+            <Button
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "book_demo_click",
+      "CTA Button"
+    );
+
+    navigate("/contact");
+  }}
+  className="h-10 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold shadow-md shadow-blue-600/20 transition-colors"
+>
+  Book a Demo
+</Button>
           </div>
 
           {/* Mobile Toggle */}

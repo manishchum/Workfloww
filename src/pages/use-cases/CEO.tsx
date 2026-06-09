@@ -1,5 +1,7 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { trackEvent } from "../../Analytics";
 
 const LOCATIONS = [
   { name: "Mumbai North", execution: 91, revenue: "₹2.8L", conversion: 38, csat: 4.7 },
@@ -59,6 +61,7 @@ const getExecutionColor = (value: number) => {
 const sectionPadding = "max-w-[1200px] mx-auto w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 py-10 sm:py-10 lg:py-16";
 
 export default function CEO() {
+  const navigate = useNavigate();
   return (
     <div className="bg-white text-slate-900">
 
@@ -88,11 +91,20 @@ export default function CEO() {
 
               <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mt-6 sm:mt-8">
                 <Button
-                  size="lg"
-                  className="h-12 px-6 rounded-xl text-base font-semibold bg-[#6357d4] hover:bg-[#5146c7] text-white w-full sm:w-auto"
-                >
-                  Book a Demo
-                </Button>
+  size="lg"
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "book_demo_click",
+      "CTA Button"
+    );
+
+    navigate("/contact");
+  }}
+  className="h-12 px-6 rounded-xl text-base font-semibold bg-[#6357d4] hover:bg-[#5146c7] text-white w-full sm:w-auto"
+>
+  Book a Demo
+</Button>
                 <Button
                   variant="outline"
                   size="lg"
@@ -335,11 +347,20 @@ export default function CEO() {
             </p>
             <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mt-6 sm:mt-8">
               <Button
-                size="lg"
-                className="h-12 px-6 rounded-xl text-base font-semibold bg-[#6357d4] hover:bg-[#5146c7] text-white w-full sm:w-auto"
-              >
-                Reserve the pilot
-              </Button>
+  size="lg"
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Reserve Pilot Click",
+      "CEO Bottom CTA"
+    );
+
+    navigate("/contact");
+  }}
+  className="h-12 px-6 rounded-xl text-base font-semibold bg-[#6357d4] hover:bg-[#5146c7] text-white w-full sm:w-auto"
+>
+  Reserve the pilot
+</Button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-8 sm:mt-10 text-xs uppercase tracking-[0.2em] text-slate-400">
               <div className="border border-slate-700 rounded-full px-4 py-2 text-center">ISO-ready data</div>

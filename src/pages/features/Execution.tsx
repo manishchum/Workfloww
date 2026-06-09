@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Zap, Target, ClipboardCheck, BookOpen, Trophy, CheckCircle2, TrendingUp, AlertCircle, Clock, Smartphone, BarChart3, Users, Shield, CalendarClock, MessageCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { trackEvent } from "../../Analytics";
 
 const Execution = () => {
   const navigate = useNavigate();
@@ -26,9 +27,20 @@ const Execution = () => {
               <p className="text-xl text-slate-600 mb-8 leading-relaxed">
                 Knowing what to do and actually doing it are two very different things. Lucid's execution layer puts ownership on the ground — nudging, verifying, and scoring field behavior so your standards don't stay on paper. They show up at every customer, every visit, every day.
               </p>
-              <button onClick={() => navigate('/contact')} className="bg-[#6357d4] hover:bg-[#5146c7] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2">
-                Book Demo <ArrowRight className="w-5 h-5" />
-              </button>
+              <button
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Book Demo Click",
+      "CTA Button"
+    );
+
+    navigate("/contact");
+  }}
+  className="bg-[#6357d4] hover:bg-[#5146c7] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"
+>
+  Book Demo <ArrowRight className="w-5 h-5" />
+</button>
             </motion.div>
 
             {/* Right Visual: Execution Nudge Phone Mockup */}
@@ -573,9 +585,20 @@ const Execution = () => {
         <h2 className="text-4xl font-bold text-white mb-8 leading-tight">
           Ready to bridge the gap between knowing and doing?
         </h2>
-        <button onClick={() => navigate('/contact')} className="bg-white/10 hover:bg-white/20 border border-white text-white px-8 py-4 rounded-full font-semibold text-lg transition-all inline-flex items-center gap-2 backdrop-blur-sm">
-          Book Demo Now <ArrowRight className="w-5 h-5" />
-        </button>
+        <button
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Book Demo Click",
+      "CTA Button"
+    );
+
+    navigate("/contact");
+  }}
+  className="bg-[#6357d4] hover:bg-[#5146c7] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"
+>
+  Book Demo <ArrowRight className="w-5 h-5" />
+</button>
       </div>
     </div>
   </div>

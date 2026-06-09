@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { trackEvent } from "../Analytics";
 
 export default function CareerProgression() {
     return (
@@ -36,7 +37,7 @@ export default function CareerProgression() {
                                 employees a future within the company. Track progress and identify
                                 high-potential individuals early.
                             </p>
-                            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-8">
+                            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-8"onClick={() => trackEvent("Lead","Book Demo Click","Website Button")}>
                                 Book Demo
                             </Button>
                         </motion.div>

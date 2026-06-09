@@ -39,10 +39,12 @@ import ContentEngine from "./pages/ContentEngine";
 import BuilderLab from "./pages/BuilderLab";
 import LighthouseProgram from "./pages/LighthouseProgram";
 import Pricing from "./pages/Pricing";
+import Analytics from "./Analytics";
 
 export default function App() {
   return (
     <Router>
+      <Analytics/>
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />

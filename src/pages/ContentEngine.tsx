@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { CheckCircle2, Grid3x3, Zap, BookOpen, MessageSquare, BarChart3, ArrowRight } from "lucide-react";
+import { trackEvent } from "../Analytics";
 
 export default function ContentEngine() {
   const navigate = useNavigate();
@@ -1284,9 +1285,20 @@ export default function ContentEngine() {
                 The knowledge that wins deals sits in documents, decks, and the heads of your best people. Lucid extracts it, structures it, and delivers it to every rep — before their next customer conversation.
               </p>
               <div className="cta-group">
-                <button onClick={() => navigate('/contact')} className="bg-[#6357d4] hover:bg-[#5146c7] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2">
-                  Book Demo <ArrowRight className="w-5 h-5" />
-                </button>
+                <button
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Book Demo Click",
+      "CTA Button"
+    );
+
+    navigate("/contact");
+  }}
+  className="bg-[#6357d4] hover:bg-[#5146c7] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"
+>
+  Book Demo <ArrowRight className="w-5 h-5" />
+</button>
               </div>
             </div>
 
@@ -1731,11 +1743,19 @@ export default function ContentEngine() {
         <div className="cta-inner">
           <h2>Ready to put your best knowledge in every rep's hands?</h2>
           <button
-            onClick={() => navigate('/contact')}
-            className="bg-white hover:bg-gray-100 text-[#6357d4] px-8 py-4 rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"
-          >
-            Book Demo <ArrowRight className="w-5 h-5" />
-          </button>
+  onClick={() => {
+    trackEvent(
+      "Lead",
+      "Book Demo Click",
+      "CTA Button"
+    );
+
+    navigate("/contact");
+  }}
+  className="bg-[#6357d4] hover:bg-[#5146c7] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"
+>
+  Book Demo <ArrowRight className="w-5 h-5" />
+</button>
         </div>
       </section>
 
