@@ -126,7 +126,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [emailError, setEmailError] = React.useState("");
   const [phoneError, setPhoneError] = React.useState("");
   const [messageError, setMessageError] = React.useState("");
+  const [promptCopiedToast, setPromptCopiedToast] = React.useState(false);
   const formLoadTime = React.useRef<number>(Date.now());
+  const promptToastTimerRef = React.useRef<number | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const { sendEmail: sendContactEmail, status: contactStatus, error: contactError } = useLeadEmail();
   const location = useLocation();
@@ -176,6 +178,45 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     setIsMenuOpen(false);
     window.scrollTo(0, 0);
   }, [location]);
+
+  React.useEffect(() => {
+    return () => {
+      if (promptToastTimerRef.current) {
+        window.clearTimeout(promptToastTimerRef.current);
+      }
+    };
+  }, []);
+
+  const showPromptCopiedToast = () => {
+    setPromptCopiedToast(true);
+
+    if (promptToastTimerRef.current) {
+      window.clearTimeout(promptToastTimerRef.current);
+    }
+
+    promptToastTimerRef.current = window.setTimeout(() => {
+      setPromptCopiedToast(false);
+      promptToastTimerRef.current = null;
+    }, 2000);
+  };
+
+  const copyTextToClipboard = async (text: string) => {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "true");
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+  };
 
   const handleDemoSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -872,31 +913,32 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     {[
                       {
                         name: "ChatGPT",
-                        src:"/images/chatgpt_logo.png",
+                        src: "/images/chatgpt_logo.png",
                         url: "https://chatgpt.com",
                         prompt: "Analyze https://www.workfloww.ai and explain how Workfloww.ai helps organizations adopt AI, transform business workflows, upskill teams, and achieve measurable business results. Include target customers, use cases, and key benefits.",
                         color: "bg-slate-100 hover:bg-slate-200"
                       },
+                      
                       {
                         name: "Perplexity",
-                        icon: "🔍",
+                        src: "/images/perplexity_logo.png",
                         url: "https://www.perplexity.ai",
                         prompt: "Analyze https://www.workfloww.ai and explain how Workfloww.ai helps organizations adopt AI, transform business workflows, upskill teams, and achieve measurable business results. Include target customers, use cases, and key benefits.",
-                        color: "bg-orange-100 hover:bg-orange-200"
+                        color: "bg-gray-100 hover:bg-gray-200"
                       },
-                      // {
-                      //   name: "Claude",
-                      //   icon: "🧠",
-                      //   url: "https://claude.ai",
-                      //   prompt: "Analyze https://www.workfloww.ai and explain how WorkflowW helps organizations adopt AI, transform business workflows, upskill teams, and achieve measurable business results. Include target customers, use cases, and key benefits.",
-                      //   color: "bg-black hover:bg-slate-800"
-                      // },
                       {
                         name: "Gemini",
-                        icon: "✨",
+                        src: "/images/gemini_logo.png",
                         url: "https://gemini.google.com",
                         prompt: "Analyze https://www.workfloww.ai and explain how Workfloww.ai helps organizations adopt AI, transform business workflows, upskill teams, and achieve measurable business results. Include target customers, use cases, and key benefits.",
-                        color: "bg-blue-600 hover:bg-blue-700"
+                        color: "bg-grey-600 hover:bg-white-700"
+                      },
+                      {
+                        name: "Claude",
+                        src: "/images/claude_logo.png",
+                        url: "https://claude.ai/new",
+                        prompt: "Analyze https://www.workfloww.ai and explain how Workfloww.ai helps organizations adopt AI, transform business workflows, upskill teams, and achieve measurable business results. Include target customers, use cases, and key benefits.",
+                        color: "bg-amber-50 hover:bg-amber-100"
                       },
                       // {
                       //   name: "Copilot",
@@ -906,33 +948,63 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       //   color: "bg-slate-700 hover:bg-slate-800"
                       // }
                     ].map((ai) => (
-                      <a
-                        key={ai.name}
-                        href={ai.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          const encodedPrompt = encodeURIComponent(ai.prompt);
-                          let finalUrl = ai.url;
-                          if (ai.name === "ChatGPT") {
-                            finalUrl = `https://chatgpt.com/?q=${encodedPrompt}`;
-                          } else if (ai.name === "Perplexity") {
-                            finalUrl = `https://www.perplexity.ai/?q=${encodedPrompt}`;
-                          } else if (ai.name === "Claude") {
-                            finalUrl = "https://claude.ai/new";
-                          } else if (ai.name === "Gemini") {
-                            finalUrl = `https://www.google.com/search?q=${encodedPrompt}`;
-                          } else if (ai.name === "Copilot") {
-                            finalUrl = `https://copilot.microsoft.com/?q=${encodedPrompt}`;
-                          }
-                          window.open(finalUrl, "_blank");
-                        }}
-                        className={`flex items-center justify-center w-10 h-10 rounded-lg ${ai.color} transition-all transform hover:scale-110 cursor-pointer`}
-                        title={`Ask ${ai.name} about Lucid`}
-                      >
-                        <span className="text-lg">{ai.icon}</span>
-                      </a>
+                      <div key={ai.name} className="relative">
+                        {ai.name === "Claude" && promptCopiedToast && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 6, scale: 0.96 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 6, scale: 0.96 }}
+                            className="absolute -top-11 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 shadow-lg shadow-emerald-500/10"
+                          >
+                            Prompt copied
+                          </motion.div>
+                        )}
+                        <a
+                          href={ai.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            const encodedPrompt = encodeURIComponent(ai.prompt);
+                            let finalUrl = ai.url;
+                            if (ai.name === "ChatGPT") {
+                              finalUrl = `https://chatgpt.com/?q=${encodedPrompt}`;
+                            } else if (ai.name === "Perplexity") {
+                              finalUrl = `https://www.perplexity.ai/?q=${encodedPrompt}`;
+                            } else if (ai.name === "Claude") {
+                              finalUrl = "https://claude.ai/new";
+                            } else if (ai.name === "Gemini") {
+                              finalUrl = `https://www.google.com/search?q=${encodedPrompt}`;
+                            } else if (ai.name === "Copilot") {
+                              finalUrl = `https://copilot.microsoft.com/?q=${encodedPrompt}`;
+                            }
+                            if (ai.name === "Claude") {
+                              showPromptCopiedToast();
+                              void copyTextToClipboard(ai.prompt).catch(() => {
+                                // Keep the toast either way; the prompt handoff can still be manual.
+                              });
+                              window.setTimeout(() => {
+                                window.open(finalUrl, "_blank", "noopener,noreferrer");
+                              }, 300);
+                              return;
+                            }
+                            window.open(finalUrl, "_blank");
+                          }}
+                          className={`flex items-center justify-center w-10 h-10 rounded-lg ${ai.color} transition-all transform hover:scale-110 cursor-pointer`}
+                          title={`Ask ${ai.name} about Lucid`}
+                        >
+                          {ai.src ? (
+                            <img
+                              src={ai.src}
+                              alt={`${ai.name} logo`}
+                              className="w-6 h-6 object-contain"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <span className="text-lg leading-none">{ai.icon}</span>
+                          )}
+                        </a>
+                      </div>
                     ))}
                   </div>
                 </div>
