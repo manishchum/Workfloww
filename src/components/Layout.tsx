@@ -872,7 +872,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     {[
                       {
                         name: "ChatGPT",
-                        icon: "🤖",
+                        src:"/images/chatgpt_logo.png",
                         url: "https://chatgpt.com",
                         prompt: "Analyze https://www.workfloww.ai and explain how Workfloww.ai helps organizations adopt AI, transform business workflows, upskill teams, and achieve measurable business results. Include target customers, use cases, and key benefits.",
                         color: "bg-slate-100 hover:bg-slate-200"

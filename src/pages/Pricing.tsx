@@ -1,6 +1,17 @@
 import * as React from "react";
 import { motion } from "motion/react";
-import { Check, ChevronDown, ChevronUp, Phone } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  CircleHelp,
+  Mic,
+  MessageSquare,
+  Minus,
+  Phone,
+  Plus,
+  Sparkles,
+  X,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,457 +21,602 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-type PlanType = "monthly" | "annual";
+type PlanKey = "standard" | "advanced" | "pro";
 
-interface PricingPlan {
+type PlanFeature = {
+  label: string;
+};
+
+type Plan = {
+  key: PlanKey;
   name: string;
-  subtitle: string;
-  price: number;
-  priceAnnual: number;
+  accent: string;
+  icon: React.ReactNode;
   description: string;
-  recommended?: boolean;
-  features: string[];
-  buttonText: string;
-  buttonStyle?: "primary" | "secondary";
+  buttonClassName: string;
+  cardClassName: string;
+  featured?: boolean;
+  dark?: boolean;
+  features: PlanFeature[];
+};
+
+type CapabilityCell =
+  | { type: "check" }
+  | { type: "text"; value: string }
+  | { type: "none" };
+
+type CapabilityRow = {
+  label: string;
+  standard: CapabilityCell;
+  advanced: CapabilityCell;
+  pro: CapabilityCell;
+};
+
+type CapabilityGroup = {
+  title: string;
+  rows: CapabilityRow[];
+};
+
+const plans: Plan[] = [
+  {
+    key: "standard",
+    name: "Standard",
+    accent: "text-emerald-500",
+    icon: <Sparkles className="h-7 w-7" />,
+    description:
+      "Establish core alignment with fundamental assessments, baseline tools, and expert-in-the-loop tracking resources.",
+    buttonClassName:
+      "bg-[#4f3dfc] hover:bg-[#4030e7] text-white shadow-[0_14px_30px_rgba(79,61,252,0.28)]",
+    cardClassName:
+      "border-2 border-[#6a63ff] shadow-[0_8px_30px_rgba(73,82,255,0.12)]",
+    features: [
+      { label: "Lucid Studio Access" },
+      { label: "Adaptive Assessment Engine" },
+      { label: "Customized Reports & Analytics" },
+      { label: "Expert-Guided Review & Sprint Verse" },
+      { label: "Foundational Learning Profiling" },
+    ],
+  },
+  {
+    key: "advanced",
+    name: "Advanced",
+    accent: "text-[#584cff]",
+    icon: <MessageSquare className="h-7 w-7" />,
+    description:
+      "Experience high-fidelity, interactive, real-time core dialogue simulator with voice and text capabilities.",
+    buttonClassName:
+      "bg-white border border-[#6a63ff] text-[#4f3dfc] hover:bg-[#f6f5ff]",
+    cardClassName:
+      "border border-slate-200 shadow-[0_10px_26px_rgba(15,23,42,0.08)]",
+    featured: true,
+    features: [
+      { label: "Complete Standard Package" },
+      { label: "Live Conversation Sandbox" },
+      { label: "Voice & Text Chat Assistant for modules" },
+      { label: "Accelerated Response Performance" },
+    ],
+  },
+  {
+    key: "pro",
+    name: "Pro",
+    accent: "text-slate-300",
+    icon: <Mic className="h-7 w-7" />,
+    description:
+      "Specially designed to supercharge your sales teams, accelerate conversion rates, and fast-track high-value customer engagements.",
+    buttonClassName:
+      "bg-[#6a63ff] hover:bg-[#5a52f0] text-white shadow-[0_14px_30px_rgba(106,99,255,0.34)]",
+    cardClassName:
+      "bg-[#11172d] text-white shadow-[0_18px_38px_rgba(15,23,42,0.24)] border border-[#11172d]",
+    dark: true,
+    features: [
+      { label: "All Advanced Features Included" },
+      { label: "Revenue Acceleration Suite" },
+      { label: "Sales Execution Workspace" },
+      { label: "Category-Specific Sales Toolkits" },
+      { label: "Uptime SLA & Dedicated Support" },
+    ],
+  },
+];
+
+const modules = [
+  {
+    pill: "Interactive Module",
+    pillClassName:
+      "bg-[#eef0ff] text-[#4f3dfc] border border-[#d9dcff]",
+    title: "Conversational Role Play",
+    description:
+      "Simulate high-stakes business discussions, customer complaint handles, and objection loops using custom-crafted dialogue personas. Let trainees practice under highly realistic conditions.",
+  },
+  {
+    pill: "Analytics Stream",
+    pillClassName:
+      "bg-[#e9fbf1] text-emerald-600 border border-[#ccefdc]",
+    title: "Custom KPI & Progress Dashboard",
+    description:
+      "Measure workforce readiness with granular analytics, progress indicators, and operational insights. Track skill development, identify gaps, and optimize training impact with data-driven precision.",
+  },
+];
+
+const capabilityGroups: CapabilityGroup[] = [
+  {
+    title: "CREATOR STUDIO & CONTENT",
+    rows: [
+      {
+        label: "Lucid Studio Editor",
+        standard: { type: "check" },
+        advanced: { type: "check" },
+        pro: { type: "check" },
+      },
+    ],
+  },
+  {
+    title: "ASSESSMENTS & MODULES",
+    rows: [
+      {
+        label: "Module Assessments",
+        standard: { type: "check" },
+        advanced: { type: "check" },
+        pro: { type: "check" },
+      },
+      {
+        label: "Baseline Assessments",
+        standard: { type: "check" },
+        advanced: { type: "check" },
+        pro: { type: "check" },
+      },
+      {
+        label: "Learning Style Evaluation",
+        standard: { type: "check" },
+        advanced: { type: "check" },
+        pro: { type: "check" },
+      },
+    ],
+  },
+  {
+    title: "AI & CONVERSATIONAL TOOLS",
+    rows: [
+      {
+        label: "Voice & Text Chat Assistant",
+        standard: { type: "none" },
+        advanced: { type: "check" },
+        pro: { type: "check" },
+      },
+      {
+        label: "Real-Time conversations sandbox",
+        standard: { type: "none" },
+        advanced: { type: "check" },
+        pro: { type: "check" },
+      },
+      {
+        label: "Expert in the loop",
+        standard: { type: "none" },
+        advanced: { type: "none" },
+        pro: { type: "check" },
+      },
+    ],
+  },
+  {
+    title: "METRICS & DASHBOARDS",
+    rows: [
+      {
+        label: "Customized Reports & Analytics",
+        standard: { type: "check"  },
+        advanced: { type: "check"  },
+        pro: { type: "check"  },
+      },
+      // {
+      //   label: "Sprint Verse tracking systems",
+      //   standard: { type: "text", value: "Included" },
+      //   advanced: { type: "text", value: "Included" },
+      //   pro: { type: "text", value: "Included" },
+      // },
+      {
+        label: "Sales Acceleration Tools",
+        standard: { type: "none" },
+        advanced: { type: "none" },
+        pro: { type: "check"  },
+      },
+      {
+        label: "Integrated Task Management",
+        standard: { type: "none" },
+        advanced: { type: "none" },
+        pro: { type: "check"  },
+      },
+    ],
+  },
+];
+
+const faqs = [
+  {
+    question: 'What is included in the Standard plan?',
+    answer:
+      "The Standard plan includes Lucid Studio Access, Adaptive Assessment Engine, Customized Reports & Analytics, Expert-Guided Review & Sprint Verse, and Foundational Learning Profiling.",
+  },
+  {
+    question: "Is this platform useful for sales enablement teams?",
+    answer:
+      "Yes, the platform is designed to support sales enablement through guided learning, scenario-based workflows, task management, and category-wise sales tools.",
+  },
+  {
+    question: "What are standalone modules and add-ons?",
+    answer:
+      "Standalone modules are optional feature sets that can be added to your deployment based on specific team or workflow needs.",
+  },
+  {
+    question: 'How works the "Book a Demo" flow?',
+    answer:
+      "Use the sales CTA and we route you to a guided conversation so we can understand your use case, timing, and rollout requirements.",
+  },
+];
+
+
+
+function renderCell(cell: CapabilityCell) {
+  if (cell.type === "check") {
+    return (
+      <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border-2 border-emerald-500 bg-emerald-50">
+        <Check className="h-5 w-5 text-emerald-600 stroke-[3]" />
+      </span>
+    );
+  }
+
+  if (cell.type === "text") {
+    return (
+      <span className="text-[13px] font-semibold text-[#4f3dfc]">
+        {cell.value}
+      </span>
+    );
+  }
+
+  // return (
+  //   <X className="h-5 w-5 text-slate-300 stroke-[2.5]" />
+  // );
+
+  return (
+    <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-red-200 bg-red-50">
+      <X className="h-5 w-5 stroke-[3] text-red-500" />
+    </span>
+  );
 }
 
-interface FeatureRow {
-  category: string;
-  items: FeatureItem[];
+function FeatureList({ plan }: { plan: Plan }) {
+  return (
+    <div
+      className={`mt-8 rounded-[24px] border-t border-white/10 pt-8 ${
+        plan.dark ? "border-white/10" : "border-slate-100"
+      }`}
+    >
+      <p
+        className={`text-[13px] font-extrabold tracking-[0.18em] uppercase ${
+          plan.dark ? "text-[#8791cb]" : "text-[#4f3dfc]"
+        }`}
+      >
+        {plan.key === "standard"
+          ? "Features included in Standard:"
+          : plan.key === "advanced"
+            ? "Everything in Standard, plus:"
+            : "Everything in Advanced, plus:"}
+      </p>
+      <ul className="mt-5 space-y-4">
+        {plan.features.map((feature) => (
+          <li key={feature.label} className="flex items-start gap-3">
+            <span
+              className={`mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full ${
+                plan.dark ? "bg-white/10 text-white" : "bg-emerald-50 text-emerald-500"
+              }`}
+            >
+              <Check className="h-3.5 w-3.5" />
+            </span>
+            <span
+              className={`text-[15px] leading-6 ${
+                plan.dark ? "text-white" : "text-slate-700"
+              }`}
+            >
+              {feature.label}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
-interface FeatureItem {
-  name: string;
-  details?: Record<string, string>;
+function PlanCard({ plan, onTalkToSales }: { plan: Plan; onTalkToSales: () => void }) {
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 22 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.45 }}
+      className={`relative overflow-hidden rounded-[30px] p-8 md:p-10 ${
+        plan.cardClassName
+      } ${plan.dark ? "" : "bg-white"}`}
+    >
+      {plan.featured && (
+        <div className="absolute right-6 top-6 rounded-full bg-[#4f3dfc] px-4 py-2 text-[13px] font-extrabold tracking-[0.12em] text-white shadow-lg shadow-[#4f3dfc]/25">
+          RECOMMENDED
+        </div>
+      )}
+
+      <div className="flex items-start gap-4">
+        <div
+          className={`flex h-14 w-14 items-center justify-center rounded-2xl border ${
+            plan.dark
+              ? "border-white/10 bg-white/5 text-[#a6b0ff]"
+              : plan.key === "standard"
+                ? "border-emerald-200 bg-emerald-50 text-emerald-500"
+                : "border-[#d3d0ff] bg-[#f5f3ff] text-[#5c56ff]"
+          }`}
+        >
+          {plan.icon}
+        </div>
+        <div className="pt-1">
+          <h3 className={`text-[30px] font-extrabold leading-none ${plan.dark ? "text-white" : "text-slate-900"}`}>
+            {plan.name}
+          </h3>
+          <p
+            className={`mt-2 text-[13px] font-extrabold tracking-[0.18em] uppercase ${
+              plan.dark ? "text-[#8fa0ff]" : "text-[#4f3dfc]"
+            }`}
+          >
+            Lucid Suite
+          </p>
+        </div>
+      </div>
+
+      <p
+        className={`mt-8 text-[16px] leading-7 ${
+          plan.dark ? "text-slate-300" : "text-slate-600"
+        }`}
+      >
+        {plan.description}
+      </p>
+
+      <div
+        className={`my-8 h-px ${plan.dark ? "bg-white/10" : "bg-slate-100"}`}
+      />
+
+      <div
+        className={`text-[28px] font-extrabold leading-none ${
+          plan.dark ? "text-white" : "text-slate-900"
+        }`}
+      >
+        {/* Custom Enterprise Solution */}
+      </div>
+      <p className={`mt-2 text-[15px] ${plan.dark ? "text-slate-300" : "text-slate-600"}`}>
+        {/* Contact us for standard seat-based quotation */}
+      </p>
+
+      <div className={`my-8 h-px ${plan.dark ? "bg-white/10" : "bg-slate-100"}`} />
+
+      <Button
+        onClick={onTalkToSales}
+        className={`h-14 w-full rounded-2xl text-[16px] font-extrabold ${plan.buttonClassName}`}
+      >
+        <span className="flex items-center gap-2">
+          Talk to Sales
+          <Phone className="h-4 w-4" />
+        </span>
+      </Button>
+
+      <FeatureList plan={plan} />
+    </motion.article>
+  );
 }
 
 export default function Pricing() {
-  const [billingType, setBillingType] = React.useState<PlanType>("monthly");
-  const [expandedFaq, setExpandedFaq] = React.useState<string | null>(null);
   const navigate = useNavigate();
 
-  const plans: PricingPlan[] = [
-    {
-      name: "Starter",
-      subtitle: "LUCID SUITE",
-      price: 39,
-      priceAnnual: 39 * 12 * 0.8,
-      description: "Unlock standard course creation and student testing mechanics.",
-      features: [
-        "Full Access to Lucid Studio",
-        "Dynamic Module Assessments",
-        "Standard Text Outputs",
-        "Up to 10 active modules",
-        "Email support",
-      ],
-      buttonText: "Talk to Sales",
-      buttonStyle: "secondary",
-    },
-    {
-      name: "Standard",
-      subtitle: "LUCID SUITE",
-      price: 99,
-      priceAnnual: 99 * 12 * 0.8,
-      description: "Enhance learning with real-time conversational sandboxes.",
-      recommended: true,
-      features: [
-        "Lucid Studio & Assessments",
-        "Interactive Module Chat",
-        "Enhanced AI Assistant response speed",
-        "Up to 30 active modules",
-        "Priority Email & Chat support",
-      ],
-      buttonText: "Talk to Sales",
-      buttonStyle: "primary",
-    },
-    {
-      name: "Plus",
-      subtitle: "LUCID SUITE",
-      price: 239,
-      priceAnnual: 239 * 12 * 0.8,
-      description: "Track progression against enterprise KPIs and outcomes.",
-      features: [
-        "Standard subscription benefits",
-        "Full KPI Dashboard Analytics",
-        "Student Skill Matrix & Mapping",
-        "Up to 100 active modules",
-        "Dedicated Account assistance",
-      ],
-      buttonText: "Talk to Sales",
-      buttonStyle: "secondary",
-    },
-    {
-      name: "Pro",
-      subtitle: "LUCID SUITE",
-      price: 479,
-      priceAnnual: 479 * 12 * 0.8,
-      description: "Ultimate immersive simulation with natural voice training.",
-      features: [
-        "Plus subscription benefits",
-        "Interactive Roleplay Simulator",
-        "Direct Speech-to-Speech audio sandbox",
-        "Unlimited modules and assessment grids",
-        "SLA-backed uptime & customized integrations",
-      ],
-      buttonText: "Talk to Sales",
-      buttonStyle: "primary",
-    },
-  ];
-
-  const featureComparison: FeatureRow[] = [
-    {
-      category: "KEY PLATFORM FEATURES",
-      items: [
-        { name: "Lucid Studio Editor" },
-        { name: "Active simulations limit", details: { Starter: "Up to 10 modules", Standard: "Up to 30 modules", Plus: "Up to 100 modules", Pro: "Unlimited modules" } },
-      ],
-    },
-    {
-      category: "CREATOR STUDIO & CONTENT",
-      items: [
-        { name: "Lucid Studio Editor" },
-        { name: "Active simulations limit", details: { Starter: "Up to 10 modules", Standard: "Up to 30 modules", Plus: "Up to 100 modules", Pro: "Unlimited modules" } },
-      ],
-    },
-    {
-      category: "ASSESSMENTS & MODULES",
-      items: [
-        { name: "Module Assessments" },
-      ],
-    },
-    {
-      category: "AI & CONVERSATIONAL TOOLS",
-      items: [
-        { name: "Module AI Chat" },
-        { name: "Conversational Roleplay Simulator" },
-        { name: "Speech-to-Speech Sandbox" },
-        { name: "Custom AI Voice profiles", details: { Pro: "All voice assets" } },
-      ],
-    },
-    {
-      category: "METRICS & DASHBOARDS",
-      items: [
-        { name: "KPI & Progress Dashboard" },
-        { name: "Analytics API & PDF Exports", details: { Plus: "PDF Reports", Pro: "PDF & API Stream" } },
-      ],
-    },
-    {
-      category: "HOSTING & ENTERPRISE SUPPORT",
-      items: [
-        { name: "Dedicated cloud sandbox", details: { Starter: "Shared cloud", Standard: "Shared cloud", Plus: "Shared cloud", Pro: "Available addon" } },
-      ],
-    },
-  ];
-
-  const faqs = [
-    {
-      question: 'What constitutes a "Module" in the Lucid Platform?',
-      answer: "A Module in the Lucid Platform represents a self-contained learning unit that can include content, assessments, and interactive elements.",
-    },
-    {
-      question: "How does the Speech-to-Speech simulation function?",
-      answer: "The Speech-to-Speech simulation uses advanced AI to enable realistic voice-based interactions, allowing users to practice conversational skills in real-world scenarios.",
-    },
-    {
-      question: "Can I train the roleplay simulator on our custom script or playbooks?",
-      answer: "Yes, the Pro plan includes the ability to customize the roleplay simulator with your custom scripts and playbooks for organization-specific training.",
-    },
-    {
-      question: "Is there a contract required, and can we upgrade at any point?",
-      answer: "Contracts and upgrade flexibility depend on your plan. Contact our sales team to discuss custom arrangements that fit your needs.",
-    },
-    {
-      question: 'How works the "Talk to Sales" demo flow?',
-      answer: "The Talk to Sales demo flow connects you with our sales team to demonstrate the platform capabilities tailored to your organization's needs.",
-    },
-    {
-      question: "Is student progress tracking GDPR/SOC-2 compliant?",
-      answer: "Yes, all student progress tracking and data storage meets GDPR and SOC-2 compliance standards to ensure data security and privacy.",
-    },
-  ];
-
-  const handleContactRedirect = () => {
+  const onTalkToSales = () => {
     navigate("/contact");
   };
 
-  const displayPrice = (plan: PricingPlan) => {
-    const price = billingType === "annual" ? plan.priceAnnual : plan.price;
-    return Math.round(price).toLocaleString();
-  };
-
-  const getSavings = (plan: PricingPlan) => {
-    if (billingType === "annual") {
-      const monthlyTotal = plan.price * 12;
-      const annualPrice = plan.priceAnnual;
-      const savings = Math.round(((monthlyTotal - annualPrice) / monthlyTotal) * 100);
-      return savings;
-    }
-    return 0;
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+    <div className="min-h-screen bg-white text-slate-900">
+      <section className="px-4 pb-20 pt-28 sm:px-6 lg:pt-32">
+        <div className="mx-auto max-w-5xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6 text-slate-900"
+            className="inline-flex items-center rounded-full border border-[#d8d7ff] bg-[#f4f3ff] px-4 py-2 text-[13px] font-extrabold tracking-[0.34em] text-[#4f3dfc]"
           >
-            Plans for any rollout size.
+            CAPABILITY ROADMAPS
+          </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.05 }}
+            className="mx-auto mt-7 max-w-4xl text-4xl font-black leading-[1.08] tracking-tight text-slate-950 sm:text-5xl lg:text-[64px]"
+          >
+            Choose the plan aligned with your organizational goals.
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-lg sm:text-xl text-slate-600 mb-12 max-w-2xl mx-auto"
+            transition={{ delay: 0.12 }}
+            className="mx-auto mt-6 max-w-3xl text-[18px] leading-8 text-slate-500"
           >
-            Deploy interactive, live simulation features smoothly. Choose an optimization config built for true team alignment.
+            Explore how Lucid models, Studio assessments, and roleplay workflows integrate to empower your workforce.
           </motion.p>
-
-          {/* Billing Toggle */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16"
-          >
-            <div className="flex items-center gap-3 bg-slate-100 rounded-full p-1">
-              <button
-                onClick={() => setBillingType("monthly")}
-                className={`px-6 py-2.5 rounded-full font-semibold transition-all ${
-                  billingType === "monthly"
-                    ? "bg-white text-blue-600 shadow-md"
-                    : "text-slate-700 hover:text-slate-900"
-                }`}
-              >
-                Monthly Plan
-              </button>
-              <button
-                onClick={() => setBillingType("annual")}
-                className={`px-6 py-2.5 rounded-full font-semibold transition-all ${
-                  billingType === "annual"
-                    ? "bg-white text-blue-600 shadow-md"
-                    : "text-slate-700 hover:text-slate-900"
-                }`}
-              >
-                Annual Billing
-              </button>
-            </div>
-            <div className="bg-teal-50 border border-teal-200 rounded-full px-4 py-2 text-sm font-semibold text-teal-700">
-              Save up to 20% on Annual Pricing Plans
-            </div>
-          </motion.div>
         </div>
       </section>
 
-      {/* Pricing Cards */}
-      <section className="pb-20 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {plans.map((plan, index) => (
-              <motion.div
-                key={plan.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className={`relative rounded-2xl p-8 transition-all ${
-                  plan.recommended
-                    ? "lg:scale-105 bg-gradient-to-b from-blue-50 to-white border-2 border-blue-500 shadow-2xl"
-                    : "bg-white border border-slate-200 hover:shadow-lg"
-                }`}
+      <section className="px-4 pb-24 sm:px-6">
+        <div className="mx-auto grid max-w-[1360px] gap-8 lg:grid-cols-3">
+          {plans.map((plan) => (
+            <PlanCard key={plan.key} plan={plan} onTalkToSales={onTalkToSales} />
+          ))}
+        </div>
+      </section>
+
+      <section className="px-4 pb-28 sm:px-6">
+        <div className="mx-auto max-w-5xl text-center">
+          <div className="inline-flex items-center rounded-full border border-[#d8d7ff] bg-[#f4f3ff] px-4 py-2 text-[13px] font-extrabold tracking-[0.34em] text-[#4f3dfc]">
+            STANDALONE MODULES & ADD-ONS
+          </div>
+          <h2 className="mt-6 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
+            Modular Scaling Features
+          </h2>
+          <p className="mx-auto mt-4 max-w-3xl text-[18px] leading-8 text-slate-500">
+            Ready to construct singular feature setups? These specific high-fidelity modules can be added into your platform deployment.
+          </p>
+        </div>
+
+        <div className="mx-auto mt-12 grid max-w-[1110px] gap-6 lg:grid-cols-2">
+          {modules.map((module) => (
+            <motion.div
+              key={module.title}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{ duration: 0.4 }}
+              className="rounded-[26px] border border-slate-200 bg-white p-8 shadow-[0_12px_28px_rgba(15,23,42,0.08)]"
+            >
+              <span
+                className={`inline-flex rounded-full px-4 py-2 text-[14px] font-bold ${module.pillClassName}`}
               >
-                {plan.recommended && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-bold uppercase">
-                      Recommended
-                    </span>
-                  </div>
-                )}
+                {module.pill}
+              </span>
+              <h3 className="mt-8 text-3xl font-black tracking-tight text-slate-950">
+                {module.title}
+              </h3>
+              <p className="mt-6 max-w-xl text-[17px] leading-8 text-slate-500">
+                {module.description}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
 
-                <div className="mb-6">
-                  <h3 className="text-2xl font-bold text-slate-900 mb-1">{plan.name}</h3>
-                  <p className="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-4">{plan.subtitle}</p>
-                  <p className="text-sm text-slate-600 mb-6">{plan.description}</p>
+      <section className="px-4 pb-28 sm:px-6">
+        <div className="mx-auto max-w-5xl text-center">
+          <h2 className="text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
+            Full Capability Breakdown
+          </h2>
+          <p className="mt-4 text-[18px] leading-8 text-slate-500">
+            Compare deep specifications and module parameters item by item
+          </p>
+        </div>
 
-                  <div className="mb-2">
-                    <span className="text-4xl font-bold text-slate-900">${displayPrice(plan)}</span>
-                    <span className="text-slate-600 ml-1">/ month</span>
-                  </div>
-                  {billingType === "annual" && getSavings(plan) > 0 && (
-                    <p className="text-sm text-teal-600 font-semibold">SAVE {getSavings(plan)}%</p>
-                  )}
-                </div>
-
-                <Button
-                  onClick={handleContactRedirect}
-                  className={`w-full mb-8 h-12 rounded-lg font-bold transition-all ${
-                    plan.buttonStyle === "primary"
-                      ? "bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-600/20"
-                      : "bg-slate-100 hover:bg-slate-200 text-slate-900 border border-slate-300"
-                  }`}
-                >
-                  {plan.buttonText}
-                </Button>
-
-                <div className="space-y-4">
-                  {plan.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-teal-500 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-slate-700">{feature}</span>
+        <div className="mx-auto mt-10 max-w-[1320px] overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_16px_34px_rgba(15,23,42,0.08)]">
+          <div className="overflow-x-auto">
+            <table className="min-w-[1180px] w-full border-collapse">
+              <thead>
+                <tr className="border-b border-slate-200 bg-slate-50/70">
+                  <th className="w-[33%] px-6 py-8 text-left text-[15px] font-bold text-slate-500">
+                    Key Platform Features
+                  </th>
+                  <th className="px-6 py-8 text-center">
+                    <div className="text-[28px] font-extrabold leading-none text-[#4f3dfc]">
+                      Standard
                     </div>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Trust Section */}
-      <section className="py-16 px-4 sm:px-6 bg-slate-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-xl p-6"
-            >
-              <div className="text-3xl mb-3">🔐</div>
-              <h3 className="font-bold text-slate-900 mb-3">SOC-2 & GDPR Protected</h3>
-              <p className="text-slate-600 text-sm">
-                We encrypt all student dialogue streams, scores, and business playbooks securely. Trainee logs remain completely isolated.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="bg-white rounded-xl p-6"
-            >
-              <div className="text-3xl mb-3">👥</div>
-              <h3 className="font-bold text-slate-900 mb-3">Enterprise Scalability</h3>
-              <p className="text-slate-600 text-sm">
-                Provision thousands of active simulation seats instantly. Integration API streams let you feed compliance pipelines smoothly.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="bg-white rounded-xl p-6"
-            >
-              <div className="text-3xl mb-3">⏱️</div>
-              <h3 className="font-bold text-slate-900 mb-3">99.9% Jitter Free Audio</h3>
-              <p className="text-slate-600 text-sm">
-                Our Pro plan streams voice packets with sub-100ms processing times, guaranteeing real-world phone simulator responses.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Comparison Table */}
-      <section className="py-20 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-900 mb-4">Full Capability Breakdown</h2>
-            <p className="text-lg text-slate-600">
-              Compare deep specifications and module parameters item by item
-            </p>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="bg-slate-50 border-b border-slate-200">
-                    <th className="text-left px-6 py-4 font-bold text-slate-900">Key Platform Features</th>
-                    <th className="text-center px-4 py-4 font-bold text-slate-600">Starter</th>
-                    <th className="text-center px-4 py-4 font-bold text-slate-600">Standard</th>
-                    <th className="text-center px-4 py-4 font-bold text-slate-600">Plus</th>
-                    <th className="text-center px-4 py-4 font-bold text-slate-600">Pro</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {featureComparison.map((row, idx) => (
-                    <React.Fragment key={idx}>
-                      <tr className="bg-slate-50 border-t border-slate-200">
-                        <td colSpan={5} className="px-6 py-3 font-bold text-blue-600 text-xs uppercase tracking-wider">
-                          {row.category}
+                    <div className="mt-2 text-[13px] text-slate-500">
+                      Fundamental assessments
+                    </div>
+                    <button
+                      type="button"
+                      onClick={onTalkToSales}
+                      className="mt-2 text-[13px] font-bold text-[#4f3dfc] hover:underline"
+                    >
+                      Talk to Sales
+                    </button>
+                  </th>
+                  <th className="relative bg-[#f3efff] px-6 py-8 text-center">
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#4f3dfc] px-3 py-1 text-[12px] font-black tracking-[0.14em] text-white">
+                      
+                    </span>
+                    <div className="text-[28px] font-extrabold leading-none text-slate-900">
+                      Advanced
+                    </div>
+                    <div className="mt-2 text-[13px] text-slate-500">
+                      + Interactive Conversational Agent
+                    </div>
+                    <button
+                      type="button"
+                      onClick={onTalkToSales}
+                      className="mt-2 text-[13px] font-bold text-[#4f3dfc] hover:underline"
+                    >
+                      Talk to Sales
+                    </button>
+                  </th>
+                  <th className="px-6 py-8 text-center">
+                    <div className="text-[28px] font-extrabold leading-none text-slate-900">
+                      Pro
+                    </div>
+                    <div className="mt-2 text-[13px] text-slate-500">
+                      + Enterprise Sales Acceleration
+                    </div>
+                    <button
+                      type="button"
+                      onClick={onTalkToSales}
+                      className="mt-2 text-[13px] font-bold text-[#4f3dfc] hover:underline"
+                    >
+                      Talk to Sales
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {capabilityGroups.map((group) => (
+                  <React.Fragment key={group.title}>
+                    <tr className="border-b border-slate-200 bg-white/95">
+                      <td colSpan={4} className="px-6 py-4 text-[13px] font-black tracking-[0.18em] text-[#4f3dfc]">
+                        {group.title}
+                      </td>
+                    </tr>
+                    {group.rows.map((row) => (
+                      <tr key={row.label} className="border-b border-slate-200 last:border-b-0">
+                        <td className="px-6 py-5 text-[14px] font-medium text-slate-900">
+                          <span className="mr-3 inline-flex h-5 w-5 items-center justify-center rounded-full border border-slate-300 text-slate-400">
+                            <CircleHelp className="h-3 w-3" />
+                          </span>
+                          {row.label}
+                        </td>
+                        <td className="px-6 py-5 text-center">
+                          {renderCell(row.standard)}
+                        </td>
+                        <td className="bg-[#f3efff] px-6 py-5 text-center">
+                          {renderCell(row.advanced)}
+                        </td>
+                        <td className="px-6 py-5 text-center">
+                          {renderCell(row.pro)}
                         </td>
                       </tr>
-                      {row.items.map((item, itemIdx) => (
-                        <tr key={itemIdx} className="border-b border-slate-200 hover:bg-slate-50">
-                          <td className="px-6 py-4 text-sm text-slate-900 font-medium">{item.name}</td>
-                          {plans.map((plan) => (
-                            <td key={plan.name} className="text-center px-4 py-4">
-                              {item.details && item.details[plan.name] ? (
-                                <span className="text-sm text-slate-700">{item.details[plan.name]}</span>
-                              ) : (
-                                <Check className="w-5 h-5 text-teal-500 mx-auto" />
-                              )}
-                            </td>
-                          ))}
-                        </tr>
-                      ))}
-                    </React.Fragment>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                    ))}
+                  </React.Fragment>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 px-4 sm:px-6 bg-slate-50">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-slate-900 mb-4">
-            Need a customized integration or massive seat package?
+      <section className="px-4 pb-24 sm:px-6">
+        <div className="mx-auto max-w-4xl text-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#d8d7ff] bg-[#f4f3ff] px-4 py-2 text-[13px] font-extrabold tracking-[0.18em] text-[#4f3dfc]">
+            <CircleHelp className="h-4 w-4" />
+            FAQ
+          </div>
+          <h2 className="mt-6 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
+            Frequently Answered Inquiries
           </h2>
-          <p className="text-slate-600 mb-8">
-            We offer custom API workflows, SOC2 compliance, and dedicated team trainings on enterprise standards.
+          <p className="mx-auto mt-4 max-w-3xl text-[18px] leading-8 text-slate-500">
+            Clear answers to help you choose the right plan with confidence.
           </p>
-          <Button
-            onClick={handleContactRedirect}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-bold shadow-lg shadow-blue-600/20 inline-flex items-center gap-2"
-          >
-            <Phone className="w-5 h-5" />
-            Talk to Enterprise Sales
-          </Button>
         </div>
-      </section>
 
-      {/* FAQ Section */}
-      <section className="py-20 px-4 sm:px-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-block bg-blue-100 text-blue-600 px-4 py-2 rounded-full text-sm font-bold mb-4">
-              FAQ
-            </div>
-            <h2 className="text-4xl font-bold text-slate-900 mb-4">Frequently Answered Inquiries</h2>
-            <p className="text-lg text-slate-600">
-              Learn how Lucid LMS models, Studio assessment logic, and roleplay workflows function on your codebase.
-            </p>
-          </div>
-
-          <Accordion className="space-y-4">
-            {faqs.map((faq, idx) => (
+        <div className="mx-auto mt-12 max-w-[1050px]">
+          <Accordion type="single" collapsible className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_14px_32px_rgba(15,23,42,0.08)]">
+            {faqs.map((faq) => (
               <AccordionItem
-                key={idx}
-                className="bg-white border border-slate-200 rounded-lg px-6"
+                key={faq.question}
+                value={faq.question}
+                className="border-b border-slate-200 last:border-b-0"
               >
-                <AccordionTrigger className="text-left font-semibold text-slate-900 hover:text-blue-600 py-4">
-                  {faq.question}
+                <AccordionTrigger className="px-8 py-7 text-left text-[20px] font-bold text-slate-900 hover:no-underline">
+                  <span className="pr-6">{faq.question}</span>
                 </AccordionTrigger>
-                <AccordionContent className="text-slate-600 pb-4">
+                <AccordionContent className="px-8 pb-7 pt-0 text-[16px] leading-8 text-slate-600">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -469,27 +625,30 @@ export default function Pricing() {
         </div>
       </section>
 
-      {/* Footer CTA */}
-      <section className="py-16 px-4 sm:px-6 bg-gradient-to-r from-blue-50 to-slate-50 border-t border-slate-200">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-slate-900 mb-4">
-            Ready to get started with Lucid?
-          </h2>
-          <p className="text-slate-600 mb-8">
-            Join leading organizations transforming their operations with real-time execution visibility and AI-powered learning.
+      <section className="px-4 pb-24 sm:px-6">
+        <div className="mx-auto max-w-5xl rounded-[30px] bg-slate-950 px-8 py-12 text-center text-white shadow-[0_18px_40px_rgba(15,23,42,0.2)]">
+          <p className="text-[13px] font-black tracking-[0.24em] text-[#8fa0ff]">
+            READY TO TALK?
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <h3 className="mt-5 text-3xl font-black tracking-tight sm:text-4xl">
+            Let’s shape the right enterprise plan for your rollout.
+          </h3>
+          {/* <p className="mx-auto mt-4 max-w-3xl text-[17px] leading-8 text-slate-300">
+            We can map features, module tiers, and rollout support to the exact shape of your organization.
+          </p> */}
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button
-              onClick={handleContactRedirect}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-bold shadow-lg shadow-blue-600/20"
+              onClick={onTalkToSales}
+              className="h-12 rounded-2xl bg-[#6a63ff] px-8 text-[15px] font-extrabold text-white hover:bg-[#5a52f0]"
             >
-              Schedule a Demo
+              Talk to Sales <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             <Button
-              onClick={() => navigate("/")}
-              className="bg-white hover:bg-slate-100 text-blue-600 px-8 py-3 rounded-lg font-bold border-2 border-slate-300"
+              onClick={() => navigate("/contact")}
+              variant="outline"
+              className="h-12 rounded-2xl border-white/20 bg-white/5 px-8 text-[15px] font-extrabold text-white hover:bg-white/10 hover:text-white"
             >
-              Learn More
+              Book a Demo
             </Button>
           </div>
         </div>
