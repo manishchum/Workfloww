@@ -38,6 +38,7 @@ import Execution from "./pages/features/Execution";
 import ContentEngine from "./pages/ContentEngine";
 import BuilderLab from "./pages/BuilderLab";
 import LighthouseProgram from "./pages/LighthouseProgram";
+import Pricing from "./pages/Pricing";
 import Analytics from "./Analytics";
 
 export default function App() {
@@ -48,6 +49,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/pricing" element={<Pricing />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/features/career-progression" element={<CareerProgression />} />
           <Route path="/features/sop-audits" element={<SOPAudits />} />

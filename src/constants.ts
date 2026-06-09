@@ -108,7 +108,8 @@ export const LUCID_CONTENT = {
     { name: "Use Case", items: ["CEO", "CHRO", "Sales Head", "Operations Head", "Compliance & Audits", "Last-Mile Communication", "SOP Deviation"] },
     { name: "Light House Program", href: "/lighthouse-program" },
     { name: "Builder Lab", href: "/builder-lab" },
-    { name: "About", href: "/about" }
+    { name: "About", href: "/about" },
+    { name: "Pricing", href: "/pricing" }
     // { name: "Contact Us", href: "/contact" }
   ],
   footer: {

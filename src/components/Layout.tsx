@@ -373,6 +373,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 const getLink = (name: string) => {
                                   switch (name) {
                                     case "About": return "/about";
+                                    case "Pricing": return "/pricing";
                                     case "Lucid Ready": return "/features/sales-team";
                                     case "Lucid Arsenal": return "/features/sales-tool";
                                     case "Lucid Field": return "/features/execution";
@@ -505,6 +506,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                               const getLink = (name: string) => {
                                 switch (name) {
                                   case "About": return "/about";
+                                  case "Pricing": return "/pricing";
                                   case "Lucid Ready": return "/features/sales-team";
                                   case "Lucid Arsenal": return "/features/sales-tool";
                                   case "Lucid Field": return "/features/execution";
@@ -873,6 +875,86 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     </li>
                   ))}
                 </ul>
+                
+                {/* Ask AI How Lucid Works - Below Company */}
+                <div className="mt-6 pt-6 border-t border-slate-100">
+                  <h5 className="font-bold text-sm mb-3 text-slate-900 uppercase">Know more about workfloww.ai</h5>
+                  <div className="flex flex-wrap gap-3">
+                    {[
+                      {
+                        name: "ChatGPT",
+                        src: "/images/chatgpt_logo.png",
+                        url: "https://chatgpt.com",
+                        prompt: "Analyze https://www.workfloww.ai and explain how Workfloww.ai helps organizations adopt AI, transform business workflows, upskill teams, and achieve measurable business results. Include target customers, use cases, and key benefits.",
+                        color: "bg-slate-100 hover:bg-slate-200"
+                      },
+                      
+                      {
+                        name: "Perplexity",
+                        src: "/images/perplexity_logo.png",
+                        url: "https://www.perplexity.ai",
+                        prompt: "Analyze https://www.workfloww.ai and explain how Workfloww.ai helps organizations adopt AI, transform business workflows, upskill teams, and achieve measurable business results. Include target customers, use cases, and key benefits.",
+                        color: "bg-gray-100 hover:bg-gray-200"
+                      },
+                      {
+                        name: "Gemini",
+                        src: "/images/gemini_logo.png",
+                        url: "https://gemini.google.com",
+                        prompt: "Analyze https://www.workfloww.ai and explain how Workfloww.ai helps organizations adopt AI, transform business workflows, upskill teams, and achieve measurable business results. Include target customers, use cases, and key benefits.",
+                        color: "bg-grey-600 hover:bg-white-700"
+                      },
+                      {
+                        name: "Claude",
+                        src: "/images/claude_logo.png",
+                        url: "https://claude.ai/new",
+                        prompt: "Analyze https://www.workfloww.ai and explain how Workfloww.ai helps organizations adopt AI, transform business workflows, upskill teams, and achieve measurable business results. Include target customers, use cases, and key benefits.",
+                        color: "bg-amber-50 hover:bg-amber-100"
+                      },
+                      // {
+                      //   name: "Copilot",
+                      //   icon: "💫",
+                      //   url: "https://www.bing.com/chat",
+                      //   prompt: "Describe Lucid's approach to operational execution visibility and team training",
+                      //   color: "bg-slate-700 hover:bg-slate-800"
+                      // }
+                    ].map((ai) => (
+                      <div key={ai.name} className="relative">
+                        <a
+                          href={ai.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            const encodedPrompt = encodeURIComponent(ai.prompt);
+                            let finalUrl = ai.url;
+                            if (ai.name === "ChatGPT") {
+                              finalUrl = `https://chatgpt.com/?q=${encodedPrompt}`;
+                            } else if (ai.name === "Perplexity") {
+                              finalUrl = `https://www.perplexity.ai/?q=${encodedPrompt}`;
+                            } else if (ai.name === "Claude") {
+                              finalUrl = `https://claude.ai/new?q=${encodedPrompt}`;
+                            } else if (ai.name === "Gemini") {
+                              // finalUrl = `https://www.google.com/search?q=${encodedPrompt}`;
+                              finalUrl = `https://www.google.com/search?q=${encodedPrompt}&udm=50`;
+                            } else if (ai.name === "Copilot") {
+                              finalUrl = `https://copilot.microsoft.com/?q=${encodedPrompt}`;
+                            }
+                            window.open(finalUrl, "_blank", "noopener,noreferrer");
+                          }}
+                          className={`flex items-center justify-center w-10 h-10 rounded-lg ${ai.color} transition-all transform hover:scale-110 cursor-pointer`}
+                          title={`Ask ${ai.name} about Lucid`}
+                        >
+                          <img
+                            src={ai.src}
+                            alt={`${ai.name} logo`}
+                            className="w-6 h-6 object-contain"
+                            loading="lazy"
+                          />
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
