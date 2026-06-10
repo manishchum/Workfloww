@@ -875,7 +875,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     </li>
                   ))}
                 </ul>
-                
+
                 {/* Ask AI How Lucid Works - Below Company */}
                 <div className="mt-6 pt-6 border-t border-slate-100">
                   <h5 className="font-bold text-sm mb-3 text-slate-900 uppercase">Know more about workfloww.ai</h5>
@@ -888,7 +888,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         prompt: "Analyze https://www.workfloww.ai and explain how Workfloww.ai helps organizations adopt AI, transform business workflows, upskill teams, and achieve measurable business results. Include target customers, use cases, and key benefits.",
                         color: "bg-slate-100 hover:bg-slate-200"
                       },
-                      
+
                       {
                         name: "Perplexity",
                         src: "/images/perplexity_logo.png",
