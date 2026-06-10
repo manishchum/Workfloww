@@ -459,6 +459,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
         color: "#e2e8f0",
         position: isMobile ? "relative" : "fixed",
         top: 0,
+        zIndex: 40,
         left: 0,
         overflowY: isMobile ? "auto" : "hidden",
         overflowX: "hidden",
