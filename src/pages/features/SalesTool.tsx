@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from "react-helmet-async";
 import { motion } from 'motion/react';
 import { ArrowRight, CheckCircle2, MessageCircle, FileText, BarChart3, Shield, Zap, TrendingUp, Globe, Smartphone, Clock, Swords, Target, Mic, Search, BookOpen, Microscope, Trophy, DollarSign, PhoneCall, Mail } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -69,6 +70,11 @@ const SalesTool = () => {
 
   return (
     <div className="bg-white min-h-screen font-sans text-navy">
+      <Helmet>
+        <title>Sales Tools – Battle Cards, Talk Tracks & More | Lucid by Workfloww.AI</title>
+        <meta name="description" content="Lucid builds 10 field-ready sales tools — battle cards, objection handlers, talk tracks, pitch narratives and more. Built for your industry, updated from real field intelligence." />
+        <link rel="canonical" href="https://www.workfloww.ai/sales-tools" />
+      </Helmet>
 
       {/* 1. HERO SECTION */}
       <section style={{ padding: "13.5rem 1.25rem 11rem" }} className="relative overflow-hidden bg-gradient-to-b from-blue-50 to-white pt-24">

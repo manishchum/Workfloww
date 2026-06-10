@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { trackEvent } from "../../Analytics";
@@ -10,6 +11,11 @@ const SalesTeam = () => {
 
   return (
     <div className="w-full bg-white pt-24">
+      <Helmet>
+        <title>Sales Team Enablement – Build a Field-Ready Sales Team | Lucid</title>
+        <meta name="description" content="Lucid builds field-ready sales teams with onboarding sprints, skill assessments, AI roleplay, voice agents and KPI tracking. Deploy via WhatsApp in 48 hours." />
+        <link rel="canonical" href="https://www.workfloww.ai/sales-team" />
+      </Helmet>
       {/* ===== 1. HERO SECTION ===== */}
      <section style={{ padding: "9.5rem 1.25rem 11rem" }} className="relative w-full flex items-center overflow-hidden bg-white">
   <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
@@ -734,7 +740,6 @@ const SalesTeam = () => {
 };
 
 export default SalesTeam;
-
 <style>{`
   @media (min-width: 1024px) {
     section[style*="padding: 2.5rem 1.25rem"] {

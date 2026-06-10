@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "../../Analytics";
 import { useNavigate } from "react-router-dom";
@@ -99,6 +100,11 @@ export default function OperationsHead() {
   const navigate = useNavigate();
   return (
     <div className="bg-white text-slate-900">
+      <Helmet>
+        <title>Operations Head Use Case – Compliance & Execution Visibility | Lucid</title>
+        <meta name="description" content="Lucid gives operations heads real-time compliance visibility across every location and shift. Close recurring deviations, enforce SOPs, and track corrective actions to resolution — in 48 hours." />
+        <link rel="canonical" href="https://www.workfloww.ai/operations-head" />
+      </Helmet>
 
       {/* ── Hero ───────────────────────────────────────────────────────── */}
       <section className="border-b border-slate-200">

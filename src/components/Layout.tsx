@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
+import { trackEvent } from "../Analytics";
 import {
   Sparkles,
   Menu,
@@ -455,14 +456,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="hidden md:flex items-center gap-4">
             <Button
   onClick={() => {
+  try {
     trackEvent(
       "Lead",
       "book_demo_click",
       "CTA Button"
     );
-
-    navigate("/contact");
-  }}
+  } catch (err) {
+    console.error("Analytics failed:", err);
+  }
+  navigate("/contact");
+}}
   className="h-10 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold shadow-md shadow-blue-600/20 transition-colors"
 >
   Book a Demo
@@ -803,12 +807,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   {LUCID_CONTENT.footer.features.map((item) => {
                     const getLink = (name: string) => {
                       switch (name) {
-                        case "Self-Learning": return "/features/self-learning";
-                        case "Seamless Training": return "/features/seamless-training";
-                        case "Career Progression": return "/features/career-progression";
-                        case "SOP/Audits": return "/features/sop-audits";
-                        case "Rewards & Recognition": return "/features/rewards-recognition";
-                        case "Ticketing": return "/features/ticketing";
+                        case "Lucid Ready": return "/features/sales-team";
+                        case "Lucid Arsenal": return "/features/sales-tool";
+                        case "Lucid Field": return "/features/execution";
+                        case "Lucid Studio": return "/features/content-engine";
                         default: return null;
                       }
                     };
@@ -875,7 +877,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     </li>
                   ))}
                 </ul>
-                
+
                 {/* Ask AI How Lucid Works - Below Company */}
                 <div className="mt-6 pt-6 border-t border-slate-100">
                   <h5 className="font-bold text-sm mb-3 text-slate-900 uppercase">Know more about workfloww.ai</h5>
@@ -888,7 +890,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         prompt: "Analyze https://www.workfloww.ai and explain how Workfloww.ai helps organizations adopt AI, transform business workflows, upskill teams, and achieve measurable business results. Include target customers, use cases, and key benefits.",
                         color: "bg-slate-100 hover:bg-slate-200"
                       },
-                      
+
                       {
                         name: "Perplexity",
                         src: "/images/perplexity_logo.png",
