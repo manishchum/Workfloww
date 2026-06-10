@@ -1,5 +1,4 @@
 import React from 'react';
-import { Helmet } from "react-helmet-async";
 import { motion } from 'motion/react';
 import { ArrowRight, Zap, Target, ClipboardCheck, BookOpen, Trophy, CheckCircle2, TrendingUp, AlertCircle, Clock, Smartphone, BarChart3, Users, Shield, CalendarClock, MessageCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -10,11 +9,6 @@ const Execution = () => {
 
   return (
     <div className="bg-white min-h-screen font-sans text-slate-900">
-      <Helmet>
-        <title>Execution – Close the Gap Between Training and Action | Lucid</title>
-        <meta name="description" content="Lucid's execution layer nudges, verifies and scores field behavior. Automated nudge engine, KPI-mapped performance, execution proof via checklist and ground-level voice insights." />
-        <link rel="canonical" href="https://www.workfloww.ai/execution" />
-      </Helmet>
 
       {/* 1. HERO SECTION */}
 <section style={{ padding: "5rem 1.25rem 3rem" }} className="relative overflow-hidden bg-gradient-to-b from-emerald-50/50 to-white pt-24">

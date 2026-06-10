@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Helmet } from "react-helmet-async";
 import {
   Users,
   BarChart3,
@@ -192,11 +191,6 @@ export default function QSRRetail() {
 
   return (
     <div className="lucid-qsr">
-      <Helmet>
-        <title>QSR & Retail Execution – Floor Readiness & Compliance | Lucid</title>
-        <meta name="description" content="Lucid gives QSR and retail operations leaders real-time execution visibility. Track launch readiness, audit compliance, and associate performance by outlet — before revenue is lost at the counter." />
-        <link rel="canonical" href="https://www.workfloww.ai/qsr-retail" />
-      </Helmet>
       <style>{`
         :root {
           --accent: #5b4ef5;
