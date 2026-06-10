@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Helmet } from "react-helmet-async";
 import { LayoutGrid, LineChart, Star, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import SectionWrapper from "../../components/SectionWrapper";
@@ -156,6 +157,11 @@ export default function ManufacturingIndustrial() {
   const navigate = useNavigate();
   return (
     <div className="lucid-mfg">
+      <Helmet>
+        <title>Manufacturing & Industrial – SOP Execution & Quality Compliance | Lucid</title>
+        <meta name="description" content="Lucid gives manufacturing plant heads real-time SOP adherence visibility by line and shift. Close quality deviation loops, eliminate repeat audit findings, and verify operator comprehension before they touch the line." />
+        <link rel="canonical" href="https://www.workfloww.ai/manufacturing" />
+      </Helmet>
       <style>{`
         :root {
           --accent: #6357d4;
