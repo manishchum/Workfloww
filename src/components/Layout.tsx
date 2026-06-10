@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { trackEvent } from "../Analytics";
 import {
   Sparkles,
   Menu,
@@ -456,17 +455,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="hidden md:flex items-center gap-4">
             <Button
   onClick={() => {
-  try {
     trackEvent(
       "Lead",
       "book_demo_click",
       "CTA Button"
     );
-  } catch (err) {
-    console.error("Analytics failed:", err);
-  }
-  navigate("/contact");
-}}
+
+    navigate("/contact");
+  }}
   className="h-10 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold shadow-md shadow-blue-600/20 transition-colors"
 >
   Book a Demo
@@ -807,10 +803,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   {LUCID_CONTENT.footer.features.map((item) => {
                     const getLink = (name: string) => {
                       switch (name) {
-                        case "Lucid Ready": return "/features/sales-team";
-                        case "Lucid Arsenal": return "/features/sales-tool";
-                        case "Lucid Field": return "/features/execution";
-                        case "Lucid Studio": return "/features/content-engine";
+                        case "Self-Learning": return "/features/self-learning";
+                        case "Seamless Training": return "/features/seamless-training";
+                        case "Career Progression": return "/features/career-progression";
+                        case "SOP/Audits": return "/features/sop-audits";
+                        case "Rewards & Recognition": return "/features/rewards-recognition";
+                        case "Ticketing": return "/features/ticketing";
                         default: return null;
                       }
                     };

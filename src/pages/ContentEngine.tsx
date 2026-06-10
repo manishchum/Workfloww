@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { CheckCircle2, Grid3x3, Zap, BookOpen, MessageSquare, BarChart3, ArrowRight } from "lucide-react";
 import { trackEvent } from "../Analytics";
@@ -28,11 +27,6 @@ export default function ContentEngine() {
 
   return (
     <div className="lucid-content-engine">
-      <Helmet>
-        <title>Content Engine – Turn Your Knowledge Into Sales Training | Lucid</title>
-        <meta name="description" content="Lucid's Content Engine converts your SOPs, PDFs, voice notes and decks into deployable WhatsApp sprints in under 6 hours. Multi-format ingestion, AI-generated sprints, voice insights and content analytics." />
-        <link rel="canonical" href="https://www.workfloww.ai/content-engine" />
-      </Helmet>
       <style>{`
         :root {
           --accent: #5b4ef5;

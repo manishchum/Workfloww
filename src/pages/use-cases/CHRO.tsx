@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { trackEvent } from "../../Analytics";
@@ -92,11 +91,6 @@ export default function CHRO() {
   const navigate = useNavigate();
   return (
     <div className="bg-white text-slate-900">
-      <Helmet>
-        <title>CHRO Use Case – Reduce Attrition & Build Frontline Capability | Lucid</title>
-        <meta name="description" content="Lucid gives CHROs early attrition signals, capability scores by role, and ramp speed tracking across the frontline. Protect the 3–6x replacement cost of every exit before it happens." />
-        <link rel="canonical" href="https://www.workfloww.ai/chro" />
-      </Helmet>
 
       {/* ── Hero ───────────────────────────────────────────────────────── */}
       <section className="border-b border-slate-200">
