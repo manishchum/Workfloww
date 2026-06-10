@@ -17,7 +17,6 @@ import {
 } from "lucide-react";
 import { useLeadEmail } from "../hooks/useLeadEmail";
 import { trackEvent } from "../Analytics";
-import { Helmet } from "react-helmet-async";
 
 // ─────────────── RESPONSIVE HOOK ───────────────
 const useWindowSize = () => {
@@ -458,7 +457,6 @@ const StoryAct2 = ({ onNext, onSkip }) => {
         background: "#051121",
         color: "#e2e8f0",
         position: isMobile ? "relative" : "fixed",
-        zIndex: 40,
         top: 0,
         left: 0,
         overflowY: isMobile ? "auto" : "hidden",
@@ -1439,74 +1437,31 @@ const FinalCTA = () => {
 };
 
 // ─────────────── MAIN APP ───────────────
-// ─────────────── MAIN APP ───────────────
 export default function Home() {
   const [act, setAct] = React.useState(1);
 
   React.useEffect(() => {
     const isDark = act === 2;
-
-    window.dispatchEvent(
-      new CustomEvent("lucid:header", {
-        detail: { dark: isDark },
-      })
-    );
-
+    window.dispatchEvent(new CustomEvent("lucid:header", { detail: { dark: isDark } }));
     return () => {
-      window.dispatchEvent(
-        new CustomEvent("lucid:header", {
-          detail: { dark: false },
-        })
-      );
+      window.dispatchEvent(new CustomEvent("lucid:header", { detail: { dark: false } }));
     };
   }, [act]);
 
-  const nextAct = () => setAct((p) => p + 1);
+  const nextAct = () => setAct(p => p + 1);
   const skipToMain = () => setAct(3);
 
- if (act === 1) return (
-    <>
-      <Helmet>
-        <title>Lucid – Frontline Execution Platform | Workfloww.AI</title>
-        <meta name="description" content="Lucid is the operating layer between decisions and frontline execution. Deploy training, SOPs & compliance to your frontline via WhatsApp in 48 hours." />
-      </Helmet>
-      <StoryAct1 onNext={nextAct} onSkip={skipToMain} />
-    </>
-  );
-
-  if (act === 2) return (
-    <>
-      <Helmet>
-        <title>Lucid – Frontline Execution Platform | Workfloww.AI</title>
-        <meta name="description" content="Lucid is the operating layer between decisions and frontline execution. Deploy training, SOPs & compliance to your frontline via WhatsApp in 48 hours." />
-      </Helmet>
-      <StoryAct2 onNext={skipToMain} onSkip={skipToMain} />
-    </>
-  );
+  if (act === 1) return <StoryAct1 onNext={nextAct} onSkip={skipToMain} />;
+  if (act === 2) return <StoryAct2 onNext={skipToMain} onSkip={skipToMain} />;
 
   return (
-    <>
-      <Helmet>
-  <title>Lucid – Frontline Execution Platform | Workfloww.AI</title>
-  <meta name="description" content="Lucid is the operating layer between decisions and frontline execution. Deploy training, SOPs & compliance to your frontline via WhatsApp in 48 hours." />
-  <link rel="canonical" href="https://www.workfloww.ai/" />
-</Helmet>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-        style={{
-          fontFamily: "system-ui, -apple-system, sans-serif",
-        }}
-      >
-        <Hero />
-        <StatsStrip />
-        <Comparison />
-        <Capabilities />
-        <HowItWorks />
-        <FinalCTA />
-      </motion.div>
-    </>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+      <Hero />
+      <StatsStrip />
+      <Comparison />
+      <Capabilities />
+      <HowItWorks />
+      <FinalCTA />
+    </motion.div>
   );
 }

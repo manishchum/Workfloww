@@ -114,7 +114,7 @@ export const LUCID_CONTENT = {
   ],
   footer: {
     industries: ["QSR & Retail", "FMCG & Beverages", "Manufacturing & Industrial", "Services & Distribution"],
-    features: ["Lucid Ready", "Lucid Arsenal", "Lucid Field", "Lucid Studio"],
+    features: ["Sales Team", "Sales Tool", "Execution", "Self-Learning", "Seamless Training", "Career Progression", "SOP/Audits", "Rewards & Recognition", "Ticketing"],
     useCases: ["CEO", "CHRO", "Sales Head", "Operations Head", "Compliance & Audits", "Last-Mile Communication", "SOP Deviation"],
     company: ["About", "Certifications", "Contact"]
   },
