@@ -1,0 +1,51 @@
+{
+  "version": "1",
+  "pages": {
+    "home": {
+      "title": "Lucid — Operating layer for frontline execution",
+      "description": "The operating layer between what your organization decides and what actually happens — at the counter, on the floor, in the field, on the line.",
+      "og": {
+        "title": "Lucid — Execution OS for your frontline",
+        "description": "Fast. AI-powered. Deployed everywhere your frontline is.",
+        "image": "https://www.workfloww.ai/images/og-home.png",
+        "url": "https://www.workfloww.ai/"
+      },
+      "content": {
+        "hero": {
+          "subtitle": "WHAT IS LUCID?",
+          "description": "The operating layer between what your organization decides and what actually happens — at the counter, on the floor, in the field, on the line."
+        },
+        "capabilities": {
+          "title": "Six Things That Move Your Numbers.",
+          "items": [
+            { "title": "Convert & Deploy", "desc": "Convert SOPs and deploy via WhatsApp, video, and audio." },
+            { "title": "Execution Visibility", "desc": "Know what your frontline knows — by role, by location, by shift." },
+            { "title": "Compliance at Scale", "desc": "SOP audits, photo capture, corrective actions." }
+          ]
+        }
+      }
+    },
+    "about": {
+      "title": "About Lucid",
+      "description": "Lucid helps organizations close the gap between strategy and frontline execution.",
+      "og": {
+        "title": "About Lucid — Workfloww",
+        "description": "Learn about our mission to improve frontline execution.",
+        "image": "https://www.workfloww.ai/images/og-about.png",
+        "url": "https://www.workfloww.ai/about"
+      },
+      "content": { "summary": "Lucid is built to make your organisation's strategy reach the frontline." }
+    },
+    "contact": {
+      "title": "Contact Us",
+      "description": "Get in touch with the Lucid team for demos and trials.",
+      "og": {
+        "title": "Contact — Lucid",
+        "description": "Contact the Lucid sales and support team.",
+        "image": "https://www.workfloww.ai/images/og-contact.png",
+        "url": "https://www.workfloww.ai/contact"
+      },
+      "content": { "summary": "Reach out for demos, partnerships, or support." }
+    }
+  }
+}
