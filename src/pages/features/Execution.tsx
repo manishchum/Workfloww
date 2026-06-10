@@ -608,7 +608,6 @@ const Execution = () => {
 };
 
 export default Execution;
-
 <style>{`
   @media (min-width: 1024px) {
     section[style*="padding: 2.5rem 1.25rem"] {
