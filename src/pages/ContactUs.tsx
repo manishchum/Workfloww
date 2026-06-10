@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Helmet } from "react-helmet-async";
 import { motion } from "motion/react";
 import { Mail, Phone, MapPin, ArrowRight, MessageSquare, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -131,6 +132,11 @@ export default function Contact() {
 
   return (
     <div className="bg-gradient-to-b from-blue-50 via-white to-blue-50 min-h-screen text-slate-900 flex flex-col items-center justify-center pt-24 pb-12 px-4 sm:pt-28 sm:pb-16 sm:px-6 lg:pt-20 lg:pb-20 lg:px-8">
+      <Helmet>
+        <title>Contact Us – Book a Demo | Lucid by Workfloww.AI</title>
+        <meta name="description" content="Get in touch with the Lucid team. Apply for the 30-day Lighthouse Programme or book a demo to see how Lucid closes the gap between strategy and frontline execution." />
+        <link rel="canonical" href="https://www.workfloww.ai/contact" />
+      </Helmet>
       <div className="w-full flex items-center justify-center">
         <div className="max-w-7xl w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-20 items-center">

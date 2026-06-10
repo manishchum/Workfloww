@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Helmet } from "react-helmet-async";
 import { LayoutGrid, LineChart, Star, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import SectionWrapper from "../../components/SectionWrapper";
@@ -219,6 +220,11 @@ export default function FMCG() {
 
   return (
     <div className="lucid-fmcg">
+      <Helmet>
+        <title>FMCG Sales Execution – Scheme Readiness & Field Visibility | Lucid</title>
+        <meta name="description" content="Lucid gives FMCG sales leaders real-time scheme execution visibility. Track which reps are briefed, which understand the scheme, and which are actively selling — by territory, by Day 1." />
+        <link rel="canonical" href="https://www.workfloww.ai/fmcg" />
+      </Helmet>
       <style>{`
         :root {
           --accent: #5b4ef5;

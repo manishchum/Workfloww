@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { trackEvent } from "../../Analytics";
 
@@ -70,6 +71,11 @@ export default function SalesHead() {
 
   return (
     <div className="bg-white text-slate-900">
+      <Helmet>
+        <title>Sales Head Use Case – Counter Readiness & Launch Execution | Lucid</title>
+        <meta name="description" content="Lucid gives sales heads real-time counter readiness scores, launch execution proof, and location-level gap alerts. Drive +17% close rate lift and protect every launch rupee before the campaign goes live." />
+        <link rel="canonical" href="https://www.workfloww.ai/sales-head" />
+      </Helmet>
 
       {/* ── Hero ───────────────────────────────────────────────────────── */}
       <section className="border-b border-slate-200">
