@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build",
+    "generate-snapshots": "node scripts/generate-snapshots.js",
+    "build": "node scripts/generate-snapshots.js && vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit"
@@ -27,6 +28,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-ga4": "^3.0.1",
+    "react-helmet-async": "^3.0.0",
     "react-router-dom": "^7.14.0",
     "shadcn": "^4.2.0",
     "tailwind-merge": "^3.5.0",
