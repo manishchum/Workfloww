@@ -3,6 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import * as React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
@@ -44,7 +49,7 @@ import Analytics from "./Analytics";
 export default function App() {
   return (
     <Router>
-      <Analytics/>
+      <Analytics />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
