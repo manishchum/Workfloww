@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from "motion/react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -458,6 +459,7 @@ const StoryAct2 = ({ onNext, onSkip }) => {
         color: "#e2e8f0",
         position: isMobile ? "relative" : "fixed",
         top: 0,
+        zIndex: 40,
         left: 0,
         overflowY: isMobile ? "auto" : "hidden",
         overflowX: "hidden",
