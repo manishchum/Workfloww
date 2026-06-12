@@ -1,4 +1,4 @@
-export const RAZORPAY_KEY_ID = import.meta.env.RAZORPAY_KEY_ID as string;
+export const RAZORPAY_KEY_ID = import.meta.env.VITE_RAZORPAY_KEY_ID as string;
 
 // TODO: Replace with your order-creation API endpoint
 export const ORDER_ENDPOINT = '/api/ai-metamind/create-order';

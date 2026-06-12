@@ -1,18 +1,64 @@
-import { RAZORPAY_KEY_ID, PRICE, THANK_YOU_URL, ORDER_ENDPOINT } from './config';
+import {
+  RAZORPAY_KEY_ID,
+  PRICE,
+  THANK_YOU_URL,
+  ORDER_ENDPOINT,
+  VERIFY_ENDPOINT,
+} from './config';
 import { trackInitiateCheckout, trackPurchase } from './pixel';
 
 declare global {
   interface Window {
-    Razorpay: any;
+    Razorpay?: RazorpayConstructor;
   }
 }
 
+type RazorpayPaymentResponse = {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+};
+
+type RazorpayOptions = {
+  key: string;
+  amount: number;
+  currency: string;
+  name: string;
+  description: string;
+  order_id: string;
+  handler: (response: RazorpayPaymentResponse) => void;
+  modal: {
+    ondismiss: () => void;
+  };
+  theme: {
+    color: string;
+  };
+};
+
+type RazorpayInstance = {
+  open: () => void;
+};
+
+type RazorpayConstructor = new (options: RazorpayOptions) => RazorpayInstance;
+
 function loadScript(): Promise<void> {
   return new Promise((resolve, reject) => {
-    if (document.getElementById('rzp-checkout-js')) {
+    if (window.Razorpay) {
       resolve();
       return;
     }
+
+    const existingScript = document.getElementById('rzp-checkout-js');
+    if (existingScript) {
+      existingScript.addEventListener('load', () => resolve(), { once: true });
+      existingScript.addEventListener(
+        'error',
+        () => reject(new Error('Failed to load Razorpay SDK')),
+        { once: true },
+      );
+      return;
+    }
+
     const script = document.createElement('script');
     script.id = 'rzp-checkout-js';
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
@@ -27,7 +73,7 @@ async function verifyPayment(
   razorpay_payment_id: string,
   razorpay_signature: string,
 ): Promise<void> {
-  const res = await fetch('/api/ai-metamind/verify-payment', {
+  const res = await fetch(VERIFY_ENDPOINT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ razorpay_order_id, razorpay_payment_id, razorpay_signature }),
@@ -52,6 +98,10 @@ export async function openCheckout(): Promise<void> {
   try {
     await loadScript();
 
+    if (!window.Razorpay) {
+      throw new Error('Razorpay SDK is unavailable');
+    }
+
     const orderRes = await fetch(ORDER_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -69,7 +119,7 @@ export async function openCheckout(): Promise<void> {
       name: 'AI MetaMind – HR Series',
       description: 'Live AI Upskilling Workshop',
       order_id: order.order_id,
-      handler: (response: any) => {
+      handler: (response) => {
         // Run async verification without blocking Razorpay's handler
         verifyPayment(
           response.razorpay_order_id,

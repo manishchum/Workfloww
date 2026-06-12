@@ -12,6 +12,7 @@ import hashlib
 import hmac
 import json
 import requests
+import time
 from pydantic import BaseModel
 
 # Set up logging
@@ -147,7 +148,6 @@ async def send_email(data: LeadRequest):
 
 RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
 RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_KEY_SECRET")
-RAZORPAY_WEBHOOK_SECRET = os.getenv("RAZORPAY_WEBHOOK_SECRET")
 
 if not all([RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET]):
     logger.warning("Razorpay credentials not configured")
