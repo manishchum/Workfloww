@@ -4,4 +4,4 @@ python-dotenv
 resend
 pydantic
 email-validator
-react-ga4
+# react-ga4
