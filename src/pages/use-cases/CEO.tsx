@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { trackEvent } from "../../Analytics";
@@ -64,6 +65,11 @@ export default function CEO() {
   const navigate = useNavigate();
   return (
     <div className="bg-white text-slate-900">
+      <Helmet>
+        <title>CEO Use Case – Execution Visibility Across All Locations | Lucid</title>
+        <meta name="description" content="Lucid gives CEOs a live execution view across 50–200 locations. See where strategy breaks down, which stores are at risk, and lift conversion in weak zones — in 48 hours." />
+        <link rel="canonical" href="https://www.workfloww.ai/ceo" />
+      </Helmet>
 
       {/* ── Hero ───────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden border-b border-slate-200">
