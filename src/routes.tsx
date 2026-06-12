@@ -33,6 +33,7 @@ import ContentEngine from "./pages/ContentEngine";
 import BuilderLab from "./pages/BuilderLab";
 import LighthouseProgram from "./pages/LighthouseProgram";
 import Pricing from "./pages/Pricing";
+import AiMetamind from "./pages/AiMetamind";
 
 const routes: RouteObject[] = [
   {
@@ -166,6 +167,10 @@ const routes: RouteObject[] = [
   {
     path: "/lighthouse-program",
     element: <Layout><LighthouseProgram /></Layout>,
+  },
+  {
+    path: "/ai-metamind",
+    element: <AiMetamind />
   },
 ];
 

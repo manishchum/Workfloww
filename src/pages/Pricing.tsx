@@ -606,7 +606,7 @@ export default function Pricing() {
         </div>
 
         <div className="mx-auto mt-12 max-w-[1050px]">
-          <Accordion type="single" collapsible className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_14px_32px_rgba(15,23,42,0.08)]">
+          <Accordion className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_14px_32px_rgba(15,23,42,0.08)]">
             {faqs.map((faq) => (
               <AccordionItem
                 key={faq.question}

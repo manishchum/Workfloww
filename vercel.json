@@ -3,6 +3,11 @@
     {
       "source": "/send-email",
       "destination": "/api/main"
-    }
+    },
+
+    {
+      "source": "/api/ai-metamind/:path*",
+      "destination": "/api/main"
+    }  
   ]
 }

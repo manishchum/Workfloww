@@ -3,12 +3,16 @@ import logging
 import os
 from pathlib import Path
 from typing import Optional
-
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr, Field
 import resend
+import hashlib
+import hmac
+import json
+import requests
+from pydantic import BaseModel
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -136,4 +140,124 @@ async def send_email(data: LeadRequest):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to send the lead email due to a backend system error. Please try again later."
+        )
+
+
+# ============= AI METAMIND RAZORPAY INTEGRATION =============
+
+RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
+RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_KEY_SECRET")
+RAZORPAY_WEBHOOK_SECRET = os.getenv("RAZORPAY_WEBHOOK_SECRET")
+
+if not all([RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET]):
+    logger.warning("Razorpay credentials not configured")
+
+
+class CreateOrderRequest(BaseModel):
+    amount: int  # Amount in paise (e.g., 49900 for ₹499)
+    currency: str = "INR"
+
+
+class VerifyPaymentRequest(BaseModel):
+    razorpay_order_id: str
+    razorpay_payment_id: str
+    razorpay_signature: str
+
+
+@app.post("/api/ai-metamind/create-order")
+async def create_razorpay_order(request: CreateOrderRequest):
+    """
+    Create a Razorpay order for AI MetaMind workshop
+    """
+    if not RAZORPAY_KEY_ID or not RAZORPAY_KEY_SECRET:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Razorpay not configured"
+        )
+
+    try:
+        # Call Razorpay API to create order
+        auth = (RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET)
+        response = requests.post(
+            "https://api.razorpay.com/v1/orders",
+            auth=auth,
+            json={
+                "amount": request.amount,
+                "currency": request.currency,
+                "receipt": f"ai-metamind-{int(time.time())}",
+            },
+            timeout=10
+        )
+
+        if response.status_code != 200:
+            logger.error(f"Razorpay API error: {response.text}")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Failed to create order"
+            )
+
+        data = response.json()
+        logger.info(f"Order created: {data.get('id')}")
+
+        return {
+            "order_id": data.get("id"),
+            "amount": data.get("amount"),
+            "currency": data.get("currency"),
+        }
+
+    except requests.RequestException as e:
+        logger.error(f"Razorpay request failed: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Payment service unavailable"
+        )
+
+
+@app.post("/api/ai-metamind/verify-payment")
+async def verify_razorpay_payment(request: VerifyPaymentRequest):
+    """
+    Verify Razorpay payment signature
+    """
+    if not RAZORPAY_KEY_SECRET:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Razorpay not configured"
+        )
+
+    try:
+        # Verify signature
+        message = f"{request.razorpay_order_id}|{request.razorpay_payment_id}"
+        signature = hmac.new(
+            RAZORPAY_KEY_SECRET.encode(),
+            message.encode(),
+            hashlib.sha256
+        ).hexdigest()
+
+        if signature != request.razorpay_signature:
+            logger.warning(f"Invalid signature for payment {request.razorpay_payment_id}")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Invalid payment signature"
+            )
+
+        logger.info(f"Payment verified: {request.razorpay_payment_id}")
+
+        # TODO: Save payment to database, send confirmation email, etc.
+        # Example:
+        # await db.payments.insert({
+        #     "razorpay_payment_id": request.razorpay_payment_id,
+        #     "razorpay_order_id": request.razorpay_order_id,
+        #     "created_at": datetime.now(),
+        #     "status": "verified"
+        # })
+
+        return {"verified": True, "payment_id": request.razorpay_payment_id}
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Payment verification failed: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Payment verification failed"
         )
