@@ -1,12 +1,3 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
 
 import * as React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";

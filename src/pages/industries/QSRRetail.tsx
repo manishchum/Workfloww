@@ -7,6 +7,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import SectionWrapper from "../../components/SectionWrapper";
 import { trackEvent } from "../../Analytics";
+import { Helmet } from "react-helmet-async";
 
 const TAGS = [
   "QSR chains",
@@ -191,6 +192,11 @@ export default function QSRRetail() {
 
   return (
     <div className="lucid-qsr">
+      <Helmet>
+        <title>QSR & Retail Execution – Floor Readiness & Compliance | Lucid</title>
+        <meta name="description" content="Lucid gives QSR and retail operations leaders real-time execution visibility. Track launch readiness, audit compliance, and associate performance by outlet — before revenue is lost at the counter." />
+        <link rel="canonical" href="https://www.workfloww.ai/qsr-retail" />
+      </Helmet>
       <style>{`
         :root {
           --accent: #5b4ef5;

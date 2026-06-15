@@ -808,12 +808,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   {LUCID_CONTENT.footer.features.map((item) => {
                     const getLink = (name: string) => {
                       switch (name) {
-                        case "Self-Learning": return "/features/self-learning";
-                        case "Seamless Training": return "/features/seamless-training";
-                        case "Career Progression": return "/features/career-progression";
-                        case "SOP/Audits": return "/features/sop-audits";
-                        case "Rewards & Recognition": return "/features/rewards-recognition";
-                        case "Ticketing": return "/features/ticketing";
+                        case "Lucid Ready": return "/features/sales-team";
+                        case "Lucid Arsenal": return "/features/sales-tool";
+                        case "Lucid Field": return "/features/execution";
+                        case "Lucid Studio": return "/features/content-engine";
                         default: return null;
                       }
                     };
