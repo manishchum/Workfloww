@@ -40,7 +40,7 @@ const SalesTeam = () => {
 
     navigate("/contact");
   }}
-  className="w-fit px-8 py-6 text-base font-semibold rounded-xl"
+  className="w-fit px-8 py-4 text-base font-semibold rounded-xl"
   style={{ backgroundColor: "#5B50E8" }}
 >
   Book Demo
@@ -48,12 +48,13 @@ const SalesTeam = () => {
       </div>
 
       {/* Right */}
-      <div className="flex justify-center lg:justify-end items-center">
+      <div className="flex justify-center lg:justify-end items-start -mt-32">
         <div className="w-full max-w-4xl">
           <img
-            src="/images/salesteam1.png"
+            src="/images/screen.png"
+            
             alt="Lucid Interface"
-            className="w-full h-auto rounded-[32px] shadow-2xl object-contain"
+            className="w-full h-full rounded-[32px] shadow-2xl object-contain"
           />
         </div>
       </div>
@@ -314,9 +315,9 @@ const SalesTeam = () => {
       <div className="flex justify-center lg:justify-end items-center">
         <div className="w-full max-w-xl">
           <img
-            src="/images/salesteam4.png"
+            src="/images/salesTeam-4.png"
             alt="Onboarding Sprints"
-            className="w-full h-auto rounded-[32px] shadow-2xl object-contain"
+            className="w-full h-full rounded-[32px] shadow-2xl object-contain"
           />
         </div>
       </div>
@@ -481,7 +482,7 @@ const SalesTeam = () => {
       <div className="flex justify-center lg:justify-start items-center order-2 lg:order-1">
         <div className="w-full max-w-xl">
           <img
-            src="/images/salesteam7.png"
+            src="/images/salesTeam-7.png"
             alt="Sales KPI Dashboard"
             className="w-full h-auto rounded-[32px] shadow-2xl object-contain"
           />

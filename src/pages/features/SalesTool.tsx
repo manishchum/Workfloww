@@ -111,41 +111,11 @@ const SalesTool = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative mx-auto w-full max-w-sm"
             >
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-2xl overflow-hidden">
-                {/* Topbar */}
-                <div className="bg-[#1E3A5F] px-4 py-3 flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-[#6357d4]/40 flex items-center justify-center text-base">⚔️</div>
-                  <div className="flex-1">
-                    <div className="text-white font-semibold text-sm">Sales Arsenal · Insurance · Mumbai</div>
-                    <div className="text-white/60 text-xs">10 tools · Updated today from field insights</div>
-                  </div>
-                  <span className="text-[10px] font-bold px-2 py-1 bg-green-500 text-white rounded-full">LIVE</span>
-                </div>
-                {/* Tool Grid */}
-                <div className="p-4 bg-gray-50">
-                  <div className="grid grid-cols-2 gap-3 mb-3">
-                    {[
-                      { icon: "⚔️", name: "Battle Card", meta: "vs HDFC Life · 2hrs ago", badge: "READY", badgeColor: "bg-green-100 text-green-700" },
-                      { icon: "🛡️", name: "Objection Handler", meta: "Top 10 · This week's field data", badge: "READY", badgeColor: "bg-green-100 text-green-700" },
-                      { icon: "🗣️", name: "Talk Track", meta: "Premium Plan · Branch visit", badge: "NEW", badgeColor: "bg-[#6357d4] text-white" },
-                      { icon: "💰", name: "Pricing Guardrails", meta: "Q3 · Approved limits", badge: "READY", badgeColor: "bg-green-100 text-green-700" },
-                    ].map((tool, i) => (
-                      <div key={i} className="bg-white rounded-xl p-3 border border-gray-100 flex flex-col gap-1.5 shadow-sm">
-                        <span className="text-base">{tool.icon}</span>
-                        <div>
-                          <div className="text-xs font-bold text-navy">{tool.name}</div>
-                          <div className="text-[10px] text-gray-500 leading-tight">{tool.meta}</div>
-                        </div>
-                        <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full w-fit ${tool.badgeColor}`}>{tool.badge}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="bg-[#6357d4] rounded-xl px-4 py-3 flex items-center gap-3">
-                    <span className="text-white text-sm">⚡</span>
-                    <span className="text-white text-xs font-semibold">6 more tools available · All updated from this week's field intelligence</span>
-                  </div>
-                </div>
-              </div>
+              <img
+                src="/images/Lucid arsenals.png"
+                alt="Sales Arsenal"
+                className="w-[600px] h-[400px] rounded-2xl shadow-2xl object-contain"
+              />
             </motion.div>
           </div>
         </div>
