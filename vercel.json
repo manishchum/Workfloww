@@ -8,6 +8,10 @@
     {
       "source": "/api/ai-metamind/:path*",
       "destination": "/api/main"
-    }  
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }

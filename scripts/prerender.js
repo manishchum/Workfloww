@@ -3,6 +3,11 @@ import path from 'path';
 import Prerenderer from '@prerenderer/prerenderer';
 import PuppeteerRenderer from '@prerenderer/renderer-puppeteer';
 
+if (process.env.VERCEL === '1') {
+  console.log('Skipping Puppeteer prerender on Vercel; SPA routes use the index.html rewrite.');
+  process.exit(0);
+}
+
 /**
  * Convert camelCase and PascalCase to kebab-case
  */
