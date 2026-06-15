@@ -145,7 +145,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const isDarkHeader =
     forceDarkHeader ||
     (!scrolled && isDarkRoute);
-  const hideGlobalNav = location.pathname.startsWith("/ai-metamind");
+  const hideGlobalNav = location.pathname === "/ai-metamind";
 
   const CAL_USERNAME = "manish-chum-ovkoyi";
   const CAL_EVENT_SLUG = "book-a-demo";
@@ -780,7 +780,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </Dialog>
 
       {/* Footer */}
-      {!hideGlobalNav && isMenuOpen && (
+      {!hideGlobalNav && (
       <footer className="bg-white border-t border-slate-200 py-12 text-slate-900">
         <div className="max-w-[1180px] mx-auto w-full px-4 sm:px-6">
           <div className="mb-8">
