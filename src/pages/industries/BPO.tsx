@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
+import { useNavigate } from "react-router-dom";
 import {
   CheckCircle2,
   ArrowRight,
@@ -20,7 +20,8 @@ import { Label } from "@/components/ui/label";
 import { trackEvent } from "../../Analytics";
 
 export default function BPO() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+
   const handleDemoSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert("Demo request submitted! Our team will contact you shortly.");

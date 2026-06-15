@@ -94,7 +94,6 @@ export default function LighthouseProgram() {
         <meta name="description" content="The Lighthouse Program is an exclusive 30-day pilot for revenue leaders. Deploy Lucid, align your frontline, and see measurable sales execution results before you commit." />
         <link rel="canonical" href="https://www.workfloww.ai/lighthouse-program" />
       </Helmet>
-
       {/* ── Hero ────────────────────────────────────────────────────────── */}
       <section style={{ maxWidth: "1100px", margin: "0 auto", padding: "3rem 1.25rem 2rem" }} className="relative lucid-container flex flex-col lg:flex-row items-center gap-6 sm:gap-8 lg:gap-12 min-h-fit lg:min-h-[85vh] px-0 py-0 sm:py-0 md:py-0 lg:py-0 xl:py-0">
         {/* Glow */}

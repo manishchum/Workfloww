@@ -77,7 +77,6 @@ export default function BuilderLab() {
         <meta name="description" content="Builder Labs is a community for people who want to build with AI. Get proven workflows, templates, mentorship and peer support to solve real business problems with AI." />
         <link rel="canonical" href="https://www.workfloww.ai/builder-labs" />
       </Helmet>
-
       {/* ── Hero ───────────────────────────────────────────────────────── */}
       <section style={{ padding: "5rem 1.25rem 3rem" }} className="relative overflow-hidden bg-white min-h-[100vh] flex items-center pt-24">
         <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Helmet } from "react-helmet-async";
 import {
   Users,
   BarChart3,
@@ -8,6 +7,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import SectionWrapper from "../../components/SectionWrapper";
 import { trackEvent } from "../../Analytics";
+import { Helmet } from "react-helmet-async";
 
 const TAGS = [
   "QSR chains",

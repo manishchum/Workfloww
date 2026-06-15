@@ -13,7 +13,7 @@ if (GA_ID) {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <HelmetProvider>
+     <HelmetProvider>
       <App />
     </HelmetProvider>
   </StrictMode>

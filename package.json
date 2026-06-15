@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "generate-snapshots": "node scripts/generate-snapshots.js",
-    "build": "node scripts/generate-snapshots.js && vite build",
+    "build": "vite build && node scripts/prerender.js",
+    "prerender": "node scripts/prerender.js",
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit"
@@ -36,7 +36,10 @@
     "vite": "^6.2.0"
   },
   "devDependencies": {
+    "@prerenderer/prerenderer": "^0.7.2",
+    "@prerenderer/renderer-puppeteer": "^0.2.0",
     "@types/node": "^22.14.0",
+    "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.21",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",

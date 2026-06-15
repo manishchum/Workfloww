@@ -100,6 +100,7 @@ export default function OperationsHead() {
   const navigate = useNavigate();
   return (
     <div className="bg-white text-slate-900">
+
       <Helmet>
         <title>Operations Head Use Case – Compliance & Execution Visibility | Lucid</title>
         <meta name="description" content="Lucid gives operations heads real-time compliance visibility across every location and shift. Close recurring deviations, enforce SOPs, and track corrective actions to resolution — in 48 hours." />

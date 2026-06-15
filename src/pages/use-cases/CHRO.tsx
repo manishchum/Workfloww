@@ -97,7 +97,6 @@ export default function CHRO() {
         <meta name="description" content="Lucid gives CHROs early attrition signals, capability scores by role, and ramp speed tracking across the frontline. Protect the 3–6x replacement cost of every exit before it happens." />
         <link rel="canonical" href="https://www.workfloww.ai/chro" />
       </Helmet>
-
       {/* ── Hero ───────────────────────────────────────────────────────── */}
       <section className="border-b border-slate-200">
         <div className={sp}>

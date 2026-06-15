@@ -10,6 +10,7 @@ const Execution = () => {
 
   return (
     <div className="bg-white min-h-screen font-sans text-slate-900">
+
       <Helmet>
         <title>Execution – Close the Gap Between Training and Action | Lucid</title>
         <meta name="description" content="Lucid's execution layer nudges, verifies and scores field behavior. Automated nudge engine, KPI-mapped performance, execution proof via checklist and ground-level voice insights." />

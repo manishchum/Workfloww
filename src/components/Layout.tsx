@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { trackEvent } from "../Analytics";
 import {
   Sparkles,
   Menu,
@@ -46,6 +45,7 @@ import LinkedInLeadPopup from "./LinkedInLeadPopup";
 import { Logo } from "./Logo";
 import { LUCID_CONTENT } from "../constants";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "../Analytics";
 
 // ---------------------------------------------------------------------------
 // Validation Functions - Production-friendly
@@ -145,6 +145,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const isDarkHeader =
     forceDarkHeader ||
     (!scrolled && isDarkRoute);
+  const hideGlobalNav = location.pathname.startsWith("/ai-metamind");
 
   const CAL_USERNAME = "manish-chum-ovkoyi";
   const CAL_EVENT_SLUG = "book-a-demo";
@@ -309,6 +310,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-500/20 selection:text-blue-600">
       {/* Navigation */}
+      {!hideGlobalNav && (
       <nav
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
@@ -456,17 +458,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="hidden md:flex items-center gap-4">
             <Button
   onClick={() => {
-  try {
     trackEvent(
       "Lead",
       "book_demo_click",
       "CTA Button"
     );
-  } catch (err) {
-    console.error("Analytics failed:", err);
-  }
-  navigate("/contact");
-}}
+
+    navigate("/contact");
+  }}
   className="h-10 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold shadow-md shadow-blue-600/20 transition-colors"
 >
   Book a Demo
@@ -482,10 +481,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </button>
         </div>
       </nav>
+      )}
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
-        {isMenuOpen && (
+        {!hideGlobalNav && isMenuOpen && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -780,6 +780,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </Dialog>
 
       {/* Footer */}
+      {!hideGlobalNav && isMenuOpen && (
       <footer className="bg-white border-t border-slate-200 py-12 text-slate-900">
         <div className="max-w-[1180px] mx-auto w-full px-4 sm:px-6">
           <div className="mb-8">
@@ -972,6 +973,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </footer>
+      )}
     </div>
   );
 }

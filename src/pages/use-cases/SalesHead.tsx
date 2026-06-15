@@ -71,6 +71,7 @@ export default function SalesHead() {
 
   return (
     <div className="bg-white text-slate-900">
+
       <Helmet>
         <title>Sales Head Use Case – Counter Readiness & Launch Execution | Lucid</title>
         <meta name="description" content="Lucid gives sales heads real-time counter readiness scores, launch execution proof, and location-level gap alerts. Drive +17% close rate lift and protect every launch rupee before the campaign goes live." />

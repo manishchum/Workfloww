@@ -1,7 +1,3 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
 
 import * as React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -40,11 +36,12 @@ import BuilderLab from "./pages/BuilderLab";
 import LighthouseProgram from "./pages/LighthouseProgram";
 import Pricing from "./pages/Pricing";
 import Analytics from "./Analytics";
+import AiMetamind from "./pages/AiMetamind";
 
 export default function App() {
   return (
     <Router>
-      <Analytics/>
+      <Analytics />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -80,6 +77,7 @@ export default function App() {
           <Route path="/features/content-engine" element={<ContentEngine />} />
           <Route path="/builder-lab" element={<BuilderLab />} />
           <Route path="/lighthouse-program" element={<LighthouseProgram />} />
+          <Route path="/ai-metamind" element={<AiMetamind />} />
         </Routes>
       </Layout>
     </Router>
