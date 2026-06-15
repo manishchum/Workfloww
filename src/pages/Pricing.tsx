@@ -2,7 +2,6 @@ import * as React from "react";
 import { motion } from "motion/react";
 import {
   ArrowRight,
-  Check,
   CircleHelp,
   Mic,
   MessageSquare,
@@ -10,7 +9,6 @@ import {
   Phone,
   Plus,
   Sparkles,
-  X,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -56,6 +54,39 @@ type CapabilityGroup = {
   title: string;
   rows: CapabilityRow[];
 };
+
+function CheckMark({ compact = false }: { compact?: boolean }) {
+  const size = compact ? "h-4 w-4" : "h-10 w-10";
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className={size}
+      fill="none"
+    >
+      <path
+        d="M4.5 12.4l5 5.1L19.8 5.8"
+        stroke="currentColor"
+        strokeWidth={compact ? 3.1 : 3.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function CrossMark() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-10 w-10" fill="none">
+      <path
+        d="M6.2 6.2l11.6 11.6M17.8 6.2L6.2 17.8"
+        stroke="currentColor"
+        strokeWidth={3.5}
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
 
 const plans: Plan[] = [
   {
@@ -176,6 +207,12 @@ const capabilityGroups: CapabilityGroup[] = [
     title: "AI & CONVERSATIONAL TOOLS",
     rows: [
       {
+        label: "Expert in the loop",
+        standard: { type: "check" },
+        advanced: { type: "check" },
+        pro: { type: "check" },
+      },
+      {
         label: "Voice & Text Chat Assistant",
         standard: { type: "none" },
         advanced: { type: "check" },
@@ -187,12 +224,7 @@ const capabilityGroups: CapabilityGroup[] = [
         advanced: { type: "check" },
         pro: { type: "check" },
       },
-      {
-        label: "Expert in the loop",
-        standard: { type: "none" },
-        advanced: { type: "none" },
-        pro: { type: "check" },
-      },
+      
     ],
   },
   {
@@ -254,8 +286,8 @@ const faqs = [
 function renderCell(cell: CapabilityCell) {
   if (cell.type === "check") {
     return (
-      <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border-2 border-emerald-500 bg-emerald-50">
-        <Check className="h-5 w-5 text-emerald-600 stroke-[3]" />
+      <span className="inline-flex h-12 w-12 items-center justify-center text-[#1f9d55]">
+        <CheckMark />
       </span>
     );
   }
@@ -273,8 +305,8 @@ function renderCell(cell: CapabilityCell) {
   // );
 
   return (
-    <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-red-200 bg-red-50">
-      <X className="h-5 w-5 stroke-[3] text-red-500" />
+    <span className="inline-flex h-12 w-12 items-center justify-center text-[#ef233c]">
+      <CrossMark />
     </span>
   );
 }
@@ -301,11 +333,11 @@ function FeatureList({ plan }: { plan: Plan }) {
         {plan.features.map((feature) => (
           <li key={feature.label} className="flex items-start gap-3">
             <span
-              className={`mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full ${
-                plan.dark ? "bg-white/10 text-white" : "bg-emerald-50 text-emerald-500"
+              className={`mt-0.5 inline-flex h-5 w-5 items-center justify-center ${
+                plan.dark ? "text-white" : "text-emerald-500"
               }`}
             >
-              <Check className="h-3.5 w-3.5" />
+              <CheckMark compact />
             </span>
             <span
               className={`text-[15px] leading-6 ${
@@ -606,7 +638,7 @@ export default function Pricing() {
         </div>
 
         <div className="mx-auto mt-12 max-w-[1050px]">
-          <Accordion type="single" collapsible className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_14px_32px_rgba(15,23,42,0.08)]">
+          <Accordion className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_14px_32px_rgba(15,23,42,0.08)]">
             {faqs.map((faq) => (
               <AccordionItem
                 key={faq.question}

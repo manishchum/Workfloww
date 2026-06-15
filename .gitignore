@@ -8,4 +8,7 @@ coverage/
 !.env.example
 .env.local
 venv
+__pycache__/
+*.pyc
+api/ai_metamind_payments.jsonl
 

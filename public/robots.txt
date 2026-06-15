@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /send-email
+Sitemap: https://workfloww.ai/sitemap.xml

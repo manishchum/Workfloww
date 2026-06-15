@@ -1,12 +1,13 @@
 {
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/main.py"
-    },
-    {
       "source": "/send-email",
-      "destination": "/api/main.py"
+      "destination": "/api/main"
+    },
+
+    {
+      "source": "/api/ai-metamind/:path*",
+      "destination": "/api/main"
     },
     {
       "source": "/(.*)",

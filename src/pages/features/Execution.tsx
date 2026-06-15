@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from "react-helmet-async";
 import { motion } from 'motion/react';
 import { ArrowRight, Zap, Target, ClipboardCheck, BookOpen, Trophy, CheckCircle2, TrendingUp, AlertCircle, Clock, Smartphone, BarChart3, Users, Shield, CalendarClock, MessageCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +10,12 @@ const Execution = () => {
 
   return (
     <div className="bg-white min-h-screen font-sans text-slate-900">
+
+      <Helmet>
+        <title>Execution – Close the Gap Between Training and Action | Lucid</title>
+        <meta name="description" content="Lucid's execution layer nudges, verifies and scores field behavior. Automated nudge engine, KPI-mapped performance, execution proof via checklist and ground-level voice insights." />
+        <link rel="canonical" href="https://www.workfloww.ai/execution" />
+      </Helmet>
 
       {/* 1. HERO SECTION */}
 <section style={{ padding: "5rem 1.25rem 3rem" }} className="relative overflow-hidden bg-gradient-to-b from-emerald-50/50 to-white pt-24">
@@ -48,80 +55,13 @@ const Execution = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative mx-auto w-full max-w-[340px]"
+              className="relative mx-auto w-full max-w-[450px]"
             >
-              <div className="absolute inset-0 bg-emerald-500/10 blur-3xl rounded-full"></div>
-              <div className="relative bg-[#f7f8fa] border-[8px] border-slate-900 rounded-[3rem] shadow-2xl overflow-hidden h-[700px] flex flex-col">
-                {/* Phone Header */}
-                <div className="bg-[#1a5e40] px-6 pt-12 pb-4 text-white relative shadow-md z-10">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                      <Zap className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-lg leading-tight">Execution Nudge</h3>
-                      <p className="text-emerald-100 text-sm opacity-90">Pre-shift · 9:00 AM</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Phone Content / Nudge Rows */}
-                <div className="flex-1 p-4 space-y-4 overflow-hidden relative">
-                  <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #000 1px, transparent 0)', backgroundSize: '16px 16px' }}></div>
-
-                  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.5 }} className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 relative z-10">
-                    <div className="flex items-start gap-3">
-                      <div className="text-2xl mt-0.5">🎯</div>
-                      <div>
-                        <div className="flex justify-between items-start mb-1">
-                          <h4 className="font-bold text-slate-900">Today's Target Reminder</h4>
-                          <span className="text-xs text-slate-400">9:00</span>
-                        </div>
-                        <p className="text-sm text-slate-600">4 demos · 2 follow-ups · 1 referral ask</p>
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.7 }} className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 relative z-10">
-                    <div className="flex items-start gap-3">
-                      <div className="text-2xl mt-0.5">📋</div>
-                      <div>
-                        <div className="flex justify-between items-start mb-1">
-                          <h4 className="font-bold text-slate-900">Pre-Visit Checklist Due</h4>
-                          <span className="text-xs text-slate-400">9:00</span>
-                        </div>
-                        <p className="text-sm text-slate-600">TATA AIG visit at 10:30 AM — 3 items pending</p>
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.9 }} className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 relative z-10">
-                    <div className="flex items-start gap-3">
-                      <div className="text-2xl mt-0.5">📚</div>
-                      <div>
-                        <div className="flex justify-between items-start mb-1">
-                          <h4 className="font-bold text-slate-900">Sprint Reminder</h4>
-                          <span className="text-xs text-slate-400">9:00</span>
-                        </div>
-                        <p className="text-sm text-slate-600">Compliance update — 6 mins — complete before 11 AM</p>
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.1 }} className="bg-white rounded-2xl p-4 shadow-sm border border-emerald-100 relative z-10">
-                    <div className="flex items-start gap-3">
-                      <div className="text-2xl mt-0.5">🏆</div>
-                      <div>
-                        <div className="flex justify-between items-start mb-1">
-                          <h4 className="font-bold text-slate-900">Leaderboard Update</h4>
-                          <span className="text-xs text-emerald-600 font-medium">9:01</span>
-                        </div>
-                        <p className="text-sm text-emerald-700 font-medium">You're #3 in Mumbai West this week!</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
-              </div>
+              <img
+                src="/images/lucid field.png"
+                alt="Execution Nudge"
+                className="w-full h-auto rounded-3xl shadow-2xl object-contain"
+              />
             </motion.div>
           </div>
         </div>
@@ -348,63 +288,13 @@ const Execution = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="order-1 lg:order-2 mx-auto w-full max-w-sm"
+              className="order-1 lg:order-2 mx-auto w-full max-w-xl"
             >
-              <div className="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
-                {/* Header */}
-                <div className="bg-[#065F46] px-5 py-4 flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-sm shrink-0">✅</div>
-                  <div className="flex-1">
-                    <div className="text-white font-semibold text-sm">Execution Checklist</div>
-                    <div className="text-white/60 text-xs">Post-Visit · TATA AIG Andheri</div>
-                  </div>
-                  <span className="text-xs font-bold bg-white/20 text-white px-2 py-1 rounded-full">3/5</span>
-                </div>
-
-                {/* Chat Body */}
-                <div className="bg-[#ece5dd] p-4 flex flex-col gap-3">
-                  {/* Bot message */}
-                  <div className="flex items-end gap-2 max-w-[85%]">
-                    <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs shrink-0">L</div>
-                    <div className="bg-white rounded-xl rounded-tl-none px-4 py-3 text-sm text-slate-800 shadow-sm">
-                      ✅ Visit complete! Please confirm the following before you leave:
-                    </div>
-                  </div>
-
-                  {/* Checklist Card */}
-                  <div className="bg-white rounded-xl px-4 py-3 border border-slate-100 shadow-sm flex flex-col gap-2.5 ml-9">
-                    {[
-                      { done: true, label: "Product brochures left at counter" },
-                      { done: true, label: "Demo completed with branch manager" },
-                      { done: true, label: "Follow-up date confirmed" },
-                      { done: false, label: "Upload photo of display setup" },
-                      { done: false, label: "Collect signed feedback form" },
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center gap-2.5">
-                        <div className={`w-4 h-4 rounded flex items-center justify-center shrink-0 text-[10px] font-bold ${item.done ? 'bg-emerald-100 text-emerald-700' : 'border border-amber-300 bg-amber-50'}`}>
-                          {item.done ? '✓' : ''}
-                        </div>
-                        <span className={`text-xs ${item.done ? 'text-slate-800' : 'text-slate-400'}`}>{item.label}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* User reply */}
-                  <div className="self-end max-w-[75%]">
-                    <div className="bg-[#d9fdd3] rounded-xl rounded-tr-none px-4 py-2 text-sm text-slate-800 shadow-sm">
-                      📸 [Photo uploaded]
-                    </div>
-                  </div>
-
-                  {/* Bot confirmation */}
-                  <div className="flex items-end gap-2 max-w-[85%]">
-                    <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs shrink-0">L</div>
-                    <div className="bg-emerald-100 rounded-xl rounded-tl-none px-4 py-3 text-sm text-emerald-900 font-medium shadow-sm">
-                      ✅ Photo received! 4 of 5 done. One task remaining.
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <img
+                src="/images/execution checklist.png"
+                alt="Execution Checklist"
+                className="w-full h-[650px] rounded-3xl shadow-xl"
+              />
             </motion.div>
           </div>
         </div>

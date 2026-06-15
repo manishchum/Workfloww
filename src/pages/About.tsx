@@ -1,10 +1,16 @@
 import * as React from "react";
+import { Helmet } from "react-helmet-async";
 import { motion } from "motion/react";
 import { Linkedin } from "lucide-react";
 
 export default function About() {
   return (
     <div className="lh-page min-h-screen pt-24">
+      <Helmet>
+        <title>About Us – Workfloww.AI | The Team Behind Lucid</title>
+        <meta name="description" content="Meet the team behind Lucid. Workfloww.AI works at the intersection of AI and organisation performance — consulting on AI deployment and building products that prove it's possible." />
+        <link rel="canonical" href="https://www.workfloww.ai/about" />
+      </Helmet>
       {/* ── Hero ────────────────────────────────────────────────────────── */}
       <section
         className="bg-white"

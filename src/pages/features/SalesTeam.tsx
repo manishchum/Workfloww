@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { trackEvent } from "../../Analytics";
@@ -10,6 +11,13 @@ const SalesTeam = () => {
 
   return (
     <div className="w-full bg-white pt-24">
+
+      <Helmet>
+        <title>Sales Team Enablement – Build a Field-Ready Sales Team | Lucid</title>
+        <meta name="description" content="Lucid builds field-ready sales teams with onboarding sprints, skill assessments, AI roleplay, voice agents and KPI tracking. Deploy via WhatsApp in 48 hours." />
+        <link rel="canonical" href="https://www.workfloww.ai/sales-team" />
+      </Helmet>
+      
       {/* ===== 1. HERO SECTION ===== */}
      <section style={{ padding: "9.5rem 1.25rem 11rem" }} className="relative w-full flex items-center overflow-hidden bg-white">
   <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%" }}>
@@ -40,7 +48,7 @@ const SalesTeam = () => {
 
     navigate("/contact");
   }}
-  className="w-fit px-8 py-6 text-base font-semibold rounded-xl"
+  className="w-fit px-8 py-4 text-base font-semibold rounded-xl"
   style={{ backgroundColor: "#5B50E8" }}
 >
   Book Demo
@@ -48,12 +56,13 @@ const SalesTeam = () => {
       </div>
 
       {/* Right */}
-      <div className="flex justify-center lg:justify-end items-center">
+      <div className="flex justify-center lg:justify-end items-start -mt-32">
         <div className="w-full max-w-4xl">
           <img
-            src="/images/salesteam1.png"
+            src="/images/screen.png"
+            
             alt="Lucid Interface"
-            className="w-full h-auto rounded-[32px] shadow-2xl object-contain"
+            className="w-full h-full rounded-[32px] shadow-2xl object-contain"
           />
         </div>
       </div>
@@ -314,9 +323,9 @@ const SalesTeam = () => {
       <div className="flex justify-center lg:justify-end items-center">
         <div className="w-full max-w-xl">
           <img
-            src="/images/salesteam4.png"
+            src="/images/salesTeam-4.png"
             alt="Onboarding Sprints"
-            className="w-full h-auto rounded-[32px] shadow-2xl object-contain"
+            className="w-full h-full rounded-[32px] shadow-2xl object-contain"
           />
         </div>
       </div>
@@ -481,7 +490,7 @@ const SalesTeam = () => {
       <div className="flex justify-center lg:justify-start items-center order-2 lg:order-1">
         <div className="w-full max-w-xl">
           <img
-            src="/images/salesteam7.png"
+            src="/images/salesTeam-7.png"
             alt="Sales KPI Dashboard"
             className="w-full h-auto rounded-[32px] shadow-2xl object-contain"
           />
