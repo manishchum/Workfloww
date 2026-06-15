@@ -4,6 +4,7 @@ import {
   THANK_YOU_URL,
   ORDER_ENDPOINT,
   VERIFY_ENDPOINT,
+  FAILURE_ENDPOINT,
 } from './config';
 import { trackInitiateCheckout, trackPurchase } from './pixel';
 
@@ -37,9 +38,24 @@ type RazorpayOptions = {
 
 type RazorpayInstance = {
   open: () => void;
+  on: (event: 'payment.failed', handler: (response: RazorpayFailureResponse) => void) => void;
 };
 
 type RazorpayConstructor = new (options: RazorpayOptions) => RazorpayInstance;
+
+type RazorpayFailureResponse = {
+  error?: {
+    code?: string;
+    description?: string;
+    source?: string;
+    step?: string;
+    reason?: string;
+    metadata?: {
+      order_id?: string;
+      payment_id?: string;
+    };
+  };
+};
 
 function loadScript(): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -86,6 +102,22 @@ async function verifyPayment(
   }
 }
 
+async function recordPaymentFailure(response: RazorpayFailureResponse): Promise<void> {
+  await fetch(FAILURE_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      code: response.error?.code,
+      description: response.error?.description,
+      source: response.error?.source,
+      step: response.error?.step,
+      reason: response.error?.reason,
+      razorpay_order_id: response.error?.metadata?.order_id,
+      razorpay_payment_id: response.error?.metadata?.payment_id,
+    }),
+  });
+}
+
 export async function openCheckout(): Promise<void> {
   if (!RAZORPAY_KEY_ID) {
     console.error('[openCheckout] Razorpay key not configured');
@@ -105,7 +137,7 @@ export async function openCheckout(): Promise<void> {
     const orderRes = await fetch(ORDER_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: PRICE * 100, currency: 'INR' }),
+      body: JSON.stringify({}),
     });
 
     if (!orderRes.ok) throw new Error(`Order API returned ${orderRes.status}`);
@@ -142,6 +174,17 @@ export async function openCheckout(): Promise<void> {
         ondismiss: () => console.log('[checkout] dismissed by user'),
       },
       theme: { color: '#6357d4' },
+    });
+
+    rzp.on('payment.failed', (response) => {
+      recordPaymentFailure(response).catch((err) => {
+        console.error('[payment-failed]', err);
+      });
+
+      alert(
+        response.error?.description ??
+          'Payment failed. Please try again or use another payment method.',
+      );
     });
 
     rzp.open();

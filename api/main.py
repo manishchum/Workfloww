@@ -2,7 +2,8 @@ import html
 import logging
 import os
 from pathlib import Path
-from typing import Optional
+from datetime import datetime, timezone
+from typing import Any, Optional
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,7 +14,6 @@ import hmac
 import json
 import requests
 import time
-from pydantic import BaseModel
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -148,20 +148,101 @@ async def send_email(data: LeadRequest):
 
 RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
 RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_KEY_SECRET")
+PAYMENT_SHEET_WEBHOOK_URL = os.getenv("PAYMENT_SHEET_WEBHOOK_URL")
+PAYMENT_SHEET_WEBHOOK_SECRET = os.getenv("PAYMENT_SHEET_WEBHOOK_SECRET")
+WORKSHOP_AMOUNT_PAISE = 49900
+WORKSHOP_CURRENCY = "INR"
+PAYMENT_RECORDS_FILE = Path(
+    os.getenv(
+        "PAYMENT_RECORDS_FILE",
+        str(Path(__file__).parent / "ai_metamind_payments.jsonl"),
+    )
+)
 
 if not all([RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET]):
     logger.warning("Razorpay credentials not configured")
 
 
 class CreateOrderRequest(BaseModel):
-    amount: int  # Amount in paise (e.g., 49900 for ₹499)
-    currency: str = "INR"
+    name: Optional[str] = Field(None, max_length=100)
+    email: Optional[EmailStr] = None
+    phone: Optional[str] = Field(None, max_length=30)
 
 
 class VerifyPaymentRequest(BaseModel):
     razorpay_order_id: str
     razorpay_payment_id: str
     razorpay_signature: str
+
+
+class PaymentFailedRequest(BaseModel):
+    razorpay_order_id: Optional[str] = Field(None, max_length=100)
+    razorpay_payment_id: Optional[str] = Field(None, max_length=100)
+    code: Optional[str] = Field(None, max_length=100)
+    description: Optional[str] = Field(None, max_length=500)
+    source: Optional[str] = Field(None, max_length=100)
+    step: Optional[str] = Field(None, max_length=100)
+    reason: Optional[str] = Field(None, max_length=100)
+
+
+def save_payment_record(event_type: str, payload: dict[str, Any]) -> None:
+    record = {
+        "event_type": event_type,
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        **payload,
+    }
+
+    if PAYMENT_SHEET_WEBHOOK_URL:
+        try:
+            response = requests.post(
+                PAYMENT_SHEET_WEBHOOK_URL,
+                json={
+                    "secret": PAYMENT_SHEET_WEBHOOK_SECRET,
+                    "record": record,
+                },
+                timeout=10,
+            )
+            response_data = response.json()
+            if response.status_code < 400 and response_data.get("ok") is True:
+                return
+
+            logger.error(
+                f"Payment sheet webhook rejected record with status {response.status_code}"
+            )
+        except (requests.RequestException, ValueError) as e:
+            logger.error(f"Payment sheet webhook failed: {str(e)}", exc_info=True)
+
+    if os.getenv("VERCEL") == "1":
+        logger.warning(
+            "Payment record was not stored in production; configure or fix PAYMENT_SHEET_WEBHOOK_URL"
+        )
+        return
+
+    try:
+        PAYMENT_RECORDS_FILE.parent.mkdir(parents=True, exist_ok=True)
+        with PAYMENT_RECORDS_FILE.open("a", encoding="utf-8") as file:
+            file.write(json.dumps(record, default=str) + "\n")
+    except OSError as e:
+        logger.error(f"Failed to store payment record: {str(e)}", exc_info=True)
+
+
+def fetch_razorpay_payment(payment_id: str) -> dict[str, Any]:
+    if not RAZORPAY_KEY_ID or not RAZORPAY_KEY_SECRET:
+        return {}
+
+    try:
+        response = requests.get(
+            f"https://api.razorpay.com/v1/payments/{payment_id}",
+            auth=(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET),
+            timeout=10,
+        )
+        if response.status_code != 200:
+            logger.warning(f"Unable to fetch Razorpay payment {payment_id}: {response.text}")
+            return {}
+        return response.json()
+    except requests.RequestException as e:
+        logger.warning(f"Razorpay payment fetch failed for {payment_id}: {str(e)}")
+        return {}
 
 
 @app.post("/api/ai-metamind/create-order")
@@ -182,8 +263,8 @@ async def create_razorpay_order(request: CreateOrderRequest):
             "https://api.razorpay.com/v1/orders",
             auth=auth,
             json={
-                "amount": request.amount,
-                "currency": request.currency,
+                "amount": WORKSHOP_AMOUNT_PAISE,
+                "currency": WORKSHOP_CURRENCY,
                 "receipt": f"ai-metamind-{int(time.time())}",
             },
             timeout=10
@@ -198,6 +279,21 @@ async def create_razorpay_order(request: CreateOrderRequest):
 
         data = response.json()
         logger.info(f"Order created: {data.get('id')}")
+        save_payment_record(
+            "order_created",
+            {
+                "razorpay_order_id": data.get("id"),
+                "amount": data.get("amount"),
+                "currency": data.get("currency"),
+                "status": data.get("status"),
+                "receipt": data.get("receipt"),
+                "customer": {
+                    "name": request.name,
+                    "email": request.email,
+                    "phone": request.phone,
+                },
+            },
+        )
 
         return {
             "order_id": data.get("id"),
@@ -225,31 +321,73 @@ async def verify_razorpay_payment(request: VerifyPaymentRequest):
         )
 
     try:
-        # Verify signature
-        message = f"{request.razorpay_order_id}|{request.razorpay_payment_id}"
+        payment = fetch_razorpay_payment(request.razorpay_payment_id)
+        server_order_id = payment.get("order_id")
+
+        if not server_order_id or server_order_id != request.razorpay_order_id:
+            logger.warning(f"Order mismatch for payment {request.razorpay_payment_id}")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Payment order mismatch"
+            )
+
+        # Verify using the order ID retrieved from Razorpay, not the browser payload.
+        message = f"{server_order_id}|{request.razorpay_payment_id}"
         signature = hmac.new(
             RAZORPAY_KEY_SECRET.encode(),
             message.encode(),
             hashlib.sha256
         ).hexdigest()
 
-        if signature != request.razorpay_signature:
+        if not hmac.compare_digest(signature, request.razorpay_signature):
             logger.warning(f"Invalid signature for payment {request.razorpay_payment_id}")
+            save_payment_record(
+                "payment_signature_invalid",
+                {
+                    "razorpay_order_id": request.razorpay_order_id,
+                    "razorpay_payment_id": request.razorpay_payment_id,
+                    "verified": False,
+                },
+            )
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Invalid payment signature"
             )
 
-        logger.info(f"Payment verified: {request.razorpay_payment_id}")
+        if (
+            payment.get("amount") != WORKSHOP_AMOUNT_PAISE
+            or payment.get("currency") != WORKSHOP_CURRENCY
+            or payment.get("status") != "captured"
+            or payment.get("captured") is not True
+        ):
+            logger.warning(f"Payment not captured or amount mismatch: {request.razorpay_payment_id}")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Payment is not captured or has an invalid amount"
+            )
 
-        # TODO: Save payment to database, send confirmation email, etc.
-        # Example:
-        # await db.payments.insert({
-        #     "razorpay_payment_id": request.razorpay_payment_id,
-        #     "razorpay_order_id": request.razorpay_order_id,
-        #     "created_at": datetime.now(),
-        #     "status": "verified"
-        # })
+        logger.info(f"Payment verified: {request.razorpay_payment_id}")
+        save_payment_record(
+            "payment_verified",
+            {
+                "razorpay_order_id": request.razorpay_order_id,
+                "razorpay_payment_id": request.razorpay_payment_id,
+                "verified": True,
+                "payment": {
+                    "amount": payment.get("amount"),
+                    "currency": payment.get("currency"),
+                    "status": payment.get("status"),
+                    "method": payment.get("method"),
+                    "email": payment.get("email"),
+                    "contact": payment.get("contact"),
+                    "fee": payment.get("fee"),
+                    "tax": payment.get("tax"),
+                    "created_at": payment.get("created_at"),
+                    "captured": payment.get("captured"),
+                    "description": payment.get("description"),
+                },
+            },
+        )
 
         return {"verified": True, "payment_id": request.razorpay_payment_id}
 
@@ -261,3 +399,42 @@ async def verify_razorpay_payment(request: VerifyPaymentRequest):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Payment verification failed"
         )
+
+
+@app.post("/api/ai-metamind/payment-failed")
+async def record_razorpay_payment_failure(request: PaymentFailedRequest):
+    """
+    Store a failed payment only after confirming it with Razorpay.
+    """
+    if not request.razorpay_order_id or not request.razorpay_payment_id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Missing Razorpay order or payment ID"
+        )
+
+    payment = fetch_razorpay_payment(request.razorpay_payment_id)
+    if payment.get("order_id") != request.razorpay_order_id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Payment order mismatch"
+        )
+
+    save_payment_record(
+        "payment_failed",
+        {
+            "razorpay_order_id": request.razorpay_order_id,
+            "razorpay_payment_id": request.razorpay_payment_id,
+            "code": payment.get("error_code") or request.code,
+            "description": payment.get("error_description") or request.description,
+            "source": payment.get("error_source") or request.source,
+            "step": payment.get("error_step") or request.step,
+            "reason": payment.get("error_reason") or request.reason,
+            "payment": {
+                "amount": payment.get("amount"),
+                "currency": payment.get("currency"),
+                "status": payment.get("status"),
+                "method": payment.get("method"),
+            },
+        },
+    )
+    return {"stored": True}
