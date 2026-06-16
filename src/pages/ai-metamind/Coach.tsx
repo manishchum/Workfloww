@@ -6,7 +6,7 @@ const credentials = [
 
 export default function Coach() {
   return (
-    <section className="bg-[#051121] py-24 lg:py-32 px-6">
+    <section className="bg-[#051121] py-24 lg:py-8 px-6">
       <div className="max-w-5xl mx-auto">
         <p className="text-[#6357d4] text-sm font-semibold uppercase tracking-widest mb-14">
           YOUR FACILITATOR

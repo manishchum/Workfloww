@@ -37,6 +37,7 @@ import LighthouseProgram from "./pages/LighthouseProgram";
 import Pricing from "./pages/Pricing";
 import Analytics from "./Analytics";
 import AiMetamind from "./pages/AiMetamind";
+import AiMetamindbeg from "./pages/AiMetamindaibeg";
 
 export default function App() {
   return (
@@ -78,6 +79,7 @@ export default function App() {
           <Route path="/builder-lab" element={<BuilderLab />} />
           <Route path="/lighthouse-program" element={<LighthouseProgram />} />
           <Route path="/ai-metamind" element={<AiMetamind />} />
+          <Route path="/ai-metamind-beginner" element={<AiMetamindbeg/>} />
         </Routes>
       </Layout>
     </Router>
