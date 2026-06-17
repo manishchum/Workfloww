@@ -957,6 +957,114 @@ const faqs = [
 ];
 
 // ---------- Component ----------
+const credentials = [
+  { value: '22+', label: 'Years Leadership Experience' },
+  { value: 'Founder', label: 'AI Product Builder' },
+  { value: 'Big 4', label: 'EY Advisory Background' },
+];
+
+const facilitationExperience = [
+  '22+ years of leadership experience across global organizations.',
+  'Designs and facilitates leadership immersion sessions, functional bootcamps and AI hackathons for business teams.',
+  'Facilitated change management and transformation engagements across Pharma, FMCG, Fintech, Alco Beverages, Technology, Consulting and Telecom.',
+];
+
+const credentialsList = [
+  // 'Founder, AI Product builder',
+  // 'Certified Change Management Professional.',
+  // 'Big 4 advisory experience with EY — strategy and business transformations.',
+  'IIT Kanpur, AI in Leadership. MBA - SCMHRD',
+];
+
+function Coach() {
+  return (
+    <section className="bg-[#051121] py-24 lg:py-8 px-6">
+      <div className="max-w-5xl mx-auto">
+        <p className="text-[#6357d4] text-sm font-semibold uppercase tracking-widest mb-14">
+          YOUR FACILITATOR
+        </p>
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+          {/* Photo placeholder + credentials */}
+          <div>
+            <div className="aspect-[4/5] max-w-sm mx-auto lg:mx-0 rounded-3xl overflow-hidden mb-6 border border-white/8 bg-white/5">
+              <img
+                src="/images/ai-metamind/manish.png"
+                alt="Manish Chum"
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
+            <div className="grid grid-cols-3 gap-3 max-w-sm mx-auto lg:mx-0">
+              {credentials.map((c) => (
+                <div
+                  key={c.label}
+                  className="bg-[#0a1928] border border-white/8 rounded-xl p-4 text-center"
+                >
+                  <p className="font-bold text-white text-xl leading-none mb-1">
+                    {c.value}
+                  </p>
+                  <p className="text-white/35 text-xs leading-snug">{c.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Bio */}
+          <div>
+            <h2 className="font-bold text-white text-4xl lg:text-5xl leading-tight mb-2">
+              Manish Chum
+            </h2>
+            <p className="text-[#6357d4] text-lg mb-2 font-medium">
+              Founder, Workfloww.ai
+            </p>
+            <p className="text-white/35 text-sm mb-10">Gurugram, India</p>
+
+            <div className="space-y-5 text-white/65 text-lg leading-relaxed">
+              <h3 className="text-white font-semibold text-xl !mb-3">
+                Professional Background
+              </h3>
+              <p>
+                Manish Chum is founder, Workfloww.ai of AI tech consulting firm Workfloww.ai. Senior
+                industry expert with 20+ years of experience with organizations like
+                EY, Airtel, and Mahindra, he specializes in designing and delivering
+                GenAI and Agentic AI capability-building journeys for business teams
+                across India and global markets. He works with CXOs and business
+                leaders to embed practical AI workflows across business operations.
+              </p>
+            </div>
+
+            {/* <h3 className="text-white font-semibold text-xl mt-10 mb-4">
+              Facilitation Experience
+            </h3>
+            <ul className="space-y-3 text-white/65 text-lg leading-relaxed list-disc pl-5">
+              {facilitationExperience.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul> */}
+
+            <h3 className="text-white font-semibold text-xl mt-10 mb-4">
+              Relevant Certifications / Credentials
+            </h3>
+            <ul className="space-y-3 text-white/65 text-lg leading-relaxed list-disc pl-5">
+              {credentialsList.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+
+            <blockquote className="mt-10 border-l-2 border-[#6357d4] pl-6">
+              <p className="italic text-white/55 text-xl leading-relaxed">
+                "My goal is simple: you leave this workshop with AI skills you can use
+                on Monday morning. Not someday. This Monday."
+              </p>
+              <cite className="text-white/30 text-sm mt-3 block not-italic">
+                — Manish Chum
+              </cite>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 const AIMetaMindBeginner = () => {
   const [openFaq, setOpenFaq] = useState(null);
@@ -1247,7 +1355,10 @@ const AIMetaMindBeginner = () => {
         </div>
       </section>
 
-      {/* TRACK COMPARISON */}
+  {/* COACH */}
+  <Coach />
+
+  {/* TRACK COMPARISON */}
       <section className="section">
         <div className="container">
           <Eyebrow>All Tracks</Eyebrow>
@@ -1271,6 +1382,8 @@ const AIMetaMindBeginner = () => {
           </div>
         </div>
       </section>
+
+      
 
       {/* FAQ */}
       <section className="section alt">
