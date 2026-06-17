@@ -57,7 +57,7 @@ export default function Hero() {
           <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse" />
 
           <span className="text-white/65 text-sm">
-            Next live session · Limited to 24 seats · ₹499 only
+            Next live session · ₹499 only
           </span>
 
         </div>
