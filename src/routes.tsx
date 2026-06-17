@@ -34,6 +34,7 @@ import BuilderLab from "./pages/BuilderLab";
 import LighthouseProgram from "./pages/LighthouseProgram";
 import Pricing from "./pages/Pricing";
 import AiMetamind from "./pages/AiMetamind";
+import AiMetamindHr from "./pages/AiMetamindaibeg";
 
 const routes: RouteObject[] = [
   {
@@ -48,42 +49,42 @@ const routes: RouteObject[] = [
     path: "/pricing",
     element: <Layout><Pricing /></Layout>,
   },
-  {
-    path: "/onboarding",
-    element: <Layout><Onboarding /></Layout>,
-  },
-  {
-    path: "/features/career-progression",
-    element: <Layout><CareerProgression /></Layout>,
-  },
-  {
-    path: "/features/sop-audits",
-    element: <Layout><SOPAudits /></Layout>,
-  },
-  {
-    path: "/features/rewards-recognition",
-    element: <Layout><RewardsRecognition /></Layout>,
-  },
-  {
-    path: "/features/ticketing",
-    element: <Layout><Ticketing /></Layout>,
-  },
-  {
-    path: "/mobile-learning",
-    element: <Layout><MobileLearning /></Layout>,
-  },
-  {
-    path: "/communication",
-    element: <Layout><Communication /></Layout>,
-  },
-  {
-    path: "/features/self-learning",
-    element: <Layout><SelfLearning /></Layout>,
-  },
-  {
-    path: "/features/seamless-training",
-    element: <Layout><SeamlessTraining /></Layout>,
-  },
+  // {
+  //   path: "/onboarding",
+  //   element: <Layout><Onboarding /></Layout>,
+  // },
+  // {
+  //   path: "/features/career-progression",
+  //   element: <Layout><CareerProgression /></Layout>,
+  // },
+  // {
+  //   path: "/features/sop-audits",
+  //   element: <Layout><SOPAudits /></Layout>,
+  // },
+  // {
+  //   path: "/features/rewards-recognition",
+  //   element: <Layout><RewardsRecognition /></Layout>,
+  // },
+  // {
+  //   path: "/features/ticketing",
+  //   element: <Layout><Ticketing /></Layout>,
+  // },
+  // {
+  //   path: "/mobile-learning",
+  //   element: <Layout><MobileLearning /></Layout>,
+  // },
+  // {
+  //   path: "/communication",
+  //   element: <Layout><Communication /></Layout>,
+  // },
+  // {
+  //   path: "/features/self-learning",
+  //   element: <Layout><SelfLearning /></Layout>,
+  // },
+  // {
+  //   path: "/features/seamless-training",
+  //   element: <Layout><SeamlessTraining /></Layout>,
+  // },
   {
     path: "/contact",
     element: <Layout><Contact /></Layout>,
@@ -112,18 +113,18 @@ const routes: RouteObject[] = [
     path: "/industries/delivery-partners",
     element: <Layout><Delivery /></Layout>,
   },
-  {
-    path: "/industries/bpo-contact-centres",
-    element: <Layout><BPO /></Layout>,
-  },
-  {
-    path: "/industries/insurance-banking",
-    element: <Layout><Finance /></Layout>,
-  },
-  {
-    path: "/industries/hospitality",
-    element: <Layout><Hospitality /></Layout>,
-  },
+  // {
+  //   path: "/industries/bpo-contact-centres",
+  //   element: <Layout><BPO /></Layout>,
+  // },
+  // {
+  //   path: "/industries/insurance-banking",
+  //   element: <Layout><Finance /></Layout>,
+  // },
+  // {
+  //   path: "/industries/hospitality",
+  //   element: <Layout><Hospitality /></Layout>,
+  // },
   {
     path: "/industries/manufacturing-industrial",
     element: <Layout><ManufacturingIndustrial /></Layout>,
@@ -171,6 +172,10 @@ const routes: RouteObject[] = [
   {
     path: "/ai-metamind",
     element: <AiMetamind />
+  },
+   {
+    path: "/ai-metamind-beginner",
+    element: <AiMetamindHr />
   },
 ];
 
