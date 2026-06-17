@@ -2,7 +2,7 @@ import { openCheckout } from '../../lib/ai-metamind/razorpay';
 
 export default function FinalCTA() {
   return (
-    <section className="relative py-28 lg:py-40 px-6 overflow-hidden">
+    <section className="relative py-28 lg:py-10 px-6 overflow-hidden">
       <div className="absolute inset-0 bg-[#051121]" />
       <div className="absolute inset-0 bg-gradient-to-br from-[#6357d4]/12 via-transparent to-blue-600/8 pointer-events-none" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#6357d4]/10 blur-3xl rounded-full pointer-events-none" />

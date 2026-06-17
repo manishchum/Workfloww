@@ -11,7 +11,7 @@ const includes = [
 
 export default function Pricing() {
   return (
-    <section className="bg-[#051121] py-24 lg:py-32 px-6">
+    <section className="bg-[#051121] py-24 lg:py-8 px-6">
       <div className="max-w-5xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Value context */}
