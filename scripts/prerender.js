@@ -132,7 +132,12 @@ const run = async () => {
     console.error('❌ Unexpected error during prerender:', error);
     // do not exit with failure to keep build usable in environments without Chrome
   } finally {
-    prerenderer.destroy();
+    try {
+      prerenderer.destroy();
+    } catch (destroyErr) {
+      // Log and continue — destroy may fail if renderer never initialized
+      console.warn('Warning: prerenderer.destroy() failed:', destroyErr && destroyErr.message ? destroyErr.message : destroyErr);
+    }
   }
 };
 
