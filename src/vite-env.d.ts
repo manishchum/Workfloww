@@ -2,12 +2,14 @@
 
 interface ImportMetaEnv {
   readonly VITE_RAZORPAY_KEY_ID?: string;
+  readonly VITE_META_PIXEL_ID?: string;
 }
 
 interface Window {
   fbq?: (
-    command: "track",
-    eventName: string,
+    command: 'init' | 'track' | string,
+    eventName?: string,
     parameters?: Record<string, unknown>
-  ) => void;
+  ) => void & { __initialized?: boolean; queue?: unknown[] };
+  _fbq?: unknown;
 }
