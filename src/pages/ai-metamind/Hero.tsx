@@ -140,7 +140,10 @@ export default function Hero() {
 
 
         <button
-          onClick={openCheckout}
+          onClick={() => {
+  window.fbq?.("track", "InitiateCheckout");
+  openCheckout();
+}}
           className="
           bg-blue-600
           hover:bg-blue-700
