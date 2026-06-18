@@ -71,7 +71,10 @@ export default function Pricing() {
                 </p>
 
                 <button
-                  onClick={openCheckout}
+                  onClick={() => {
+  window.fbq?.("track", "InitiateCheckout");
+  openCheckout();
+}}
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg py-4 rounded-xl transition-colors duration-200 mb-4 cursor-pointer"
                 >
                   Reserve My Seat — ₹499
