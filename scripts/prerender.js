@@ -119,25 +119,15 @@ const run = async () => {
     console.log(`🔍 Discovered ${routes.length} routes to prerender:`);
     routes.forEach(route => console.log(`   - ${route}`));
     
-    try {
-      await prerenderer.initialize();
-      const renderedRoutes = await prerenderer.renderRoutes(routes);
-      renderedRoutes.forEach((renderedRoute) => writeRoute(renderedRoute.route, renderedRoute.html));
-      console.log(`\n✅ Prerendered ${renderedRoutes.length} routes to ${distDir}`);
-    } catch (innerErr) {
-      console.warn('⚠️ Prerenderer failed to initialize or render routes. Skipping prerender.');
-      console.warn(innerErr && innerErr.message ? innerErr.message : innerErr);
-    }
+    await prerenderer.initialize();
+    const renderedRoutes = await prerenderer.renderRoutes(routes);
+    renderedRoutes.forEach((renderedRoute) => writeRoute(renderedRoute.route, renderedRoute.html));
+    console.log(`\n✅ Prerendered ${renderedRoutes.length} routes to ${distDir}`);
   } catch (error) {
-    console.error('❌ Unexpected error during prerender:', error);
-    // do not exit with failure to keep build usable in environments without Chrome
+    console.error('❌ Prerender failed:', error);
+    process.exit(1);
   } finally {
-    try {
-      prerenderer.destroy();
-    } catch (destroyErr) {
-      // Log and continue — destroy may fail if renderer never initialized
-      console.warn('Warning: prerenderer.destroy() failed:', destroyErr && destroyErr.message ? destroyErr.message : destroyErr);
-    }
+    prerenderer.destroy();
   }
 };
 

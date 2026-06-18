@@ -825,8 +825,9 @@
 
 
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { openCheckout } from "../lib/ai-metamind/razorpay";
+import { initMetaPixel } from "../utils/metaPixel";
 
 /**
  * AI MetaMind — AI Essentials (Beginner Tier) Landing Page
@@ -843,7 +844,14 @@ const Eyebrow = ({ children }) => (
 );
 
 const ReserveButton = ({ className = "", children }) => (
-  <button type="button" onClick={openCheckout} className={`btn-primary ${className}`}>
+  <button
+    type="button"
+    onClick={() => {
+      window.fbq?.("track", "InitiateCheckout");
+      openCheckout();
+    }}
+    className={`btn-primary ${className}`}
+  >
     {children}
   </button>
 );
@@ -1069,6 +1077,10 @@ function Coach() {
 const AIMetaMindBeginner = () => {
   const [openFaq, setOpenFaq] = useState(null);
 
+  useEffect(() => {
+    initMetaPixel();
+  }, []);
+
   return (
     <div className="page">
       <style>{css}</style>
@@ -1106,11 +1118,14 @@ const AIMetaMindBeginner = () => {
           </p>
 
           <button
-            onClick={openCheckout}
-            className="hero-btn"
-          >
-            Reserve My Seat — ₹499
-          </button>
+  onClick={() => {
+    window.fbq?.("track", "InitiateCheckout");
+    openCheckout();
+  }}
+  className="hero-btn"
+>
+  Reserve My Seat — ₹499
+</button>
 
           <p className="hero-meta">
             4+ hours <span className="dot">•</span> 2 live sessions{" "}
@@ -1341,9 +1356,15 @@ const AIMetaMindBeginner = () => {
             <p className="price-main">₹499</p>
             <p className="price-note">4+ hours · 2 weekends · One-time payment</p>
 
-            <button onClick={openCheckout} className="hero-btn price-cta">
-              Reserve My Seat — ₹499
-            </button>
+            <button
+  onClick={() => {
+    window.fbq?.("track", "InitiateCheckout");
+    openCheckout();
+  }}
+  className="hero-btn price-cta"
+>
+  Reserve My Seat — ₹499
+</button>
 
             <p className="price-secure">🔒 Secure checkout via Razorpay · SSL encrypted</p>
 
@@ -1424,9 +1445,15 @@ const AIMetaMindBeginner = () => {
           <p className="closing-sub">
             4+ hours. ₹499. One programme built to make AI make sense — finally.
           </p>
-          <button onClick={openCheckout} className="hero-btn">
-            Reserve My Seat — ₹499
-          </button>
+          <button
+  onClick={() => {
+    window.fbq?.("track", "InitiateCheckout");
+    openCheckout();
+  }}
+  className="hero-btn"
+>
+  Reserve My Seat — ₹499
+</button>
           <p className="hero-meta mt-md">
             Limited seats <span className="dot">•</span> Live on Zoom{" "}
             <span className="dot">•</span> Recording included{" "}

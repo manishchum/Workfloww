@@ -146,6 +146,8 @@ import Testimonials from './ai-metamind/Testimonials';
 import Pricing from './ai-metamind/Pricing';
 import FAQ from './ai-metamind/FAQ';
 import FinalCTA from './ai-metamind/FinalCTA';
+import { useEffect } from "react";
+import { initMetaPixel } from "../utils/metaPixel";
 
 
 function CohortBanner() {
@@ -225,6 +227,12 @@ function CohortBanner() {
 
 
 export default function AiMetamind() {
+
+  useEffect(() => {
+
+    initMetaPixel();
+
+  }, []);
 
   return (
 

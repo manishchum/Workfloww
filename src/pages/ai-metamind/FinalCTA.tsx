@@ -27,7 +27,13 @@ export default function FinalCTA() {
         </p>
 
         <button
-          onClick={openCheckout}
+          onClick={() => {
+
+    window.fbq?.("track", "InitiateCheckout");
+
+    openCheckout();
+
+  }}
           className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xl px-14 py-5 rounded-full transition-all duration-200 hover:scale-[1.03] shadow-2xl shadow-blue-600/25 cursor-pointer"
         >
           Reserve My Seat — ₹499
