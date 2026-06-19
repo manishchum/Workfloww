@@ -27,6 +27,11 @@ type RazorpayOptions = {
   name: string;
   description: string;
   order_id: string;
+  prefill?: {
+    name?: string;
+    email?: string;
+    contact?: string;
+  };
   handler: (response: RazorpayPaymentResponse) => void;
   modal: {
     ondismiss: () => void;
@@ -88,11 +93,22 @@ async function verifyPayment(
   razorpay_order_id: string,
   razorpay_payment_id: string,
   razorpay_signature: string,
+  customer: CustomerDetails,
 ): Promise<void> {
   const res = await fetch(VERIFY_ENDPOINT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ razorpay_order_id, razorpay_payment_id, razorpay_signature }),
+    body: JSON.stringify({
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+      name: customer.name,
+      email: customer.email,
+      phone: customer.phone,
+      designation: customer.designation,
+      company_name: customer.companyName,
+      source: customer.source,
+    }),
   });
 
   const data = (await res.json()) as { verified?: boolean; error?: string };
@@ -118,7 +134,25 @@ async function recordPaymentFailure(response: RazorpayFailureResponse): Promise<
   });
 }
 
-export async function openCheckout(): Promise<void> {
+export type CustomerDetails = {
+  name: string;
+  email: string;
+  phone: string;
+  designation?: string;
+  companyName?: string;
+  source?: string;
+};
+
+export interface CheckoutUserData {
+  name: string;
+  email: string;
+  phone: string;
+  designation?: string;
+  companyName?: string;
+  source: string;
+}
+
+export async function openCheckout(userData: CheckoutUserData): Promise<void> {
   if (!RAZORPAY_KEY_ID) {
     console.error('[openCheckout] Razorpay key not configured');
     alert('Payment system is not configured. Please contact support.');
@@ -137,7 +171,7 @@ export async function openCheckout(): Promise<void> {
     const orderRes = await fetch(ORDER_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({}),
+      body: JSON.stringify(userData),
     });
 
     if (!orderRes.ok) throw new Error(`Order API returned ${orderRes.status}`);
@@ -151,12 +185,18 @@ export async function openCheckout(): Promise<void> {
       name: 'AI MetaMind – HR Series',
       description: 'Live AI Upskilling Workshop',
       order_id: order.order_id,
+      prefill: {
+        name: userData.name,
+        email: userData.email,
+        contact: userData.phone,
+      },
       handler: (response) => {
         // Run async verification without blocking Razorpay's handler
         verifyPayment(
           response.razorpay_order_id,
           response.razorpay_payment_id,
           response.razorpay_signature,
+          userData,
         )
           .then(() => {
             trackPurchase(PRICE, 'INR');

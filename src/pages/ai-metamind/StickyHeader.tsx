@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { openCheckout } from '../../lib/ai-metamind/razorpay';
 
 export default function StickyHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -30,12 +29,9 @@ export default function StickyHeader() {
 
         <button
           onClick={() => {
-
-    window.fbq?.("track", "InitiateCheckout");
-
-    openCheckout();
-
-  }}
+            window.fbq?.("track", "InitiateCheckout");
+            window.dispatchEvent(new CustomEvent('open-registration-modal', { detail: { source: 'nav' } }));
+          }}
           className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors duration-200 cursor-pointer"
         >
           Reserve My Seat — ₹499

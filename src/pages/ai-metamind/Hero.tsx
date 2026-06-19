@@ -1,5 +1,3 @@
-import { openCheckout } from '../../lib/ai-metamind/razorpay';
-
 export default function Hero() {
   return (
     <section
@@ -141,9 +139,9 @@ export default function Hero() {
 
         <button
           onClick={() => {
-  window.fbq?.("track", "InitiateCheckout");
-  openCheckout();
-}}
+            window.fbq?.("track", "InitiateCheckout");
+            window.dispatchEvent(new CustomEvent('open-registration-modal', { detail: { source: 'hero' } }));
+          }}
           className="
           bg-blue-600
           hover:bg-blue-700
