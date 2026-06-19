@@ -169,6 +169,7 @@ class CreateOrderRequest(BaseModel):
     phone: Optional[str] = Field(None, max_length=30)
     designation: Optional[str] = Field(None, max_length=100)
     company_name: Optional[str] = Field(None, max_length=100)
+    companyName: Optional[str] = Field(None, max_length=100)
     source: Optional[str] = Field(None, max_length=100)
 
 
@@ -181,6 +182,7 @@ class VerifyPaymentRequest(BaseModel):
     phone: Optional[str] = Field(None, max_length=30)
     designation: Optional[str] = Field(None, max_length=100)
     company_name: Optional[str] = Field(None, max_length=100)
+    companyName: Optional[str] = Field(None, max_length=100)
     source: Optional[str] = Field(None, max_length=100)
 
 
@@ -302,7 +304,7 @@ async def create_razorpay_order(request: CreateOrderRequest):
                     "email": request.email,
                     "phone": request.phone,
                     "designation": request.designation,
-                    "company_name": request.company_name,
+                    "company_name": request.company_name or request.companyName,
                 },
             },
         )
@@ -391,7 +393,7 @@ async def verify_razorpay_payment(request: VerifyPaymentRequest):
                     "email": request.email,
                     "phone": request.phone,
                     "designation": request.designation,
-                    "company_name": request.company_name,
+                    "company_name": request.company_name or request.companyName,
                 },
                 "payment": {
                     "amount": payment.get("amount"),

@@ -1,4 +1,4 @@
-const SHEET_NAME = 'Payments';
+const SHEET_NAME = '';
 const SECRET_PROPERTY = 'PAYMENT_SHEET_WEBHOOK_SECRET';
 
 // Add SECRET_PROPERTY in Apps Script Project Settings > Script Properties.
@@ -49,11 +49,23 @@ function doPost(e) {
 
     try {
       const source = record.source || '';
-      let targetSheetName = SHEET_NAME;
+      let targetSheetName = '';
       if (source.indexOf('beg_') === 0) {
         targetSheetName = 'Payments_Beginner';
       } else if (source.indexOf('hr_') === 0) {
         targetSheetName = 'Payments_HR';
+      } else {
+        // Fallback: Check description/receipt to determine sheet when source prefix is missing
+        const desc = (record.description || record.payment?.description || '').toLowerCase();
+        const receipt = (record.receipt || '').toLowerCase();
+        if (desc.indexOf('hr') !== -1 || receipt.indexOf('hr') !== -1) {
+          targetSheetName = 'Payments_HR';
+        } else if (desc.indexOf('beg') !== -1 || desc.indexOf('essential') !== -1 || receipt.indexOf('beg') !== -1) {
+          targetSheetName = 'Payments_Beginner';
+        } else {
+          // Default fallback sheet name
+          targetSheetName = 'Payments_HR';
+        }
       }
 
       const sheet = getSheet(targetSheetName);
@@ -95,12 +107,49 @@ function doPost(e) {
         JSON.stringify(record),
       ];
 
-      const existingRowIndex = findRowByOrderId(sheet, record.razorpay_order_id);
+      let activeSheet = sheet;
+      let existingRowIndex = findRowByOrderId(activeSheet, record.razorpay_order_id);
+
+      // If not found in the designated sheet, check the other sheets as fallback
+      if (existingRowIndex === -1 && record.razorpay_order_id) {
+        const sheetsToCheck = ['Payments_HR', 'Payments_Beginner'];
+        for (const name of sheetsToCheck) {
+          if (name !== targetSheetName) {
+            const checkSheet = getSheet(name);
+            const foundIndex = findRowByOrderId(checkSheet, record.razorpay_order_id);
+            if (foundIndex !== -1) {
+              activeSheet = checkSheet;
+              existingRowIndex = foundIndex;
+              break;
+            }
+          }
+        }
+      }
+
       if (existingRowIndex !== -1) {
-        const range = sheet.getRange(existingRowIndex, 1, 1, HEADERS.length);
+        const range = activeSheet.getRange(existingRowIndex, 1, 1, HEADERS.length);
+        const existingValues = range.getValues()[0];
+
+        // Preserve original metadata (customer details, source) if they are missing in the new event payload
+        const columnsToMerge = [
+          'customer_name',
+          'customer_email',
+          'customer_phone',
+          'designation',
+          'company_name',
+          'source'
+        ];
+
+        for (const colName of columnsToMerge) {
+          const idx = HEADERS.indexOf(colName);
+          if (idx !== -1 && (!row[idx] || row[idx] === '')) {
+            row[idx] = existingValues[idx] || '';
+          }
+        }
+
         range.setValues([row.map(safeCell)]);
       } else {
-        sheet.appendRow(row.map(safeCell));
+        activeSheet.appendRow(row.map(safeCell));
       }
       return jsonResponse({ ok: true });
     } finally {

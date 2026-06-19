@@ -143,7 +143,16 @@ export type CustomerDetails = {
   source?: string;
 };
 
-export async function openCheckout(customer: CustomerDetails): Promise<void> {
+export interface CheckoutUserData {
+  name: string;
+  email: string;
+  phone: string;
+  designation?: string;
+  companyName?: string;
+  source: string;
+}
+
+export async function openCheckout(userData: CheckoutUserData): Promise<void> {
   if (!RAZORPAY_KEY_ID) {
     console.error('[openCheckout] Razorpay key not configured');
     alert('Payment system is not configured. Please contact support.');
@@ -162,14 +171,7 @@ export async function openCheckout(customer: CustomerDetails): Promise<void> {
     const orderRes = await fetch(ORDER_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: customer.name,
-        email: customer.email,
-        phone: customer.phone,
-        designation: customer.designation,
-        company_name: customer.companyName,
-        source: customer.source,
-      }),
+      body: JSON.stringify(userData),
     });
 
     if (!orderRes.ok) throw new Error(`Order API returned ${orderRes.status}`);
@@ -184,9 +186,9 @@ export async function openCheckout(customer: CustomerDetails): Promise<void> {
       description: 'Live AI Upskilling Workshop',
       order_id: order.order_id,
       prefill: {
-        name: customer.name,
-        email: customer.email,
-        contact: customer.phone,
+        name: userData.name,
+        email: userData.email,
+        contact: userData.phone,
       },
       handler: (response) => {
         // Run async verification without blocking Razorpay's handler
@@ -194,7 +196,7 @@ export async function openCheckout(customer: CustomerDetails): Promise<void> {
           response.razorpay_order_id,
           response.razorpay_payment_id,
           response.razorpay_signature,
-          customer,
+          userData,
         )
           .then(() => {
             trackPurchase(PRICE, 'INR');
