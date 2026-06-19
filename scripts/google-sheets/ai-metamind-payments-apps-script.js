@@ -22,6 +22,8 @@ const HEADERS = [
   'customer_name',
   'customer_email',
   'customer_phone',
+  'designation',
+  'company_name',
   'code',
   'description',
   'source',
@@ -46,7 +48,15 @@ function doPost(e) {
     lock.waitLock(10000);
 
     try {
-      const sheet = getSheet();
+      const source = record.source || '';
+      let targetSheetName = SHEET_NAME;
+      if (source.indexOf('beg_') === 0) {
+        targetSheetName = 'Payments_Beginner';
+      } else if (source.indexOf('hr_') === 0) {
+        targetSheetName = 'Payments_HR';
+      }
+
+      const sheet = getSheet(targetSheetName);
 
       if (
         record.event_type === 'payment_verified' &&
@@ -75,6 +85,8 @@ function doPost(e) {
         record.customer?.name || '',
         record.customer?.email || '',
         record.customer?.phone || '',
+        record.customer?.designation || '',
+        record.customer?.company_name || '',
         record.code || '',
         record.description || record.payment?.description || '',
         record.source || '',
@@ -83,7 +95,13 @@ function doPost(e) {
         JSON.stringify(record),
       ];
 
-      sheet.appendRow(row.map(safeCell));
+      const existingRowIndex = findRowByOrderId(sheet, record.razorpay_order_id);
+      if (existingRowIndex !== -1) {
+        const range = sheet.getRange(existingRowIndex, 1, 1, HEADERS.length);
+        range.setValues([row.map(safeCell)]);
+      } else {
+        sheet.appendRow(row.map(safeCell));
+      }
       return jsonResponse({ ok: true });
     } finally {
       lock.releaseLock();
@@ -93,9 +111,9 @@ function doPost(e) {
   }
 }
 
-function getSheet() {
+function getSheet(sheetName) {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  const sheet = spreadsheet.getSheetByName(SHEET_NAME) || spreadsheet.insertSheet(SHEET_NAME);
+  const sheet = spreadsheet.getSheetByName(sheetName) || spreadsheet.insertSheet(sheetName);
 
   if (sheet.getLastRow() === 0) {
     sheet.appendRow(HEADERS);
@@ -132,4 +150,23 @@ function jsonResponse(payload) {
   return ContentService
     .createTextOutput(JSON.stringify(payload))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+function findRowByOrderId(sheet, orderId) {
+  if (!orderId || sheet.getLastRow() < 2) {
+    return -1;
+  }
+
+  const orderIdColumn = HEADERS.indexOf('razorpay_order_id') + 1;
+  const values = sheet
+    .getRange(2, orderIdColumn, sheet.getLastRow() - 1, 1)
+    .getValues();
+
+  for (let i = 0; i < values.length; i++) {
+    if (values[i][0] === orderId) {
+      return i + 2; // 1-based index (2 is the first data row)
+    }
+  }
+
+  return -1;
 }

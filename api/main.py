@@ -167,12 +167,21 @@ class CreateOrderRequest(BaseModel):
     name: Optional[str] = Field(None, max_length=100)
     email: Optional[EmailStr] = None
     phone: Optional[str] = Field(None, max_length=30)
+    designation: Optional[str] = Field(None, max_length=100)
+    company_name: Optional[str] = Field(None, max_length=100)
+    source: Optional[str] = Field(None, max_length=100)
 
 
 class VerifyPaymentRequest(BaseModel):
     razorpay_order_id: str
     razorpay_payment_id: str
     razorpay_signature: str
+    name: Optional[str] = Field(None, max_length=100)
+    email: Optional[EmailStr] = None
+    phone: Optional[str] = Field(None, max_length=30)
+    designation: Optional[str] = Field(None, max_length=100)
+    company_name: Optional[str] = Field(None, max_length=100)
+    source: Optional[str] = Field(None, max_length=100)
 
 
 class PaymentFailedRequest(BaseModel):
@@ -287,10 +296,13 @@ async def create_razorpay_order(request: CreateOrderRequest):
                 "currency": data.get("currency"),
                 "status": data.get("status"),
                 "receipt": data.get("receipt"),
+                "source": request.source,
                 "customer": {
                     "name": request.name,
                     "email": request.email,
                     "phone": request.phone,
+                    "designation": request.designation,
+                    "company_name": request.company_name,
                 },
             },
         )
@@ -373,6 +385,14 @@ async def verify_razorpay_payment(request: VerifyPaymentRequest):
                 "razorpay_order_id": request.razorpay_order_id,
                 "razorpay_payment_id": request.razorpay_payment_id,
                 "verified": True,
+                "source": request.source,
+                "customer": {
+                    "name": request.name,
+                    "email": request.email,
+                    "phone": request.phone,
+                    "designation": request.designation,
+                    "company_name": request.company_name,
+                },
                 "payment": {
                     "amount": payment.get("amount"),
                     "currency": payment.get("currency"),

@@ -1,4 +1,3 @@
-import { openCheckout } from '../../lib/ai-metamind/razorpay';
 
 const includes = [
   { icon: '🔴', label: '3-hour live workshop on Zoom' },
@@ -72,9 +71,9 @@ export default function Pricing() {
 
                 <button
                   onClick={() => {
-  window.fbq?.("track", "InitiateCheckout");
-  openCheckout();
-}}
+                    window.fbq?.("track", "InitiateCheckout");
+                    window.dispatchEvent(new CustomEvent('open-registration-modal', { detail: { source: 'pricing' } }));
+                  }}
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg py-4 rounded-xl transition-colors duration-200 mb-4 cursor-pointer"
                 >
                   Reserve My Seat — ₹499
