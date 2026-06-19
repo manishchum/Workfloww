@@ -146,8 +146,9 @@ import Testimonials from './ai-metamind/Testimonials';
 import Pricing from './ai-metamind/Pricing';
 import FAQ from './ai-metamind/FAQ';
 import FinalCTA from './ai-metamind/FinalCTA';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { initMetaPixel } from "../utils/metaPixel";
+import RegistrationModal from '../components/RegistrationModal';
 
 
 function CohortBanner() {
@@ -227,11 +228,19 @@ function CohortBanner() {
 
 
 export default function AiMetamind() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalSource, setModalSource] = useState('hr_general');
 
   useEffect(() => {
-
     initMetaPixel();
 
+    const handleOpen = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      setModalSource(`hr_${customEvent.detail?.source || 'general'}`);
+      setIsModalOpen(true);
+    };
+    window.addEventListener('open-registration-modal', handleOpen);
+    return () => window.removeEventListener('open-registration-modal', handleOpen);
   }, []);
 
   return (
@@ -295,6 +304,12 @@ export default function AiMetamind() {
       <FAQ />
 
       <FinalCTA />
+
+      <RegistrationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        source={modalSource}
+      />
 
 
 

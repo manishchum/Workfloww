@@ -1,1 +1,1 @@
-created_at,event_type,razorpay_order_id,razorpay_payment_id,verified,amount,currency,status,method,email,contact,fee,tax,captured,receipt,customer_name,customer_email,customer_phone,code,description,source,step,reason,raw_json
+created_at,event_type,razorpay_order_id,razorpay_payment_id,verified,amount,currency,status,method,email,contact,fee,tax,captured,receipt,customer_name,customer_email,customer_phone,designation,company_name,code,description,source,step,reason,raw_json
