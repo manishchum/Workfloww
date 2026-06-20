@@ -1,4 +1,4 @@
-const SHEET_NAME = 'Payments';
+const SHEET_NAME = '';
 const SECRET_PROPERTY = 'PAYMENT_SHEET_WEBHOOK_SECRET';
 
 // Add SECRET_PROPERTY in Apps Script Project Settings > Script Properties.
@@ -22,6 +22,8 @@ const HEADERS = [
   'customer_name',
   'customer_email',
   'customer_phone',
+  'designation',
+  'company_name',
   'code',
   'description',
   'source',
@@ -42,11 +44,36 @@ function doPost(e) {
     }
 
     const record = body.record || {};
+
+    // LOG INCOMING REQUEST FOR DEBUGGING
+    console.log('Received Webhook Payload:', JSON.stringify(body));
+
     const lock = LockService.getScriptLock();
     lock.waitLock(10000);
 
     try {
-      const sheet = getSheet();
+      const source = record.source || '';
+      let targetSheetName = '';
+      if (source.indexOf('beg_') === 0) {
+        targetSheetName = 'Payments_Beginner';
+      } else if (source.indexOf('hr_') === 0) {
+        targetSheetName = 'Payments_HR';
+      } else {
+        // Fallback: Check description/receipt to determine sheet when source prefix is missing
+        const desc = (record.description || record.payment?.description || '').toLowerCase();
+        const receipt = (record.receipt || '').toLowerCase();
+        if (desc.indexOf('hr') !== -1 || receipt.indexOf('hr') !== -1) {
+          targetSheetName = 'Payments_HR';
+        } else if (desc.indexOf('beg') !== -1 || desc.indexOf('essential') !== -1 || receipt.indexOf('beg') !== -1) {
+          targetSheetName = 'Payments_Beginner';
+        } else {
+          // Default fallback sheet name
+          targetSheetName = 'Payments_HR';
+        }
+      }
+
+      console.log('Chosen Target Sheet:', targetSheetName);
+      const sheet = getSheet(targetSheetName);
 
       if (
         record.event_type === 'payment_verified' &&
@@ -75,6 +102,8 @@ function doPost(e) {
         record.customer?.name || '',
         record.customer?.email || '',
         record.customer?.phone || '',
+        record.customer?.designation || '',
+        record.customer?.company_name || '',
         record.code || '',
         record.description || record.payment?.description || '',
         record.source || '',
@@ -83,7 +112,52 @@ function doPost(e) {
         JSON.stringify(record),
       ];
 
-      sheet.appendRow(row.map(safeCell));
+      let activeSheet = sheet;
+      let existingRowIndex = findRowByOrderId(activeSheet, record.razorpay_order_id);
+
+      // If not found in the designated sheet, check the other sheets as fallback
+      if (existingRowIndex === -1 && record.razorpay_order_id) {
+        const sheetsToCheck = ['Payments_HR', 'Payments_Beginner'];
+        for (const name of sheetsToCheck) {
+          if (name !== targetSheetName) {
+            const checkSheet = getSheet(name);
+            const foundIndex = findRowByOrderId(checkSheet, record.razorpay_order_id);
+            if (foundIndex !== -1) {
+              activeSheet = checkSheet;
+              existingRowIndex = foundIndex;
+              break;
+            }
+          }
+        }
+      }
+
+      if (existingRowIndex !== -1) {
+        const range = activeSheet.getRange(existingRowIndex, 1, 1, HEADERS.length);
+        const existingValues = range.getValues()[0];
+
+        // Preserve original metadata (customer details, source) if they are missing in the new event payload
+        const columnsToMerge = [
+          'customer_name',
+          'customer_email',
+          'customer_phone',
+          'designation',
+          'company_name',
+          'source'
+        ];
+
+        for (const colName of columnsToMerge) {
+          const idx = HEADERS.indexOf(colName);
+          if (idx !== -1 && (!row[idx] || row[idx] === '')) {
+            row[idx] = existingValues[idx] || '';
+          }
+        }
+
+        range.setValues([row.map(safeCell)]);
+      } else {
+        console.log('Appended new row to sheet:', activeSheet.getName());
+        activeSheet.appendRow(row.map(safeCell));
+      }
+      console.log('Successfully processed payment record.');
       return jsonResponse({ ok: true });
     } finally {
       lock.releaseLock();
@@ -93,9 +167,9 @@ function doPost(e) {
   }
 }
 
-function getSheet() {
+function getSheet(sheetName) {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  const sheet = spreadsheet.getSheetByName(SHEET_NAME) || spreadsheet.insertSheet(SHEET_NAME);
+  const sheet = spreadsheet.getSheetByName(sheetName) || spreadsheet.insertSheet(sheetName);
 
   if (sheet.getLastRow() === 0) {
     sheet.appendRow(HEADERS);
@@ -132,4 +206,23 @@ function jsonResponse(payload) {
   return ContentService
     .createTextOutput(JSON.stringify(payload))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+function findRowByOrderId(sheet, orderId) {
+  if (!orderId || sheet.getLastRow() < 2) {
+    return -1;
+  }
+
+  const orderIdColumn = HEADERS.indexOf('razorpay_order_id') + 1;
+  const values = sheet
+    .getRange(2, orderIdColumn, sheet.getLastRow() - 1, 1)
+    .getValues();
+
+  for (let i = 0; i < values.length; i++) {
+    if (values[i][0] === orderId) {
+      return i + 2; // 1-based index (2 is the first data row)
+    }
+  }
+
+  return -1;
 }

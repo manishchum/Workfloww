@@ -827,7 +827,7 @@
 
 import React, { useState, useEffect } from "react";
 import { openCheckout } from "../lib/ai-metamind/razorpay";
-import { initMetaPixel } from "../utils/metaPixel";
+import RegistrationModal from "../components/RegistrationModal";
 
 /**
  * AI MetaMind — AI Essentials (Beginner Tier) Landing Page
@@ -846,10 +846,7 @@ const Eyebrow = ({ children }) => (
 const ReserveButton = ({ className = "", children }) => (
   <button
     type="button"
-    onClick={() => {
-      window.fbq?.("track", "InitiateCheckout");
-      openCheckout();
-    }}
+    onClick={() => window.dispatchEvent(new CustomEvent('open-registration-modal', { detail: { source: 'nav' } }))}
     className={`btn-primary ${className}`}
   >
     {children}
@@ -1076,9 +1073,17 @@ function Coach() {
 
 const AIMetaMindBeginner = () => {
   const [openFaq, setOpenFaq] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalSource, setModalSource] = useState('beg_general');
 
   useEffect(() => {
-    initMetaPixel();
+    const handleOpen = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      setModalSource(`beg_${customEvent.detail?.source || 'general'}`);
+      setIsModalOpen(true);
+    };
+    window.addEventListener('open-registration-modal', handleOpen);
+    return () => window.removeEventListener('open-registration-modal', handleOpen);
   }, []);
 
   return (
@@ -1118,14 +1123,11 @@ const AIMetaMindBeginner = () => {
           </p>
 
           <button
-  onClick={() => {
-    window.fbq?.("track", "InitiateCheckout");
-    openCheckout();
-  }}
-  className="hero-btn"
->
-  Reserve My Seat — ₹499
-</button>
+            onClick={() => window.dispatchEvent(new CustomEvent('open-registration-modal', { detail: { source: 'hero' } }))}
+            className="hero-btn"
+          >
+            Reserve My Seat — ₹499
+          </button>
 
           <p className="hero-meta">
             4+ hours <span className="dot">•</span> 2 live sessions{" "}
@@ -1356,15 +1358,9 @@ const AIMetaMindBeginner = () => {
             <p className="price-main">₹499</p>
             <p className="price-note">4+ hours · 2 weekends · One-time payment</p>
 
-            <button
-  onClick={() => {
-    window.fbq?.("track", "InitiateCheckout");
-    openCheckout();
-  }}
-  className="hero-btn price-cta"
->
-  Reserve My Seat — ₹499
-</button>
+            <button onClick={() => window.dispatchEvent(new CustomEvent('open-registration-modal', { detail: { source: 'pricing' } }))} className="hero-btn price-cta">
+              Reserve My Seat — ₹499
+            </button>
 
             <p className="price-secure">🔒 Secure checkout via Razorpay · SSL encrypted</p>
 
@@ -1445,15 +1441,9 @@ const AIMetaMindBeginner = () => {
           <p className="closing-sub">
             4+ hours. ₹499. One programme built to make AI make sense — finally.
           </p>
-          <button
-  onClick={() => {
-    window.fbq?.("track", "InitiateCheckout");
-    openCheckout();
-  }}
-  className="hero-btn"
->
-  Reserve My Seat — ₹499
-</button>
+          <button onClick={() => window.dispatchEvent(new CustomEvent('open-registration-modal', { detail: { source: 'final-cta' } }))} className="hero-btn">
+              Reserve My Seat — ₹499
+            </button>
           <p className="hero-meta mt-md">
             Limited seats <span className="dot">•</span> Live on Zoom{" "}
             <span className="dot">•</span> Recording included{" "}
@@ -1490,6 +1480,12 @@ const AIMetaMindBeginner = () => {
           </div>
         </footer>
       </section>
+
+      <RegistrationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        source={modalSource}
+      />
     </div>
   );
 };
