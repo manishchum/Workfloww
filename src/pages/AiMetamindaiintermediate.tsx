@@ -4,11 +4,11 @@ import RegistrationModal from "../components/RegistrationModal";
 import { initMetaPixel } from "../utils/metaPixel";
 
 /**
- * AI MetaMind — AI Essentials (Beginner Tier) Landing Page
+ * AI MetaMind — AI Practitioner (Intermediate Tier) Landing Page
  * Visual system: dark navy, indigo/blue accent, teal highlights.
  * 
- * Beginner Track: AI Essentials
- * 4+ Hours | 2 Live Sessions | ₹499 | Batch starts Sat, 20th June '26
+ * Intermediate Track: AI Practitioner
+ * 9+ Hours | 3 Live Sessions | ₹10,000 | Batch starts Sat, 20th June '26
  */
 
 // ---------- Reusable bits ----------
@@ -20,7 +20,7 @@ const Eyebrow = ({ children }) => (
 const ReserveButton = ({ className = "", children }) => (
   <button
     type="button"
-    onClick={() => window.dispatchEvent(new CustomEvent('open-registration-modal', { detail: { source: 'nav' } }))}
+    onClick={() => window.dispatchEvent(new CustomEvent('open-registration-modal', { detail: { source: 'intermediate_nav' } }))}
     className={`btn-primary ${className}`}
   >
     {children}
@@ -37,11 +37,11 @@ const DotIcon = () => (
 
 const whyProgramme = [
   "Understand how AI works & how to apply it",
-  "Every learning element is grounded in practical application — decision making, productivity, problem solving, brainstorming & real workplace scenarios",
-  "Instead of being overwhelmed by AI tools, it's a structured step-by-step mastery",
+  "Every learning element is grounded in practical application — Decision making, productivity, problem Solving, brainstorming & real workplace scenarios",
+  "Instead of being overwhelmed by AI tools, its a structured step by step mastery",
   "Live classes ensure dialogue & reflection",
-  "This programme equips you to stay relevant, valuable, and ahead of the curve",
-  "Simplifying the technology for non-tech talent",
+  "This programme equips you to stay relevant, valuable, and ahead of the curve.",
+  "Simplifying the technology for non tech talent",
 ];
 
 const uniqueCards = [
@@ -51,107 +51,97 @@ const uniqueCards = [
   },
   {
     title: "Beyond Basic AI Tools",
-    body: "Go beyond mere tool usage to truly enhance your AI tech skills, enabling you to understand and leverage technology more deeply in your domain. Covers Gen AI, Agentic AI, and AI automations.",
+    body: "Go beyond mere tool usage to truly enhance your AI tech skills, enabling you to understand and leverage technology more deeply in your domain. Covers aspects of Gen AI, Agentic AI and AI automations.",
   },
   {
     title: "AI-Powered Problem Solving",
-    body: "Develop critical thinking and problem-solving skills for complex business challenges, using cutting-edge AI tools to drive effective solutions across the roles in your domain.",
+    body: "Develop critical thinking and problem-solving skills for complex business challenges, utilizing cutting-edge AI tools to drive effective solutions across the roles in your domain.",
   },
   {
     title: "Designed by Business Leaders",
-    body: "Crafted for professionals by experienced business leaders, ensuring relevant, real-world insights — enriched with real-life case studies from our AI consulting work.",
+    body: "This program is specifically crafted for professionals by experienced business leaders, ensuring relevant, real-world insights and applications. We bring real life case studies through our AI consulting work to make the programme enriched and one of its kinds.",
   },
   {
-    title: "Practical Application First",
-    body: "Every session is built around real workplace scenarios. You'll leave each class with tools and frameworks you can use at work immediately — not someday, but the very next day.",
+    title: "Agentic AI & AI Automation",
+    body: "Only programme which helps learners to build agents in enterprise environment. Be it Microsoft Co Pilot Studio or Google AI Studio. We give sandboxes to participants to experiment & prototype.",
   },
   {
     title: "Post Learning Support",
-    body: "Get extended support to excel in your AI adoption journey post-session. Our community and alumni mentors are there to guide you as you apply what you've learnt.",
+    body: "Only AI programme which gives 2 weeks extended support to participants to excel in the journey of AI Adoption post the session. Our engineering teams work with you to help you build AI solutions in your workflows.",
   },
 ];
 
 const learningModules = [
   {
     title: "AI & Gen-AI Foundations",
-    body: "Get a clear understanding of the technical terminologies without the 'tech-talk'. Cut through the jargon and understand how AI actually works.",
+    body: "Get a clear understanding of the technical terminologies without the 'tech-talk'. Cut through the jargon and understand how LLMs function and how to orchestrate them.",
   },
   {
     title: "Prompt Engineering Essentials",
-    body: "Master frameworks to craft clear instructions and get the best results from AI tools. The skill that multiplies everything else you do with AI.",
+    body: "Master frameworks to master clear instructions to get best results from AI tools. Unlock advanced techniques like chain-of-thought, few-shot prompting, and persona design.",
   },
   {
     title: "AI Productivity Tool Kit",
-    body: "Live showcase of tools which save hours of your manual effort. See them work in real time and learn how to bring them into your workflow.",
+    body: "Live show case of tools which saves hours of your manual effort. Practical walkthrough of document analysis, text generation, and dynamic data formatting.",
   },
   {
     title: "Responsible AI Basics",
-    body: "Understand the essentials of bias, fairness, and ethics in AI — so you use these tools confidently and responsibly at work.",
+    body: "Understand essentials of bias, fairness and ethics. Set clear guidelines for safe corporate data usage and security best practices.",
   },
 ];
 
-const areasForApplication = "Design AI-led interventions across your functional area — sales, marketing, HR, operations — and identify where AI can make the biggest difference in your specific role.";
+const areasForApplication = "Design AI-led interventions across your daily workflow, automate documentation and drafting tasks, and build templates to simplify reporting.";
 
 const whatYouGet = [
-  "Prompt Playbook",
-  "AI Case Books",
-  "AI Template Stack",
-  "Lifetime AI Community",
+  "Prompt Playbook (Practitioner Edition)",
+  "AI Case Books & Implementation Maps",
+  "AI Template Stack & Blueprint Templates",
+  "Lifetime AI Community Access",
   "Fortnightly AMA with Alumni Mentors",
   "Certification of Completion",
 ];
 
 const takeaways = [
-  "Cut through AI jargon and actually understand what it means for your role",
-  "Use AI tools confidently for day-to-day productivity",
-  "Prompt AI effectively to get results that matter",
-  "Become the AI-aware professional in the room",
+  "Integrate AI tools seamlessly into your daily role and decision-making",
+  "Use advanced prompting methodologies to get highly reliable results",
+  "Automate text generation, report summaries, and document analysis",
+  "Become the go-to AI practitioner in your business team",
 ];
 
 const faqs = [
   {
     q: "Who is this programme designed for?",
-    a: "Professionals, students, job aspirants, and curious learners who want to cut through the jargon and start using AI today. No prior experience with AI is needed — this is the perfect starting point.",
+    a: "Professionals, managers, and business teams who want to build functional expertise in using AI tools. Prior basic knowledge of ChatGPT or LLMs is helpful, but no coding background is required.",
   },
   {
     q: "Do I need any technical or coding background?",
-    a: "Absolutely not. The programme is designed specifically to simplify AI for non-technical professionals. You'll work with intuitive, no-code tools and guided frameworks throughout every session.",
+    a: "Not at all. We teach you how to leverage intuitive, no-code interfaces and advanced prompts to integrate AI into your day-to-day work.",
   },
   {
     q: "What will I be able to do after this programme?",
-    a: "You'll understand how AI and Gen-AI work, craft effective prompts, use an AI productivity toolkit to save hours of manual work, and apply responsible AI principles in your workplace — all within 4+ hours across 2 live sessions.",
+    a: "You will be able to write advanced prompt workflows, use AI to automate daily reporting and drafting, and use no-code tools to solve functional challenges.",
   },
   {
     q: "What if I can't attend a live session?",
-    a: "You get full access to recorded content, so you won't miss anything. That said, the live, interactive format is where most participants get the most value — the dialogue and Q&A make the learning stick.",
+    a: "You will receive full recording access to all three live sessions, so you can catch up or review the material anytime.",
   },
   {
     q: "How long is the programme, and what is the format?",
-    a: "4+ hours across 2 live sessions (2 hours each, Saturday/Sunday). Delivered online — live, interactive, and hands-on — with instructor-led teaching and tool labs.",
+    a: "9+ hours across 3 live sessions (3 hours each). The program is highly interactive, featuring instructor-led labs where you practice prompting in real-time.",
   },
   {
-    q: "Can I upgrade to Intermediate or Expert later?",
-    a: "Yes! The Beginner track is the foundation of AI MetaMind. Once you complete it, you can continue your journey with the Intermediate (AI Practitioner) or Expert (AI Strategic Leader) tracks.",
+    q: "Can I take this after the Beginner track?",
+    a: "Yes! The Intermediate track is a great next step after completing the Beginner (AI Essentials) track, though you can enroll directly if you already have basic familiarity with AI.",
   },
 ];
 
-// ---------- Component ----------
 const credentials = [
   { value: '22+', label: 'Years Leadership Experience' },
   { value: 'Founder', label: 'AI Product Builder' },
   { value: 'Big 4', label: 'EY Advisory Background' },
 ];
 
-const facilitationExperience = [
-  '22+ years of leadership experience across global organizations.',
-  'Designs and facilitates leadership immersion sessions, functional bootcamps and AI hackathons for business teams.',
-  'Facilitated change management and transformation engagements across Pharma, FMCG, Fintech, Alco Beverages, Technology, Consulting and Telecom.',
-];
-
 const credentialsList = [
-  // 'Founder, AI Product builder',
-  // 'Certified Change Management Professional.',
-  // 'Big 4 advisory experience with EY — strategy and business transformations.',
   'IIT Kanpur, AI in Leadership. MBA - SCMHRD',
 ];
 
@@ -202,7 +192,7 @@ function Coach() {
                 Professional Background
               </h3>
               <p>
-                Manish Chum is founder, Workfloww.ai of AI tech consulting firm Workfloww.ai. Senior
+                Manish Chum is founder of AI tech consulting firm Workfloww.ai. Senior
                 industry expert with 20+ years of experience with organizations like
                 EY, Airtel, and Mahindra, he specializes in designing and delivering
                 GenAI and Agentic AI capability-building journeys for business teams
@@ -210,15 +200,6 @@ function Coach() {
                 leaders to embed practical AI workflows across business operations.
               </p>
             </div>
-
-            {/* <h3 className="text-white font-semibold text-xl mt-10 mb-4">
-              Facilitation Experience
-            </h3>
-            <ul className="space-y-3 text-white/65 text-lg leading-relaxed list-disc pl-5">
-              {facilitationExperience.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul> */}
 
             <h3 className="text-white font-semibold text-xl mt-10 mb-4">
               Relevant Certifications / Credentials
@@ -245,17 +226,17 @@ function Coach() {
   );
 }
 
-const AIMetaMindBeginner = () => {
+const AIMetaMindIntermediate = () => {
   const [openFaq, setOpenFaq] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalSource, setModalSource] = useState('beg_general');
+  const [modalSource, setModalSource] = useState('intermediate_general');
 
   useEffect(() => {
     initMetaPixel();
 
     const handleOpen = (e: Event) => {
       const customEvent = e as CustomEvent;
-      setModalSource(`beg_${customEvent.detail?.source || 'general'}`);
+      setModalSource(`intermediate_${customEvent.detail?.source || 'general'}`);
       setIsModalOpen(true);
     };
     window.addEventListener('open-registration-modal', handleOpen);
@@ -271,9 +252,9 @@ const AIMetaMindBeginner = () => {
         <div className="nav-inner">
           <div className="brand">
             <span className="brand-main">AI MetaMind</span>
-            <span className="brand-sub">AI ESSENTIALS</span>
+            <span className="brand-sub">AI PRACTITIONER</span>
           </div>
-          <ReserveButton className="nav-cta">Reserve My Seat — ₹499</ReserveButton>
+          <ReserveButton className="nav-cta">Reserve My Seat — ₹899</ReserveButton>
         </div>
       </header>
 
@@ -282,42 +263,33 @@ const AIMetaMindBeginner = () => {
         <div className="hero-inner">
           <div className="pill">
             <span className="pill-dot" />
-            Batch starting Saturday, 20th June '26 · Beginner Track
+            Batch starting Saturday, 20th June '26 · Intermediate Track
           </div>
 
           <h1 className="hero-title">
             The Future of AI Is Here.
             <br />
-            <span className="accent">Start Before It Leaves You Behind.</span>
+            <span className="accent">Integrate It Into Your Role.</span>
           </h1>
 
           <p className="hero-sub">
-            AI Essentials is the beginner track of AI MetaMind — built for professionals
-            who want to cut through the jargon and start using AI today. Live classes.
-            Weekend programme. For professionals, students, job aspirants, and curious
-            learners.
+            AI Practitioner is the intermediate track of AI MetaMind — built for professionals,
+            managers, and business teams who want to move beyond basic tools and integrate AI workflows
+            into their day-to-day decision-making. Live classes. Weekend programme.
           </p>
 
           <button
-            onClick={() => window.dispatchEvent(new CustomEvent('open-registration-modal', { detail: { source: 'hero' } }))}
+            onClick={() => window.dispatchEvent(new CustomEvent('open-registration-modal', { detail: { source: 'intermediate_hero' } }))}
             className="hero-btn"
           >
-            Reserve My Seat — ₹499
+            Reserve My Seat — ₹899
           </button>
 
           <p className="hero-meta">
-            4+ hours <span className="dot">•</span> 2 live sessions{" "}
+            9+ hours <span className="dot">•</span> 3 live sessions{" "}
             <span className="dot">•</span> Live + interactive + hands-on{" "}
             <span className="dot">•</span> Recording included
           </p>
-
-          {/* <div className="cohort-banner">
-            <div>
-              <p className="cohort-label">NEXT BATCH</p>
-              <p className="cohort-date">🚀 Starting Saturday, 20th June '26</p>
-            </div>
-            <p className="cohort-side">2 weekends · 2 hrs each · ₹499</p>
-          </div> */}
         </div>
       </section>
 
@@ -365,14 +337,14 @@ const AIMetaMindBeginner = () => {
       <section className="section">
         <div className="container">
           <Eyebrow>Programme Overview</Eyebrow>
-          <h2 className="h2">AI Essentials — Beginner</h2>
+          <h2 className="h2">AI Practitioner — Intermediate</h2>
           <p className="lede">
-            For professionals looking to cut through the jargon and start using AI today.
+            For functional professionals looking to apply AI tools to daily tasks.
           </p>
 
           <div className="grid-4 mt-xl">
             {[
-              { label: "Duration", value: "4+ hours · 2 live sessions (2 hrs each, Sat/Sun)" },
+              { label: "Duration", value: "9+ hours · 3 live sessions (3 hrs each, Sat/Sun)" },
               { label: "Learning Format", value: "Instructor-led, hands-on tool labs" },
               { label: "Delivery", value: "Delivered online — live, interactive, hands-on" },
               { label: "Access", value: "Full access to recorded content" },
@@ -392,7 +364,7 @@ const AIMetaMindBeginner = () => {
           <Eyebrow>What You'll Learn</Eyebrow>
           <h2 className="h2">Four Modules. Practical from Day One.</h2>
           <p className="lede">
-            Everything you need to go from AI-curious to AI-confident in a single weekend.
+            Everything you need to go from AI-aware to AI-practitioner.
           </p>
 
           <div className="grid-2 mt-xl">
@@ -421,16 +393,15 @@ const AIMetaMindBeginner = () => {
               <div className="card card-flat">
                 <h3 className="card-title">Hands-on Tool Labs — 50%</h3>
                 <p className="card-body">
-                  Apply what you learn in real time during guided tool labs. Practise
-                  prompting, explore AI tools, and build your confidence with live
-                  instructor support.
+                  Apply what you learn in real time during guided tool labs. Practise prompting,
+                  analyze data, and establish templates with live instructor support.
                 </p>
               </div>
               <div className="card card-flat">
-                <h3 className="card-title">Quizzes — 50%</h3>
+                <h3 className="card-title">Quizzes & Exercises — 50%</h3>
                 <p className="card-body">
-                  Test your understanding through scenario-based quizzes and live
-                  interactions designed to reinforce key concepts.
+                  Test your technical concepts with quizzes and complete hands-on integration exercises
+                  simulating real workplace scenarios.
                 </p>
               </div>
             </div>
@@ -449,7 +420,7 @@ const AIMetaMindBeginner = () => {
                 </li>
               ))}
             </ul>
-            <div className="highlight-banner mt-md">AI Tool Kit Worth ₹10,000 — Free</div>
+            <div className="highlight-banner mt-md">AI Templates Stack — Included</div>
           </div>
         </div>
       </section>
@@ -459,7 +430,7 @@ const AIMetaMindBeginner = () => {
         <div className="container">
           <Eyebrow>Your Takeaway</Eyebrow>
           <h2 className="h2">By the End, AI Won't Feel Like a Black Box</h2>
-          <p className="lede">You'll understand it, use it, and talk about it with confidence.</p>
+          <p className="lede">You'll understand it, use it, and integrate it into your role with confidence.</p>
 
           <ul className="check-list mt-xl single-col">
             {takeaways.map((item) => (
@@ -475,34 +446,15 @@ const AIMetaMindBeginner = () => {
       </section>
 
       {/* KEY TOOLS */}
-      {/* <section className="section">
-        <div className="container narrow center">
-          <Eyebrow>Tools You'll Explore</Eyebrow>
-          <h2 className="h2 center">Key AI Tools &amp; Platforms</h2>
-          <div className="tool-grid mt-xl">
-            {["ChatGPT", "Claude", "NotebookLM", "Gemini", "Perplexity", "Copilot", "Gamma AI", "Napkin AI", "DALL·E", "Midjourney", "Sora", "ElevenLabs"].map((tool) => (
-              <span className="tool-chip" key={tool}>{tool}</span>
-            ))}
-          </div>
-        </div>
-      </section> */}
-
-    <section className="section">
+      <section className="section">
         <div className="container narrow center">
           <img
-          src="/images/ai-tools.png"
-          alt="AI tools"
-          className="
-          mx-auto
-          w-full
-          max-w-5xl
-          object-contain
-          "
-        />
+            src="/images/ai-tools.png"
+            alt="AI tools"
+            className="mx-auto w-full max-w-5xl object-contain"
+          />
         </div>
-     </section>
-
-      
+      </section>
 
       {/* PRICING */}
       <section className="section alt">
@@ -510,19 +462,19 @@ const AIMetaMindBeginner = () => {
           <div>
             <Eyebrow>Investment</Eyebrow>
             <h2 className="h2">
-              One Weekend. <span className="accent">A Real Head Start</span> in AI.
+              Practitioner Cohort. <span className="accent">A Real Practical Edge</span> in AI.
             </h2>
             <p className="lede">
-              The Beginner track is the fastest way to go from zero to AI-confident — built
-              for professionals who want to start now, not someday.
+              The Intermediate track is the comprehensive roadmap to everyday AI workflows — built
+              for professionals who want to master prompting, analysis, and execution today.
             </p>
 
             <ul className="emoji-list">
-              <li><span>🔴</span> 4+ hours · 2 live sessions on Zoom</li>
+              <li><span>🔴</span> 9+ hours · 3 live sessions on Zoom</li>
               <li><span>🎬</span> Full access to recorded content</li>
-              <li><span>🤖</span> AI & Gen-AI foundations + prompt engineering</li>
-              <li><span>🛠️</span> Live AI productivity tool kit showcase</li>
-              <li><span>📚</span> Prompt Playbook, AI Case Books & Template Stack</li>
+              <li><span>🤖</span> Advanced prompts, formatting, and data analysis labs</li>
+              <li><span>🛠️</span> Live practical workflow sandboxes</li>
+              <li><span>📚</span> Prompt Playbook & Blueprint Templates</li>
               <li><span>🏆</span> Certificate of completion</li>
             </ul>
           </div>
@@ -530,12 +482,12 @@ const AIMetaMindBeginner = () => {
           <div className="price-card">
             <p className="price-pill">⚡ Batch starting Sat, 20th June '26 — limited seats</p>
 
-            <p className="price-tier">AI Essentials — Beginner</p>
-            <p className="price-main">₹499</p>
-            <p className="price-note">4+ hours · 2 weekends · One-time payment</p>
+            <p className="price-tier">AI Practitioner — Intermediate</p>
+            <p className="price-main">₹899</p>
+            <p className="price-note">9+ hours · 3 sessions · One-time payment</p>
 
-            <button onClick={() => window.dispatchEvent(new CustomEvent('open-registration-modal', { detail: { source: 'pricing' } }))} className="hero-btn price-cta">
-              Reserve My Seat — ₹499
+            <button onClick={() => window.dispatchEvent(new CustomEvent('open-registration-modal', { detail: { source: 'intermediate_pricing' } }))} className="hero-btn price-cta">
+              Reserve My Seat — ₹899
             </button>
 
             <p className="price-secure">🔒 Secure checkout via Razorpay · SSL encrypted</p>
@@ -548,10 +500,10 @@ const AIMetaMindBeginner = () => {
         </div>
       </section>
 
-  {/* COACH */}
-  <Coach />
+      {/* COACH */}
+      <Coach />
 
-  {/* TRACK COMPARISON */}
+      {/* TRACK COMPARISON */}
       <section className="section">
         <div className="container">
           <Eyebrow>All Tracks</Eyebrow>
@@ -559,8 +511,8 @@ const AIMetaMindBeginner = () => {
           <p className="lede">Complete the Beginner track and continue your AI journey at your own pace.</p>
           <div className="grid-3 mt-xl">
             {[
-              { tier: "Beginner", name: "AI Essentials", price: "₹499", duration: "4+ hrs · 2 sessions", desc: "Cut through jargon. Start using AI today.", active: true },
-              { tier: "Intermediate", name: "AI Practitioner", price: "₹899", duration: "9+ hrs · 3 sessions", desc: "Integrate AI into your daily workflow & decision-making.", active: false },
+              { tier: "Beginner", name: "AI Essentials", price: "₹499", duration: "4+ hrs · 2 sessions", desc: "Cut through jargon. Start using AI today.", active: false },
+              { tier: "Intermediate", name: "AI Practitioner", price: "₹899", duration: "9+ hrs · 3 sessions", desc: "Integrate AI into your daily workflow & decision-making.", active: true },
               { tier: "Expert", name: "AI Strategic Leader", price: "₹14,999", duration: "16+ hrs · 4 sessions", desc: "Drive the AI agenda. Build custom AI solutions.", active: false },
             ].map((track) => (
               <div className={`card ${track.active ? "card-teal card-active" : "card-dim"}`} key={track.tier}>
@@ -575,8 +527,6 @@ const AIMetaMindBeginner = () => {
           </div>
         </div>
       </section>
-
-      
 
       {/* FAQ */}
       <section className="section alt">
@@ -609,17 +559,17 @@ const AIMetaMindBeginner = () => {
       <section className="closing">
         <div className="container narrow center">
           <Eyebrow>The Decision Point</Eyebrow>
-          <h2 className="closing-title">Everyone's Using AI. Learn to Use It Well.</h2>
+          <h2 className="closing-title">Everyone's Using AI. Learn to Use It.</h2>
           <p className="closing-quote">
             "The best time to start learning AI was six months ago. The second best time is
             this Saturday."
           </p>
           <p className="closing-sub">
-            4+ hours. ₹499. One programme built to make AI make sense — finally.
+            9+ hours. ₹899. One programme built to help you master functional AI tools.
           </p>
-          <button onClick={() => window.dispatchEvent(new CustomEvent('open-registration-modal', { detail: { source: 'final-cta' } }))} className="hero-btn">
-              Reserve My Seat — ₹499
-            </button>
+          <button onClick={() => window.dispatchEvent(new CustomEvent('open-registration-modal', { detail: { source: 'intermediate_final-cta' } }))} className="hero-btn">
+            Reserve My Seat — ₹899
+          </button>
           <p className="hero-meta mt-md">
             Limited seats <span className="dot">•</span> Live on Zoom{" "}
             <span className="dot">•</span> Recording included{" "}
@@ -632,17 +582,17 @@ const AIMetaMindBeginner = () => {
             <div>
               <div className="brand">
                 <span className="brand-main">AI MetaMind</span>
-                <span className="brand-sub">AI ESSENTIALS</span>
+                <span className="brand-sub">AI PRACTITIONER</span>
               </div>
-              <p className="footer-tag">Live AI upskilling — for professionals, students, and job aspirants</p>
+              <p className="footer-tag">Live AI upskilling — for professionals, leaders, and managers</p>
             </div>
             <div className="footer-links">
               <a 
-              href="/privacy-policy"
-              className="hover:text-white/60 transition-colors"
-            >
-              Privacy Policy
-            </a>
+                href="/privacy-policy"
+                className="hover:text-white/60 transition-colors"
+              >
+                Privacy Policy
+              </a>
               <a href="/contact" className="footer-link">Contact</a>
             </div>
             <p className="footer-copy">© 2026 Workfloww. All rights reserved.</p>
@@ -666,7 +616,7 @@ const AIMetaMindBeginner = () => {
   );
 };
 
-export default AIMetaMindBeginner;
+export default AIMetaMindIntermediate;
 
 // ---------- Styles ----------
 

@@ -37,6 +37,10 @@ const specialCaseRoutes = {
   'BuilderLab': 'builder-lab',
   'LighthouseProgram': 'lighthouse-program',
   'QSRRetail': 'qsr-cloud-kitchens',
+  'AiMetamindaibeg': 'ai-metamind-beginner',
+  'AiMetamindaiexpert': 'ai-metamind-expert',
+  'AiMetamindaiintermediate': 'ai-metamind-intermediate',
+  'AimetamindHRexpert': 'ai-metamind-hr-expert',
 };
 
 const getRouteName = (componentName) => {
@@ -102,7 +106,10 @@ const routes = discoverRoutes();
 const distDir = path.join(process.cwd(), 'dist');
 const prerenderer = new Prerenderer({
   staticDir: distDir,
-  renderer: new PuppeteerRenderer({ headless: true }),
+  renderer: new PuppeteerRenderer({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  }),
 });
 
 const writeRoute = (route, html) => {
