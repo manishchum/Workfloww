@@ -6,7 +6,7 @@ export async function initMetaPixel(): Promise<void> {
 
   // Avoid double-initialization
   const w = window as any;
-  if (w.fbq && w.fbq.__initialized) return;
+  if (w.fbq && (w.fbq.__initialized || w.fbq.__initializing)) return;
 
   // Minimal fbq stub to queue commands until the real script loads
   if (!w.fbq) {
@@ -20,18 +20,16 @@ export async function initMetaPixel(): Promise<void> {
     w.fbq.version = '2.0';
   }
 
+  w.fbq.__initializing = true;
+
   // Dynamically load the official fbevents script
   return new Promise((resolve) => {
     try {
       const existing = document.querySelector("script[src*='fbevents']");
-      if (existing) {
-        // If script already present, attempt init immediately
-        try {
-          w.fbq('init', pixelId);
-          w.fbq('track', 'PageView');
+      if (existing || (w.fbq && w.fbq.loaded)) {
+        if (w.fbq) {
           w.fbq.__initialized = true;
-        } catch (e) {
-          // ignore
+          w.fbq.__initializing = false;
         }
         resolve();
         return;
@@ -47,15 +45,20 @@ export async function initMetaPixel(): Promise<void> {
             w.fbq('init', pixelId);
             w.fbq('track', 'PageView');
             w.fbq.__initialized = true;
+            w.fbq.__initializing = false;
           }
         } catch (err) {
           // no-op
         }
         resolve();
       };
-      script.onerror = () => resolve();
+      script.onerror = () => {
+        if (w.fbq) w.fbq.__initializing = false;
+        resolve();
+      };
       document.head.appendChild(script);
     } catch (e) {
+      if (w.fbq) w.fbq.__initializing = false;
       resolve();
     }
   });

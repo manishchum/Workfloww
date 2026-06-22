@@ -44,6 +44,10 @@ function doPost(e) {
     }
 
     const record = body.record || {};
+
+    // LOG INCOMING REQUEST FOR DEBUGGING
+    console.log('Received Webhook Payload:', JSON.stringify(body));
+
     const lock = LockService.getScriptLock();
     lock.waitLock(10000);
 
@@ -68,6 +72,7 @@ function doPost(e) {
         }
       }
 
+      console.log('Chosen Target Sheet:', targetSheetName);
       const sheet = getSheet(targetSheetName);
 
       if (
@@ -149,8 +154,10 @@ function doPost(e) {
 
         range.setValues([row.map(safeCell)]);
       } else {
+        console.log('Appended new row to sheet:', activeSheet.getName());
         activeSheet.appendRow(row.map(safeCell));
       }
+      console.log('Successfully processed payment record.');
       return jsonResponse({ ok: true });
     } finally {
       lock.releaseLock();
