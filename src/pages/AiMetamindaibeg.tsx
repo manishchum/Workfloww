@@ -8,7 +8,7 @@ import { initMetaPixel } from "../utils/metaPixel";
  * Visual system: dark navy, indigo/blue accent, teal highlights.
  * 
  * Beginner Track: AI Essentials
- * 4+ Hours | 2 Live Sessions | ₹499 | Batch starts Sat, 20th June '26
+ * 4+ Hours | 2 Live Sessions | ₹499 | Batch starts Sat, 27th June '26
  */
 
 // ---------- Reusable bits ----------
@@ -119,7 +119,7 @@ const faqs = [
   },
   {
     q: "What will I be able to do after this programme?",
-    a: "You'll understand how AI and Gen-AI work, craft effective prompts, use an AI productivity toolkit to save hours of manual work, and apply responsible AI principles in your workplace — all within 4+ hours across 2 live sessions.",
+    a: "You'll understand how AI and Gen-AI work, craft effective prompts, use an AI productivity toolkit to save hours of manual work, and apply responsible AI principles in your workplace — all within 3+ hours across 1 live session.",
   },
   {
     q: "What if I can't attend a live session?",
@@ -127,7 +127,7 @@ const faqs = [
   },
   {
     q: "How long is the programme, and what is the format?",
-    a: "4+ hours across 2 live sessions (2 hours each, Saturday/Sunday). Delivered online — live, interactive, and hands-on — with instructor-led teaching and tool labs.",
+    a: "3+ hours across 1 live session (3 hours, Saturday). Delivered online — live, interactive, and hands-on — with instructor-led teaching and tool labs.",
   },
   {
     q: "Can I upgrade to Intermediate or Expert later?",
@@ -144,7 +144,7 @@ const credentials = [
 
 const facilitationExperience = [
   '22+ years of leadership experience across global organizations.',
-  'Designs and facilitates leadership immersion sessions, functional bootcamps and AI hackathons for business teams.',
+  'Designs and facilitates leadership immersion session, functional bootcamps and AI hackathons for business teams.',
   'Facilitated change management and transformation engagements across Pharma, FMCG, Fintech, Alco Beverages, Technology, Consulting and Telecom.',
 ];
 
@@ -306,7 +306,7 @@ const AIMetaMindBeginner = () => {
           </button>
 
           <p className="hero-meta">
-            4+ hours <span className="dot">•</span> 2 live sessions{" "}
+            3+ hours <span className="dot">•</span> 1 live session{" "}
             <span className="dot">•</span> Live + interactive + hands-on{" "}
             <span className="dot">•</span> Recording included
           </p>
@@ -372,7 +372,7 @@ const AIMetaMindBeginner = () => {
 
           <div className="grid-4 mt-xl">
             {[
-              { label: "Duration", value: "4+ hours · 2 live sessions (2 hrs each, Sat/Sun)" },
+              { label: "Duration", value: "3+ hours · 1 live session (3 hrs, Sat)" },
               { label: "Learning Format", value: "Instructor-led, hands-on tool labs" },
               { label: "Delivery", value: "Delivered online — live, interactive, hands-on" },
               { label: "Access", value: "Full access to recorded content" },
@@ -518,7 +518,7 @@ const AIMetaMindBeginner = () => {
             </p>
 
             <ul className="emoji-list">
-              <li><span>🔴</span> 4+ hours · 2 live sessions on Zoom</li>
+              <li><span>🔴</span> 3+ hours · 1 live session on Zoom</li>
               <li><span>🎬</span> Full access to recorded content</li>
               <li><span>🤖</span> AI & Gen-AI foundations + prompt engineering</li>
               <li><span>🛠️</span> Live AI productivity tool kit showcase</li>
@@ -528,11 +528,11 @@ const AIMetaMindBeginner = () => {
           </div>
 
           <div className="price-card">
-            <p className="price-pill">⚡ Batch starting Sat, 20th June '26 — limited seats</p>
+            <p className="price-pill">⚡ Batch starting Sat, 27th June '26 — limited seats</p>
 
             <p className="price-tier">AI Essentials — Beginner</p>
             <p className="price-main">₹499</p>
-            <p className="price-note">4+ hours · 2 weekends · One-time payment</p>
+            <p className="price-note">3+ hours · 1 live session · One-time payment</p>
 
             <button onClick={() => window.dispatchEvent(new CustomEvent('open-registration-modal', { detail: { source: 'pricing' } }))} className="hero-btn price-cta">
               Reserve My Seat — ₹499
@@ -559,7 +559,7 @@ const AIMetaMindBeginner = () => {
           <p className="lede">Complete the Beginner track and continue your AI journey at your own pace.</p>
           <div className="grid-3 mt-xl">
             {[
-              { tier: "Beginner", name: "AI Essentials", price: "₹499", duration: "4+ hrs · 2 sessions", desc: "Cut through jargon. Start using AI today.", active: true },
+              { tier: "Beginner", name: "AI Essentials", price: "₹499", duration: "3+ hrs · 1 session", desc: "Cut through jargon. Start using AI today.", active: true },
               { tier: "Intermediate", name: "AI Practitioner", price: "₹899", duration: "9+ hrs · 3 sessions", desc: "Integrate AI into your daily workflow & decision-making.", active: false },
               { tier: "Expert", name: "AI Strategic Leader", price: "₹14,999", duration: "16+ hrs · 4 sessions", desc: "Drive the AI agenda. Build custom AI solutions.", active: false },
             ].map((track) => (
@@ -615,7 +615,7 @@ const AIMetaMindBeginner = () => {
             this Saturday."
           </p>
           <p className="closing-sub">
-            4+ hours. ₹499. One programme built to make AI make sense — finally.
+            3+ hours. ₹499. One programme built to make AI make sense — finally.
           </p>
           <button onClick={() => window.dispatchEvent(new CustomEvent('open-registration-modal', { detail: { source: 'final-cta' } }))} className="hero-btn">
               Reserve My Seat — ₹499
