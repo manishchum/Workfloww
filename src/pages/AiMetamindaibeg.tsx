@@ -282,7 +282,7 @@ const AIMetaMindBeginner = () => {
         <div className="hero-inner">
           <div className="pill">
             <span className="pill-dot" />
-            Batch starting Saturday, 20th June '26 · Beginner Track
+            Batch starting Saturday, 27th June '26 · Beginner Track
           </div>
 
           <h1 className="hero-title">
