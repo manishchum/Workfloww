@@ -38,6 +38,9 @@ import Pricing from "./pages/Pricing";
 import Analytics from "./Analytics";
 import AiMetamind from "./pages/AiMetamind";
 import AiMetamindbeg from "./pages/AiMetamindaibeg";
+import AiMetamindExpert from "./pages/AiMetamindaiexpert";
+import AiMetamindIntermediate from "./pages/AiMetamindaiintermediate";
+import AiMetamindHRExpert from "./pages/AimetamindHRexpert";
 
 export default function App() {
   return (
@@ -80,6 +83,9 @@ export default function App() {
           <Route path="/lighthouse-program" element={<LighthouseProgram />} />
           <Route path="/ai-metamind" element={<AiMetamind />} />
           <Route path="/ai-metamind-beginner" element={<AiMetamindbeg/>} />
+          <Route path="/ai-metamind-expert" element={<AiMetamindExpert />} />
+          <Route path="/ai-metamind-intermediate" element={<AiMetamindIntermediate />} />
+          <Route path="/ai-metamind-hr-expert" element={<AiMetamindHRExpert />} />
         </Routes>
       </Layout>
     </Router>

@@ -159,7 +159,22 @@ export async function openCheckout(userData: CheckoutUserData): Promise<void> {
     return;
   }
 
-  trackInitiateCheckout();
+  const sourceLower = (userData.source || "").toLowerCase();
+  const price = sourceLower.includes("expert") || sourceLower.includes("exp_")
+    ? 14999
+    : sourceLower.includes("intermediate") || sourceLower.includes("int_")
+    ? 899
+    : 499;
+
+  const workshopName = sourceLower.includes("hrexpert")
+    ? "AI MetaMind – HR Expert"
+    : sourceLower.includes("expert") || sourceLower.includes("exp_")
+    ? "AI MetaMind – Strategic Leader"
+    : sourceLower.includes("intermediate") || sourceLower.includes("int_")
+    ? "AI MetaMind – Practitioner"
+    : "AI MetaMind – HR Series";
+
+  trackInitiateCheckout(price);
 
   try {
     await loadScript();
@@ -180,9 +195,9 @@ export async function openCheckout(userData: CheckoutUserData): Promise<void> {
 
     const rzp = new window.Razorpay({
       key: RAZORPAY_KEY_ID,
-      amount: PRICE * 100,
+      amount: price * 100,
       currency: 'INR',
-      name: 'AI MetaMind – HR Series',
+      name: workshopName,
       description: 'Live AI Upskilling Workshop',
       order_id: order.order_id,
       prefill: {
@@ -199,7 +214,7 @@ export async function openCheckout(userData: CheckoutUserData): Promise<void> {
           userData,
         )
           .then(() => {
-            trackPurchase(PRICE, 'INR');
+            trackPurchase(price, 'INR');
             window.location.href = THANK_YOU_URL;
           })
           .catch((err) => {

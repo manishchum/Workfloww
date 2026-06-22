@@ -103,30 +103,19 @@ export default function RegistrationModal({
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent
-        className="max-h-[calc(100vh-2rem)] overflow-y-auto border border-white/10 bg-[#0a0f1d] text-white p-6 shadow-2xl shadow-black/50 sm:max-w-md rounded-2xl"
+        className="font-dm-sans max-h-[calc(100vh-2rem)] overflow-y-auto border border-white/10 bg-[#0a0f1d] text-white p-6 shadow-2xl shadow-black/50 sm:max-w-md rounded-2xl"
         showCloseButton={!isLoading}
       >
         <DialogHeader className="space-y-4">
           {/* Logo / Header */}
           <div className="flex items-center gap-2">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="flex-shrink-0"
-            >
-              {/* top row */}
-              <rect x="8" y="0" width="6" height="6" fill="#6357d4" rx="1" />
-              <rect x="16" y="0" width="6" height="6" fill="#a5b4fc" rx="1" />
-              {/* middle row */}
-              <rect x="0" y="8" width="6" height="6" fill="#6357d4" rx="1" />
-              <rect x="8" y="8" width="6" height="6" fill="#6357d4" rx="1" />
-              {/* bottom row */}
-              <rect x="0" y="16" width="6" height="6" fill="#a5b4fc" rx="1" />
-              <rect x="16" y="16" width="6" height="6" fill="#a5b4fc" rx="1" />
-            </svg>
+            <img
+              src="/images/logo.png"
+              alt="AI MetaMind logo"
+              width={36}
+              height={36}
+              className="flex-shrink-0 w-9 h-9 object-contain"
+            />
             <div className="flex flex-col">
               <span className="font-bold text-white text-base leading-tight tracking-tight">
                 AI MetaMind
@@ -141,7 +130,7 @@ export default function RegistrationModal({
             <span className="text-[#8b7cff] text-[11px] uppercase tracking-widest font-bold block">
               REGISTRATION
             </span>
-            <DialogTitle className="text-3xl font-extrabold tracking-tight text-white leading-none">
+            <DialogTitle className="font-dm-sans text-3xl font-extrabold tracking-tight text-white leading-none">
               Reserve Your <span className="text-[#6357d4]">Seat</span>
             </DialogTitle>
             <DialogDescription className="text-sm text-white/50 pt-1 leading-relaxed">
