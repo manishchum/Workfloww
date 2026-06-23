@@ -15,6 +15,40 @@ import { Building } from "lucide-react";
 
 // ---------- Data ----------
 
+
+<Helmet>
+
+        <title>
+          AI MetaMind HR Series - Live AI Workshop for HR Professionals
+        </title>
+
+        <meta
+          name="description"
+          content="Learn to apply AI across recruiting, L&D, and HR operations in this 3-hour live workshop with Manish Chum. Get 50+ prompts and workflows ready to use Monday."
+        />
+
+        <meta 
+          name="og:title" 
+          content="AI MetaMind HR Series" 
+        />
+
+        <meta 
+          name="og:type" 
+          content="website" 
+        />
+
+        <meta 
+          name="og:url" 
+          content="https://workfloww.ai/ai-metamind" 
+        />
+
+        <meta 
+          name="twitter:card" 
+          content="summary_large_image" 
+        />
+
+      </Helmet>
+
 const problems = [
   {
     icon: '⚡',
