@@ -56,7 +56,7 @@
 //             font-bold
 //             "
 //           >
-//             🚀 Starting 20th June
+//             🚀 Starting 28th June
 //           </h2>
 //         </div>
 
@@ -200,7 +200,7 @@ function CohortBanner() {
             font-bold
             "
           >
-            🚀 Starting 20th June
+            🚀 Starting 28th June
           </h2>
 
 

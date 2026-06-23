@@ -3,16 +3,51 @@ import { Helmet } from "react-helmet-async";
 import { openCheckout } from "../lib/ai-metamind/razorpay";
 import RegistrationModal from "../components/RegistrationModal";
 import { initMetaPixel } from "../utils/metaPixel";
+import { Building } from "lucide-react";
 
 /**
  * AI MetaMind — HR Expert Landing Page
  * Visual system: dark navy bg-[#051121], purple/indigo accents, clean Tailwind CSS.
  * 
  * HR Expert Track: AI Strategic Leader for HR
- * 4 Weeks | 16 Hours | ₹14,999 | Batch starts Sat, 20th June '26
+ * 4 Weeks | 16 Hours | ₹14,999 | Batch starts Sat, 5th July '26
  */
 
 // ---------- Data ----------
+
+
+<Helmet>
+
+        <title>
+          AI MetaMind HR Series - Live AI Workshop for HR Professionals
+        </title>
+
+        <meta
+          name="description"
+          content="Learn to apply AI across recruiting, L&D, and HR operations in this 3-hour live workshop with Manish Chum. Get 50+ prompts and workflows ready to use Monday."
+        />
+
+        <meta 
+          name="og:title" 
+          content="AI MetaMind HR Series" 
+        />
+
+        <meta 
+          name="og:type" 
+          content="website" 
+        />
+
+        <meta 
+          name="og:url" 
+          content="https://workfloww.ai/ai-metamind" 
+        />
+
+        <meta 
+          name="twitter:card" 
+          content="summary_large_image" 
+        />
+
+      </Helmet>
 
 const problems = [
   {
@@ -51,102 +86,174 @@ const outcomes = [
 const curriculumWeeks = [
   {
     week: 'Week 1',
-    title: 'Foundations & Practical AI in HR',
+    title: 'HR 4.0 & AI Foundations',
     modules: [
       {
         num: 'M1',
-        name: 'HR 4.0 & AI Foundations',
+        name: 'Introduction to AI & Generative AI',
         points: [
-          'Gen AI, LLMs & prompt engineering essentials for HR',
-          'HR Tech Stack audit & readying data for AI'
+          'Get a clear understanding of Artificial Intelligence and Generative AI terminologies and technical stacks used. Cut through the tech jargon and elevate your understanding about core technology.'
         ]
       },
       {
         num: 'M2',
-        name: 'Practical AI Applications',
+        name: 'Live Demonstration of GenAI Tools for HR',
         points: [
-          'Leverage AI tools for job description design, candidate sourcing, screening, outreach',
-          'AI for onboarding automation, employee engagement, pulse surveys, training content creation'
+          'Experience top AI tools in action — writing job descriptions, generating survey questions, creating workforce plans, or analyzing feedback.See how AI can save hours of manual effort and deliver outcomes that are faster, sharper, and more strategic.'
         ]
       }
     ]
   },
   {
     week: 'Week 2',
-    title: 'Advanced AI Agents & Workflows in HR',
+    title: ' Practical AI Skills for HR',
     modules: [
       {
         num: 'M3',
-        name: 'Strategic AI Implementation',
+        name: 'Prompt Engineering Essentials',
         points: [
-          'Build custom AI agents (recruiters, trainers, advisors) using Google AI Studio & CoPilot Studio',
-          'AI for HR analytics, workforce planning, attrition prediction, performance review parsing'
+          'Master the art and science of prompt design — crafting clear, contextual, and powerful instructions that generate the best results from AI tools.Learn proven frameworks and templates tailored for HR tasks like performance reviews, employee communication, and leadership reports.'
         ]
       },
       {
         num: 'M4',
-        name: 'Responsible AI Management',
+        name: 'AI use cases in HR Strategy',
         points: [
-          'AI governance, ethics, bias detection, data privacy & compliance in HR',
-          'Measuring ROI of AI initiatives & building an AI implementation roadmap'
+          'Discover where AI can add value across the HR function - from recruitment, onboarding, and performance management to analytics and reporting.Create a visual “AI in HR Map” to identify areas where automation and augmentation can improve speed, accuracy, and insight.'
         ]
       },
       {
         num: 'M5',
-        name: 'Talent Lifecycle Transformation',
+        name: 'Identifying AI opportunity in HR',
         points: [
-          'Design AI-led HR interventions across the full talent lifecycle (Hire to Retire)',
-          'Automate candidate onboarding, skill development, and career pathing workflows'
+          'Learn to identify the right spaces in HR for AI adoption — from automating repetitive tasks to enhancing decision-making and analytics.Use a practical framework to map AI leverage zones across recruitment, learning, performance, and engagement.'
         ]
       }
     ]
   },
   {
     week: 'Week 3',
-    title: 'Hands-on Sandbox & Implementation',
+    title: 'AI in Talent, Analytics & Engagement',
     modules: [
       {
         num: 'M6',
-        name: 'Custom Agent Lab',
+        name: 'AI use cases in Talent Acquisition',
         points: [
-          'Build custom AI assistants for recruiting, coaching, and compliance parsing',
-          'Configure custom sandboxes using Google AI Studio & Microsoft CoPilot Studio'
+          'Reimagine hiring with AI. Learn how to automate sourcing, improve candidate quality, enhance employer branding, and enable predictive hiring analytics.Experience how AI can write job descriptions, rank resumes, and simulate structured interviews — transforming the recruiter’s toolkit.'
         ]
       },
       {
         num: 'M7',
-        name: 'HR Workflow Automation',
+        name: 'AI use cases in HR Analytics',
         points: [
-          'Integrate AI agents into your business tools (Slack, Teams, Sheets)',
-          'Establish multi-agent orchestration for hire-to-retire process'
+          'Move beyond Excel dashboards. Learn how to use AI tools to analyze workforce data, identify emerging trends, and forecast talent risks.Understand descriptive, diagnostic, and predictive analytics — and how AI can help HR leaders make proactive, data-backed decisions.'
+        ]
+      },
+      {
+        num: 'M8',
+        name: 'AI use cases in L&D & Employee Engagement',
+        points: [
+          'Explore how AI personalizes learning and employee experience. Map skill gaps, build learning journeys, and measure engagement with sentiment analysis tools.Understand how GenAI can help HR teams co-create development plans, learning nudges, and engagement playbooks.'
         ]
       }
     ]
   },
   {
     week: 'Week 4',
-    title: 'Strategic Roadmap & ROI',
+    title: 'Responsible & Ethical AI in HR',
     modules: [
       {
-        num: 'M8',
+        num: 'M9',
         name: 'AI Governance & Compliance',
         points: [
-          'Establish bias audit processes and data security guardrails',
-          'Draft AI utilization policies for employee handbook'
+          'Understand the human side of AI. Address issues of bias, fairness, transparency, and accountability in AI-driven HR decisions.Learn how to communicate AI ethics and governance principles to leaders and employees — ensuring responsible adoption across your organization.'
         ]
       },
       {
-        num: 'M9',
-        name: 'Capstone Project & Showcase',
+        num: 'M10',
+        name: 'AI use cases in Total Rewards',
         points: [
-          'Present your custom HR AI transformation roadmap',
-          'Fireside chats with industry leaders and certificate presentation'
+          'Explore different use cases in total rewards like benefits benchmarking, compensation data analysis, simulations for LTiP, ESOPs etc.'
         ]
-      }
+      },
+      {
+        num: 'M11',
+        name: 'Strategic Alignment & Business Storytelling',
+        points: [
+          'Translate your AI learnings into business language. Build your AI Capability Plan and learn to pitch HR-AI initiatives to senior leadership — showcasing ROI, change readiness, and impact'
+        ]
+      },
+      {
+        num: 'M12',
+        name: 'The 4E Framework for Building AI Capability',
+        points: [
+          'Explore the structured “4E” model — Explore, Experiment, Execute, Elevate — to grow your AI maturity as an HR professional.Learn how to move from experimenting with tools to designing strategy-level AI initiatives that impact the business.'
+        ]
+      },
     ]
   }
 ];
 
+function AiToolsSection() {
+  return (
+    <section className="bg-[#051121] py-16 px-6">
+      <div className="max-w-5xl mx-auto text-center">
+        <img
+          src="/images/ai-tools.png"
+          alt="AI tools"
+          className="mx-auto w-full max-w-5xl object-contain"
+        />
+      </div>
+    </section>
+  );
+}
+
+function TrustedCompaniesSection() {
+  return (
+    <section className="bg-[#080b1d] px-6 py-8">
+
+      <div className="max-w-6xl mx-auto flex justify-center">
+
+        <img
+          src="/images/trusted-companies.png"
+          alt="Trusted companies"
+          className="
+            block
+            w-full
+            max-w-5xl
+            h-auto
+            object-contain
+          "
+        />
+
+      </div>
+
+    </section>
+  );
+}
+
+function LeadersSection() {
+  return (
+    <section className="bg-[#080b1d] px-6 py-10">
+
+      <div className="max-w-7xl mx-auto flex justify-center">
+
+        <img
+          src="/images/leaders.png"
+          alt="Leaders who walked the AI path with us"
+          className="
+            w-full
+            max-w-6xl
+            h-auto
+            object-contain
+          "
+        />
+
+      </div>
+
+    </section>
+  );
+}
 const uniqueCards = [
   {
     title: "Integrated HR & AI Expertise",
@@ -292,7 +399,7 @@ function Hero() {
       <div className="relative z-10 max-w-5xl mx-auto text-center">
         <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-5 py-2 mb-8">
           <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse" />
-          <span className="text-white/65 text-sm">Next Cohort starting 20th June '26</span>
+          <span className="text-white/65 text-sm">Next Cohort starting 5th July '26</span>
         </div>
 
         <h1 className="font-bold text-white leading-tight tracking-tight mb-6">
@@ -340,7 +447,7 @@ function CohortBanner() {
       <div className="max-w-5xl mx-auto rounded-2xl border border-[#6357d4]/40 bg-[#6357d4]/10 px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
         <div>
           <p className="text-[#8b7cff] text-sm uppercase tracking-widest font-semibold mb-1">Next Live Cohort</p>
-          <h2 className="text-white text-3xl font-bold">🚀 Starting Saturday, 20th June '26</h2>
+          <h2 className="text-white text-3xl font-bold">🚀 Starting Saturday, 5th July '26</h2>
         </div>
         <p className="text-white/70 text-sm md:text-base">Limited seats available • Live AI workshop series</p>
       </div>
@@ -760,8 +867,11 @@ export default function AiMetamindHRExpert() {
       <Problem />
       <Outcome />
       <Curriculum />
-      <UniqueFeatures />
-      <ProgramOverviewStats />
+  <AiToolsSection />
+  <UniqueFeatures />
+  <TrustedCompaniesSection />
+  <LeadersSection />
+  <ProgramOverviewStats />
       <Coach />
       <Testimonials />
       <Pricing />
