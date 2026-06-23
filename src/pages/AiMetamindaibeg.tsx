@@ -8,7 +8,7 @@ import { initMetaPixel } from "../utils/metaPixel";
  * Visual system: dark navy, indigo/blue accent, teal highlights.
  * 
  * Beginner Track: AI Essentials
- * 4+ Hours | 2 Live Sessions | ₹499 | Batch starts Sat, 27th June '26
+ * 3+ Hours | 1 Live Session | ₹499 | Batch starts Sat, 27th June '26
  */
 
 // ---------- Reusable bits ----------
