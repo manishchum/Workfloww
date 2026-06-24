@@ -145,7 +145,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const isDarkHeader =
     forceDarkHeader ||
     (!scrolled && isDarkRoute);
-  const hideGlobalNav = location.pathname === "/ai-metamind-beginner" || location.pathname === "/ai-metamind";
+  const hideGlobalNav = location.pathname === "/ai-metamind-beginner" || location.pathname === "/ai-metamind" || location.pathname === "/ai-metamind-expert" || location.pathname === "/ai-metamind-intermediate" || location.pathname === "/ai-metamind-hr-expert";
   
 
   const CAL_USERNAME = "manish-chum-ovkoyi";

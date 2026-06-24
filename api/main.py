@@ -256,6 +256,17 @@ def fetch_razorpay_payment(payment_id: str) -> dict[str, Any]:
         return {}
 
 
+def get_amount_for_source(source: Optional[str]) -> int:
+    if not source:
+        return 49900  # fallback to ₹499
+    src = source.lower()
+    if "expert" in src or "exp_" in src:
+        return 1499900  # ₹14,999
+    if "intermediate" in src or "int_" in src:
+        return 89900  # ₹899
+    return 49900  # fallback to ₹499
+
+
 @app.post("/api/ai-metamind/create-order")
 async def create_razorpay_order(request: CreateOrderRequest):
     """
@@ -270,11 +281,12 @@ async def create_razorpay_order(request: CreateOrderRequest):
     try:
         # Call Razorpay API to create order
         auth = (RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET)
+        amount_paise = get_amount_for_source(request.source)
         response = requests.post(
             "https://api.razorpay.com/v1/orders",
             auth=auth,
             json={
-                "amount": WORKSHOP_AMOUNT_PAISE,
+                "amount": amount_paise,
                 "currency": WORKSHOP_CURRENCY,
                 "receipt": f"ai-metamind-{int(time.time())}",
             },
@@ -368,8 +380,9 @@ async def verify_razorpay_payment(request: VerifyPaymentRequest):
                 detail="Invalid payment signature"
             )
 
+        expected_amount_paise = get_amount_for_source(request.source)
         if (
-            payment.get("amount") != WORKSHOP_AMOUNT_PAISE
+            payment.get("amount") != expected_amount_paise
             or payment.get("currency") != WORKSHOP_CURRENCY
             or payment.get("status") != "captured"
             or payment.get("captured") is not True

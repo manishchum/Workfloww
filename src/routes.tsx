@@ -35,6 +35,9 @@ import LighthouseProgram from "./pages/LighthouseProgram";
 import Pricing from "./pages/Pricing";
 import AiMetamind from "./pages/AiMetamind";
 import AiMetamindHr from "./pages/AiMetamindaibeg";
+import AiMetamindExpert from "./pages/AiMetamindaiexpert";
+import AiMetamindIntermediate from "./pages/AiMetamindaiintermediate";
+import AiMetamindHRExpert from "./pages/AimetamindHRexpert";
 
 const routes: RouteObject[] = [
   {
@@ -176,6 +179,18 @@ const routes: RouteObject[] = [
    {
     path: "/ai-metamind-beginner",
     element: <AiMetamindHr />
+  },
+  {
+    path: "/ai-metamind-expert",
+    element: <AiMetamindExpert />
+  },
+  {
+    path: "/ai-metamind-intermediate",
+    element: <AiMetamindIntermediate />
+  },
+  {
+    path: "/ai-metamind-hr-expert",
+    element: <AiMetamindHRExpert />
   },
 ];
 

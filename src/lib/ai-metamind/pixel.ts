@@ -4,9 +4,9 @@ export function trackPageView(): void {
   }
 }
 
-export function trackInitiateCheckout(): void {
+export function trackInitiateCheckout(value: number = 499): void {
   if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-    window.fbq('track', 'InitiateCheckout', { value: 499, currency: 'INR' });
+    window.fbq('track', 'InitiateCheckout', { value, currency: 'INR' });
   }
 }
 

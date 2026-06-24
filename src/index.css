@@ -159,6 +159,10 @@
   .rotate-y-180 {
     transform: rotateY(180deg);
   }
+  /* Font utility for DM Sans (project already imports via @fontsource at top) */
+  .font-dm-sans {
+    font-family: 'DM Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
 }
 
 /* ── Lighthouse Program — scoped design tokens ─────────────────────────── */
