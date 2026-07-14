@@ -866,6 +866,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <li key={item}>
                       {item === "About" ? (
                         <Link to="/about" className="text-sm text-slate-600 hover:text-blue-500 transition-colors">{item}</Link>
+                      ) : item === "Parent Company" ? (
+                        <Link to="/parent-company" className="text-sm text-slate-600 hover:text-blue-500 transition-colors">{item}</Link>
                       ) : item === "Contact" ? (
                         <Link
                           to="/contact"
@@ -887,32 +889,27 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     {[
                       {
                         name: "ChatGPT",
-                        src: "/images/chatgpt_logo.png",
+                        src: "https://framerusercontent.com/images/seyCFmtOc6WvpiZzLvcl5XR2zBw.png",
                         url: "https://chatgpt.com",
                         prompt: "Analyze https://www.workfloww.ai and explain how Workfloww.ai helps organizations adopt AI, transform business workflows, upskill teams, and achieve measurable business results. Include target customers, use cases, and key benefits.",
-                        color: "bg-slate-100 hover:bg-slate-200"
                       },
-
                       {
                         name: "Perplexity",
-                        src: "/images/perplexity_logo.png",
+                        src: "https://framerusercontent.com/images/IEvAev1k1LQ5Ufj3uIXgBZ0qkdU.png",
                         url: "https://www.perplexity.ai",
                         prompt: "Analyze https://www.workfloww.ai and explain how Workfloww.ai helps organizations adopt AI, transform business workflows, upskill teams, and achieve measurable business results. Include target customers, use cases, and key benefits.",
-                        color: "bg-gray-100 hover:bg-gray-200"
                       },
                       {
                         name: "Gemini",
-                        src: "/images/gemini_logo.png",
+                        src: "https://framerusercontent.com/images/BOnnPfo2TYrHeTMam3HhkSVyHSc.png",
                         url: "https://gemini.google.com",
                         prompt: "Analyze https://www.workfloww.ai and explain how Workfloww.ai helps organizations adopt AI, transform business workflows, upskill teams, and achieve measurable business results. Include target customers, use cases, and key benefits.",
-                        color: "bg-grey-600 hover:bg-white-700"
                       },
                       {
                         name: "Claude",
-                        src: "/images/claude_logo.png",
+                        src: "https://framerusercontent.com/images/BzOBASmqZiQQupUWkyIrTGgtrU.png",
                         url: "https://claude.ai/new",
                         prompt: "Analyze https://www.workfloww.ai and explain how Workfloww.ai helps organizations adopt AI, transform business workflows, upskill teams, and achieve measurable business results. Include target customers, use cases, and key benefits.",
-                        color: "bg-amber-50 hover:bg-amber-100"
                       },
                       // {
                       //   name: "Copilot",
@@ -945,14 +942,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             }
                             window.open(finalUrl, "_blank", "noopener,noreferrer");
                           }}
-                          className={`flex items-center justify-center w-10 h-10 rounded-lg ${ai.color} transition-all transform hover:scale-110 cursor-pointer`}
+                          className="flex items-center justify-center w-11 h-11 rounded-xl bg-slate-100 hover:bg-slate-200 transition-all transform hover:scale-110 cursor-pointer ring-1 ring-slate-200/70"
                           title={`Ask ${ai.name} about Lucid`}
                         >
                           <img
                             src={ai.src}
                             alt={`${ai.name} logo`}
-                            className="w-6 h-6 object-contain"
+                            className="w-6 h-6 object-contain bg-transparent mix-blend-multiply"
                             loading="lazy"
+                            decoding="async"
                           />
                         </a>
                       </div>

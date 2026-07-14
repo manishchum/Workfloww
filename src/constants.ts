@@ -116,7 +116,7 @@ export const LUCID_CONTENT = {
     industries: ["QSR & Retail", "FMCG & Beverages", "Manufacturing & Industrial", "Services & Distribution"],
     features: ["Lucid Ready", "Lucid Arsenal", "Lucid Field", "Lucid Studio"],
     useCases: ["CEO", "CHRO", "Sales Head", "Operations Head", "Compliance & Audits", "Last-Mile Communication", "SOP Deviation"],
-    company: ["About", "Certifications", "Contact"]
+    company: ["About", "Parent Company", "Contact"]
   },
   targetedSolutions: [
     {

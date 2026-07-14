@@ -3,12 +3,20 @@ import { motion } from "motion/react";
 import {
   ArrowRight,
   CircleHelp,
+  BrainCircuit,
+  ChartColumn,
+  ClipboardCheck,
+  LayoutGrid,
+  MessageSquareText,
   Mic,
   MessageSquare,
   Minus,
   Phone,
   Plus,
   Sparkles,
+  Target,
+  Users,
+  WandSparkles,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -88,6 +96,18 @@ function CrossMark() {
   );
 }
 
+function CapabilityIcon({
+  icon: Icon,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+}) {
+  return (
+    <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-slate-50 text-slate-500">
+      <Icon className="h-3 w-3" />
+    </span>
+  );
+}
+
 const plans: Plan[] = [
   {
     key: "standard",
@@ -112,7 +132,7 @@ const plans: Plan[] = [
     key: "advanced",
     name: "Advanced",
     accent: "text-[#584cff]",
-    icon: <MessageSquare className="h-7 w-7" />,
+    icon: <MessageSquareText className="h-7 w-7" />,
     description:
       "Experience high-fidelity, interactive, real-time core dialogue simulator with voice and text capabilities.",
     buttonClassName:
@@ -257,6 +277,22 @@ const capabilityGroups: CapabilityGroup[] = [
     ],
   },
 ];
+
+function getCapabilityIcon(label: string) {
+  const normalized = label.toLowerCase();
+
+  if (normalized.includes("studio editor")) return LayoutGrid;
+  if (normalized.includes("assessment")) return ClipboardCheck;
+  if (normalized.includes("learning style")) return BrainCircuit;
+  if (normalized.includes("expert in the loop")) return Users;
+  if (normalized.includes("voice & text")) return Mic;
+  if (normalized.includes("real-time")) return MessageSquareText;
+  if (normalized.includes("reports") || normalized.includes("analytics")) return ChartColumn;
+  if (normalized.includes("sales")) return Target;
+  if (normalized.includes("task")) return WandSparkles;
+
+  return Sparkles;
+}
 
 const faqs = [
   {
