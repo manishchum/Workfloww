@@ -54,14 +54,7 @@ export default function Analytics() {
       // ignore
     }
 
-    // Meta Pixel page view
-    try {
-      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-        window.fbq('track', 'PageView');
-      }
-    } catch (e) {
-      // swallow
-    }
+    // Meta Pixel removed; previously we tracked PageView with fbq. No-op now.
   }, [location]);
 
   return null;
