@@ -35,6 +35,7 @@ import ContentEngine from "./pages/ContentEngine";
 import BuilderLab from "./pages/BuilderLab";
 import LighthouseProgram from "./pages/LighthouseProgram";
 import Pricing from "./pages/Pricing";
+import ParentCompany from "./pages/ParentCompany";
 import Analytics from "./Analytics";
 import AiMetamind from "./pages/AiMetamind";
 import AiMetamindbeg from "./pages/AiMetamindaibeg";
@@ -62,6 +63,7 @@ export default function App() {
           <Route path="/features/seamless-training" element={<SeamlessTraining />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/parent-company" element={<ParentCompany />} />
           <Route path="/industries/retail" element={<Retail />} />
           <Route path="/industries/qsr-cloud-kitchens" element={<QSRRetail />} />
           <Route path="/industries/fmcg-beverages" element={<FMCG />} />
