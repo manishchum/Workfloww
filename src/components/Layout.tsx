@@ -864,6 +864,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <li key={item}>
                       {item === "About" ? (
                         <Link to="/about" className="text-sm text-slate-600 hover:text-blue-500 transition-colors">{item}</Link>
+                      ) : item === "Parent Company" ? (
+                        <Link to="/parent-company" className="text-sm text-slate-600 hover:text-blue-500 transition-colors">{item}</Link>
                       ) : item === "Contact" ? (
                         <Link
                           to="/contact"
